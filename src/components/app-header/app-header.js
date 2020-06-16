@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './app-header.module.css'
-import Burger from '../header-burger/header-burger'
+import Burger from './header-burger/header-burger'
 
 function Header() {
     return (
