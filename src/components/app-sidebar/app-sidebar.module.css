@@ -1,10 +1,7 @@
-.sidebar_inner {
+.sidebar_list {
     background-color: #303846;
     width: 150px;
     height: 100%;
-}
-
-.sidebar_list {
     display: flex;
     flex-direction: column;
     justify-content: center;
