@@ -9,7 +9,8 @@ class Settings extends React.Component{
         example: false,
         image: false,
         countOfWords: '',
-        countOfCards: ''
+        countOfCards: '',
+        level: ''
     }
 
     handleChange = (event) => {
@@ -25,6 +26,10 @@ class Settings extends React.Component{
 
     }
 
+    handleSelect = (event) => {
+        this.setState({level : +event.target.value})
+    }
+
     showState = (event) => {
         event.preventDefault()
         console.log(this.state)
@@ -35,6 +40,18 @@ class Settings extends React.Component{
         return (
             <div className={s.settings_inner}>
                 <form className={s.settings_form}>
+                    <label>
+                        Уровень сложности:
+                        <select value={this.state.level} onChange={this.handleSelect}>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                        </select>
+                    </label>
+                
                     <label>
                         Новых слов в день:
                         <input id='countOfWords' type="number" onChange = {this.handleChange} min="1" max="50"/>
