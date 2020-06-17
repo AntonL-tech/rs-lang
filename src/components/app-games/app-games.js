@@ -16,7 +16,7 @@ function Games() {
     const renderCard = (card, index) => {
         return (
                 <Card className={s.game_card} style={{ width: '33%', height:'380px' }} key = {index}>
-                    <Card.Img style={{ width: '100%', height:'220px' }} className={s.card_img} variant="top" src="holder.js/100px180" src={card.image} />
+                    <Card.Img style={{ width: '100%', height:'220px' }} className={s.card_img} variant="top" src={card.image} />
                     <Card.Body>
                         <Card.Title>{card.title}</Card.Title>
                         <Card.Text>
