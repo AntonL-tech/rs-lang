@@ -1,5 +1,7 @@
 export const createUser = async (user) => {
   try {
+    console.log('user: ', user);
+
     const rawResponse = await fetch(
       'https://afternoon-falls-25894.herokuapp.com/users',
       {
