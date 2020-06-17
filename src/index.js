@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from '../src/components/app/app';
+import Sprint from '../src/components/sprint-game/Sprint';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Sprint />
   </React.StrictMode>,
   document.getElementById('root')
 );
