@@ -1,7 +1,5 @@
 export const createUser = async (user) => {
   try {
-    console.log('user: ', user);
-
     const rawResponse = await fetch(
       'https://afternoon-falls-25894.herokuapp.com/users',
       {
@@ -16,6 +14,10 @@ export const createUser = async (user) => {
 
     if (rawResponse.status === 422) {
       throw new Error('Incorrect e-mail or password');
+    }
+
+    if (rawResponse.status === 417) {
+      throw new Error('User already exist');
     }
 
     const content = await rawResponse.json();
