@@ -1,18 +1,29 @@
 import React from 'react';
 import s from './app.module.css';
 import Auth from '../Auth';
-import { BrowserRouter } from 'react-router-dom';
-
-function onAuth(user) {
-  console.log(user);
-}
+import {
+  BrowserRouter,
+  Redirect,
+  NavLink,
+  Route,
+  Switch,
+} from 'react-router-dom';
+import Logout from '../Logout';
+import ProtectedRoute from '../ProtectedRoute';
+import Game from '../Game';
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <h1 className={s.title}>Hello World</h1>
-        <Auth onAuth={onAuth} />
+        <NavLink to="/">Home</NavLink>
+        <NavLink to="/game">Game</NavLink>
+        <NavLink to="/signin">Login</NavLink>
+        <Logout text="Logout" />
+        <Switch>
+          <Route path="/signin" component={Auth} />
+          <ProtectedRoute path="/game" component={Game} />
+        </Switch>
       </BrowserRouter>
     </>
   );
