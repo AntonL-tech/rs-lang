@@ -25,7 +25,10 @@ class Auth extends Component {
         token: user.token,
         email: userData.email,
       });
-      this.props.onAuth(this.state);
+
+      Object.keys(this.state).forEach((key) => {
+        localStorage.setItem(key, this.state[key]);
+      });
     } catch (error) {
       console.error(error);
     }
