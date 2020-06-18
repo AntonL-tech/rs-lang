@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import s from './auth.module.css';
 
 class SignUpForm extends Component {
   constructor(props) {
@@ -7,7 +8,7 @@ class SignUpForm extends Component {
       email: '',
       password: '',
       confirmPassword: '',
-      noConfirmText: '',
+      errorText: '',
     };
 
     this.onChangeValue = this.onChangeValue.bind(this);
@@ -28,37 +29,56 @@ class SignUpForm extends Component {
 
   async onSubmit(e) {
     e.preventDefault();
-    if (this.state.password === this.confirmPassword) {
-      this.props.onSubmit(this.state);
-    } else {
+    if (this.state.password !== this.state.confirmPassword) {
       this.setState({
-        noConfirmText: 'Password not match',
+        errorText: 'Password not match',
       });
+      return;
     }
+    if (!this.state.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
+      this.setState({
+        errorText: 'Not valid email',
+      });
+      return;
+    }
+    if (
+      !this.state.password.match(
+        /(?=.*[0-9])(?=.*[+-_@$!%*?&#.,;:[]{}])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z+-_@$!%*?&#.,;:[]{}]{8,}/g
+      )
+    ) {
+      this.setState({
+        errorText: 'Not valid password',
+      });
+      return;
+    }
+    this.props.onSubmit(this.state);
   }
 
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.onSubmit} className={s.auth_form}>
+        <label>Login: </label>
         <input
           type="text"
           name="username"
           placeholder="Login"
           onChange={this.onChangeValue}
         />
+        <label>Password: </label>
         <input
           type="password"
           name="password"
           placeholder="Password"
           onChange={this.onChangeValue}
         />
+        <label>Confirm password: </label>
         <input
           type="password"
           name="confirm-password"
           placeholder="Confirm Password"
           onChange={this.onChangeValue}
         />
-        <span>{this.state.noConfirmText}</span>
+        <span>{this.state.errorText}</span>
         <button type="submit">SignUp</button>
       </form>
     );
