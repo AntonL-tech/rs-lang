@@ -3,6 +3,7 @@ import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
 import { createUser, loginUser } from './clientApi';
 import { Route, NavLink } from 'react-router-dom';
+import s from './auth.module.css';
 
 class Auth extends Component {
   constructor(props) {
@@ -37,10 +38,22 @@ class Auth extends Component {
 
   render() {
     return (
-      <div>
-        <div>
-          <NavLink to="/signin">Sign In</NavLink>
-          <NavLink to="/signup">Sign Up</NavLink>
+      <div className={s.auth}>
+        <div className={s.links}>
+          <NavLink
+            to="/signin"
+            className={s.linksItem}
+            activeClassName={s.linksItemActive}
+          >
+            Sign In
+          </NavLink>
+          <NavLink
+            to="/signup"
+            className={s.linksItem}
+            activeClassName={s.linksItemActive}
+          >
+            Sign Up
+          </NavLink>
         </div>
         <Route path="/signin">
           <SignInForm onSubmit={this.onSignIn} />

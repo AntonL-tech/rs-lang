@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import s from './auth.module.css';
 
 class SignInForm extends Component {
   constructor(props) {
@@ -28,13 +29,15 @@ class SignInForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.onSubmit} className={s.auth_form}>
+        <label>Login: </label>
         <input
           type="text"
           name="username"
           placeholder="Login"
           onChange={this.onChangeValue}
         />
+        <label>Password: </label>
         <input
           type="password"
           name="password"
