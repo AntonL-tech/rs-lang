@@ -20,7 +20,11 @@ class Auth extends Component {
   async onSignIn(userData) {
     try {
       const user = await loginUser(userData);
-      this.setState({ userId: user.userId, token: user.token });
+      this.setState({
+        userId: user.userId,
+        token: user.token,
+        email: userData.email,
+      });
       this.props.onAuth(this.state);
     } catch (error) {
       console.error(error);
