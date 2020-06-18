@@ -1,0 +1,56 @@
+.menu_wrapper {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid coral;
+    border-radius: 10px;
+    width: 100%;
+    height: 60px;
+    padding: 0 50px;
+    box-sizing: border-box;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.menu_select_level {
+    
+}
+
+.menu_settings {
+    display: flex;
+}
+
+.chose_btn {
+    font-size: 16px;
+    color: cyan;
+    width: 150px;
+    background-color:  #37393d;
+}
+
+.setting_button {
+    height: 40px;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-left: 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.megafon_btn {
+    width: 50px;
+    background-image: url(../assets/megaphone.svg);
+}
+
+.translate_btn {
+    width: 50px;
+    background-image: url(../assets/translate.svg);
+}
+
+.song_btn {
+    width: 50px;
+    background-image: url(../assets/music.svg);
+}
+
+.image_btn {
+    width: 50px;
+    background-image: url(../assets/photo.svg);
+}
