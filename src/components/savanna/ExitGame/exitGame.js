@@ -1,31 +1,48 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import s from './exitGame.module.css';
 
-class ExitGame extends React.Component {
-    render() {
-        return (
-            <div className={s.ExitGameIcon}>              
-            </div>
-            <div className={s.ExitBlock}>
-                <div className={s.ExitBlockTitle}>Тренировка не закончена!</div>
-                <div className={s.ExitBlockText}>Если вы вернетесь к списку, ваши результаты будут потеряны</div>
-                <button className={s.ExitBlockCloseBtn}>Закрыть</button>
-                <div className={s.ExitBlockCanselBtn}>Отмена</div>
-            </div>
-        );
-    }
-}
+// import Icon from '../Assets/icons/clear.svg';
+// import Button from '../button/Button';
+// import closeBtn from './Assets/icons/clear.svg';
 
-export default ExitGame;
+const Modal = ({ title, isOpen, onCancel, onSubmit, subTitle }) => {
+    return (
+        <>
+            {isOpen && (
+                <div className={s.modalOverlay}>
+                    <div className={s.modalWindow}>
+                        <div className={s.modalContent}>
+                            <div className={s.modalTitle}>{title}</div>
+                            <div className={s.modalText}>{subTitle}</div>
+                            <div className={s.modalCloseBtn} onClick={onSubmit}>
+                                Закрыть
+                            </div>
+                            <div className={s.modalCanselBtn} onClick={onCancel}>
+                                Отмена
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </>
+    );
+};
 
-// const createFinishGameIcon = () => {
-//     messageBlockElem.classList = 'message-block';
-//     containerQuestion.append(messageBlockElem);
-//     messageContainer.classList = 'message-block__container';
-//     messageBlockElem.append(messageContainer);
-//     alertText.classList = 'message-block__container_text';
-//     messageContainer.append(alertText);
-//     message.classList = 'message-block__container_icon';
-//     messageContainer.append(message);
-//     randomAudioVoice.play();
-// };
+Modal.propTypes = {
+    title: PropTypes.string,
+    isOpen: PropTypes.bool,
+    onCancel: PropTypes.func,
+    onSubmit: PropTypes.func,
+    subTitle: PropTypes.string,
+};
+
+Modal.defaultProps = {
+    title: 'Тренировка не закончена!',
+    isOpen: false,
+    onCancel: () => {},
+    onSubmit: () => {},
+    subTitle: 'Если вы вернетесь к списку, ваши результаты не будут сохранены',
+};
+
+export default Modal;

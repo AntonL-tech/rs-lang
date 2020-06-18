@@ -1,5 +1,6 @@
 import React from 'react';
 import s from './startScreen.module.css';
+import { Link } from 'react-router-dom';
 
 class StartText extends React.Component {
     constructor(props) {
@@ -12,6 +13,7 @@ class StartText extends React.Component {
 
     startGame() {
         console.log('Игра началась. Цитата из одного фильма');
+        window.location.assign('/game');
     }
 
     handleChange(event) {

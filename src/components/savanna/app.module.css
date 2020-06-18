@@ -9,6 +9,18 @@
     color: white;
 }
 
+.exitGameIcon {
+    width: 30px;
+    height: 30px;
+    background-size: 100%;
+    position: absolute;
+    top: 30px;
+    right: 45px;
+    cursor: pointer;
+}
+
+
+
 /* 
 .contentIntro {
     position: absolute;
