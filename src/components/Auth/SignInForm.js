@@ -44,7 +44,9 @@ class SignInForm extends Component {
           placeholder="Password"
           onChange={this.onChangeValue}
         />
-        <button type="submit">SignIn</button>
+        <button type="submit" className={s.button}>
+          SignIn
+        </button>
       </form>
     );
   }

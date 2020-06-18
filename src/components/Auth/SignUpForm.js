@@ -79,7 +79,9 @@ class SignUpForm extends Component {
           onChange={this.onChangeValue}
         />
         <span>{this.state.errorText}</span>
-        <button type="submit">SignUp</button>
+        <button type="submit" className={s.button}>
+          SignUp
+        </button>
       </form>
     );
   }
