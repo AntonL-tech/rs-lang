@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
 import { createUser, loginUser } from './clientApi';
+import { Route, NavLink } from 'react-router-dom';
 
 class Auth extends Component {
   constructor(props) {
@@ -37,8 +38,17 @@ class Auth extends Component {
   render() {
     return (
       <div>
-        <SignInForm onSubmit={this.onSignIn} />
-        <SignUpForm onSubmit={this.onSignUp} />
+        <div>
+          <NavLink to="/signin">Sign In</NavLink>
+          <NavLink to="/signup">Sign Up</NavLink>
+        </div>
+        <Route path="/signin">
+          <SignInForm onSubmit={this.onSignIn} />
+        </Route>
+
+        <Route path="/signup">
+          <SignUpForm onSubmit={this.onSignUp} />
+        </Route>
       </div>
     );
   }
