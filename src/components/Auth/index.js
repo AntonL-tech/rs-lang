@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
 import { createUser, loginUser } from './clientApi';
-import { Route, NavLink } from 'react-router-dom';
+import { Route, NavLink, Redirect } from 'react-router-dom';
 import s from './auth.module.css';
 
 class Auth extends Component {
@@ -11,6 +11,7 @@ class Auth extends Component {
     this.state = {
       userId: '',
       token: '',
+      redirect: null,
     };
 
     this.onSignIn = this.onSignIn.bind(this);
@@ -29,6 +30,8 @@ class Auth extends Component {
       Object.keys(this.state).forEach((key) => {
         localStorage.setItem(key, this.state[key]);
       });
+
+      this.setState({ redirect: '/' });
     } catch (error) {
       console.error(error);
     }
@@ -46,6 +49,7 @@ class Auth extends Component {
   render() {
     return (
       <div className={s.auth}>
+        {this.state.redirect ? <Redirect to={this.state.redirect} /> : null}
         <div className={s.links}>
           <NavLink
             to="/signin"
