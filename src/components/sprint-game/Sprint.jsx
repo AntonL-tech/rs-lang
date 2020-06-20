@@ -15,8 +15,8 @@ const Sprint = () => {
                     <Route path='/game' render={() => <GamePage />} />
                 </Switch>
                 </div>
-            </Router>
-
+        </Router>
+        
     )
 }
 export default Sprint;
