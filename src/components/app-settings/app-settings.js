@@ -1,44 +1,115 @@
 import React, {Component} from 'react';
 import s from './app-settings.module.css'
 
-class Settings extends React.Component{
-    state = {
-        translation: false,
-        transcription: false,
-        meaning: false,
-        example: false,
-        image: false,
-        countOfWords: '',
-        countOfCards: '',
-        level: ''
+
+class Settings extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+           settingPage: true,
+           audio: false,
+           translation: false,
+           transcription: false,
+           textExample: false,
+           textExampleTranslate: false,
+           meaning: false,
+           meaningRu: false,
+           meaningAudio: false,
+           example: false,
+           image: false,
+           countOfWords: '',
+           countOfCards: '',
+           level: '',
+           data: [],
+           line: 0,
+           page: 1,
+           count: 0
+        };
+
+        this.setResults = this.setResults.bind(this)
     }
 
     handleChange = (event) => {
-        console.log(+event.target.value);
         this.setState({[event.target.id]: +event.target.value})
-
     }
-
+        
     handleCheck = (event) => {
-        console.log(event.target.id);
-        console.log(this);
         this.setState({[event.target.id]: event.target.checked})
 
     }
-
+        
     handleSelect = (event) => {
         this.setState({level : +event.target.value})
     }
 
-    showState = (event) => {
-        event.preventDefault()
-        console.log(this.state)
+
+    handleChangePage(event) {
+        this.getResults()
     }
 
+    getResults() {
+        const group = !this.state.level ? 0 : this.state.level - 1;
+        fetch(`https://afternoon-falls-25894.herokuapp.com/words?page=${this.state.page}&group=${group}`)
+            .then(data => {
+                return data.json()
+            })
+            .then(this.setResults)
+            .catch(err => {
+                console.log(err) 
+            })
+    }
 
-    render() {
-        return (
-            <div className={s.settings_inner}>
+    setResults(data) {
+        this.setState({data: data})
+        console.log(this.state)
+        this.setState({ settingPage: false });
+        console.log(data)
+    }
+
+    displayCards(data, line = 0) {
+        const translation = this.state.translation ? {display: 'block'} : {display: 'none'}
+        const transcription = this.state.transcription ? {display: 'block'} : {display: 'none'}
+        const audio = this.state.audio ? {display: 'block'} : {display: 'none'}
+        const meaning = this.state.meaning ? {display: 'block'} : {display: 'none'}
+        const meaningRu = this.state.meaningRu ? {display: 'block'} : {display: 'none'}
+        const image = this.state.image ? {display: 'block'} : {display: 'none'}
+        const meaningAudio = this.state.meaningAudio ? {display: 'block'} : {display: 'none'}
+        const textExample = this.state.textExample ? {display: 'block'} : {display: 'none'}
+        const textExampleTranslate = this.state.textExampleTranslate ? {display: 'block'} : {display: 'none'}
+
+        return(
+            <div>
+                <div>Слово: <input id="answer"/></div>
+                <div style={translation}>Перевод: {data[line].wordTranslate}</div>
+                <div style={transcription}>Транскрипция: {data[line].transcription}</div>
+                <div style={audio}>Аудио: <audio controls src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].audio}`}></audio></div>
+                <div style={image}>Картинка:  <img src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].image}`} width="200" height="200" alt='meaning' /></div>
+                <div style={meaning}>Предложение на англе: {data[line].textMeaning} </div>
+                <div style={meaningRu}>Предложение на русском: {data[line].textMeaningTranslate}</div>
+                <div style={meaningAudio}>Аудио предложение на англе: <audio controls src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].audioMeaning}`}></audio></div>
+                <div style={textExample}>Предложение с примером использования изучаемого слова: {data[line].textExample}</div>
+                <div style={textExampleTranslate}>Предложение с примером использования изучаемого слова на русском: {data[line].textExampleTranslate}</div>
+            </div>
+        )
+    }
+
+    increment() {
+        this.setState({ line: this.state.line + 1 });
+        if (this.state.line === 19) {
+            this.setState({ line: 0 });
+            this.setState({ page: this.state.page + 1 });
+            this.getResults();
+        }
+        this.setState({ count: this.state.count + 1 });
+        if (this.state.count === this.state.countOfWords) {
+            console.log('Great')
+        }
+    }
+
+    render() {    
+        const { settingPage, data } = this.state;
+        const page = settingPage ? (<div>
+             <div className={s.settings_inner}>
                 <form className={s.settings_form}>
                     <label>
                         Уровень сложности:
@@ -69,14 +140,38 @@ class Settings extends React.Component{
                     </label>
 
                     <label>
+                        Аудио:
+                        <input id='audio' type="checkbox" checked={this.state.audio}
+                         onChange = {this.handleCheck}/>
+                    </label>
+
+                    <label>
                         Предложение с объяснением значения слова:
                         <input id='meaning' type="checkbox" checked={this.state.meaning}
                          onChange = {this.handleCheck}/>
                     </label>
 
                     <label>
+                        Предложение с объяснением значения слова на русском:
+                        <input id='meaningRu' type="checkbox" checked={this.state.meaningRu}
+                         onChange = {this.handleCheck}/>
+                    </label>
+
+                    <label>
+                        Аудио с объяснением значения слова:
+                        <input id='meaningAudio' type="checkbox" checked={this.state.meaningAudio}
+                         onChange = {this.handleCheck}/>
+                    </label>
+
+                    <label>
                         Предложение с примером использования изучаемого слова:
-                        <input id='example' type="checkbox" checked={this.state.example}
+                        <input id='textExample' type="checkbox" checked={this.state.textExample}
+                         onChange = {this.handleCheck}/>
+                    </label>
+
+                    <label>
+                        Предложение с примером использования изучаемого слова на русском:
+                        <input id='textExampleTranslate' type="checkbox" checked={this.state.textExampleTranslate}
                          onChange = {this.handleCheck}/>
                     </label>
 
@@ -91,11 +186,22 @@ class Settings extends React.Component{
                         <input id='image' type="checkbox" checked={this.state.image}
                          onChange = {this.handleCheck}/>
                     </label>
-                    
-                    <input type="submit" value="Submit" onClick={this.showState} />
                 </form>
+            </div>
+            <button type="button" onClick={this.handleChangePage.bind(this)}>Editor</button>
+        </div>) : 
+        (<div>
+            {this.displayCards(data,this.state.line)}
+            <button type="button" onClick={() => this.increment()}>Next</button>
+        </div>);
+
+
+        return (
+            <div className="App">
+                {page}
             </div>
         );
     }
 }
+
 export default Settings;
