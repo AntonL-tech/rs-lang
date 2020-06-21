@@ -6,6 +6,7 @@ class Settings extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+           answer: '',
            settingPage: true,
            audio: false,
            translation: false,
@@ -32,6 +33,10 @@ class Settings extends React.Component {
     handleChange = (event) => {
         this.setState({[event.target.id]: +event.target.value})
     }
+    
+    handleChangeInput = (event) => {
+        this.setState({[event.target.id]: event.target.value})
+    }
         
     handleCheck = (event) => {
         this.setState({[event.target.id]: event.target.checked})
@@ -40,11 +45,6 @@ class Settings extends React.Component {
         
     handleSelect = (event) => {
         this.setState({level : +event.target.value})
-    }
-
-
-    handleChangePage(event) {
-        this.getResults()
     }
 
     getResults() {
@@ -78,8 +78,8 @@ class Settings extends React.Component {
         const textExampleTranslate = this.state.textExampleTranslate ? {display: 'block'} : {display: 'none'}
 
         return(
-            <div>
-                <div>Слово: <input id="answer"/></div>
+            <div className={s.card}>
+                <div>Слово: <input type='input' onChange = {this.handleChangeInput} id="answer" autoFocus={true}/></div>
                 <div style={translation}>Перевод: {data[line].wordTranslate}</div>
                 <div style={transcription}>Транскрипция: {data[line].transcription}</div>
                 <div style={audio}>Аудио: <audio controls src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].audio}`}></audio></div>
@@ -94,22 +94,42 @@ class Settings extends React.Component {
     }
 
     increment() {
-        this.setState({ line: this.state.line + 1 });
-        if (this.state.line === 19) {
-            this.setState({ line: 0 });
-            this.setState({ page: this.state.page + 1 });
-            this.getResults();
-        }
-        this.setState({ count: this.state.count + 1 });
-        if (this.state.count === this.state.countOfWords) {
-            console.log('Great')
+        if (this.state.answer.toLowerCase() === this.state.data[this.state.line].word.toLowerCase()) {
+            this.sayWord(this.state.answer)
+            console.log('Good job')
+            this.setState({ line: this.state.line + 1 });
+            if (this.state.line === 19) {
+                this.setState({ line: 0 });
+                this.setState({ page: this.state.page + 1 });
+                this.getResults();
+            }
+
+            this.setState({ count: this.state.count + 1 });
+            if (this.state.count === this.state.countOfWords) {
+                console.log('Great')
+            }
+        } else {
+            console.log('Wrong word')
         }
     }
 
+    sayWord(word) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.volume = .7;
+        msg.rate = 1;
+        msg.pitch = 1;
+        msg.text = word;
+        const voice =  {
+            'lang': 'en-US',
+        };
+        msg.lang = voice.lang;
+        speechSynthesis.speak(msg);
+    };
+
     render() {    
         const { settingPage, data } = this.state;
-        const page = settingPage ? (<div>
-             <div className={s.settings_inner}>
+        const page = settingPage ? (<div className={s.settings_inner}>
+             <div >
                 <form className={s.settings_form}>
                     <label>
                         Уровень сложности:
@@ -188,7 +208,7 @@ class Settings extends React.Component {
                     </label>
                 </form>
             </div>
-            <button type="button" onClick={this.handleChangePage.bind(this)}>Editor</button>
+            <button type="button" onClick={() => this.getResults()}>Editor</button>
         </div>) : 
         (<div>
             {this.displayCards(data,this.state.line)}
@@ -197,7 +217,7 @@ class Settings extends React.Component {
 
 
         return (
-            <div className="App">
+            <div className={s.form_inner}>
                 {page}
             </div>
         );
