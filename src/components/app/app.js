@@ -18,10 +18,10 @@ function App() {
       <BrowserRouter>
         <NavLink to="/">Home</NavLink>
         <NavLink to="/game">Game</NavLink>
-        <NavLink to="/signin">Login</NavLink>
+        <NavLink to="/auth">Login</NavLink>
         <Logout text="Logout" />
         <Switch>
-          <Route path="/signin" component={Auth} />
+          <Route path="/auth" component={Auth} />
           <ProtectedRoute path="/game" component={Game} />
         </Switch>
       </BrowserRouter>
