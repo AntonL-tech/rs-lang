@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
 import { createUser, loginUser } from './clientApi';
-import { Route, NavLink, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import s from './auth.module.css';
 
 class Auth extends Component {
@@ -25,6 +25,7 @@ class Auth extends Component {
         userId: user.userId,
         token: user.token,
         email: userData.email,
+        signin: true,
       });
 
       Object.keys(this.state).forEach((key) => {
@@ -47,32 +48,33 @@ class Auth extends Component {
   }
 
   render() {
+    let activeClass = `${s.linksItem} ${s.linksItemActive}`;
     return (
       <div className={s.auth}>
         {this.state.redirect ? <Redirect to={this.state.redirect} /> : null}
         <div className={s.links}>
-          <NavLink
-            to="/signin"
-            className={s.linksItem}
-            activeClassName={s.linksItemActive}
+          <button
+            className={this.state.signin ? activeClass : s.linksItem}
+            onClick={() => {
+              this.setState({ signin: true });
+            }}
           >
             Sign In
-          </NavLink>
-          <NavLink
-            to="/signup"
-            className={s.linksItem}
-            activeClassName={s.linksItemActive}
+          </button>
+          <button
+            className={this.state.signin ? s.linksItem : activeClass}
+            onClick={() => {
+              this.setState({ signin: false });
+            }}
           >
             Sign Up
-          </NavLink>
+          </button>
         </div>
-        <Route path="/signin">
+        {this.state.signin ? (
           <SignInForm onSubmit={this.onSignIn} />
-        </Route>
-
-        <Route path="/signup">
+        ) : (
           <SignUpForm onSubmit={this.onSignUp} />
-        </Route>
+        )}
       </div>
     );
   }
