@@ -15,6 +15,7 @@
 .auth_form {
   background-color: lightblue;
   display: flex;
+  max-width: 30%;
   padding: 2rem;
   flex-direction: column;
   border-radius: 5px;
@@ -30,6 +31,7 @@
   border-top-right-radius: 5px;
   outline: none;
   background-color: aquamarine;
+  border: none;
 }
 
 .linksItem:hover:not(.linksItemActive) {
@@ -38,6 +40,10 @@
 
 .linksItemActive {
   background-color: lightblue;
+}
+
+.passwordDescription {
+  word-wrap: normal;
 }
 
 .button {
