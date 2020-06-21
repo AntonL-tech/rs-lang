@@ -13,11 +13,12 @@ class Logout extends Component {
     this.setState({
       redirect: true,
     });
+    this.renderRedirect();
   }
 
   renderRedirect() {
     if (this.state.redirect) {
-      return <Redirect to="/signin" />;
+      return <Redirect to="/auth" />;
     }
   }
 
