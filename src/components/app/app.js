@@ -11,6 +11,7 @@ import SpeakIt from '../speakit/speakit';
 import Home from '../app-home/app-home';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute';
+import Auth from '../Auth';
 
 function App() {
   return (
@@ -22,24 +23,12 @@ function App() {
               <Home />
             </Route>
             <Route path="/auth" component={Auth} />
-            <ProtectedRoute path="/app-settings">
-              <Settings />
-            </ProtectedRoute>
-            <ProtectedRoute path="/app-games">
-              <Games />
-            </ProtectedRoute>
-            <ProtectedRoute path="/app-words">
-              <Words />
-            </ProtectedRoute>
-            <ProtectedRoute path="/app-stats">
-              <Stats />
-            </ProtectedRoute>
-            <ProtectedRoute path="/app-team">
-              <Team />
-            </ProtectedRoute>
-            <ProtectedRoute path="/speakit">
-              <SpeakIt />
-            </ProtectedRoute>
+            <ProtectedRoute path="/app-settings" component={Settings} />
+            <ProtectedRoute path="/app-games" component={Games} />
+            <ProtectedRoute path="/app-words" component={Words} />
+            <ProtectedRoute path="/app-stats" component={Stats} />
+            <ProtectedRoute path="/app-team" component={Team} />
+            <ProtectedRoute path="/speakit" component={SpeakIt} />
           </Switch>
         </div>
       </Router>
