@@ -19,3 +19,141 @@
     max-width: 1440px;
     margin: 0 auto;
 }
+
+.menu_wrapper {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid coral;
+    border-radius: 10px;
+    width: 100%;
+    height: 60px;
+    padding: 0 50px;
+    box-sizing: border-box;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.menu_select_level {
+    
+}
+
+.menu_settings {
+    display: flex;
+}
+
+.chose_btn {
+    font-size: 16px;
+    color: cyan;
+    width: 70px;
+    background-color:  #37393d;
+}
+
+
+.choose_level {
+    width: 55px;
+    height: 45px;
+    border-radius: 5px;
+    border: 1px solid cyan;
+    cursor: pointer;
+    color: #fff;
+    background: #37393d;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 17px;
+    padding-left: 5px;
+    margin-right: 10px;
+}
+
+.setting_button {
+    height: 40px;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-left: 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.megafon_btn {
+    width: 50px;
+    background-image: url(../assets/megaphone.svg);
+}
+
+.translate_btn {
+    width: 50px;
+    background-image: url(../assets/translate.svg);
+}
+
+.song_btn {
+    width: 50px;
+    background-image: url(../assets/music.svg);
+}
+
+.image_btn {
+    width: 50px;
+    background-image: url(../assets/photo.svg);
+}
+
+
+.game_wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    align-items: center;
+    margin: 0 auto 10px;
+    max-width: 1000px;
+    border: solid 1px red;
+}
+
+.game_sentence {
+    min-height: 25px;
+    margin-bottom: 5px;
+}
+
+.game_settings{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game_speaker{
+    height: 40px;
+    cursor: pointer;
+    border-radius: 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 50px;
+    background-image: url(../assets/speaker.svg);
+}
+
+.game_container {
+    height: 450px;
+    width: 100%;
+    border: solid 1px red;
+    margin-bottom: 10px;
+}
+
+.game_words {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: solid 1px red;
+    height: 50px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.btn_dont_know {
+    cursor: pointer;
+    margin: 0 auto;
+
+}
+
+
+.drag_word {
+    min-width: 20px;
+    height: 100%;
+    padding: 0 10px;
+    outline: solid 1px red;
+    background: coral;
+}
