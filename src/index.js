@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from '../src/components/app/app';
+
+// at the time of development
+import App from '../src/components/english-puzzle/app';
 
 ReactDOM.render(
   <React.StrictMode>
