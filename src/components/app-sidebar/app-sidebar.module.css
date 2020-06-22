@@ -1,0 +1,23 @@
+.sidebar_inner {
+    background-color: #303846;
+    width: 150px;
+    height: 100%;
+}
+
+.sidebar_list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar_item {
+    margin: 40px auto 70px;
+    cursor: pointer;
+}
+
+i {
+    color: #09d3ac;
+}
