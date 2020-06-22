@@ -4,6 +4,22 @@
   background: linear-gradient(0,#b3d5d8, #ffffff);;
 }
 
+.header {
+  margin: 0 0 50px;
+  font-size: 32px;
+  font-weight: 700;
+  color: #5183e7;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.description {
+  margin: 0 0 50px;
+  font-size: 20px;
+  text-align: center;
+  color: #5183e7;
+}
+
 .about {
   height: 100%;
   margin: 0 auto;
@@ -27,4 +43,28 @@
   border-radius: 5px;
   outline: none;
   cursor: pointer;
+}
+
+.start {
+  margin: 0 auto;
+  width: 120px;
+  height: 40px;
+  font-size: 14px;
+  font-weight: 900;
+  color: #d1e4f5;
+  text-transform: uppercase;
+  background-color: #699bff;
+  border: 1px solid #699bffbb;
+  border-radius: 5px;
+  /* outline: none; */
+  cursor: pointer;
+}
+
+.start:hover {
+  color: #4582fd;
+  background-color: #e1effc;
+}
+
+.start:focus {
+  outline: none;
 }
