@@ -1,18 +1,17 @@
 import React from 'react';
-import s from './app-stats.module.css'
+import s from './app-home.module.css'
 import Header from '../app-header/app-header'
 import Sidebar from '../app-sidebar/app-sidebar'
 
-
-function Stats() {
+function Home() {
     return (
-        <div>
+        <div className={s.home_inner}>
             <Header/>
-            <div className={'flex'}>
+            <div  className={'flex'}>
                     <Sidebar/>
-                    <p>Statistic</p>
+                    <p>Home</p>
             </div>
         </div>
     )
 }
-export default Stats;
+export default Home;

@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import s from './app-settings.module.css'
+import Header from '../app-header/app-header'
+import Sidebar from '../app-sidebar/app-sidebar'
 
 
 class Settings extends React.Component {
@@ -33,16 +35,16 @@ class Settings extends React.Component {
     handleChange = (event) => {
         this.setState({[event.target.id]: +event.target.value})
     }
-    
+
     handleChangeInput = (event) => {
         this.setState({[event.target.id]: event.target.value})
     }
-        
+
     handleCheck = (event) => {
         this.setState({[event.target.id]: event.target.checked})
 
     }
-        
+
     handleSelect = (event) => {
         this.setState({level : +event.target.value})
     }
@@ -55,7 +57,7 @@ class Settings extends React.Component {
             })
             .then(this.setResults)
             .catch(err => {
-                console.log(err) 
+                console.log(err)
             })
     }
 
@@ -126,7 +128,7 @@ class Settings extends React.Component {
         speechSynthesis.speak(msg);
     };
 
-    render() {    
+    render() {
         const { settingPage, data } = this.state;
         const page = settingPage ? (<div className={s.settings_inner}>
              <div >
@@ -142,7 +144,7 @@ class Settings extends React.Component {
                             <option>6</option>
                         </select>
                     </label>
-                
+
                     <label>
                         Новых слов в день:
                         <input id='countOfWords' type="number" onChange = {this.handleChange} min="1" max="50"/>
@@ -209,7 +211,7 @@ class Settings extends React.Component {
                 </form>
             </div>
             <button type="button" onClick={() => this.getResults()}>Editor</button>
-        </div>) : 
+        </div>) :
         (<div>
             {this.displayCards(data,this.state.line)}
             <button type="button" onClick={() => this.increment()}>Next</button>
@@ -217,11 +219,17 @@ class Settings extends React.Component {
 
 
         return (
-            <div className={s.form_inner}>
-                {page}
+            <div>
+                <Header/>
+                <div>
+                    <Sidebar/>
+                    <div className={s.form_inner}>
+                        {page}
+                    </div>
+                </div>
             </div>
+
         );
     }
 }
-
 export default Settings;
