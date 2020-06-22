@@ -2,11 +2,16 @@ import React from 'react';
 import WordTile from '../WordTile';
 import './wordTilesList.css';
 
-const WordTilesList = ({ tiles }) => {
+const WordTilesList = ({ tiles, onSelect }) => {
   const elements = tiles.map((tile) => {
     return (
       <div className="word-tiles__item" key={tile.id}>
-        <WordTile {...tile} />
+        <WordTile
+          {...tile}
+          onSelect={() => {
+            onSelect(tile.id);
+          }}
+        />
       </div>
     );
   });
