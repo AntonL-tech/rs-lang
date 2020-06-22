@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import WordTile from './components/WordTile';
 
 class SpeakIt extends Component {
   constructor(props) {
@@ -6,7 +7,7 @@ class SpeakIt extends Component {
     this.state = {};
   }
   render() {
-    return <div>SpeakIt!</div>;
+    return <WordTile word="boat" transcription="[bout]" />;
   }
 }
 
