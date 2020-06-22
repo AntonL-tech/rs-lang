@@ -22,3 +22,7 @@
   height: 35px;
   background-image: url('./audio.svg');
 }
+
+.word-tile--active {
+  background-color: gray;
+}

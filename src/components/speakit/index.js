@@ -55,7 +55,11 @@ class SpeakIt extends Component {
     return (
       <>
         <WordInfo word={this.state.selectedWord} />
-        <WordTilesList tiles={this.state.data} onSelect={this.selectWord} />
+        <WordTilesList
+          tiles={this.state.data}
+          selectId={this.state.selectedWord.id}
+          onSelect={this.selectWord}
+        />
       </>
     );
   }
