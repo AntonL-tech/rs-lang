@@ -7,7 +7,7 @@ function Words() {
     return (
         <div>
             <Header/>
-            <div style={{display: 'flex'}}>
+            <div className={'flex'}>
                     <Sidebar/>
                     <p>Words</p>
             </div>

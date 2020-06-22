@@ -9,9 +9,9 @@ function Games() {
     return (
         <div>
             <Header/>
-            <div style={{display: 'flex'}}>
+            <div className={'flex'}>
                 <Sidebar/>
-                <div style={{display: 'flex'}}>
+                <div className={'flex'}>
                     <Card className={s.game_card} style={{ width: '350px', height:'380px' }}>
                         <Card.Img style={{ width: '100%', height:'220px' }} className={s.card_img} variant="top" src={'https://avatarko.ru/img/kartinka/33/multfilm_lyagushka_32117.jpg'} />
                         <Card.Body>
@@ -25,7 +25,7 @@ function Games() {
                 </div>
             </div>
         </div>
-        
+
     )
 }
 export default Games;

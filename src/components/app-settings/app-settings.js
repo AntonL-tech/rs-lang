@@ -7,7 +7,7 @@ function Settings() {
     return (
         <div>
             <Header/>
-            <div style={{display: 'flex'}}>
+            <div className={'flex'}>
                     <Sidebar/>
                     <p>asdasd</p>
             </div>

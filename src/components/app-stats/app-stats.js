@@ -8,7 +8,7 @@ function Stats() {
     return (
         <div>
             <Header/>
-            <div style={{display: 'flex'}}>
+            <div className={'flex'}>
                     <Sidebar/>
                     <p>Statistic</p>
             </div>

@@ -7,11 +7,11 @@ function Team() {
     return (
             <div>
                 <Header/>
-                <div style={{display: 'flex'}}>
+                <div className={'flex'}>
                         <Sidebar/>
                         <p>Team</p>
                 </div>
-            </div>    
+            </div>
     )
 }
 export default Team;

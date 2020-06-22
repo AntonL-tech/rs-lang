@@ -7,7 +7,7 @@ function Home() {
     return (
         <div className={s.home_inner}>
             <Header/>
-            <div style={{display: 'flex'}}>
+            <div  className={'flex'}>
                     <Sidebar/>
                     <p>Home</p>
             </div>
