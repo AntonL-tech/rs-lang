@@ -221,7 +221,7 @@ class Settings extends React.Component {
         return (
             <div>
                 <Header/>
-                <div>
+                <div className={'flex'}>
                     <Sidebar/>
                     <div className={s.form_inner}>
                         {page}
