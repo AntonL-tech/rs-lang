@@ -92,6 +92,7 @@ export default class GamePage extends Component {
           </div>
 
           <WordList words={this.state.answers} callback={this.getAnswer} isQuestion={this.state.isQuestion} answer={this.state.isCorrectAnswer} answerId={this.state.answerId} /> 
+          
           <button className={classNames.btnPass} onClick={this.pass}>Не знаю</button>
           <button className={classNames.btnNext} onClick={this.nextWord}>Следующее</button>
         </div>        
