@@ -24,10 +24,12 @@ class Logout extends Component {
 
   render() {
     return (
-      <div>
+      <>
         {this.renderRedirect()}
-        <button onClick={this.setRedirect}>{this.props.text}</button>
-      </div>
+        <button onClick={this.setRedirect} className={this.props.className}>
+          {this.props.text}
+        </button>
+      </>
     );
   }
 }
