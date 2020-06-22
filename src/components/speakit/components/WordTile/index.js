@@ -2,7 +2,7 @@ import React from 'react';
 
 import './word-tile.css';
 
-const WordTile = ({ word, transcription }) => {
+const WordTile = ({ word, transcription, id }) => {
   return (
     <div className="word-tile">
       <p className="word-tile__text">{word}</p>
