@@ -39,6 +39,7 @@ class SpeakIt extends Component {
         },
       ],
       selectedWord: {},
+      isGame: false,
     };
 
     this.selectWord = this.selectWord.bind(this);
@@ -54,7 +55,7 @@ class SpeakIt extends Component {
   render() {
     return (
       <>
-        <WordInfo word={this.state.selectedWord} />
+        <WordInfo word={this.state.selectedWord} isGame={this.state.isGame} />
         <WordTilesList
           tiles={this.state.data}
           selectId={this.state.selectedWord.id}
