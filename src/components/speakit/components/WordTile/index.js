@@ -9,9 +9,10 @@ class WordTile extends Component {
   }
 
   render() {
-    let { word, transcription, onSelect, selected } = this.props;
+    let { word, transcription, onSelect, selected, guessed } = this.props;
 
     let className = selected ? 'word-tile word-tile--active' : 'word-tile';
+    className = guessed ? `${className} word-tile--guessed` : className;
 
     return (
       <div className={className} onClick={onSelect}>

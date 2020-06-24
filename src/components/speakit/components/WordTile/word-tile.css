@@ -26,3 +26,7 @@
 .word-tile--active {
   background-color: gray;
 }
+
+.word-tile--guessed {
+  background-color: greenyellow;
+}

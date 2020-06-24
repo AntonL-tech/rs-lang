@@ -39,11 +39,13 @@ class SpeakIt extends Component {
             'https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/files/01_0001.mp3',
         },
       ],
+      guessedWordIds: [],
       selectedWord: {},
       isGame: true,
     };
 
     this.selectWord = this.selectWord.bind(this);
+    this.checkWord = this.checkWord.bind(this);
   }
 
   selectWord(id) {
@@ -53,20 +55,33 @@ class SpeakIt extends Component {
     });
   }
 
+  checkWord(recognizedWord) {
+    let words = this.state.data;
+    words.forEach(({ word, id }) => {
+      if (recognizedWord === word) {
+        this.setState(({ guessedWordIds }) => {
+          let NewIds = guessedWordIds.includes(id)
+            ? guessedWordIds
+            : [...guessedWordIds, id];
+          return {
+            guessedWordIds: NewIds,
+          };
+        });
+      }
+    });
+  }
+
   render() {
     return (
       <>
         {this.state.isGame ? (
-          <Recognition
-            onRecognition={(txt) => {
-              console.log(txt);
-            }}
-          />
+          <Recognition onRecognition={this.checkWord} />
         ) : null}
         <WordInfo word={this.state.selectedWord} isGame={this.state.isGame} />
         <WordTilesList
           tiles={this.state.data}
           selectId={this.state.selectedWord.id}
+          guessedIds={this.state.guessedWordIds}
           onSelect={this.selectWord}
         />
       </>
