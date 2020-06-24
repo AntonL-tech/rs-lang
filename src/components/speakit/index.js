@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import WordTilesList from './components/WordTilesList';
 import WordInfo from './components/WordInfo';
+import Recognition from './components/Recognition';
 
 class SpeakIt extends Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class SpeakIt extends Component {
         },
       ],
       selectedWord: {},
-      isGame: false,
+      isGame: true,
     };
 
     this.selectWord = this.selectWord.bind(this);
@@ -55,6 +56,13 @@ class SpeakIt extends Component {
   render() {
     return (
       <>
+        {this.state.isGame ? (
+          <Recognition
+            onRecognition={(txt) => {
+              console.log(txt);
+            }}
+          />
+        ) : null}
         <WordInfo word={this.state.selectedWord} isGame={this.state.isGame} />
         <WordTilesList
           tiles={this.state.data}
