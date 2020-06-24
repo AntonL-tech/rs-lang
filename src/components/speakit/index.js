@@ -51,18 +51,16 @@ class SpeakIt extends Component {
   }
 
   selectWord(id) {
-    if (!this.state.isGame) {
-      this.setState(({ data }) => {
-        const index = data.findIndex((elem) => elem.id === id);
-        return { selectedWord: data[index] };
-      });
-    }
+    this.setState(({ data }) => {
+      const index = data.findIndex((elem) => elem.id === id);
+      return { selectedWord: data[index] };
+    });
   }
 
   checkWord(recognizedWord) {
     let words = this.state.data;
     this.setState({ recognizedWord: recognizedWord });
-    words.forEach(({ word, id }) => {
+    words.forEach(({ word, id }, index) => {
       if (recognizedWord === word) {
         this.setState(({ guessedWordIds }) => {
           let NewIds = guessedWordIds.includes(id)
@@ -70,6 +68,7 @@ class SpeakIt extends Component {
             : [...guessedWordIds, id];
           return {
             guessedWordIds: NewIds,
+            selectedWord: words[index],
           };
         });
       }
@@ -93,7 +92,7 @@ class SpeakIt extends Component {
         />
         <WordTilesList
           tiles={this.state.data}
-          selectId={this.state.selectedWord.id}
+          selectId={this.state.isGame ? null : this.state.selectedWord.id}
           guessedIds={this.state.guessedWordIds}
           onSelect={this.selectWord}
         />

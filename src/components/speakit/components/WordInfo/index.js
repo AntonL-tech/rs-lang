@@ -10,14 +10,19 @@ class WordInfo extends Component {
   render() {
     let { image, translate, audio } = this.props.word;
     let { isGame, recognizedWord } = this.props;
+    console.log('word info props', this.props);
+
     return (
-      <section className="word" id="word">
-        <audio autoPlay src={audio} />
+      <section className="word">
         <img src={image || defaultImg} alt="" className="word__image" />
-        <p className="word__translation">{translate}</p>
         {isGame ? (
           <div className="word__transcription">{recognizedWord}</div>
-        ) : null}
+        ) : (
+          <>
+            <p className="word__translation">{translate}</p>
+            <audio autoPlay src={audio} />
+          </>
+        )}
       </section>
     );
   }
