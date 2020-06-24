@@ -4,15 +4,11 @@ class Recognition extends Component {
   constructor(props) {
     super(props);
 
-    try {
-      window.SpeechRecognition =
-        window.SpeechRecognition || window.webkitSpeechRecognition;
-      this.recognition = new window.SpeechRecognition();
-      this.recognition.lang = 'en-US';
-      this.recognition.start();
-    } catch (error) {
-      throw new Error('This browser not support speech recognition');
-    }
+    window.SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+    this.recognition = new window.SpeechRecognition();
+    this.recognition.lang = 'en-US';
+    this.recognition.start();
 
     this.onRecognitionEnd = this.onRecognitionEnd.bind(this);
     this.onRecognitionResult = this.onRecognitionResult.bind(this);
