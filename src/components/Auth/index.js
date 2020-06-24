@@ -30,9 +30,9 @@ class Auth extends Component {
         signin: true,
       });
 
-      Object.keys(this.state).forEach((key) => {
-        localStorage.setItem(key, this.state[key]);
-      });
+      localStorage.setItem('token', this.state.token);
+      localStorage.setItem('userId', this.state.userId);
+      localStorage.setItem('email', this.state.email);
 
       this.setState({ redirect: '/' });
     } else {
