@@ -3,7 +3,7 @@ import s from './Sprint.module.css';
 import StartPage from './components/StartPage/StartPage';
 import StatisticPage from './components/StatisticPage/StatisticPage';
 import GamePage from './components/GamePage/GamePage';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 
 const Sprint = () => {
     return (
@@ -15,7 +15,9 @@ const Sprint = () => {
                     <Route path='/game' component={GamePage} />
                 </Switch>
                 </div>
+                <Redirect  to = '/start' />
         </Router>
+        
         
     )
 }
