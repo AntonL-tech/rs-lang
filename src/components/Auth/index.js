@@ -12,6 +12,7 @@ class Auth extends Component {
       userId: '',
       token: '',
       redirect: null,
+      failureText: '',
     };
 
     this.onSignIn = this.onSignIn.bind(this);
@@ -19,13 +20,18 @@ class Auth extends Component {
   }
 
   async onSignIn(userData) {
-    const user = await loginUser(userData);
-    this.setState({
-      userId: user.userId,
-      token: user.token,
-      email: userData.email,
-      signin: true,
-    });
+    const result = await loginUser(userData);
+    if (result.status === 'success') {
+      let user = result.data;
+      this.setState({
+        userId: user.userId,
+        token: user.token,
+        email: userData.email,
+        signin: true,
+      });
+    } else {
+      this.setState({ failureText: result.data });
+    }
 
     Object.keys(this.state).forEach((key) => {
       localStorage.setItem(key, this.state[key]);
@@ -35,8 +41,12 @@ class Auth extends Component {
   }
 
   async onSignUp(userData) {
-    await createUser(userData);
-    this.onSignIn(userData);
+    let result = await createUser(userData);
+    if (result.status === 'success') {
+      this.onSignIn(userData);
+    } else {
+      this.setState({ failureText: result.data });
+    }
   }
 
   render() {
@@ -67,6 +77,7 @@ class Auth extends Component {
         ) : (
           <SignUpForm onSubmit={this.onSignUp} />
         )}
+        <div className={s.failure}>{this.state.failureText}</div>
       </div>
     );
   }

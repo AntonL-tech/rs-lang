@@ -60,3 +60,7 @@
 .button:hover {
   background-color: aqua;
 }
+
+.failure {
+  color: red;
+}

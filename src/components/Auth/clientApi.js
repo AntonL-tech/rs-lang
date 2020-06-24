@@ -12,16 +12,25 @@ export const createUser = async (user) => {
   );
 
   if (rawResponse.status === 422) {
-    throw new Error('Incorrect e-mail or password');
+    return {
+      status: 'failure',
+      data: 'Incorrect e-mail or password',
+    };
   }
 
   if (rawResponse.status === 417) {
-    throw new Error('User already exist');
+    return {
+      status: 'failure',
+      data: 'User already exist',
+    };
   }
 
   const content = await rawResponse.json();
 
-  return content;
+  return {
+    status: 'success',
+    data: content,
+  };
 };
 
 export const loginUser = async (user) => {
@@ -38,10 +47,16 @@ export const loginUser = async (user) => {
   );
 
   if (rawResponse.status === 403) {
-    throw new Error('Incorrect e-mail or password');
+    return {
+      status: 'failure',
+      data: 'Incorrect e-mail or password',
+    };
   }
 
   const content = await rawResponse.json();
 
-  return content;
+  return {
+    status: 'success',
+    data: content,
+  };
 };
