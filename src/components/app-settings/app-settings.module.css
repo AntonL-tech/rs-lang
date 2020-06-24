@@ -30,3 +30,12 @@
 input {
     margin-left: 15px;
 }
+
+.card_word input {
+    font-size: 25px;
+    color: green;
+}
+
+.bold {
+    font-weight: 700;
+}
