@@ -12,14 +12,14 @@ function Games() {
 
     const renderCard = (card, index) => {
         return (
-            <Card className={s.game_card} style={{ width: '350px', height:'380px' }} key = {index}>
+            <Card className={s.game_card} key={index}>
                 <Card.Img style={{ width: '100%', height:'220px' }} className={s.card_img} variant="top" src={card.image} />
                 <Card.Body>
                     <Card.Title>{card.title}</Card.Title>
                     <Card.Text>
                         {card.text}
                     </Card.Text>
-                    <Button variant="primary"><Link target='_blank' to={`${card.path}`}>Start</Link></Button>
+                    <Button variant="primary"><Link target='_blank' to={card.path}>Start</Link></Button>
                 </Card.Body>
             </Card>
         )

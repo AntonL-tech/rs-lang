@@ -11,6 +11,8 @@
 .game_card {
     margin-bottom: 15px;
     max-width: 300px;
+    width: 350px;
+    height: 380px;
 }
 
 .card_img {

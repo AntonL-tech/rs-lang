@@ -244,22 +244,9 @@ class Settings extends React.Component {
 
 
     displayCards(data, line = 0) {
-        const translation = (this.state.translation && this.state.translationButton) ? {display: 'block'} : {display: 'none'}
-        const transcription = this.state.transcription ? {display: 'block'} : {display: 'none'}
-        const audio = this.state.audio ? {display: 'block'} : {display: 'none'}
-        const meaning = this.state.meaning ? {display: 'block'} : {display: 'none'}
-        const meaningRu = (this.state.meaningRu && this.state.translationButton) ? {display: 'block'} : {display: 'none'}
-        const image = this.state.image ? {display: 'block'} : {display: 'none'}
-        const meaningAudio = this.state.meaningAudio ? {display: 'block'} : {display: 'none'}
-        const textExample = this.state.textExample ? {display: 'block'} : {display: 'none'}
-        const textExampleTranslate = (this.state.textExampleTranslate && this.state.translationButton) ?  {display: 'block'} : {display: 'none'}
-        const deleteButton = this.state.deleteButton ? {display: 'block'} : {display: 'none'}
-        const hardButton = this.state.hardButton ? {display: 'block'} : {display: 'none'}
-        const showWordButton = this.state.showWordButton ? {display: 'block'} : {display: 'none'}
-        const audioExample = this.state.audioExample ? {display: 'block'} : {display: 'none'}
-        const voiceAllow = this.state.voiceAllow ? {display: 'block'} : {display: 'none'}
-        var hideTextMeaning;
-        var hideTextExample;
+        const {translation, transcription, audio, image, meaning, meaningRu, textExample, meaningAudio, textExampleTranslate, audioExample, deleteButton, showWordButton, voiceAllow, hardButton} = this.state;
+        let hideTextMeaning;
+        let hideTextExample;
 
         if (!this.state.answerButton) {
             hideTextMeaning = this.hideWord(data[line].textMeaning, data[line].word)
@@ -275,21 +262,21 @@ class Settings extends React.Component {
         const page = endGame ? (<div>
             <div className={s.card}>
                 <div className={s.card_word}>Слово: <input onKeyPress={(event) => this.handleKeyPress(event, data, this.state.line)} style={{width: inputWidth + 'px'}} type='text' onChange = {this.handleChangeInput} id="answer" value={this.state.answer} ref={this.myRef} autoFocus={true}/></div>
-                <div style={translation}>Перевод: {data[line].wordTranslate}</div>
-                <div style={transcription}>Транскрипция: {data[line].transcription}</div>
-                <div style={audio}>Аудио: <audio controls src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].audio}`}></audio></div>
-                <div style={image}>Картинка:  <img src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].image}`} width="200" height="200" alt='meaning' /></div>
-                <div style={meaning}>Предложение на англе: {hideTextMeaning} </div>
-                <div style={meaningRu}>Предложение на русском: {data[line].textMeaningTranslate}</div>
-                <div style={meaningAudio}>Аудио значение на англе: <audio controls src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].audioMeaning}`}></audio></div>
-                <div style={textExample}>Предложение с примером использования изучаемого слова: {hideTextExample}</div>
-                <div style={textExampleTranslate}>Предложение с примером использования изучаемого слова на русском: {data[line].textExampleTranslate}</div>
-                <div style={audioExample}>Аудио предложение на англе: <audio controls src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].audioExample}`}></audio></div>
-                <button style={deleteButton} >Удалить</button>
-                <button style={hardButton}>Сложные</button>
-                <button style={showWordButton} onClick={() => this.toggleAnswer(data,this.state.line)}>Показать ответ</button>
+                {translation ? <div>Перевод: {data[line].wordTranslate}</div> : null}
+                {transcription ? <div>Транскрипция: {data[line].transcription}</div> : null}
+                {audio ? <div>Аудио: <audio controls src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].audio}`}></audio></div> : null}
+                {image ? <div>Картинка:  <img src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].image}`} width="200" height="200" alt='meaning' /></div> : null}
+                {meaning ? <div>Предложение на англе: {hideTextMeaning} </div> : null}
+                {meaningRu ? <div>Предложение на русском: {data[line].textMeaningTranslate}</div> : null}
+                {meaningAudio ? <div>Аудио значение на англе: <audio controls src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].audioMeaning}`}></audio></div> : null}
+                {textExample ? <div>Предложение с примером использования изучаемого слова: {hideTextExample}</div> : null}
+                {textExampleTranslate ? <div>Предложение с примером использования изучаемого слова на русском: {data[line].textExampleTranslate}</div> : null}
+                {audioExample ? <div>Аудио предложение на англе: <audio controls src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].audioExample}`}></audio></div> : null}
+                {deleteButton ? <button>Удалить</button> : null}
+                {hardButton ? <button>Сложные</button> : null }
+                {showWordButton ? <button onClick={() => this.toggleAnswer(data,this.state.line)}>Показать ответ</button> : null}
                 <button onClick={() => this.toggletranslationButton()}>Показать/Cкрыть перевод</button>
-                <button style={voiceAllow} onClick={() => this.toggleSpeaking()}><i className="fas fa-volume-up fa-5x"/></button>
+                {voiceAllow ? <button onClick={() => this.toggleSpeaking()}><i className="fas fa-volume-up fa-5x"/></button> : null}
                 <button type="button" onClick={() => this.increment(data,this.state.line)}>Next</button>
                 <ProggresBarContainer>
                     <ProgressBar percentage={this.state.percentage}/>
@@ -310,16 +297,17 @@ class Settings extends React.Component {
     }
 
     async increment(data, line) {
-        if (this.state.answer.toLowerCase() === this.state.data[this.state.line].word.toLowerCase()) {
-            this.setState({answerButton: !this.state.answerButton});
-            const step = 1 / this.state.countOfCards*100;
-            this.setState({percentage: this.state.percentage + step})
-            if(this.state.stopAudio) {
-                await this.sayWord(this.state.answer)
-                if (this.state.meaningAudio) {
+        const {answer,answerButton, percentage, countOfCards, stopAudio, meaningAudio, audioExample, count} = this.state;
+        if (answer.toLowerCase() === this.state.data[this.state.line].word.toLowerCase()) {
+            this.setState({answerButton: !answerButton});
+            const step = 1 / countOfCards*100;
+            this.setState({percentage: percentage + step})
+            if(stopAudio) {
+                await this.sayWord(answer)
+                if (meaningAudio) {
                 await this.sayWord(data[line].textMeaning)
                 }
-                if (this.state.audioExample) {
+                if (audioExample) {
                     await this.sayWord(data[line].textExample)
                 }
             }
@@ -331,7 +319,7 @@ class Settings extends React.Component {
             }
 
             this.setState({ count: this.state.count + 1 });
-            if (this.state.count === this.state.countOfCards) {
+            if (count === countOfCards) {
                 this.setState({endGame: false})
             } else {
                 this.myRef.current.focus();
