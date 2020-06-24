@@ -1,0 +1,287 @@
+button {
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+button:active, button:focus {
+    outline: none;
+}
+
+.GameBlock{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+  
+.block{
+    margin-top: 3%;
+    max-width: 600px;
+    width: calc(100% - 20px);
+    min-width: 310px;
+    margin: 5%;
+    padding: 10px;
+    width: 100%;
+    height: 310px;
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+    background-color: #ffffff1f;
+    box-shadow: 0 0 0px #ffffff;
+    transition: 0.5s;
+}
+
+.blockGood{
+    animation: show1 0.2s forwards;
+}
+
+.blockBad{
+    animation: show2 0.2s forwards;
+}
+
+@keyframes show1 {
+    0%{
+        box-shadow: 0 0 0px #41f778;
+    }
+    50%{
+        box-shadow: 0 0 30px #41f778;
+    }
+    100% {
+        box-shadow: 0 0 0px #41f778;
+    }
+}
+@keyframes show2 {
+    0%{
+        box-shadow: 0 0 0px #f74150;
+    }
+    50%{
+        box-shadow: 0 0 30px #f74150;
+    }
+    100% {
+        box-shadow: 0 0 0px #f74150;
+    }
+}
+
+.true,
+.false{
+    display: inline-block;
+    width: calc((100%/2) - 21px);
+    height: 40px;
+    text-transform: uppercase;
+    margin: 10px;
+    border: none;
+    box-shadow: 0 0 0px #00000080;
+    transition: 0.5s;
+    font-size: 18px;
+}
+
+.false{
+    background-color: #f74150;
+}
+
+.true{
+    background-color: #41f778;
+}
+
+.true:hover,
+.false:hover{
+    box-shadow: 0 0 10px #00000080;
+    color: #ffffff;
+}
+
+.header{
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+}
+
+.time{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    margin: 20px;
+    font-size: 26px;
+    color: #ffffff;
+    background-image: url('../../../files/img/timeAnimation.svg');
+    background-size: 150%;
+    background-position: 50% 50%;
+}
+
+.timeRed{
+    background-image: url('../../../files/img/timeAnimationRed.svg');
+}
+
+.timeStart{
+    width: 160px;
+    height: 160px;
+    margin: 20px;
+    font-size: 52px;
+}
+
+.score{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 20px;
+    top: 20px;
+    width: 60px;
+    height: 60px;
+    margin: 20px;
+    font-size: 26px;
+    color: #ffffff;
+}
+
+.linkBlock{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    margin: 20px;
+    font-size: 26px;
+    color: #ffffff;
+}
+
+.link{
+    position: relative;
+    width: 30px;
+    height: 30px;
+    font-size: 26px;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.linkEl{
+    position: absolute;
+    font-size: 42px;
+    box-shadow: 0 0 0px #00000080;
+    transition: 0.5s;
+}
+
+.linkEl:nth-child(1){
+    transform: rotate(45deg);
+    top: -13px;
+    left: 11px;
+}
+
+.linkEl:nth-child(2){
+    transform: rotate(-45deg);
+    top: -13px;
+    left: 5px;
+}
+
+.link:hover .linkEl{
+    text-shadow: 1px 1px 7px  #00000080;
+    color: #f74150;
+}
+
+
+.word{
+    display: block;
+    width: 300px;
+    height: 100px;
+    margin: 0 auto;
+}
+
+.wordOriginal{
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 32px;
+    color: #ffffff;
+}
+
+.wordTranslate{
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 24px;
+    color: #ffffffb0;
+}
+
+.point{
+    display: flex;
+    justify-content: center;
+    width: 300px;
+    height: 22px;
+    margin: 0 auto;
+}
+
+.pointEl{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 0 10px;
+    border-radius: 50%;
+    background-color: #0e2b3646;
+}
+
+.pointElGood{
+    background-color: #41f778;
+}
+
+.birds{
+    position: relative;
+    display: block;
+    width: 300px;
+    height: 100px;
+    margin: 0 auto;
+}
+
+.comboText{
+    display: flex;
+    justify-content: center;
+    width: 300px;
+    height: 22px;
+    margin: 0 auto;
+    color: #ffffff80;
+}
+
+
+.bird{
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 30px;
+    display: block;
+    width: 240px;
+    height: 6px;
+    padding-top: 60px;
+    margin: 0 auto;
+}
+
+.bird1,
+.bird2,
+.bird3,
+.bird4{
+    z-index: 1;
+    position: absolute;
+    top: 8px;
+    left: 30px;
+}
+
+.bird2{
+    top: 16px;
+    left: 90px;
+}
+
+.bird3{
+    top: 15px;
+    left: 150px;
+}
+
+.bird4{
+    left: 215px;
+}
+
+.displayNone{
+    display: none;
+}

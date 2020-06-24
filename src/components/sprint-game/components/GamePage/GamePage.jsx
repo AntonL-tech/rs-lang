@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import s from './GamePage.module.css';
-import state from '../../logic/state';
 import createArrayWords from '../../logic/createArrayWords';
-import { Link } from 'react-router-dom';
+import Preloader from '../Preloader/Preloader';
+import GamePlay from './GamePlay/GamePlay';
+import GameFinish from './GameFinish/GameFinish';
 
 class GamePage extends Component {
-
     constructor(props) {
         super(props);
         this.state = {};
@@ -15,20 +14,19 @@ class GamePage extends Component {
         this.setState({
             uploaded: false
         });
-        createArrayWords().then((el) => {
+        createArrayWords(this.props.location.aboutProps).then((el) => {
             this.setState({
                 uploaded: true,
                 wordList: el,
                 wordId: 0,
-                kv: 5,
+                kv: 64,
                 step: 0,
                 goodWord: [],
                 badWord: [],
                 score: 0,
                 goodWordsScore: 0,
+                classMark: false
             });
-            
-            console.log(this.state.thisWord, this.state.wordList)
         });
     } 
 
@@ -56,25 +54,32 @@ class GamePage extends Component {
     }
 
     checkWord (bool) {
+        
         bool === this.state.wordList[this.state.wordId].wordStatus 
         ? this.true() 
         : this.false();
         this.setState({
             wordId: this.state.wordId + 1,
             step: this.state.step + 1,
+            classMark: true,
         });
+
+        setTimeout(() => {
+          this.setState({
+                classMark: false,
+            });
+        }, 200)
     }
 
     calcNum () {
         let n = this.state.goodWordsScore < 4 ? 10 
-        : (this.state.goodWordsScore < 7 ? 20 
-        : (this.state.goodWordsScore < 10 ? 40 : 80));
+        : (this.state.goodWordsScore < 8 ? 20 
+        : (this.state.goodWordsScore < 12 ? 40 : 80));
 
         return n
     }
 
     true () {
-        console.log(true);
         const wordList = [...this.state.goodWord];
         this.setState({
             goodWord: wordList.concat([this.state.wordList[this.state.wordId]]),
@@ -84,7 +89,6 @@ class GamePage extends Component {
     }
 
     false () {
-        console.log(false);
         this.setState({
             badWord: this.state.badWord.concat([this.state.wordList[this.state.wordId]]),
             goodWordsScore: 0
@@ -95,37 +99,23 @@ class GamePage extends Component {
         if (this.state.uploaded) {
             if (this.state.kv >= 0 && this.state.step < 80) {
                 return (
-                <div className={s.background}>
-        
-                    <div className={s.name}>
-                        Game level {state.level}
-                    </div>
-                    <div className={s.name}>
-                        Score {this.state.score}
-                    </div>
-                    <div className={s.link}>
-                        <Link to='/start'>Clear</Link>
-                    </div>
-                    <div>{this.state.kv}</div>  
-                    <div> {this.state.wordList[this.state.wordId].word} </div>
-                    <div> {this.state.wordList[this.state.wordId].gameWordTranslate} </div>
-                    <div> {String(this.state.wordList[this.state.wordId].wordStatus) }</div>
-                    <button onClick={() => { this.checkWord(true) }}>верно</button>
-                    <button onClick={() => { this.checkWord(false) }}>неверно</button>
-                </div>  
+                    <GamePlay score = {this.state.score} time = {this.state.kv}
+                        wordEnglish = {this.state.wordList[this.state.wordId].word}
+                        gameWordTranslate = {this.state.wordList[this.state.wordId].gameWordTranslate}
+                        status = {String(this.state.wordList[this.state.wordId].wordStatus)}
+                        checkWord={(name) => this.checkWord(name)}
+                        goodWordsScore = {this.state.goodWordsScore}
+                        classMark={this.state.classMark}
+                    />
             )}
-            return (
-            <div className={s.background}>
-                <div className={s.link}>
-                    <Link to='/start'>Завершить тренеровку</Link>
-                </div>
-                <button onClick={() => this.wordList()}>Продолжить тренеровку</button>
-                <div>finish</div>
-                <button onClick={() => {console.log(this.state.goodWord, this.state.badWord)}}>ride statistics</button>
-            </div>);
+            return <GameFinish wordList={() => this.wordList()}
+                               goodWord={this.state.goodWord}
+                               badWord={this.state.badWord}
+                               score={this.state.score}
+                    />
         }
         
-        return (<> loading </>);
+        return <Preloader />
     }
     
 }

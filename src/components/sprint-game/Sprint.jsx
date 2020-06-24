@@ -11,8 +11,8 @@ const Sprint = () => {
             <div className={s.background}>
                 <Switch>
                     <Route path='/start' render={() => <StartPage />} />
-                    <Route path='/statistic' render={() => <StatisticPage />} />
-                    <Route path='/game' render={() => <GamePage />} />
+                    <Route path='/statistic' component={StatisticPage} />
+                    <Route path='/game' component={GamePage} />
                 </Switch>
                 </div>
         </Router>

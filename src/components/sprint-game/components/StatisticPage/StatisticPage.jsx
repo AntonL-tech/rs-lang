@@ -4,14 +4,17 @@ import { Link } from 'react-router-dom';
 
 const StatisticPage = () => {
     return (
-        <div className={s.background}>
-
-            <div className={s.name}>
+        <div className={s.block}>
+             <div className={s.name}>
                 StatisticPage
             </div>
-            <div className={s.link}>
-            <Link to='/start'>Clear</Link>
+            <div className={s.linkBlock}>
+                <Link className={s.link} to='/start'>
+                    <div className={s.linkEl}>|</div>
+                    <div className={s.linkEl}>|</div>
+                </Link>
             </div>
+           
         </div>
     )
 }
