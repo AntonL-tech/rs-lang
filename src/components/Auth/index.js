@@ -19,32 +19,24 @@ class Auth extends Component {
   }
 
   async onSignIn(userData) {
-    try {
-      const user = await loginUser(userData);
-      this.setState({
-        userId: user.userId,
-        token: user.token,
-        email: userData.email,
-        signin: true,
-      });
+    const user = await loginUser(userData);
+    this.setState({
+      userId: user.userId,
+      token: user.token,
+      email: userData.email,
+      signin: true,
+    });
 
-      Object.keys(this.state).forEach((key) => {
-        localStorage.setItem(key, this.state[key]);
-      });
+    Object.keys(this.state).forEach((key) => {
+      localStorage.setItem(key, this.state[key]);
+    });
 
-      this.setState({ redirect: '/' });
-    } catch (error) {
-      console.error(error);
-    }
+    this.setState({ redirect: '/' });
   }
 
   async onSignUp(userData) {
-    try {
-      await createUser(userData);
-      this.onSignIn(userData);
-    } catch (error) {
-      console.error(error);
-    }
+    await createUser(userData);
+    this.onSignIn(userData);
   }
 
   render() {
