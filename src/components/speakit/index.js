@@ -51,10 +51,12 @@ class SpeakIt extends Component {
   }
 
   selectWord(id) {
-    this.setState(({ data }) => {
-      const index = data.findIndex((elem) => elem.id === id);
-      return { selectedWord: data[index] };
-    });
+    if (!this.state.isGame) {
+      this.setState(({ data }) => {
+        const index = data.findIndex((elem) => elem.id === id);
+        return { selectedWord: data[index] };
+      });
+    }
   }
 
   checkWord(recognizedWord) {
