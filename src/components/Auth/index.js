@@ -29,15 +29,15 @@ class Auth extends Component {
         email: userData.email,
         signin: true,
       });
+
+      Object.keys(this.state).forEach((key) => {
+        localStorage.setItem(key, this.state[key]);
+      });
+
+      this.setState({ redirect: '/' });
     } else {
       this.setState({ failureText: result.data });
     }
-
-    Object.keys(this.state).forEach((key) => {
-      localStorage.setItem(key, this.state[key]);
-    });
-
-    this.setState({ redirect: '/' });
   }
 
   async onSignUp(userData) {
