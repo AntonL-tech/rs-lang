@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import WordTilesList from './components/WordTilesList';
 import WordInfo from './components/WordInfo';
 import Recognition from './components/Recognition';
+import Stars from './components/Stars';
 
 class SpeakIt extends Component {
   constructor(props) {
@@ -82,6 +83,7 @@ class SpeakIt extends Component {
   render() {
     return (
       <>
+        <Stars n={this.state.guessedWordIds.length}></Stars>
         {this.state.isGame ? (
           <Recognition onRecognition={this.checkWord} />
         ) : null}
