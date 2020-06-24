@@ -41,11 +41,13 @@ class SpeakIt extends Component {
       ],
       guessedWordIds: [],
       selectedWord: {},
-      isGame: true,
+      isGame: false,
+      recognizedWord: '',
     };
 
     this.selectWord = this.selectWord.bind(this);
     this.checkWord = this.checkWord.bind(this);
+    this.startGame = this.startGame.bind(this);
   }
 
   selectWord(id) {
@@ -57,6 +59,7 @@ class SpeakIt extends Component {
 
   checkWord(recognizedWord) {
     let words = this.state.data;
+    this.setState({ recognizedWord: recognizedWord });
     words.forEach(({ word, id }) => {
       if (recognizedWord === word) {
         this.setState(({ guessedWordIds }) => {
@@ -71,19 +74,28 @@ class SpeakIt extends Component {
     });
   }
 
+  startGame() {
+    this.setState({ isGame: true });
+  }
+
   render() {
     return (
       <>
         {this.state.isGame ? (
           <Recognition onRecognition={this.checkWord} />
         ) : null}
-        <WordInfo word={this.state.selectedWord} isGame={this.state.isGame} />
+        <WordInfo
+          word={this.state.selectedWord}
+          isGame={this.state.isGame}
+          recognizedWord={this.state.recognizedWord}
+        />
         <WordTilesList
           tiles={this.state.data}
           selectId={this.state.selectedWord.id}
           guessedIds={this.state.guessedWordIds}
           onSelect={this.selectWord}
         />
+        <button onClick={this.startGame}>Start Game!</button>
       </>
     );
   }
