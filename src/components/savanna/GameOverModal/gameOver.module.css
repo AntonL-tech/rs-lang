@@ -49,6 +49,27 @@
     color: #37383c;
 }
 
+.validTitle {
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.33;
+    color: #28c38a;
+    text-transform: uppercase;
+}
+
+
+.invalidTitle {
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.33;
+    color: #ed593b;
+    text-transform: uppercase;
+}
+
+
+
+
+
 .modalText {
     max-width: 337px;
     font-size: 16px;

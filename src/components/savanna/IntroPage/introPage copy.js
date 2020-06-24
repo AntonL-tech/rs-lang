@@ -1,24 +1,17 @@
 import React from 'react';
-import s from './startScreen.module.css';
+import s from './introPage.module.css';
 import { Link } from 'react-router-dom';
 
 class StartText extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { value: 'levelOne' };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.startGame = this.startGame.bind(this);
+        this.state = {};
     }
 
-    startGame() {
-        console.log('Игра началась. Цитата из одного фильма');
-        window.location.assign('/game');
-    }
-
-    handleChange(event) {
+    handleChange = (event) => {
+        // this.changeState('value', event.target.value);
         this.setState({ value: event.target.value });
-    }
+    };
 
     render() {
         return (
@@ -26,7 +19,6 @@ class StartText extends React.Component {
                 <h1 className={s.introTitle}>Саванна</h1>
                 <h3 className={s.introSubTitle}>Тренировка Саванна развивает словарный запас. Чем больше слов ты знаешь, тем больше очков опыта получишь.</h3>
                 <p className={s.introLevelText}>Выбирайте уровень сложности и начинайте игру</p>
-
                 <div className={s.introSelectWrap}>
                     <select className={s.introSelectMenu} value={this.state.value} onChange={this.handleChange}>
                         <option value='levelOne'>Уровень 1</option>
@@ -38,12 +30,16 @@ class StartText extends React.Component {
                     </select>
                 </div>
 
-                <button className={s.introBtn} onClick={this.startGame}>
-                    Начать
-                </button>
+                <Link to='/game'>
+                    <button className={s.introBtn}> Начать</button>
+                </Link>
             </div>
         );
     }
 }
 
 export default StartText;
+
+// <button className={s.introBtn} onClick={this.startGame}>
+// Начать
+// </button>

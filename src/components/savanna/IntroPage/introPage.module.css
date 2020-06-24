@@ -76,6 +76,7 @@
     text-transform: uppercase;
     transition: all .15s ease;
     cursor: pointer;
+    outline: 0;
 }
 
 .introBtn:hover {

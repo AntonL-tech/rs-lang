@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import s from './exitGame.module.css';
 
-// import Icon from '../Assets/icons/clear.svg';
-// import Button from '../button/Button';
 // import closeBtn from './Assets/icons/clear.svg';
 
 const Modal = ({ title, isOpen, onCancel, onSubmit, subTitle }) => {
@@ -18,7 +16,7 @@ const Modal = ({ title, isOpen, onCancel, onSubmit, subTitle }) => {
                             <div className={s.modalCloseBtn} onClick={onSubmit}>
                                 Закрыть
                             </div>
-                            <div className={s.modalCanselBtn} onClick={onCancel}>
+                            <div className={s.modalCancelBtn} onClick={onCancel}>
                                 Отмена
                             </div>
                         </div>

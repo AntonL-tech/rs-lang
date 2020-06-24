@@ -1,88 +1,95 @@
-.introPage {
-    position: absolute;
-    top: 50%;
-    margin-top: -170px;
-    height: 300px;
-    text-align: center;
-    right: 0;
-    left: 0;
-}
-
-.introTitle {
-    margin-bottom: 45px;
-    font-size: 40px;
-    font-weight: 300;
-    line-height: 1;
-    color: #c786e0;
-    opacity: .9;
-    text-transform: uppercase;
-    letter-spacing: 14px;
-}
-
-
-
-.introSubTitle {
-    max-width: 565px;
-    margin: 0 auto 38px;
-    font-size: 18px;
-    line-height: 24px;
-    font-weight: 300;
-    color: #fff;
-    opacity: .9;
-}
-
-.introLevelText {
-    max-width: 565px;
-    margin: 0 auto 15px;
-    font-size: 14px;
-    line-height: 24px;
-    font-weight: 300;
-    color: #fff;
-    opacity: .9;
-}
-
-.introSelectWrap {
-    max-width: 565px;
-    margin: 0 auto 25px;
-}
-
-.introSelectMenu {
-    display: block;
+.questionWordBlock {
+    width: 100%;
+    height: 400px;
+    position: relative;
+    width: 60%;
     margin: 0 auto;
-    max-width: 200px;
-    padding: .75rem 2.5rem .75rem 1rem;
-    border: 1px solid rgb(230, 230, 230);
-    border-radius: 4px;
-    font-size: 1rem;
-    color: #444;
-}
-
-
-.introBtn {
-    min-width: 150px;
-    text-decoration: none;
-    /* font-family: 'Roboto'; */
-    font-weight: bold;
-    color: #DED7D7 !important;
-    text-align: center;
-    box-shadow: 1px 1px 1px #BEE2F9;
-    padding: 12px 22px;
-    font-size: 24px;
+    min-width: 300px;
+    overflow: hidden;
+    left: 0;
+    top: 0;
+    font-size: 48px;
+    line-height: 1;
     font-weight: 300;
-    letter-spacing: 2px;
-    border-radius: 6px;
-    border: 2px solid #FFFAFA;
-    background: linear-gradient(#9b2fe4, #d287d9);
-    text-transform: uppercase;
-    transition: all .15s ease;
-    cursor: pointer;
+    white-space: nowrap;
+    color: #fff;
+    letter-spacing: 1px;
+    /* background-color: thistle; */
 }
 
-.introBtn:hover {
-    color: #F0D5DE !important;
-    background: #468CCF;
-    background: linear-gradient(#a70eee, #af66d9);
-    /* background: -ms-linear-gradient(top, #B20EEE, #D966BE);
-    background: -webkit-gradient(linear, left top, left bottom, from(#B20EEE), to(#D966BE));
-    background: -moz-linear-gradient(top, #B20EEE, #D966BE); */
+.questionWord {
+    position: absolute;
+    top: 0;
+    position: absolute;
+    transform: translate(-50%);
+    left: 50%;
+    height: 2.75rem;
+    width: 15rem;
+    animation: move-highlight 5s linear;
+    animation-fill-mode: forwards;
+
+}
+
+
+
+
+@keyframes move-highlight {
+    0% {
+        top: 0em;
+    }
+
+    100% {
+        top: 8.5em;
+
+    }
+}
+
+
+
+.starsBlock {
+    margin: 20px 10px;
+    width: 30px;
+    height: 30px;
+}
+
+.answearBlock {
+    position: relative;
+    /* margin-top: 250px; */
+    display: flex;
+    bottom: 100px;
+    justify-content: center;
+    z-index: 3;
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 300;
+    color: #fff;
+}
+
+.answearWord {
+    padding: 15px;
+    cursor: pointer;
+    margin: 0 20px;
+}
+
+
+.RightAnswer {
+    padding: 15px;
+    margin: 0 20px;
+    background: rgba(164, 252, 139, 0.218);
+}
+
+.WrongAnswer {
+    padding: 15px;
+    margin: 0 20px;
+    background: #f79d9da2;
+}
+
+.exitGamePage {
+    width: 30px;
+    height: 30px;
+    background-size: 100%;
+    position: absolute;
+    top: 30px;
+    right: 45px;
+    cursor: pointer;
 }

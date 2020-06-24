@@ -163,11 +163,14 @@ class GamePage extends React.Component {
         this.setState({ isGameOver: true });
     };
 
-    handleContinueGame = () => {
+    handleToMainMenu = () => {
+        console.log('Submit function!');
         window.location.assign('/start');
         this.setState({ isGameOver: false });
     };
-    handleToMainMenu = () => {
+
+    handleContinueGame = () => {
+        console.log('Cancel function!');
         window.location.assign('/start');
         this.setState({ isGameOver: false });
     };
@@ -195,7 +198,6 @@ class GamePage extends React.Component {
                 </div>
                 <div className={s.questionWordBlock}>{wordBlock}</div>
                 <div className={s.answearBlock}>{wordList}</div>
-
                 <GameOverModal isOpen={isGameOver} onCancel={this.handleContinueGame} onSubmit={this.handleToMainMenu}>
                     {' '}
                 </GameOverModal>
