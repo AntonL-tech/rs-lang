@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Points from './gameComponents/Points';
 import imgAudioOn from '../../../files/img/audioOn.png';
 import imgAudioOff from '../../../files/img/audioOff.png';
+import imgSound from '../../../files/img/sound.png';
 
 const GamePlay = (props) => {
     if (props.time > 60 ) {
@@ -30,9 +31,13 @@ const GamePlay = (props) => {
                     </Link>
                 </div>
             </div>
+
             <div className={!props.classMark ? s.block
             : (props.goodWordsScore > 0  ? `${s.block} ${s.blockGood}` : `${s.block} ${s.blockBad}`)}>    
                 <Points goodWordsScore={props.goodWordsScore}/>
+                <button className={s.playWord} onClick={() => props.playAudioWord()}>
+                    <img src={imgSound} alt=""/>
+                </button>
                 <div className={s.word}>
                     <div className={s.wordOriginal}> {props.wordEnglish} </div>
                     <div className={s.wordTranslate}> {props.gameWordTranslate} </div>

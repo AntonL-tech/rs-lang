@@ -65,10 +65,8 @@ class GamePage extends Component {
         if (this.state.kv === 61) {
             this.playAudio(audioStart);
         }
-        if (this.state.kv === 0) {
-            if (this.state.goodWordsScore < 81) {
-                this.playAudio(audioFinish);
-            }
+        if (this.state.kv === 0 || this.state.goodWordsScore === 80) {
+            this.playAudio(audioFinish);
             clearInterval(this.intervalID);
         }
 
@@ -98,7 +96,12 @@ class GamePage extends Component {
         this.setState({
             audio: this.state.audio ? false : true,
         });
-    }
+    };
+
+    playAudioWord(){
+        const audio = this.state.wordList[this.state.wordId].audio;
+        this.playAudio(`https://raw.githubusercontent.com/irinainina/rslang-data/master/${audio}`)
+    };
 
     calcNum () {
         let n = this.state.goodWordsScore < 4 ? 10 
@@ -134,6 +137,7 @@ class GamePage extends Component {
                         status = {String(this.state.wordList[this.state.wordId].wordStatus)}
                         checkWord={(name) => this.checkWord(name)}
                         changeAudio={() => this.changeAudio()}
+                        playAudioWord={() => this.playAudioWord()}
                         audioStatus={this.state.audio}
                         goodWordsScore = {this.state.goodWordsScore}
                         classMark={this.state.classMark}/>
@@ -141,7 +145,8 @@ class GamePage extends Component {
             return <GameFinish wordList={() => this.wordList()}
                                goodWord={this.state.goodWord}
                                badWord={this.state.badWord}
-                               score={this.state.score}/>
+                               score={this.state.score}
+                               playAudioWord={() => this.playAudioWord()}/>
         }
         return <Preloader />
     }
