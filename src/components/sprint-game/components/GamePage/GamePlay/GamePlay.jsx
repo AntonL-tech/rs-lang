@@ -25,7 +25,7 @@ const GamePlay = (props) => {
                     <button className={s.audio} onClick={() => props.changeAudio()}>
                         {props.audioStatus ? <img src={imgAudioOn} alt=""/> : <img src={imgAudioOff} alt=""/> }
                     </button>
-                    <Link className={s.link} to='/start'>
+                    <Link className={s.link} to='/sprint/start'>
                         <div className={s.linkEl}>|</div>
                         <div className={s.linkEl}>|</div>
                     </Link>

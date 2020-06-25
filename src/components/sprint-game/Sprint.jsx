@@ -8,14 +8,14 @@ import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom
 const Sprint = () => {
     return (
         <Router>
-            <div className={s.background}>
-                <Switch>
-                    <Route path='/start' render={() => <StartPage />} />
-                    <Route path='/statistic' component={StatisticPage} />
-                    <Route path='/game' component={GamePage} />
-                </Switch>
+                <div className={s.background}>
+                    <Switch>
+                        <Route path='/sprint/start' render={() => <StartPage />} />
+                        <Route path='/sprint/statistic' component={StatisticPage} />
+                        <Route path='/sprint/game' component={GamePage} />
+                    </Switch>
                 </div>
-                <Redirect  to = '/start' />
+                <Redirect  to='/sprint/start' />
         </Router>
         
         

@@ -2,12 +2,14 @@ import React from 'react';
 import s from './app-games.module.css'
 import {Card, Button} from 'react-bootstrap'
 import {Link} from "react-router-dom";
-import Header from '../app-header/app-header'
-import Sidebar from '../app-sidebar/app-sidebar'
+import Header from '../app-header/app-header';
+import Sidebar from '../app-sidebar/app-sidebar';
+import SprintImg from '../sprint-game/files/img/sprintPromoBackground.jpg';
 
 function Games() {
     const gameInfo = [
         {image: 'https://avatarko.ru/img/kartinka/33/multfilm_lyagushka_32117.jpg', title: 'SpeakIt', text: 'Описание speakIt', path: '/speakit'},
+        {image: SprintImg, title: 'Sprint', text: 'Learn how to quickly translate from English into your native language.', path: '/sprint'},
     ]
 
     const renderCard = (card, index) => {
