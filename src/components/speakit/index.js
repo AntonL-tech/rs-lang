@@ -3,6 +3,7 @@ import WordTilesList from './components/WordTilesList';
 import WordInfo from './components/WordInfo';
 import Recognition from './components/Recognition';
 import Stars from './components/Stars';
+import Results from './components/Results';
 
 class SpeakIt extends Component {
   constructor(props) {
@@ -46,11 +47,15 @@ class SpeakIt extends Component {
       selectedWord: {},
       isGame: false,
       recognizedWord: '',
+      showResults: false,
     };
 
     this.selectWord = this.selectWord.bind(this);
     this.checkWord = this.checkWord.bind(this);
     this.startGame = this.startGame.bind(this);
+    this.showResults = this.showResults.bind(this);
+    this.hideResults = this.hideResults.bind(this);
+    this.restart = this.restart.bind(this);
   }
 
   selectWord(id) {
@@ -78,10 +83,36 @@ class SpeakIt extends Component {
 
   startGame() {
     this.setState({ isGame: true });
+    console.log('start game click');
+  }
+
+  showResults() {
+    this.setState({
+      isGame: false,
+      showResults: true,
+    });
+    console.log('app state when show: ', this.state);
+  }
+
+  hideResults() {
+    this.setState({
+      showResults: false,
+    });
+  }
+
+  restart() {
+    this.setState({
+      selectedWord: {},
+      isGame: false,
+      recognizedWord: '',
+      showResults: false,
+    });
   }
 
   render() {
-    const guessedCount = this.state.data.filter((elem) => elem.guessed).length;
+    const errorsWordsArr = this.state.data.filter((elem) => !elem.guessed);
+    const guessedWordsArr = this.state.data.filter((elem) => elem.guessed);
+    const guessedCount = guessedWordsArr.length;
 
     return (
       <>
@@ -99,7 +130,17 @@ class SpeakIt extends Component {
           selectId={this.state.isGame ? null : this.state.selectedWord.id}
           onSelect={this.selectWord}
         />
+        <button onClick={this.restart}>Restart</button>
         <button onClick={this.startGame}>Start Game!</button>
+        <button onClick={this.showResults}>Results</button>
+        {this.state.showResults ? (
+          <Results
+            errorsWords={errorsWordsArr}
+            knownWords={guessedWordsArr}
+            onReturn={this.hideResults}
+            onNewGame={this.restart}
+          />
+        ) : null}
       </>
     );
   }
