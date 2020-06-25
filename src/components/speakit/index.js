@@ -79,6 +79,11 @@ class SpeakIt extends Component {
         });
       }
     });
+    if (words.length === words.filter((word) => word.guessed).length) {
+      this.setState({
+        showResults: true,
+      });
+    }
   }
 
   startGame() {
@@ -97,6 +102,7 @@ class SpeakIt extends Component {
   hideResults() {
     this.setState({
       showResults: false,
+      selectedWord: {},
     });
   }
 
