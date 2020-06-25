@@ -1,27 +1,44 @@
-import React from 'react';
+import React, { Component } from 'react';
 import WordList from './WordList';
 
-const Results = (props) => {
-  let { errorsWords, knownWords, onReturn, onNewGame } = props;
+class Results extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      audio: '',
+    };
+    this.playSound = this.playSound.bind(this);
+  }
 
-  return (
-    <div>
-      <section>
-        <div>
-          Ошибок<span>{errorsWords.length}</span>
-        </div>
-        <WordList list={errorsWords} />
-      </section>
-      <section>
-        <div>
-          Знаю<span>{knownWords.length}</span>
-        </div>
-        <WordList list={knownWords} />
-      </section>
-      <button onClick={onReturn}>Return</button>
-      <button onClick={onNewGame}>NewGame</button>
-    </div>
-  );
-};
+  playSound(audio) {
+    this.setState({
+      audio: audio,
+    });
+  }
+
+  render() {
+    let { errorsWords, knownWords, onReturn, onNewGame } = this.props;
+
+    return (
+      <div>
+        {this.state.audio ? <audio autoPlay src={this.state.audio} /> : null}
+        <section>
+          <div>
+            Ошибок<span>{errorsWords.length}</span>
+          </div>
+          <WordList list={errorsWords} onClick={this.playSound} />
+        </section>
+        <section>
+          <div>
+            Знаю<span>{knownWords.length}</span>
+          </div>
+          <WordList list={knownWords} onClick={this.playSound} />
+        </section>
+        <button onClick={onReturn}>Return</button>
+        <button onClick={onNewGame}>NewGame</button>
+      </div>
+    );
+  }
+}
 
 export default Results;
