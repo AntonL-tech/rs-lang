@@ -16,23 +16,21 @@ class GamePage extends Component {
     }
 
     playAudio(sound) {
-        if(this.state.audio){
             const audio = new Audio();
             audio.preload = 'auto';
             audio.src = sound;
             audio.play();
-        }
     };
 
     wordList() {
-        this.intervalID = setInterval(
-            () => this.tick(),
-            1000
-        );
         this.setState({
             uploaded: false
         });
         createArrayWords(this.props.location.aboutProps).then((el) => {
+            this.intervalID = setInterval(
+                () => this.tick(),
+                1000
+            );
             this.setState({
                 uploaded: true,
                 wordList: el,
@@ -63,10 +61,14 @@ class GamePage extends Component {
 
     tick() {
         if (this.state.kv === 61) {
-            this.playAudio(audioStart);
+            if(this.state.audio){
+                this.playAudio(audioStart);
+            }
         }
         if (this.state.kv === 0 || this.state.goodWordsScore === 80) {
-            this.playAudio(audioFinish);
+            if(this.state.audio){
+                this.playAudio(audioFinish);
+            }
             clearInterval(this.intervalID);
         }
 
@@ -98,8 +100,7 @@ class GamePage extends Component {
         });
     };
 
-    playAudioWord(){
-        const audio = this.state.wordList[this.state.wordId].audio;
+    playAudioWord(audio = this.state.wordList[this.state.wordId].audio){
         this.playAudio(`https://raw.githubusercontent.com/irinainina/rslang-data/master/${audio}`)
     };
 
@@ -111,7 +112,9 @@ class GamePage extends Component {
     };
 
     true () {
-        this.playAudio(audioGot);
+        if(this.state.audio){
+            this.playAudio(audioGot);
+        }
         const wordList = [...this.state.goodWord];
         this.setState({
             goodWord: wordList.concat([this.state.wordList[this.state.wordId]]),
@@ -121,7 +124,9 @@ class GamePage extends Component {
     };
 
     false () {
-        this.playAudio(audioError);
+        if(this.state.audio){
+            this.playAudio(audioError);
+        }
         this.setState({
             badWord: this.state.badWord.concat([this.state.wordList[this.state.wordId]]),
             goodWordsScore: 0
@@ -146,7 +151,7 @@ class GamePage extends Component {
                                goodWord={this.state.goodWord}
                                badWord={this.state.badWord}
                                score={this.state.score}
-                               playAudioWord={() => this.playAudioWord()}/>
+                               playAudioWord={(e) => this.playAudioWord(e)}/>
         }
         return <Preloader />
     }

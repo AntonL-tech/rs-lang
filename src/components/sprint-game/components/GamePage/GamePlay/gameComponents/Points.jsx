@@ -1,10 +1,10 @@
 import React from 'react';
 import s from '../GamePlay.module.css';
 import bird from '../../../../files/img/bird.svg';
-import bird1 from '../../../../files/img/bird1.svg';
-import bird2 from '../../../../files/img/bird2.svg';
-import bird3 from '../../../../files/img/bird3.svg';
-import bird4 from '../../../../files/img/bird4.svg';
+import bird1 from '../../../../files/img/bird1.png';
+import bird2 from '../../../../files/img/bird2.png';
+import bird3 from '../../../../files/img/bird3.png';
+import bird4 from '../../../../files/img/bird4.png';
 
 const GamePlay = (props) => {
 const score = props.goodWordsScore % 4;
