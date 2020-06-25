@@ -2,6 +2,8 @@ import React from 'react';
 import s from './GamePlay.module.css';
 import { Link } from 'react-router-dom';
 import Points from './gameComponents/Points';
+import imgAudioOn from '../../../files/img/audioOn.png';
+import imgAudioOff from '../../../files/img/audioOff.png';
 
 const GamePlay = (props) => {
     if (props.time > 60 ) {
@@ -19,6 +21,9 @@ const GamePlay = (props) => {
                     {props.score}
                 </div>
                 <div className={s.linkBlock}>
+                    <button className={s.audio} onClick={() => props.changeAudio()}>
+                        {props.audioStatus ? <img src={imgAudioOn} alt=""/> : <img src={imgAudioOff} alt=""/> }
+                    </button>
                     <Link className={s.link} to='/start'>
                         <div className={s.linkEl}>|</div>
                         <div className={s.linkEl}>|</div>
