@@ -18,6 +18,7 @@ class SpeakIt extends Component {
             'https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/files/01_0002.jpg',
           audio:
             'https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/files/01_0002.mp3',
+          guessed: false,
         },
         {
           word: 'boat',
@@ -28,6 +29,7 @@ class SpeakIt extends Component {
             'https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/files/01_0005.jpg',
           audio:
             'https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/files/01_0005.mp3',
+          guessed: false,
         },
         {
           word: 'agree',
@@ -38,9 +40,9 @@ class SpeakIt extends Component {
             'https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/files/01_0001.jpg',
           audio:
             'https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/files/01_0001.mp3',
+          guessed: false,
         },
       ],
-      guessedWordIds: [],
       selectedWord: {},
       isGame: false,
       recognizedWord: '',
@@ -63,14 +65,12 @@ class SpeakIt extends Component {
     this.setState({ recognizedWord: recognizedWord });
     words.forEach(({ word, id }, index) => {
       if (recognizedWord === word) {
-        this.setState(({ guessedWordIds }) => {
-          let NewIds = guessedWordIds.includes(id)
-            ? guessedWordIds
-            : [...guessedWordIds, id];
-          return {
-            guessedWordIds: NewIds,
-            selectedWord: words[index],
-          };
+        this.setState(({ data }) => {
+          const guessedWord = data[index];
+          guessedWord.guessed = true;
+          const before = data.slice(0, index);
+          const after = data.slice(index + 1);
+          return [...before, guessedWord, ...after];
         });
       }
     });
@@ -81,9 +81,11 @@ class SpeakIt extends Component {
   }
 
   render() {
+    const guessedCount = this.state.data.filter((elem) => elem.guessed).length;
+
     return (
       <>
-        <Stars n={this.state.guessedWordIds.length}></Stars>
+        <Stars n={guessedCount}></Stars>
         {this.state.isGame ? (
           <Recognition onRecognition={this.checkWord} />
         ) : null}
@@ -95,7 +97,6 @@ class SpeakIt extends Component {
         <WordTilesList
           tiles={this.state.data}
           selectId={this.state.isGame ? null : this.state.selectedWord.id}
-          guessedIds={this.state.guessedWordIds}
           onSelect={this.selectWord}
         />
         <button onClick={this.startGame}>Start Game!</button>

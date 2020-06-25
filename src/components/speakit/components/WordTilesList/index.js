@@ -2,7 +2,7 @@ import React from 'react';
 import WordTile from '../WordTile';
 import './wordTilesList.css';
 
-const WordTilesList = ({ tiles, onSelect, selectId, guessedIds }) => {
+const WordTilesList = ({ tiles, onSelect, selectId }) => {
   const elements = tiles.map((tile) => {
     return (
       <div className="word-tiles__item" key={tile.id}>
@@ -12,7 +12,7 @@ const WordTilesList = ({ tiles, onSelect, selectId, guessedIds }) => {
             onSelect(tile.id);
           }}
           selected={tile.id === selectId}
-          guessed={guessedIds.includes(tile.id)}
+          guessed={tile.guessed}
         />
       </div>
     );
