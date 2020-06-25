@@ -39,3 +39,7 @@ input {
 .bold {
     font-weight: 700;
 }
+
+.card {
+    width: 500px;
+}

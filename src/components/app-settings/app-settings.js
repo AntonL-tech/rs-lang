@@ -74,6 +74,8 @@ class Settings extends React.Component {
         this.setState({ count: this.state.count + 1 });
         if (this.state.count === this.state.countOfCards) {
             this.setState({endGame: false})
+        } else {
+            this.myRef.current.focus();
         }
 
         this.setState({ answer: '' });
