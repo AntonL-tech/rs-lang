@@ -6,22 +6,32 @@ import Header from '../app-header/app-header'
 import Sidebar from '../app-sidebar/app-sidebar'
 
 function Games() {
+    const gameInfo = [
+        {image: 'https://avatarko.ru/img/kartinka/33/multfilm_lyagushka_32117.jpg', title: 'SpeakIt', text: 'Описание speakIt', path: '/speakit'},
+    ]
+
+    const renderCard = (card, index) => {
+        return (
+            <Card className={s.game_card} key={index}>
+                <Card.Img style={{ width: '100%', height:'220px' }} className={s.card_img} variant="top" src={card.image} />
+                <Card.Body>
+                    <Card.Title>{card.title}</Card.Title>
+                    <Card.Text>
+                        {card.text}
+                    </Card.Text>
+                    <Button variant="primary"><Link target='_blank' to={card.path}>Start</Link></Button>
+                </Card.Body>
+            </Card>
+        )
+    }
+
     return (
         <div>
             <Header/>
             <div className={'flex'}>
                 <Sidebar/>
                 <div className={'flex'}>
-                    <Card className={s.game_card} style={{ width: '350px', height:'380px' }}>
-                        <Card.Img style={{ width: '100%', height:'220px' }} className={s.card_img} variant="top" src={'https://avatarko.ru/img/kartinka/33/multfilm_lyagushka_32117.jpg'} />
-                        <Card.Body>
-                            <Card.Title>SpeakIt</Card.Title>
-                            <Card.Text>
-                            Описание SpeakIt
-                            </Card.Text>
-                            <Button variant="primary"><Link target='_blank' to='/speakit'>Start</Link></Button>
-                        </Card.Body>
-                    </Card>
+                    {gameInfo.map(renderCard)}
                 </div>
             </div>
         </div>
