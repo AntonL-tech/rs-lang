@@ -68,8 +68,8 @@ class SpeakIt extends Component {
   checkWord(recognizedWord) {
     let words = this.state.data;
     this.setState({ recognizedWord: recognizedWord });
-    words.forEach(({ word, id }, index) => {
-      if (recognizedWord === word) {
+    words.forEach(({ word }, index) => {
+      if (recognizedWord.toLowerCase() === word.toLowerCase()) {
         this.setState(({ data }) => {
           const guessedWord = data[index];
           guessedWord.guessed = true;
