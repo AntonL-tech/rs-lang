@@ -31,7 +31,7 @@
 
 
 .modalContent {
-    min-width: 398px;
+    width: 398px;
     border-radius: 8px;
     box-shadow: 1px 0 2px 0 rgba(0, 0, 0, .16);
     background-color: #fff;
@@ -50,20 +50,29 @@
 }
 
 .validTitle {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
-    line-height: 1.33;
+    margin-top: 10px;
     color: #28c38a;
     text-transform: uppercase;
 }
 
 
 .invalidTitle {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
-    line-height: 1.33;
+    margin-top: 10px;
     color: #ed593b;
     text-transform: uppercase;
+}
+
+
+.invalidTextBlock,
+.validTextBlock {
+    display: flex;
+    flex-direction: column;
+    color: black;
+    margin-top: 5px;
 }
 
 
@@ -91,7 +100,7 @@
     font-weight: 600;
     line-height: 1.43;
     color: #fff;
-    margin-top: 48px;
+    margin-top: 20px;
     cursor: pointer;
 }
 
@@ -107,4 +116,19 @@
 
 .link {
     text-decoration: none;
+}
+
+.line {
+    margin-top: 5px;
+    width: 90%;
+    height: 1px;
+    background-color: rgb(148, 186, 221);
+}
+
+@media (min-width: 300px) and (max-width: 550px) {
+    .modalContent {
+        width: 310px;
+        margin: auto;
+    }
+
 }

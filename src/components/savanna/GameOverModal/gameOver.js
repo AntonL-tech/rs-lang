@@ -2,7 +2,7 @@ import React from 'react';
 import s from './gameOver.module.css';
 import PropTypes from 'prop-types';
 
-const GameOverModal = ({ title, isOpen, onCancel, onSubmit, notValidTitle, isValidTitle, numtrue, numfalse }) => {
+const GameOverModal = ({ title, isOpen, onCancel, onSubmit, notValidTitle, isValidTitle, numtrue, numfalse, notValidBlock, validBlock }) => {
     return (
         <>
             {isOpen && (
@@ -14,16 +14,19 @@ const GameOverModal = ({ title, isOpen, onCancel, onSubmit, notValidTitle, isVal
                                 {isValidTitle}
                                 {numtrue}
                             </div>
-
+                            <div className={s.validTextBlock}>{validBlock}</div>
+                            <div className={s.line} />
                             <div className={s.invalidTitle}>
                                 {notValidTitle}
                                 {numfalse}
                             </div>
+                            <div className={s.invalidTextBlock}>{notValidBlock}</div>
+
                             <div className={s.modalCloseBtn} onClick={onSubmit}>
-                                На главную
+                                To main page
                             </div>
                             <div className={s.modalCancelBtn} onClick={onCancel}>
-                                Продолжить тренировку
+                                Continue
                             </div>
                         </div>
                     </div>
@@ -45,10 +48,10 @@ GameOverModal.propTypes = {
 };
 
 GameOverModal.defaultProps = {
-    title: 'Неплохо, но есть над чем поработать!',
+    title: "It didn't work out this time, but keep working!",
     isOpen: false,
-    notValidTitle: 'Ошибок ',
-    isValidTitle: 'Знаю ',
+    notValidTitle: 'Errors ',
+    isValidTitle: 'I know ',
     onCancel: () => {},
     onSubmit: () => {},
     numtrue: 0,

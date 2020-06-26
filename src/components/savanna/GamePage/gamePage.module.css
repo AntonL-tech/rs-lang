@@ -1,6 +1,6 @@
 .questionWordBlock {
     width: 100%;
-    height: 400px;
+    min-height: 400px;
     position: relative;
     width: 60%;
     margin: 0 auto;
@@ -14,7 +14,8 @@
     white-space: nowrap;
     color: #fff;
     letter-spacing: 1px;
-    /* background-color: thistle; */
+    border-bottom: 1px solid rgba(137, 43, 226, 0.37);
+
 }
 
 .questionWord {
@@ -39,7 +40,7 @@
     }
 
     100% {
-        top: 8.5em;
+        top: 8.3em;
 
     }
 }
@@ -54,7 +55,6 @@
 
 .answearBlock {
     position: relative;
-    /* margin-top: 250px; */
     display: flex;
     bottom: 100px;
     justify-content: center;
@@ -92,4 +92,119 @@
     top: 30px;
     right: 45px;
     cursor: pointer;
+}
+
+.lineWord {
+    color: blue
+}
+
+.timer {
+    height: 20vmin;
+    left: calc(50% - 10vmin);
+    position: fixed;
+    top: calc(50% - 10vmin);
+    width: 20vmin;
+    z-index: 1;
+    font-size: 2em;
+}
+
+.none {
+    display: none;
+}
+
+.loader {
+    animation: spin 1s infinite linear;
+    border: solid 2vmin transparent;
+    border-radius: 50%;
+    border-right-color: rgb(234, 0, 255);
+    border-top-color: rgb(234, 0, 255);
+    box-sizing: border-box;
+    height: 20vmin;
+    left: calc(50% - 10vmin);
+    position: fixed;
+    top: calc(50% - 10vmin);
+    width: 20vmin;
+    z-index: 2;
+
+}
+
+
+
+.loader:before {
+    animation: spin 2s infinite linear;
+    border: solid 2vmin transparent;
+    border-radius: 50%;
+    border-right-color: rgb(218, 97, 255);
+    border-top-color: rgb(218, 97, 255);
+    box-sizing: border-box;
+    content: "";
+    height: 16vmin;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 16vmin;
+}
+
+.loader::after {
+    animation: spin 3s infinite linear;
+    border: solid 2vmin transparent;
+    border-radius: 50%;
+    border-right-color: rgba(255, 102, 247, 0.616);
+    border-top-color: rgba(255, 102, 247, 0.616);
+    box-sizing: border-box;
+    content: "";
+    height: 12vmin;
+    left: 2vmin;
+    position: absolute;
+    top: 2vmin;
+    width: 12vmin;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+@media (min-width: 300px) and (max-width: 550px) {
+    .starsBlock {
+        margin: 10px 10;
+        width: 20px;
+        height: 20px;
+    }
+
+    .exitGameIcon {
+        width: 15px;
+        height: 15px;
+        background-size: 100%;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+
+    .questionWordBlock {
+
+        min-height: 300px;
+
+    }
+
+    .answearBlock {
+
+        flex-direction: column;
+        margin-top: 80px;
+    }
+
+    @keyframes move-highlight {
+        0% {
+            top: 0em;
+        }
+
+        100% {
+            top: 6.3em;
+
+        }
+    }
 }

@@ -50,7 +50,7 @@
     display: block;
     margin: 0 auto;
     max-width: 200px;
-    padding: .75rem 2.5rem .75rem 1rem;
+    padding: .75rem 2.3rem .75rem 2.3rem;
     border: 1px solid rgb(230, 230, 230);
     border-radius: 4px;
     font-size: 1rem;
@@ -83,7 +83,17 @@
     color: #F0D5DE !important;
     background: #468CCF;
     background: linear-gradient(#a70eee, #af66d9);
-    /* background: -ms-linear-gradient(top, #B20EEE, #D966BE);
-    background: -webkit-gradient(linear, left top, left bottom, from(#B20EEE), to(#D966BE));
-    background: -moz-linear-gradient(top, #B20EEE, #D966BE); */
+
+}
+
+
+@media (min-width: 300px) and (max-width: 550px) {
+    .introTitle {
+        margin-bottom: 27px;
+        font-size: 25px
+    }
+
+    .introSubTitle {
+        margin: 0 10px 38px;
+    }
 }

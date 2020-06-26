@@ -31,7 +31,7 @@
 
 
 .modalContent {
-    min-width: 398px;
+    width: 398px;
     border-radius: 8px;
     box-shadow: 1px 0 2px 0 rgba(0, 0, 0, .16);
     background-color: #fff;
@@ -86,4 +86,43 @@
 
 .link {
     text-decoration: none;
+}
+
+
+.exitGameIcon {
+    width: 30px;
+    height: 30px;
+    background-size: 100%;
+    position: absolute;
+    top: 30px;
+    right: 45px;
+    cursor: pointer;
+}
+
+
+@media (min-width: 300px) and (max-width: 550px) {
+    .modalContent {
+        width: 310px;
+        margin: auto;
+    }
+
+    .modalOverlay {
+
+        padding: 36px 0 16px;
+
+    }
+
+
+
+    .exitGameIcon {
+        width: 15px;
+        height: 15px;
+        background-size: 100%;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        cursor: pointer;
+    }
+
+
 }

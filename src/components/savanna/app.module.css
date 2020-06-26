@@ -7,9 +7,11 @@
     height: 100vh;
     text-align: center;
     color: white;
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 
-.exitGameIcon {
+/* .exitGameIcon {
     width: 30px;
     height: 30px;
     background-size: 100%;
@@ -17,17 +19,11 @@
     top: 30px;
     right: 45px;
     cursor: pointer;
-}
-
-
-
-/* 
-.contentIntro {
-    position: absolute;
-    top: 50%;
-    margin-top: -150px;
-    height: 300px;
-    text-align: center;
-    right: 0;
-    left: 0;
 } */
+
+
+@media (min-width: 300px) and (max-width: 374px) {
+    .content {
+        padding: 0 30px;
+    }
+}

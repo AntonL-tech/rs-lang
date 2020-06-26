@@ -1,41 +1,55 @@
 import React from 'react';
 import s from './introPage.module.css';
-// import { Link } from 'react-router-dom';
+import GamePauseModal from '../GamePauseModal/gamePauseModal';
 
 class IntroPage extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {};
-    // }
+    constructor(props) {
+        super(props);
+        this.state = { isOpen: false };
+    }
 
-    // handleChange = (event) => {
-    //     value: event.target.value;
-    // };
+    stopGame = () => {
+        this.setState({ isOpen: true });
+    };
+
+    clickToMainMenuReturn = () => {
+        this.setState({ isOpen: false });
+        window.location.assign('/start');
+    };
+
+    clickToGameReturn = () => {
+        this.setState({ isOpen: false });
+    };
 
     render() {
+        const { isOpen } = this.state;
         const { handleStartGame, handleChange } = this.props;
         const { levelValue } = this.props;
         console.log(levelValue);
         return (
-            <div className={s.introPage}>
-                <h1 className={s.introTitle}>Саванна</h1>
-                <h3 className={s.introSubTitle}>Тренировка Саванна развивает словарный запас. Чем больше слов ты знаешь, тем больше очков опыта получишь.</h3>
-                <p className={s.introLevelText}>Выбирайте уровень сложности и начинайте игру</p>
-                <div className={s.introSelectWrap}>
-                    <select className={s.introSelectMenu} value={levelValue} onChange={handleChange}>
-                        <option value={0}>Уровень 1</option>
-                        <option value={1}>Уровень 2</option>
-                        <option value={2}>Уровень 3</option>
-                        <option value={3}>Уровень 4</option>
-                        <option value={4}>Уровень 5</option>
-                        <option value={5}>Уровень 6</option>
-                    </select>
+            <>
+                <div className={s.introPage}>
+                    <h1 className={s.introTitle}>SAVANNAH</h1>
+                    <h3 className={s.introSubTitle}>The Savannah training helps you build your vocabulary. The more words you know, the more experience points you'll get.</h3>
+                    <p className={s.introLevelText}>Choose your difficulty level and start the game</p>
+                    <div className={s.introSelectWrap}>
+                        <select className={s.introSelectMenu} value={levelValue} onChange={handleChange}>
+                            <option value={0}>Level 1</option>
+                            <option value={1}>Level 2</option>
+                            <option value={2}>Level 3</option>
+                            <option value={3}>Level 4</option>
+                            <option value={4}>Level 5</option>
+                            <option value={5}>Level 6</option>
+                        </select>
+                    </div>
+                    <button className={s.introBtn} onClick={handleStartGame}>
+                        Start
+                    </button>
                 </div>
-
-                <button className={s.introBtn} onClick={handleStartGame}>
-                    Начать
-                </button>
-            </div>
+                <GamePauseModal isOpen={isOpen} gamePause={this.stopGame} onGameReturn={this.clickToGameReturn} toMainMenu={this.clickToMainMenuReturn}>
+                    {' '}
+                </GamePauseModal>
+            </>
         );
     }
 }
