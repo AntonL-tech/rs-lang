@@ -1,0 +1,124 @@
+button,
+.link {
+    display: block;
+    width: 260px;
+    height: 30px;
+    color: #ffffff;
+    background: #ffffff42;
+    padding: 5px 0;
+    font-size: 24px;
+    text-transform: uppercase;
+    margin: 10px auto;
+    text-align: center;
+    text-decoration: none;
+    transition: 0.5s;
+    padding: 0;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+}
+
+.link{
+    padding-top: 5px;
+    height: 25px;
+    background: #f74150;
+}
+
+.link:hover,
+button:hover{
+    background: #8a7fca48;
+}
+
+button:active, button:focus {
+    outline: none;
+}
+
+  
+.block{
+    margin-top: 3%;
+    max-width: 600px;
+    width: calc(100% - 20px);
+    min-width: 280px;
+    margin: 5%;
+    padding: 10px;
+    width: 100%;
+    min-height: 280px;
+    max-height: 590px;
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+    background-color: #ffffff1f;
+    box-shadow: 0 0 0px #ffffff;
+    transition: 0.5s;
+}
+
+
+.result{
+    font-size: 36px;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.statistic{
+    display: block;
+    min-width: 260px;
+    min-height: 100px;
+    max-height: 400px;
+    margin: 0 auto;
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+    background-color: #ffffff;
+    overflow: scroll;
+}
+
+.bad,
+.good{
+    margin: 5px;
+}
+
+.goodName,
+.barName{
+    font-size: 18px;
+    padding-bottom: 10px;
+    font-weight: 600;
+    color: #41f778;
+}
+
+.badName{
+    color: #f74150;
+}
+
+.line{
+    width: 90%;
+    height: 2px;
+    margin: 0 auto;
+    border-radius: 40%;
+    background-color: #13131346;
+}
+
+.word{
+    font-size: 14;
+    color: #000000;
+}
+
+.wordTranslate{
+    font-size: 12;
+    color: #505050;
+}
+
+.wordBlock{
+    padding: 2px;
+}
+
+.audio{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 7px 5px 0;
+    padding: 0;
+}
+
+img{
+    width: 80%;
+    height: 80%;
+}
