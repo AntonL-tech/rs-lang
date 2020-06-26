@@ -129,18 +129,20 @@ class Settings extends React.Component {
     displaySettings() {
         return (
             <>
-                <div >
+                <div>
                 <form className={s.settings_form}>
                     <label>
                         Уровень сложности:
-                        <select value={this.state.level} onChange={this.handleSelect}>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                        </select>
+                        <div className={s.select}>
+                            <select value={this.state.level} onChange={this.handleSelect}>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                            </select>
+                        </div>
                     </label>
 
                     <label>
@@ -153,89 +155,48 @@ class Settings extends React.Component {
                         <input id='countOfCards' type="number" onChange = {this.handleChange} min="1" max="50" required/>
                     </label>
 
-                    <label>
-                        Перевод:
-                        <input id='translation' type="checkbox" checked={this.state.translation}
-                         onChange = {this.handleCheck}/>
-                    </label>
 
-                    <label>
-                        Аудио:
-                        <input id='audio' type="checkbox" checked={this.state.audio}
-                         onChange = {this.handleCheck}/>
-                    </label>
+                    <input className={s.game_checkbox} id='translation' type="checkbox" checked={this.state.translation} onChange = {this.handleCheck}/>
+                    <label for='translation' className={s.game_checkbox_label}>Перевод</label>
 
-                    <label>
-                        Предложение с объяснением значения слова:
-                        <input id='meaning' type="checkbox" checked={this.state.meaning}
-                         onChange = {this.handleCheck}/>
-                    </label>
+                    <input className={s.game_checkbox} id='audio' type="checkbox" checked={this.state.audio} onChange = {this.handleCheck}/>
+                    <label for='audio' className={s.game_checkbox_label}>Аудио</label>
 
-                    <label>
-                        Предложение с объяснением значения слова на русском:
-                        <input id='meaningRu' type="checkbox" checked={this.state.meaningRu}
-                         onChange = {this.handleCheck}/>
-                    </label>
+                    <input className={s.game_checkbox} id='meaning' type="checkbox" checked={this.state.meaning} onChange = {this.handleCheck}/>
+                    <label for='meaning' className={s.game_checkbox_label}>Предложение с объяснением значения слова</label>
 
-                    <label>
-                        Аудио с объяснением значения слова:
-                        <input id='meaningAudio' type="checkbox" checked={this.state.meaningAudio}
-                         onChange = {this.handleCheck}/>
-                    </label>
+                    <input className={s.game_checkbox} id='meaningRu' type="checkbox" checked={this.state.meaningRu} onChange = {this.handleCheck}/>
+                    <label for='meaningRu' className={s.game_checkbox_label}>Предложение с объяснением значения слова на русском</label>
 
-                    <label>
-                        Предложение с примером использования изучаемого слова:
-                        <input id='textExample' type="checkbox" checked={this.state.textExample}
-                         onChange = {this.handleCheck}/>
-                    </label>
+                    <input className={s.game_checkbox} id='meaningAudio' type="checkbox" checked={this.state.meaningAudio} onChange = {this.handleCheck}/>
+                    <label for='meaningAudio' className={s.game_checkbox_label}>Аудио с объяснением значения слова</label>
 
-                    <label>
-                        Предложение с примером использования изучаемого слова на русском:
-                        <input id='textExampleTranslate' type="checkbox" checked={this.state.textExampleTranslate}
-                         onChange = {this.handleCheck}/>
-                    </label>
+                    <input className={s.game_checkbox} id='textExample' type="checkbox" checked={this.state.textExample} onChange = {this.handleCheck}/>
+                    <label for='textExample' className={s.game_checkbox_label}>Предложение с примером использования изучаемого слова</label>
 
-                    <label>
-                        Аудио с примером использования изучаемого слова:
-                        <input id='audioExample' type="checkbox" checked={this.state.audioExample}
-                         onChange = {this.handleCheck}/>
-                    </label>
+                    <input className={s.game_checkbox} id='textExampleTranslate' type="checkbox" checked={this.state.textExampleTranslate} onChange = {this.handleCheck}/>
+                    <label for='textExampleTranslate' className={s.game_checkbox_label}>Предложение с примером использования изучаемого слова на русском</label>
 
-                    <label>
-                        Транскрипция:
-                        <input id='transcription' type="checkbox" checked={this.state.transcription}
-                         onChange = {this.handleCheck}/>
-                    </label>
+                    <input className={s.game_checkbox} id='audioExample' type="checkbox" checked={this.state.audioExample} onChange = {this.handleCheck}/>
+                    <label for='audioExample' className={s.game_checkbox_label}>Аудио с примером использования изучаемого слова</label>
 
-                    <label>
-                        Картинка:
-                        <input id='image' type="checkbox" checked={this.state.image}
-                         onChange = {this.handleCheck}/>
-                    </label>
+                    <input className={s.game_checkbox} id='transcription' type="checkbox" checked={this.state.transcription} onChange = {this.handleCheck}/>
+                    <label for='transcription' className={s.game_checkbox_label}>Транскрипция</label>
 
-                    <label>
-                        Кнопка удалить 
-                        <input id='deleteButton' type="checkbox" checked={this.state.deleteButton}
-                         onChange = {this.handleCheck}/>
-                    </label>
+                    <input className={s.game_checkbox} id='image' type="checkbox" checked={this.state.image} onChange = {this.handleCheck}/>
+                    <label for='image' className={s.game_checkbox_label}>Картинка</label>
 
-                    <label>
-                        Кнопка cложные слова 
-                        <input id='hardButton' type="checkbox" checked={this.state.hardButton}
-                         onChange = {this.handleCheck}/>
-                    </label>
+                    <input className={s.game_checkbox} id='deleteButton' type="checkbox" checked={this.state.deleteButton} onChange = {this.handleCheck}/>
+                    <label for='deleteButton' className={s.game_checkbox_label}>Кнопка удалить</label>
 
-                    <label>
-                        Кнопка показать перевод 
-                        <input id='showWordButton' type="checkbox" checked={this.state.showWordButton}
-                         onChange = {this.handleCheck}/>
-                    </label>
+                    <input className={s.game_checkbox} id='hardButton' type="checkbox" checked={this.state.hardButton} onChange = {this.handleCheck}/>
+                    <label for='hardButton' className={s.game_checkbox_label}>Кнопка cложные слова</label>
 
-                    <label>
-                        Кнопка звука 
-                        <input id='voiceAllow' type="checkbox" checked={this.state.voiceAllow}
-                         onChange = {this.handleCheck}/>
-                    </label>
+                    <input className={s.game_checkbox} id='showWordButton' type="checkbox" checked={this.state.showWordButton} onChange = {this.handleCheck}/>
+                    <label for='showWordButton' className={s.game_checkbox_label}>Кнопка показать перевод</label>
+
+                    <input className={s.game_checkbox} id='voiceAllow' type="checkbox" checked={this.state.voiceAllow} onChange = {this.handleCheck}/>
+                    <label for='voiceAllow' className={s.game_checkbox_label}>Кнопка звука</label>
                 </form>
                 </div>
                 <button type="button" onClick={() => this.getResults()}>Editor</button>
@@ -246,7 +207,7 @@ class Settings extends React.Component {
 
 
     displayCards(data, line = 0) {
-        const {translation, transcription, audio, image, meaning, meaningRu, textExample, meaningAudio, textExampleTranslate, audioExample, deleteButton, showWordButton, voiceAllow, hardButton} = this.state;
+        const {translation, transcription, audio, image, meaning, meaningRu, textExample, meaningAudio, textExampleTranslate, audioExample, deleteButton, showWordButton, voiceAllow, hardButton, translationButton} = this.state;
         let hideTextMeaning;
         let hideTextExample;
 
@@ -257,26 +218,26 @@ class Settings extends React.Component {
             hideTextMeaning = this.showWords(data[line].textMeaning, data[line].word);
             hideTextExample = this.showWords(data[line].textExample, data[line].word);
         }
-        
+
         const inputWidth = this.state.data[line].word.length * 15;
         const {endGame} = this.state;
 
         const page = endGame ? (<div>
             <div className={s.card}>
                 <div className={s.card_word}>Слово: <input onKeyPress={(event) => this.handleKeyPress(event, data, this.state.line)} style={{width: inputWidth + 'px'}} type='text' onChange = {this.handleChangeInput} id="answer" value={this.state.answer} ref={this.myRef} autoFocus={true}/></div>
-                {translation ? <div>Перевод: {data[line].wordTranslate}</div> : null}
+                {translation && translationButton ? <div>Перевод: {data[line].wordTranslate}</div> : null}
                 {transcription ? <div>Транскрипция: {data[line].transcription}</div> : null}
                 {audio ? <div>Аудио: <audio controls src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].audio}`}></audio></div> : null}
                 {image ? <div>Картинка:  <img src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].image}`} width="200" height="200" alt='meaning' /></div> : null}
                 {meaning ? <div>Предложение на англе: {hideTextMeaning} </div> : null}
-                {meaningRu ? <div>Предложение на русском: {data[line].textMeaningTranslate}</div> : null}
+                {meaningRu && translationButton ? <div>Предложение на русском: {data[line].textMeaningTranslate}</div> : null}
                 {meaningAudio ? <div>Аудио значение на англе: <audio controls src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].audioMeaning}`}></audio></div> : null}
                 {textExample ? <div>Предложение с примером использования изучаемого слова: {hideTextExample}</div> : null}
-                {textExampleTranslate ? <div>Предложение с примером использования изучаемого слова на русском: {data[line].textExampleTranslate}</div> : null}
+                {textExampleTranslate && translationButton ? <div>Предложение с примером использования изучаемого слова на русском: {data[line].textExampleTranslate}</div> : null}
                 {audioExample ? <div>Аудио предложение на англе: <audio controls src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].audioExample}`}></audio></div> : null}
-                {deleteButton ? <button>Удалить</button> : null}
-                {hardButton ? <button>Сложные</button> : null }
-                {showWordButton ? <button onClick={() => this.toggleAnswer(data,this.state.line)}>Показать ответ</button> : null}
+                {deleteButton ? <button className={s.button}>Удалить</button> : null}
+                {hardButton ? <button className={s.button}>Сложные</button> : null }
+                {showWordButton ? <button className={s.button} onClick={() => this.toggleAnswer(data,this.state.line)}>Показать ответ</button> : null}
                 <button onClick={() => this.toggletranslationButton()}>Показать/Cкрыть перевод</button>
                 {voiceAllow ? <button onClick={() => this.toggleSpeaking()}><i className="fas fa-volume-up fa-5x"/></button> : null}
                 <button type="button" onClick={() => this.increment(data,this.state.line)}>Next</button>
@@ -290,7 +251,7 @@ class Settings extends React.Component {
                 <p>Для обучения сверх обычного расписания, нажмите кнопку 'Учить ещё' ниже</p>
                 <button>Учить ещё</button>
         </div>)
-    
+
         return(
             <>
                 {page}

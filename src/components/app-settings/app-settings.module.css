@@ -7,9 +7,8 @@
     box-shadow: 0 0 20px gray;
     border-radius: 10px;
     padding: 20px;
-    color: #338c99;
-    font-size: 20px;
-    background-color: #e2e2c0;
+    color: #09d3ac;
+    background-color: #303846;
 }
 
 .settings_form {
@@ -17,6 +16,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-family: 'Pangolin', cursive;
 }
 
 .form_inner {
@@ -25,10 +25,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: #09d3ac;
+    width: 100%;
+    transition: all .2s ease-in;
 }
 
 input {
-    margin-left: 15px;
+    margin-left: 30px;
 }
 
 .card_word input {
@@ -40,6 +43,77 @@ input {
     font-weight: 700;
 }
 
-.card {
+/* .card {
     width: 500px;
+    color: black;
+} */
+
+label {
+    font-size: 30px;
+    text-transform: uppercase;
+}
+
+input[type='checkbox'] {
+    display: none;
+}
+
+label.game_checkbox_label {
+    font-family: 'Pangolin', cursive;
+    padding-right: 20px;
+    cursor: pointer;
+    font-size: 30px;
+    text-transform: uppercase;
+}
+
+label.game_checkbox_label::after {
+    content: '';
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background: #303846;
+    border: solid 1px #09d3ac;
+    vertical-align: middle;
+    margin-left: 10px;
+    transition: all .2s ease-in;
+    border-radius: 4px;
+}
+
+input[type='checkbox']:checked + label::after {
+    border-radius: 50%;
+    content: '';
+    text-align: center;
+    font-family: sans-serif;
+    background: url(./svg/check-circle-solid.svg);
+    background-color: #303846;
+    border: solid 1px #303846;
+}
+
+.select {
+    position: relative;
+    display: inline;
+    margin-left: 15px;
+}
+
+.select::after {
+    content: '';
+    border-style: solid;
+    border-width: 8px 7px 0 7px;
+    border-color: #09d3ac transparent transparent transparent;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 50px;
+}
+
+.select select {
+    padding: 0 25px;
+    background: none;
+    border: solid 1px #09d3ac;
+    -webkit-appearance: none;
+    appearance: none;
+    font-family: 'Pangolin', cursive;
+    font-size: 30px;
+    color: #09d3ac;
+    border-radius: 4px;
+    cursor: pointer;
 }
