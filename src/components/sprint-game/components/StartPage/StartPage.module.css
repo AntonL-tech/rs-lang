@@ -21,11 +21,11 @@
 .link{
     display: block;
     width: 260px;
-    height: 30px;
+    height: 40px;
     color: #ffffff;
     border-radius: 5px;
     background:  #ffffff42;
-    padding: 5px 0;
+    padding: 3px 0;
     font-size: 24px;
     text-transform: uppercase;
     margin: 10px auto 30px;
@@ -36,6 +36,8 @@
 
 .link:hover{
     background: #8a7fca48;
+    color: #ffffff;
+    text-decoration: none;
 }
 
 .level{

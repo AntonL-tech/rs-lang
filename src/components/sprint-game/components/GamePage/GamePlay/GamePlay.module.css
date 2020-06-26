@@ -1,4 +1,6 @@
-button {
+button,
+.true,
+.false {
     padding: 0;
     border: none;
     font: inherit;
@@ -7,7 +9,11 @@ button {
     cursor: pointer;
 }
 
-button:active, button:focus {
+button:active, button:focus,
+.true:active, .true:focus,
+.audio:active, .audio:focus,
+.false:active, .false:focus,
+.playWord:active, .playWord:focus {
     outline: none;
 }
 
@@ -23,10 +29,10 @@ button:active, button:focus {
     max-width: 600px;
     width: calc(100% - 20px);
     min-width: 280px;
-    margin: 5%;
+    margin: 5px;
     padding: 10px;
     width: 100%;
-    height: 310px;
+    min-height: 310px;
     border: 2px solid #ffffff;
     border-radius: 5px;
     background-color: #ffffff1f;
@@ -108,10 +114,11 @@ button:active, button:focus {
     align-items: center;
     width: 40px;
     height: 40px;
-    top: 0px;
+    top: 10px;
     right: 10px;
-    background-color: #ffffffb0;
+    background-color: #ffffff00;
     border-radius: 15%;
+    transition: 0.5s;
 }
 
 .playWord > img{
@@ -119,18 +126,23 @@ button:active, button:focus {
     height: 80%;
 }
 
+.audio:hover, .playWord:hover {
+    background-color: #ffffff1f;
+}
+
 .time{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 60px;
+    width: 120px;
     height: 60px;
     margin: 20px;
     font-size: 26px;
     color: #ffffff;
     background-image: url('../../../files/img/timeAnimation.svg');
-    background-size: 150%;
+    background-size: 75%;
     background-position: 50% 50%;
+    background-repeat: no-repeat;
 }
 
 .timeRed{
@@ -138,9 +150,9 @@ button:active, button:focus {
 }
 
 .timeStart{
-    width: 160px;
-    height: 160px;
-    margin: 20px;
+    width: 300px;
+    height: 300px;
+    margin: 0px;
     font-size: 52px;
 }
 
@@ -159,7 +171,7 @@ button:active, button:focus {
 
 .linkBlock{
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     width: 120px;
     height: 60px;
@@ -170,6 +182,7 @@ button:active, button:focus {
 
 .link{
     position: relative;
+    display: block;
     width: 30px;
     height: 30px;
     font-size: 26px;
@@ -180,14 +193,15 @@ button:active, button:focus {
 .audio{
     width: 34px;
     height: 34px;
-    background-color: #ffffffe5;
+    background-color: #ffffff00;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 15%;
+    transition: 0.5s;
 }
 
-.audio img{
+.audio > img{
     width: 80%;
     height: 80%;
 }
@@ -201,13 +215,13 @@ button:active, button:focus {
 
 .linkEl:nth-child(1){
     transform: rotate(45deg);
-    top: -13px;
+    top: -18px;
     left: 11px;
 }
 
 .linkEl:nth-child(2){
     transform: rotate(-45deg);
-    top: -13px;
+    top: -18px;
     left: 5px;
 }
 
@@ -265,9 +279,10 @@ button:active, button:focus {
 .birds{
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     width: 260px;
     height: 100px;
+    padding-left: 20px;
     margin: 0 auto;
 }
 
@@ -288,7 +303,7 @@ button:active, button:focus {
     left: 10px;
     display: block;
     width: 240px;
-    height: 6px;
+    height: 61px;
     padding-top: 55px;
     margin: 0 auto;
 }
