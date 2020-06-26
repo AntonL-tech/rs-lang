@@ -1,6 +1,5 @@
 import React from 'react';
 import s from './app-games.module.css'
-import {Card, Button} from 'react-bootstrap'
 import {Link} from "react-router-dom";
 import Header from '../app-header/app-header';
 import Sidebar from '../app-sidebar/app-sidebar';
@@ -14,16 +13,16 @@ function Games() {
 
     const renderCard = (card, index) => {
         return (
-            <Card className={s.game_card} key={index}>
-                <Card.Img style={{ width: '100%', height:'220px' }} className={s.card_img} variant="top" src={card.image} />
-                <Card.Body>
-                    <Card.Title>{card.title}</Card.Title>
-                    <Card.Text>
+            <div className={s.game_card} key={index}>
+                <img style={{ width: '100%', height:'220px' }} className={s.card_img} src={card.image} />
+                <div>
+                    <div>{card.title}</div>
+                    <div>
                         {card.text}
-                    </Card.Text>
-                    <Button variant="primary"><Link target='_blank' to={card.path}>Start</Link></Button>
-                </Card.Body>
-            </Card>
+                    </div>
+                    <button><Link target='_blank' to={card.path}>Start</Link></button>
+                </div>
+            </div>
         )
     }
 
