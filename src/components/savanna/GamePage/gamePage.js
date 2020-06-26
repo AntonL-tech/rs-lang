@@ -44,7 +44,6 @@ class GamePage extends React.Component {
     };
 
     tick() {
-        console.log(this.state.isSpinner);
         if (this.state.timer === 0) {
             this.setState({ isStartFallingWord: true });
             this.changeCountCard();
@@ -62,8 +61,7 @@ class GamePage extends React.Component {
             clearTimeout(i);
         }
 
-        this.setState({ countCard: this.state.countCard - 4 });
-        this.setState({ isShowBlock: false });
+        this.setState({ countCard: this.state.countCard - 4, isShowBlock: false });
     };
 
     clickToMainMenuReturn = () => {
@@ -88,7 +86,6 @@ class GamePage extends React.Component {
                         arr.map((el) => (el.class = 'answearWord'));
                         this.randomArraySorted(arr);
                         this.setState({ data: arr, isSpinner: false });
-                        // this.changeCountCard();
                         this.ourInterval();
                     }
                 });
@@ -131,15 +128,13 @@ class GamePage extends React.Component {
     };
 
     answearWord = (field, obj) => {
-        this.setState({ slideDone: false });
-        this.setState({ isShowBlock: false });
+        this.setState({ slideDone: false, isShowBlock: false });
         const highestTimeoutId = setTimeout(() => {}, 1);
         for (let i = 0; i < highestTimeoutId; i++) {
             clearTimeout(i);
         }
 
         if (field.id === obj.id) {
-            console.log('TRUE');
             this.playSound(success);
             const newQuestionArray = this.state.questionArray.map((el) => {
                 let elementlClass = el.class;
@@ -153,7 +148,6 @@ class GamePage extends React.Component {
             });
             this.setState({ questionArray: newQuestionArray });
         } else {
-            console.log('FALSE');
             this.playSound(error);
             this.setState({ countStarError: this.state.countStarError + 1, countStar: this.state.countStar - 1 });
 
@@ -201,10 +195,7 @@ class GamePage extends React.Component {
                     });
                 } else {
                     this.setState({
-                        questionWordObj: someWord,
-                    });
-                    this.setState({
-                        questionWordObjCopy: someWord,
+                        questionWordObj: someWord, questionWordObjCopy: someWord,
                     });
                 }
 

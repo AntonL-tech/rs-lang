@@ -5,19 +5,13 @@ import contentImg from './bgImage.svg';
 
 import GamePage from './GamePage/gamePage';
 import IntroPage from './IntroPage/introPage';
-// import closeBtn from './Assets/icons/clear.svg';
 
 const contentStyle = {
     backgroundImage: `url(${contentImg})`,
 };
 
-// const closeIcon = {
-//     backgroundImage: `url(${closeBtn})`,
-// };
-
 class Savanna extends React.Component {
     state = {
-        // isOpen: false,
         startPage: true,
         levelValue: 0,
         timer: 3,
@@ -32,7 +26,6 @@ class Savanna extends React.Component {
     };
 
     render() {
-        console.log('Рендер страницы');
         const { startPage, levelValue } = this.state;
 
         const page = startPage ? (

@@ -10,20 +10,3 @@
     background-size: 100%;
     background-repeat: no-repeat;
 }
-
-/* .exitGameIcon {
-    width: 30px;
-    height: 30px;
-    background-size: 100%;
-    position: absolute;
-    top: 30px;
-    right: 45px;
-    cursor: pointer;
-} */
-
-
-@media (min-width: 300px) and (max-width: 374px) {
-    .content {
-        padding: 0 30px;
-    }
-}

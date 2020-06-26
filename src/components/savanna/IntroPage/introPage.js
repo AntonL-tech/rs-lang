@@ -25,7 +25,6 @@ class IntroPage extends React.Component {
         const { isOpen } = this.state;
         const { handleStartGame, handleChange } = this.props;
         const { levelValue } = this.props;
-        console.log(levelValue);
         return (
             <>
                 <div className={s.introPage}>

@@ -19,8 +19,6 @@
     letter-spacing: 14px;
 }
 
-
-
 .introSubTitle {
     max-width: 565px;
     margin: 0 auto 38px;
@@ -57,13 +55,10 @@
     color: #444;
 }
 
-
 .introBtn {
     min-width: 150px;
     text-decoration: none;
-    /* font-family: 'Roboto'; */
-    font-weight: bold;
-    color: #DED7D7 !important;
+    color: #DED7D7 ;
     text-align: center;
     box-shadow: 1px 1px 1px #BEE2F9;
     padding: 12px 22px;
@@ -83,9 +78,7 @@
     color: #F0D5DE !important;
     background: #468CCF;
     background: linear-gradient(#a70eee, #af66d9);
-
 }
-
 
 @media (min-width: 300px) and (max-width: 550px) {
     .introTitle {
