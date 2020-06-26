@@ -12,6 +12,7 @@ import Home from '../app-home/app-home';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute';
 import Auth from '../Auth';
+import Savanna from "../savanna/app";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <ProtectedRoute path="/app-stats" component={Stats} />
             <ProtectedRoute path="/app-team" component={Team} />
             <ProtectedRoute path="/speakit" component={SpeakIt} />
+            <ProtectedRoute path="/savanna" component={Savanna} />
           </Switch>
         </div>
       </Router>

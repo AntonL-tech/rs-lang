@@ -7,7 +7,7 @@ import Sprint from '../src/components/sprint-game/Sprint';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Sprint />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
