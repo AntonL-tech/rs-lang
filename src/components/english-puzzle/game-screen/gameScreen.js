@@ -1,32 +1,48 @@
 import React, { Component } from 'react';
+import { Draggable, Droppable } from 'react-drag-and-drop'
 import s from './gameScreen.module.css'
 
 import EpHeader from "../ep-header/epHeader";
 import ButtonSettings from './buttonSettings/buttonSettings'
 
-const settingButton = s.setting_button;
-
-const megafon = settingButton + ' ' + s.megafon_btn;
-const translate = settingButton + ' ' + s.translate_btn;
-const song = settingButton + ' ' + s.song_btn;
-const image = settingButton + ' ' + s.image_btn;
-
-const chooseButton = settingButton+ ' ' + s.chose_btn;
-
 export default class GameScreen extends Component {
     state = {
         level: 0,
         page: 0,
-        sentencesArray: [],
-        nextSentencesArray: [],
-        sentencesTranslateArray: [],
+        sentencesArray: [], // массив предложений
+        nextSentencesArray: [], 
+        sentencesTranslateArray: [], // массив рус предложений
         nextSentencesTranslateArray: [],
-       // isNextPage: true,
-        currentSentences: 0
+        currentSentencesIndex: 0, // текущий индекс предложения
+        currentSentences: '', // текущее предложение
+        currentSentencesСollectedArray: [], // массив собирания !!
+        currentSentencesArray: [], // массив откуда собираем !!
+        colorSentencesArray: [], // цвета при чеке !!
+        promptAlwaysPronunciation : true, // разрешить перевеод
+        isCheckButton: false, // check : display none
+        isContinueButton: false,
+
     }
 
-    componentDidMount() {
-        this.getWords(this.state.page);
+    async componentDidMount() {
+        await this.getWords(this.state.page);
+        this.setState({currentSentences:  this.state.sentencesArray[this.state.currentSentencesIndex]});
+
+        let collectedArray = [];
+        let array = this.state.currentSentences.split(' ').sort(function() {
+            return 0.5 - Math.random();
+        });
+
+        this.state.currentSentences.split(' ').forEach(()=>{
+            collectedArray.push('')
+        })
+
+        this.setState({currentSentencesArray: array});
+        this.setState({currentSentencesСollectedArray: collectedArray});
+    }
+
+    show = () => {
+        console.log(this.state)
     }
 
     getWords = async (page) => {
@@ -40,10 +56,8 @@ export default class GameScreen extends Component {
         data.forEach(item => {
             sentences.push(item.textExample
                 .replace('<b>', '')
-                .replace('</b>', '')
-                .replace('.', ''));
+                .replace('</b>', ''));
             sentencesTranslate.push(item.textExampleTranslate)
-
         });
 
         if (!this.state.sentencesArray.length){
@@ -57,18 +71,16 @@ export default class GameScreen extends Component {
         }
     }
 
-    changeGameParam = () => {
+    changeGameParam = async () => {
 
         this.setState({sentencesArray: []})
         this.setState({sentencesTranslateArray:[]})
-        this.setState({currentSentences: 0})
+        this.setState({currentSentencesIndex: 0})
 
-        this.getWords(this.state.page);
+        await this.getWords(this.state.page);
+        this.setState({currentSentences:  this.state.sentencesArray[this.state.currentSentencesIndex]});
     }
 
-    show = () => {
-        console.log(this.state)
-    }
 
     levelChange = (event) => {
         this.setState({level: +event.target.value})
@@ -78,31 +90,189 @@ export default class GameScreen extends Component {
         this.setState({page: +event.target.value})
     }  
 
-    saySentences = () => {
-
+    saySentences = (sentences) => {
+        window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+        const msg = new SpeechSynthesisUtterance();
+        const recognition = new window.SpeechRecognition();
+        msg.volume = 1;
+        msg.rate = 0.8;
+        msg.pitch = 1;
+        msg.text = sentences;
+        recognition.lang = 'en-US';
+        speechSynthesis.speak(msg);
     }
 
-    checkSentences = () => {
-        if (this.state.currentSentences === 6){
-            this.getWords(this.state.page+1);
+    switchPromptAlwaysPronunciation = () => {
+        this.setState(({promptAlwaysPronunciation}) => ({
+            promptAlwaysPronunciation : !promptAlwaysPronunciation
+        }))
+    }
+
+    promptPronunciation = (sentences) => {   // сказать предложение
+        if (this.state.promptAlwaysPronunciation) {
+            this.saySentences(sentences)
+        }
+    }
+
+    checkSentences = async () => {
+        if (this.state.currentSentencesIndex === 6){
+            await this.getWords(this.state.page+1);
         } 
-        if (this.state.currentSentences === 9){
+        if (this.state.currentSentencesIndex === 9){
             this.setState({sentencesArray: this.state.nextSentencesArray})
             this.setState({sentencesTranslateArray: this.state.nextSentencesTranslateArray})
-            this.setState({currentSentences: 0})
-            this.setState({page: ++this.state.page})
+            this.setState({currentSentencesIndex: 0})
+            this.setState({page: this.state.page + 1})
         }
         else {
-            this.setState({currentSentences: ++this.state.currentSentences})
+            this.setState({currentSentencesIndex: this.state.currentSentencesIndex + 1})
         }
+    }
+
+    onContinue = async () => {
+        
+    }
+
+
+    onCheck = () => {
+        let currentArray = this.state.currentSentences.split(' ');
+        
+        let collectedArray = this.state.currentSentencesСollectedArray;
+
+        let colorArray = [];
+
+        currentArray.forEach((item,i)=>{
+            if (item === collectedArray[i]){
+                colorArray.push('success')
+            }
+            else {
+                colorArray.push('error')
+            }
+        })
+        this.setState({colorSentencesArray: colorArray})
+        if (!colorArray.includes('error')){
+            this.setState({isContinueButton: true})
+            this.saySentences(this.state.currentSentences)
+        }
+    }
+
+
+    onSwapWordsForPuzzles = (index,arr) => { // клики с пазлов
+        const collectedArray = this.state.currentSentencesСollectedArray;
+        for (let i = 0; i<collectedArray.length; i++){
+            if (collectedArray[i] === ''){
+                collectedArray[i] = arr[index];
+                break;
+            }
+        }
+        this.setState({currentSentencesСollectedArray: collectedArray})
+
+        const currentArray = this.state.currentSentencesArray;
+        currentArray[index] = '';
+
+        this.setState({currentSentencesArray: currentArray})
+
+
+        if (!collectedArray.includes('')){
+            this.setState({isCheckButton: true})
+        }
+    }
+
+    onSwapWordsForBoard = (index, arr) => { // клики куда собираются
+        const collectedArray = this.state.currentSentencesArray;
+        for (let i = 0; i<collectedArray.length; i++){
+            if (collectedArray[i] === ''){
+                collectedArray[i] = arr[index];
+                break;
+            }
+        }
+        this.setState({currentSentencesArray: collectedArray})
+
+        const currentArray = this.state.currentSentencesСollectedArray;
+        currentArray[index] = '';
+
+        this.setState({currentSentencesСollectedArray: currentArray})
+        this.setState({isCheckButton: false})
+        this.setState({isContinueButton: false})
+        this.setState({colorSentencesArray: []})
+    }
+
+    collectSentences = () => {  // если не знаешь
+        const collectedArray = this.state.currentSentences.split(' ');
+        this.setState({currentSentencesСollectedArray: collectedArray})
+
+        let colorArray = [];
+        let currentArray = [];
+        collectedArray.forEach(()=>{
+            currentArray.push('')
+            colorArray.push('success')
+        })
+
+        this.setState({currentSentencesArray: currentArray})
+        this.setState({colorSentencesArray: colorArray})
+        this.setState({isContinueButton: true})
+        this.saySentences(this.state.currentSentences)
     }
 
     render () {
-        const { level, page, sentencesTranslateArray, currentSentences, sentencesArray } = this.state;
-        let mySentences = [];
-        if (sentencesArray.length){
-            mySentences = sentencesArray[currentSentences].split(' ');
+        const { 
+            level, 
+            page, 
+            sentencesTranslateArray, 
+            currentSentencesIndex, 
+            currentSentences, 
+            sentencesArray,
+            currentSentencesСollectedArray,
+            currentSentencesArray,
+            isCheckButton,
+            colorSentencesArray,
+            isContinueButton
+        } = this.state;
+
+        const settingButton = s.setting_button;
+        const megafon = settingButton + ' ' + s.megafon_btn;
+        const translate = settingButton + ' ' + s.translate_btn;
+        const song = settingButton + ' ' + s.song_btn;
+        const image = settingButton + ' ' + s.image_btn;
+
+        const chooseButton = settingButton+ ' ' + s.chose_btn;
+
+        const takePuzzles = s.take_puzzles + ' ' + s.game_words;
+
+        let dragWord = s.drag_word; // цвет слова
+
+
+        let colorArray = [];
+        colorSentencesArray.forEach((item)=>{
+            switch (item){
+                case 'success':
+                    colorArray.push(s.success_color);
+                    break;
+                case 'error':
+                    colorArray.push(s.error_color);
+                    break;
+                default:
+                    colorArray.push(s.common_color);
+            }
+        })
+
+        let collectButton = settingButton; // i dont know btn
+        let checkButton = s.drag_word +' '+s.display_none; // check btn
+        let continueButton = s.drag_word +' '+s.display_none;
+
+        if (isCheckButton){
+            checkButton = settingButton;
+            collectButton = s.display_none;
         }
+
+        if (isContinueButton){
+            checkButton = s.display_none;
+            collectButton = s.display_none;
+            continueButton = settingButton;
+        }
+
+
+        const mySentences = currentSentencesArray;
 
         return (
             <div>
@@ -133,41 +303,58 @@ export default class GameScreen extends Component {
                                     <option value="8">9</option>
                                     <option value="9">10</option>
                             </select>
-                            <ButtonSettings label = {'GO'} classNameBtn={chooseButton} event={this.changeGameParam}/>
+                            <ButtonSettings label = {'GO'} classNameBtn={chooseButton} clickBtn={this.changeGameParam}/>
                         </div>
                         <div>
                             <span></span>
                         </div>
                         <div className={s.menu_settings}>
-                            <ButtonSettings classNameBtn={megafon} event={this.show}/>
-                            <ButtonSettings classNameBtn={translate} event={this.show}/>
-                            <ButtonSettings classNameBtn={song} event={this.show}/>
-                            <ButtonSettings classNameBtn={image} event={this.show}/>
+                            <ButtonSettings classNameBtn={megafon} clickBtn={this.show}/>
+                            <ButtonSettings classNameBtn={translate} clickBtn={this.show}/>
+                            <ButtonSettings classNameBtn={song} clickBtn={this.switchPromptAlwaysPronunciation}/>
+                            <ButtonSettings classNameBtn={image} clickBtn={this.show}/>
                         </div>
                     </div>
     
                     <div className={s.game_wrapper}>
                         <div className={s.game_group}>
                             <div className={s.game_settings}>
-                                <h3 className={s.game_sentence}>{sentencesTranslateArray[currentSentences]}</h3>
-                                <button className={s.game_speaker}></button>
+                                <h3 className={s.game_sentence}>{sentencesTranslateArray[currentSentencesIndex]}</h3>
+                                <ButtonSettings classNameBtn={s.game_speaker} clickBtn={()=>this.promptPronunciation(currentSentences)}/>
                             </div>
                         </div>
 
                         <div className={s.game_container}>
-
-                            <div className={s.game_words}></div> 
-
+                            <div className={s.game_numbering}>
+                            {Array.from({ length: 10 }, () => null).map((field, i) => (
+                                <div key={i.toString() + 'num'} className={s.game_numbering_item }>{i+1}</div> 
+                                ))}
+                            </div>
+                            <div className={s.game_words}>
+                                <div className={s.game_words}>
+                                    {currentSentencesСollectedArray.map((word, i) => (
+                                        <div 
+                                            key={i.toString() + 'd'} 
+                                            className={dragWord + ' '+ colorArray[i]}
+                                            onClick={()=>this.onSwapWordsForBoard(i,currentSentencesСollectedArray)}
+                                        >
+                                            {word}
+                                        </div> 
+                                    ))}
+                                </div> 
+                            </div>
                         </div>
 
-                        <div className={s.game_words}>{mySentences.map((field, i) => (
-                                <div key={i.toString() + 'q'} className={s.drag_word}>{field}</div> 
+                        <div className={takePuzzles}>
+                            {mySentences.map((word, i) => (
+                                <div key={i.toString() + 'd1'} className={s.drag_word} onClick={()=>this.onSwapWordsForPuzzles(i,mySentences)}>{word}</div> 
                             ))}
-                        </div> 
+                        </div>
 
                         <div className={s.game_buttons}>
-                            <button className={s.btn_dont_know}>i don`t know</button>
-                            <button className={s.btn_dont_know} onClick={this.checkSentences}>check</button>
+                            <ButtonSettings label = {'i don`t know'} classNameBtn={collectButton} clickBtn={this.collectSentences}/>
+                            <ButtonSettings label = {'check'} classNameBtn={checkButton} clickBtn={this.onCheck}/>
+                            <ButtonSettings label = {'continue'} classNameBtn={continueButton} clickBtn={this.onContinue}/>
                         </div> 
                     </div>
     
@@ -176,5 +363,4 @@ export default class GameScreen extends Component {
         )
     }
 }
-
 

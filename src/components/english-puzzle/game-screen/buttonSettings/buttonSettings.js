@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 
 export default class ButtonSettings extends Component {
     render() {
-        const {label ='',classNameBtn, event} = this.props;
+        const {label ='',classNameBtn, clickBtn} = this.props;
         return (
-            <button className={classNameBtn} onClick={event}> {label} </button>
+            <button className={classNameBtn} onClick={clickBtn}> {label} </button>
         )
     } 
 }

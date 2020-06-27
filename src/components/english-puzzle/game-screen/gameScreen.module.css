@@ -23,7 +23,6 @@
 .menu_wrapper {
     display: flex;
     justify-content: space-between;
-    border: 1px solid coral;
     border-radius: 10px;
     width: 100%;
     height: 60px;
@@ -31,9 +30,6 @@
     box-sizing: border-box;
     align-items: center;
     margin-bottom: 20px;
-}
-
-.menu_select_level {
     
 }
 
@@ -102,7 +98,6 @@
     align-items: center;
     margin: 0 auto 10px;
     max-width: 1000px;
-    border: solid 1px red;
 }
 
 .game_sentence {
@@ -127,9 +122,10 @@
 }
 
 .game_container {
-    height: 450px;
+    display: flex;
+    height: 400px;
     width: 100%;
-    border: solid 1px red;
+    border: solid 1px #37393d;
     margin-bottom: 10px;
 }
 
@@ -138,9 +134,13 @@
     align-items: center;
     justify-content: space-between;
     border: solid 1px red;
-    height: 50px;
-    width: 100%;
+    height: 40px;
+    width: calc(100% - 40px);
     margin-bottom: 10px;
+}
+
+.take_puzzles {
+    margin-left: 40px;
 }
 
 .btn_dont_know {
@@ -149,11 +149,53 @@
 
 }
 
+.game_numbering {
+    width: 40px;
+}
+
+.game_numbering_item {
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 38px;
+    height: 38px;
+    border: 1px solid black;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: cyan;
+}
 
 .drag_word {
-    min-width: 20px;
+    cursor: pointer;
+    font-size: 20px;
+    flex-grow: 1;
     height: 100%;
-    padding: 0 10px;
-    outline: solid 1px red;
-    background: coral;
+    color: #fff;
+    outline: solid 2px #767779;
+    background-color: #37393d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.successSentences {
+    background: forestgreen;
+}
+
+.error_color {
+    background-color: red;
+}
+
+.success_color {
+    background-color: forestgreen;
+}
+
+.common_color {
+    background-color: #37393d;
+}
+
+
+.display_none {
+    display: none;
 }
