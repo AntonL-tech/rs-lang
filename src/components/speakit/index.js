@@ -4,6 +4,7 @@ import WordInfo from './components/WordInfo';
 import Recognition from './components/Recognition';
 import Stars from './components/Stars';
 import Results from './components/Results';
+import StartScreen from './components/StartScreen';
 
 class SpeakIt extends Component {
   constructor(props) {
@@ -48,6 +49,7 @@ class SpeakIt extends Component {
       isGame: false,
       recognizedWord: '',
       showResults: false,
+      isStart: true,
     };
 
     this.selectWord = this.selectWord.bind(this);
@@ -56,6 +58,7 @@ class SpeakIt extends Component {
     this.showResults = this.showResults.bind(this);
     this.hideResults = this.hideResults.bind(this);
     this.restart = this.restart.bind(this);
+    this.hideStartScreen = this.hideStartScreen.bind(this);
   }
 
   selectWord(id) {
@@ -115,6 +118,10 @@ class SpeakIt extends Component {
     });
   }
 
+  hideStartScreen() {
+    this.setState({ isStart: false });
+  }
+
   render() {
     const errorsWordsArr = this.state.data.filter((elem) => !elem.guessed);
     const guessedWordsArr = this.state.data.filter((elem) => elem.guessed);
@@ -122,6 +129,9 @@ class SpeakIt extends Component {
 
     return (
       <>
+        {this.state.isStart ? (
+          <StartScreen onClick={this.hideStartScreen} />
+        ) : null}
         <Stars n={guessedCount}></Stars>
         {this.state.isGame ? (
           <Recognition onRecognition={this.checkWord} />
