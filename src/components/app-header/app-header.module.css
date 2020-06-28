@@ -1,0 +1,24 @@
+.header_inner {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 30px 0;
+    background-color: #303846;
+}
+
+.header_logo,
+.header_user {
+    font-size: 30px;
+    color: #fff;
+}
+
+.header_button {
+    font-size: 20px;
+    cursor: pointer;
+    color: #09d3ac;
+    border: solid 1px #09d3ac;
+    background-color: #303846;
+    padding: 10px 30px;
+    border-radius: 10px;
+    outline: none;
+}
