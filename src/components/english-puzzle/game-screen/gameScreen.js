@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Draggable, Droppable } from 'react-drag-and-drop'
 import s from './gameScreen.module.css'
 
 import EpHeader from "../ep-header/epHeader";
@@ -10,41 +9,40 @@ export default class GameScreen extends Component {
         level: 0,
         page: 0,
         sentencesArray: [], // массив предложений
-        sentencesTranslateArray: [], // массив рус предложений
+        sentencesTranslateArray: [], // массив рус предложений  // заполянется запросом
         currentSentencesIndex: 0, // текущий индекс предложения
         currentSentences: '', // текущее предложение
-        currentSentencesСollectedArray: [], // массив собирания !!
-        currentSentencesArray: [], // массив откуда собираем !!
-        colorSentencesArray: [], // цвета при чеке !!
+       // currentSentencesСollectedArray: [], // массив собирания !!
+        currentSentencesArray: [], // массив откуда собираем !! предложения
+       // colorSentencesArray: [], // цвета при чеке !!
         promptAlwaysPronunciation : true, // разрешить перевеод
         isCheckButton: false, // check : display none
         isContinueButton: false,
         isIgnoranceButton: true,
-        sentencesArrayBoard:[]
+        sentencesArrayBoard:[] // массив собирания !! цвета при чеке !!
     }
 
     async componentDidMount() {
         await this.getWords(this.state.page);
-        this.setState({currentSentences:  this.state.sentencesArray[this.state.currentSentencesIndex]});
-
-        let collectedArray = [];
-        let array = this.state.currentSentences.split(' ').sort(function() {
+        
+        this.setState({currentSentences:  this.state.sentencesArray[this.state.currentSentencesIndex]}); // задаем предложение текущее
+        
+        let wordShuffleArray = this.state.currentSentences.split(' ').sort(function() {
             return 0.5 - Math.random();
         });
+        this.setState({currentSentencesArray: wordShuffleArray}); // мешаем предложение текущее
 
-        this.state.currentSentences.split(' ').forEach(()=>{
+        let collectedArray = [];
+        wordShuffleArray.forEach(()=>{
             collectedArray.push('')
-        })
+        })  // создаем массив пустых слов на доске
 
-        this.setState({currentSentencesArray: array});
-        this.setState({currentSentencesСollectedArray: collectedArray});
 
         let sentences = {
-           wordArray: this.state.currentSentencesСollectedArray,
-           colorArray: this.state.colorSentencesArray
-        }
-
-        this.setState({sentencesArrayBoard: [...this.state.sentencesArrayBoard, sentences]})
+           wordArray: collectedArray, // слова в массиве 
+           colorArray: collectedArray // цвета в массиве 
+        };
+        this.setState({sentencesArrayBoard: [...this.state.sentencesArrayBoard,sentences]})
     }
 
 
@@ -67,18 +65,18 @@ export default class GameScreen extends Component {
             sentencesTranslate.push(item.textExampleTranslate)
         });
 
-        this.setState({sentencesArray: sentences})
-        this.setState({sentencesTranslateArray:sentencesTranslate})
+        this.setState({sentencesArray: sentences})  // получаем 10 предложений
+        this.setState({sentencesTranslateArray:sentencesTranslate}) //получаем 10 рус предложений
     }
 
     changeGameParam = async () => {
 
-        this.setState({sentencesArray: []})
-        this.setState({sentencesTranslateArray:[]})
-        this.setState({currentSentencesIndex: 0})
+        this.setState({sentencesArray: []}) // делаем пустым массив 10 предложений
+        this.setState({sentencesTranslateArray:[]}) // делаем пустым рус массив 10 предложений
+        this.setState({currentSentencesIndex: 0}) // обнуляем индекс текущий
 
-        await this.getWords(this.state.page);
-        this.setState({currentSentences:  this.state.sentencesArray[this.state.currentSentencesIndex]});
+        await this.getWords(this.state.page); // новый запрос
+        this.setState({currentSentences:  this.state.sentencesArray[this.state.currentSentencesIndex]}); 
     }
 
 
@@ -130,15 +128,15 @@ export default class GameScreen extends Component {
     }*/
 
     onContinue = () => {
-        this.setState({colorSentencesArray: []})
-       // this.setState({completedSentencesArray: [...this.state.completedSentencesArray, this.state.currentSentencesСollectedArray]})
+        //this.setState({sentencesArrayBoard: {...this.state.sentencesArrayBoard[this.state.currentSentencesIndex], colorArray:collectedArray}})
+       
     }
 
-
-    onCheck = () => {
+    onCheck = () => { // ПРОВЕРИТЬ
         let currentArray = this.state.currentSentences.split(' ');
         
-        let collectedArray = this.state.currentSentencesСollectedArray;
+        const board  = this.state.sentencesArrayBoard;
+        let collectedArray = board[this.state.currentSentencesIndex].wordArray;
 
         let colorArray = [];
 
@@ -150,7 +148,10 @@ export default class GameScreen extends Component {
                 colorArray.push('error')
             }
         })
-        this.setState({colorSentencesArray: colorArray})
+
+        //this.setState({colorSentencesArray: colorArray})
+        this.setState({sentencesArrayBoard: [{...this.state.sentencesArrayBoard[this.state.currentSentencesIndex], colorArray: colorArray}]})
+
         if (!colorArray.includes('error')){
             this.setState({isContinueButton: true})
             this.saySentences(this.state.currentSentences)
@@ -165,40 +166,30 @@ export default class GameScreen extends Component {
 
         const board  = this.state.sentencesArrayBoard;
         const collectedArray = board[this.state.currentSentencesIndex].wordArray;
-        
+
+
         for (let i = 0; i<collectedArray.length; i++){
             if (collectedArray[i] === ''){
                 collectedArray[i] = arr[index];
                 break;
             }
         }
-        this.setState({sentencesArrayBoard: {...this.state.sentencesArrayBoard[this.state.currentSentencesIndex], wordArray:collectedArray}})
-        
+
+       // this.setState({sentencesArrayBoard: [...this.state.sentencesArrayBoard[0], {wordArray: collectedArray}]})
+        this.setState({sentencesArraBoard: [{...this.state.sentencesArrayBoard[this.state.currentSentencesIndex], wordArray: collectedArray}]});
 
 
-       /* const collectedArray = this.state.currentSentencesСollectedArray;
-        for (let i = 0; i<collectedArray.length; i++){
-            if (collectedArray[i] === ''){
-                collectedArray[i] = arr[index];
-                break;
-            }
-        }
-        this.setState({currentSentencesСollectedArray: collectedArray})*/
-                            
-
-        const currentArray = this.state.currentSentencesArray;
+        const currentArray = this.state.currentSentencesArray; // внизу массив текущего предложения
         currentArray[index] = '';
+        this.setState({currentSentencesArray: currentArray}) // меняем там на пустоту
 
-        this.setState({currentSentencesArray: currentArray})
-
-
-        if (!collectedArray.includes('')){
+        if (!collectedArray.includes('')){  // если вверху нет пустых то кнопка чек
             this.setState({isCheckButton: true})
             this.setState({isIgnoranceButton: false})
         }
     }
 
-    onSwapWordsForBoard = (index, arr) => { // клики куда собираются
+    onSwapWordsForBoard = (index, arr) => { // клики по доске
         const collectedArray = this.state.currentSentencesArray;
         for (let i = 0; i<collectedArray.length; i++){
             if (collectedArray[i] === ''){
@@ -208,18 +199,28 @@ export default class GameScreen extends Component {
         }
         this.setState({currentSentencesArray: collectedArray})
 
-        const currentArray = this.state.currentSentencesСollectedArray;
+        const board  = this.state.sentencesArrayBoard;
+        const currentArray = board[this.state.currentSentencesIndex].wordArray; // массив в доске
         currentArray[index] = '';
+        this.setState({sentencesArrayBoard: [{...this.state.sentencesArrayBoard[this.state.currentSentencesIndex], wordArray: currentArray}]})// меняем там на пустоту
 
-        this.setState({currentSentencesСollectedArray: currentArray})
-        this.setState({isCheckButton: false})
-        this.setState({isContinueButton: false})
-        this.setState({colorSentencesArray: []})
+        this.setState({isCheckButton: false}) // скрываем чек
+        this.setState({isContinueButton: false}) // скрываем продолжить
+        this.setState({isIgnoranceButton: true}); // показываем ай донт
+        let colorArray = []
+
+        collectedArray.forEach(()=>{
+            colorArray.push('')
+        }) 
+        this.setState({sentencesArrayBoard: [{...this.state.sentencesArrayBoard[this.state.currentSentencesIndex], colorArray: colorArray}]})//опустошаем цвета 
     }
 
-    collectSentences = () => {  // если не знаешь
+    collectSentences = () => {  // если не знаешь СДЕЛАТЬ!!!!
+        
         const collectedArray = this.state.currentSentences.split(' ');
-        this.setState({currentSentencesСollectedArray: collectedArray})
+        //this.setState({currentSentencesСollectedArray: collectedArray})
+        this.setState({sentencesArrayBoard: [{...this.state.sentencesArrayBoard[this.state.currentSentencesIndex], wordArray: collectedArray}]})
+
 
         let colorArray = [];
         let currentArray = [];
@@ -229,9 +230,10 @@ export default class GameScreen extends Component {
         })
 
         this.setState({currentSentencesArray: currentArray})
-        this.setState({colorSentencesArray: colorArray})
-        this.setState({isContinueButton: true})
-        this.saySentences(this.state.currentSentences)
+ 
+        this.setState({sentencesArrayBoard: [{...this.state.sentencesArrayBoard[this.state.currentSentencesIndex], colorArray: colorArray}]})// все цвета зеленые
+        this.setState({isContinueButton: true}) // показываем кнопку продолжить
+        this.saySentences(this.state.currentSentences) // сказать предложение
     }
 
     render () {
@@ -241,45 +243,45 @@ export default class GameScreen extends Component {
             sentencesTranslateArray, 
             currentSentencesIndex, 
             currentSentences, 
-            sentencesArray,
-            currentSentencesСollectedArray,
+            //currentSentencesСollectedArray,
             currentSentencesArray,
             isCheckButton,
-            colorSentencesArray,
+            //colorSentencesArray,
             isContinueButton,
             isIgnoranceButton,
             sentencesArrayBoard,
         } = this.state;
 
-        const settingButton = s.setting_button;
+        const settingButton = s.setting_button;  //стили
         const megafon = settingButton + ' ' + s.megafon_btn;
         const translate = settingButton + ' ' + s.translate_btn;
         const song = settingButton + ' ' + s.song_btn;
         const image = settingButton + ' ' + s.image_btn;
 
         const chooseButton = settingButton+ ' ' + s.chose_btn;
-
         const takePuzzles = s.take_puzzles + ' ' + s.game_words;
+
+        
 
         const onSwapWordsForBoard = this.onSwapWordsForBoard;
 
-        let dragWord = s.drag_word; // цвет слова
-
+        //let dragWord = s.drag_word; // цвет слова
 
         let colorArray = [];
-        colorSentencesArray.forEach((item)=>{
-            switch (item){
-                case 'success':
-                    colorArray.push(s.success_color);
-                    break;
-                case 'error':
-                    colorArray.push(s.error_color);
-                    break;
-                default:
-                    colorArray.push(s.common_color);
-            }
-        })
-            
+        if(sentencesArrayBoard[currentSentencesIndex]!==undefined){
+            sentencesArrayBoard[currentSentencesIndex].colorArray.forEach((item)=>{
+                switch (item){
+                    case 'success':
+                        colorArray.push(s.success_color);
+                        break;
+                    case 'error':
+                        colorArray.push(s.error_color);
+                        break;
+                    default:
+                        colorArray.push(s.common_color);
+                }
+            })
+        }
 
         let collectButton = settingButton; // i dont know btn
         let checkButton = s.drag_word +' '+s.display_none; // check btn
@@ -298,8 +300,7 @@ export default class GameScreen extends Component {
             collectButton = s.display_none;
             continueButton = settingButton;
         }
-        
-        
+
         return (
             <div>
                  <div className={s.background}>
@@ -356,21 +357,20 @@ export default class GameScreen extends Component {
                                 <div key={i.toString() + 'num'} className={s.game_numbering_item }>{i+1}</div> 
                                 ))}
                             </div>
+      
                             <div className={s.game_board}>
 
-                            <div className={s.game_words}>
-                                {currentSentencesСollectedArray.map((word, i) => (
-                                    <div 
-                                        key={i.toString() + 'd'} 
-                                        className={dragWord + ' '+ colorArray[i]}
-                                        onClick={()=>this.onSwapWordsForBoard(i,currentSentencesСollectedArray)}
-                                    >
-                                        {word}
-                                    </div> 
+                                {sentencesArrayBoard.map((field,i) => (
+                                    <RowSentences 
+                                        key={i.toString() + 'd2'}  
+                                        array={field.wordArray} 
+                                        classNameRow = {s.game_words} classNameWord = {colorArray}  
+                                        func={onSwapWordsForBoard} 
+                                    />
                                 ))}
-                            </div>
 
                             </div>
+
                         </div>
 
                         <div className={takePuzzles}>

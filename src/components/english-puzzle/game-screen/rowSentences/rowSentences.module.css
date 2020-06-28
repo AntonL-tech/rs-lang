@@ -1,0 +1,13 @@
+.drag_word{
+    cursor: pointer;
+    font-size: 20px;
+    flex-grow: 1;
+    height: 100%;
+    color: #fff;
+    outline: solid 2px #767779;
+    background-color: #37393d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
