@@ -1,0 +1,127 @@
+@font-face {
+  font-family: 'fontello';
+  src: url('../assets/fonts/fontello.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.page {  
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(0,#b3d5d8, #ffffff);;
+}
+
+.header {
+  margin: 0 0 50px;
+  font-size: 32px;
+  font-weight: 700;
+  color: #5183e7;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.info {
+  margin: 0 0 30px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #5183e7;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.answers {
+  margin: auto;
+  max-width: 1200px;
+  display: flex;
+  justify-content: center;
+}
+
+.answersTitle {
+  margin: 0 0 10px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #5183e7;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.answersList {
+  padding: 20px;
+  width: 100%;
+}
+
+.answersCorrect {
+  width: 50%;
+  background-color: #48f8a685;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.answersIncorrect {
+  width: 50%;
+  background-color: #fa737365;
+  border-radius: 5px;
+  display: flex;  
+  flex-direction: column;
+}
+
+.wordBlock {
+  /* margin-bottom: 5px; */
+  padding: 5px;
+  border: 1px solid transparent;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.wordBlock:hover {
+  border: 1px solid #616161;
+  border-radius: 5px;
+}
+
+.wordBlockItem {
+  margin: 0;
+  width: 40%;
+  font-size: 16px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.soundBtn {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  color: #616161;
+  background-color: transparent;
+  border: none;
+  position: relative;
+}
+
+.soundBtn:hover {
+  transform: scale(1.2);
+}
+
+.soundBtn:before {
+  content: '\e803';
+  font-family: "fontello";
+  font-style: normal;
+  font-weight: normal;
+  display: inline-block;
+  text-decoration: inherit;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.soundBtn:focus {
+  outline: none;
+}

@@ -7,6 +7,7 @@ const WordList = ({words, callback, isQuestion, answer, answerId}) => {
     let classNames = s.wordItem;
 
     if (!isQuestion) {
+      classNames = s.wordItemInactive;
       if (answer === 'true') {
         if (item.correct) {
           classNames += ` ${s.correctSelected}`;
@@ -16,9 +17,7 @@ const WordList = ({words, callback, isQuestion, answer, answerId}) => {
           classNames += ` ${s.correct}`;
         }  else if (item.id === answerId) {
           classNames += ` ${s.incorrect}`;
-        } else {
-          classNames += ` ${s.inactive}`;
-        }
+        } 
       }
     }
 

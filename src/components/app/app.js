@@ -8,24 +8,26 @@ import Stats from "../app-stats/app-stats";
 import Team from "../app-team/app-team";
 import Words from "../app-words/app-words";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import Audiocall from '../audiocall/audiocall/audiocall'
 
 function App() {
     return (
-        <>
-            <Header/>
-            <Router>
-                <div className={s.app_content}>
-                    <Sidebar/>
-                    <Switch>
-                        <Route path='/app-settings'><Settings/></Route>
-                        <Route path='/app-games'><Games/></Route>
-                        <Route path='/app-words'><Words/></Route>
-                        <Route path='/app-stats'><Stats/></Route>
-                        <Route path='/app-team'><Team/></Route>
-                    </Switch>
-                </div>
-            </Router>
-        </>
+        // <>
+        //     <Header/>
+        //     <Router>
+        //         <div className={s.app_content}>
+        //             <Sidebar/>
+        //             <Switch>
+        //                 <Route path='/app-settings'><Settings/></Route>
+        //                 <Route path='/app-games'><Games/></Route>
+        //                 <Route path='/app-words'><Words/></Route>
+        //                 <Route path='/app-stats'><Stats/></Route>
+        //                 <Route path='/app-team'><Team/></Route>
+        //             </Switch>
+        //         </div>
+        //     </Router>
+        // </>
+        <Audiocall />
     );
 }
 export default App;

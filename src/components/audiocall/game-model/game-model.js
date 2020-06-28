@@ -1,39 +1,146 @@
 export default class GameModel {
   constructor(level = 0, round = 0) {
-    this.turns = 10;
+    this.turns = 19;
     this.currentTurn = 0;
     this.amountOfPages = 30;
+    this.maxLevel = 6;
     this.level = level;
     this.round = round;
     this.currentWord = null;
-    this.questionWords = null;
-    this.answerWords = null;
-    this.answers = {};
+    this.questionWords = [];
+    this.answerWords = [];
+    this.usedPages = [];
   }
 
-  // getUserWords = () => {
-  //   return fetch('../src/components/audiocall/game-model/data.json')
-  //     .then((response) => {
-  //       if (!response.ok)  {
-  //         throw new Error('error');
-  //       }      
-  //       console.log(response)  
-  //       // return response.json();
-  //       })
-  //     .catch((error) => console.log(error.message))
-  // }
+  init = () => {
+    return this.getQuestionWords()
+      .then((res) => {
+        console.log(res)
+        this.questionWords = res;
+        this.shuffle(this.questionWords);
+        console.log(this.questionWords)
+        this.currentWord = this.questionWords[this.currentTurn];
+
+        return this.getAnswerWordsArr(Math.round(this.turns / 2));
+      })
+      .then((res) => {
+        console.log(this.answerWords)
+        this.answerWords = res;
+        const wordsArr = this.filterWordsByPartOfSpeech(this.answerWords);
+
+        return this.generateWrongAnswersData();        
+      })
+      .then((answers) => {
+        const { wordTranslate, id } =  this.currentWord;
+        answers.push({ wordTranslate, id, correct: true });      
+        this.shuffle(answers);
+
+        return [this.currentWord, answers];
+      })
+  }
+
+  nextTurn = () => {
+    if (this.currentTurn === this.turns) return;
+    this.currentTurn++;
+    this.currentWord = this.questionWords[this.currentTurn];
+
+    console.log(this.currentWord)
+    
+    return this.generateWrongAnswersData()
+      .then((answers) => {        
+        const { wordTranslate, id } =  this.currentWord;
+        answers.push({ wordTranslate, id, correct: true });
+      
+        this.shuffle(answers);
+
+        return [this.currentWord, answers];
+      });
+  }
 
   getCollectionWords = (level, page) => {
     return fetch(`https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${level}`)
-      .then((response) => {
-        if (!response.ok)  {
-          throw new Error('error');
-        }        
-        return response.json();
-        })
-      .catch((error) => console.log(error.message))
+      .then((response) => response.json());
   }
 
+  getQuestionWords = () => {
+    this.round = this.getRandomNumber(this.amountOfPages);
+    this.usedPages.push([this.level, this.round]);
+
+    return this.getCollectionWords(this.level, this.round)
+      .then((words) => this.setWordsPartOfSpeech(words));
+  }
+
+  getAnswerWordsArr = (pages) => {
+    const requestArr = [];
+    const pagesArr = this.getRandomPages(pages);
+
+    pagesArr.forEach((pageData) => {
+      const [level, page] = pageData;
+      requestArr.push(this.getCollectionWords(level, page))
+    });
+
+    return Promise.all(requestArr)
+      .then((response) => {
+        const answerWords = response.flat();
+        return this.setWordsPartOfSpeech(answerWords);
+      })
+  }
+
+  // loadAnswerWords = (pages) => {
+  //   this.getAnswerWordsArr(pages).then((res) => {
+  //     this.answerWords.push(...res);
+  //     console.log('loadAnswerWords', this.answerWords)
+  //   });
+  // }
+
+  generateWrongAnswersData = () => {
+    const wordsArr = this.filterWordsByPartOfSpeech(this.answerWords);
+
+    if (wordsArr.length < 4) {
+      return this.getAnswerWordsArr(1).then((res) => {
+        this.answerWords.push(...res);
+        return this.generateWrongAnswersData()
+      })
+    } else {
+      let words = this.filterWordsByLength(this.currentWord, wordsArr); 
+
+      let answers = this.getRandomAnswers(words);
+      answers = this.transformWrongAnswersData(answers);  
+
+      if (this.currentTurn < (this.turns / 2) && this.answerWords.length < 2000) {
+        this.getAnswerWordsArr(10).then((res) => {
+          this.answerWords.push(...res);
+        });
+      }
+      console.log(this.answerWords, 'generate')
+      return new Promise((resolve) => resolve(answers));
+    }
+  }  
+
+  filterWordsByPartOfSpeech = (words) => {
+    const wordsArr = words.filter((word) => word.partOfSpeech === this.currentWord.partOfSpeech);          
+    return wordsArr;
+  }  
+  
+  filterWordsByLength = (currentWord, wordsArr) => {    
+    const length = currentWord.wordTranslate.length;
+
+    let words = wordsArr.filter((item) => {
+      const translation = item.wordTranslate.length;
+      return (translation >= (length - 1) && translation <= (length + 1));
+    });
+    
+    if (words.length < 4) {
+      words = wordsArr;
+    } 
+
+    return words;      
+  }
+
+  getRandomNumber = (length) => {
+    return Math.round(Math.random() * (length - 1));
+  }
+  
   shuffle = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       let j = Math.floor(Math.random() * (i + 1)); 
@@ -41,44 +148,28 @@ export default class GameModel {
     }    
   }
 
-  getRandomNumber = (length) => {
-    return Math.round(Math.random() * (length - 1));
-  }
-
-  // filterUserWords = (level) => {
-  //   return this.getUserWords().then((res) => {
-  //     console.log(res)
-  //     return res.filter((item) => item.group === level)
-  //   })
-  // }
-
-  getRandomPages = () => {
+  getRandomPages = (pages) => {
     const pagesArr = [];
 
-    for (let i = 0; i < (Math.floor(this.turns / 2)); ) {
+    for (let i = 0; i < pages; ) {
       const page = this.getRandomNumber(this.amountOfPages);
-      const isRepeat = pagesArr.find((item) => item === page);
+      const level = this.getRandomNumber(this.maxLevel);
+      let isRepeat = pagesArr.find(([itemLevel, itemPage]) => itemLevel === level && itemPage === page);
+      if(!isRepeat) {
+        isRepeat = this.usedPages.find(([itemLevel, itemPage]) => itemLevel === level && itemPage === page);
+      }
 
-      if (!isRepeat && !(page === this.round)) {
-        pagesArr.push(page)
+      if (!isRepeat) {
+        pagesArr.push([level, page]);
+        this.usedPages.push([level, page])
         i++;
       }
     }
-    console.log(pagesArr)
+
     return pagesArr;
-  }
+  }  
 
-  createAnswerWordsArr = () => {
-    const requestArr = [];
-    const pagesArr = this.getRandomPages();
-
-    pagesArr.forEach((page) => {
-      requestArr.push(this.getCollectionWords(this.level, page))});
-
-    return Promise.all(requestArr).then((response) => response.flat())
-  }
-
-  generateWrongAnswersArr = (words) => {
+  getRandomAnswers = (words) => {
     let answers = [];
     for (let i = 0; i < 4; i++) {
       const index = this.getRandomNumber(words);
@@ -95,58 +186,42 @@ export default class GameModel {
     })
   }
 
-  generateGamePageData = () => {
-    this.currentWord = this.questionWords[this.currentTurn];
+  getPartOfSpeech = (wordData) => {
+    const { word, wordTranslate } = wordData;
 
-    // подбираем схожие по длине слова
-    const words = this.filterWordsByLength(this.currentWord, this.answerWords); 
-
-    // формируем массив неправильных ответов
-    let answers = this.generateWrongAnswersArr(words);
-
-    // приводим данные к удобному формату 
-    answers = this.transformWrongAnswersData(answers);
-
-    // добавляем правильный вариант
-    const {wordTranslate, id} =  this.currentWord;
-    answers.push({wordTranslate, id, correct: true})
-
-    this.shuffle(answers);
-
-    return [this.currentWord, answers];
-  }
-
-  init = () => {
-    return Promise.all([this.getCollectionWords(this.level, this.round), this.createAnswerWordsArr()])
-      .then((res) => {
-        [this.questionWords, this.answerWords] = res;
-        return this.generateGamePageData();
+    return fetch(`https://dictionary.skyeng.ru/api/public/v1/words/search?search=${word}`)
+      .then((response) => {
+        return response.json();
       })
+      .then((res) => {
+        let wordReq = res.find((item) => item.text === word)
+        if (!wordReq) {
+          wordReq = res[0];
+        }
+        
+        const meanings = wordReq.meanings;
+        const wordMeaning = meanings.find((meaning) => meaning.translation.text === wordTranslate);
+
+        if (wordMeaning)  {
+          wordData.partOfSpeech = wordMeaning.partOfSpeechCode
+        } else {
+          wordData.partOfSpeech = meanings[0].partOfSpeechCode;
+          wordData.wordTranslate =  meanings[0].translation.text;
+        }
+
+        return wordData;
+      });
   }
 
-  filterWordsByLength = (currentWord, wordsArr) => {
-    const length = currentWord.wordTranslate.length;
-    const words = wordsArr.map((item) => {
-      const {wordTranslate, id} = item;
-      return {wordTranslate, id}
-    });
+  setWordsPartOfSpeech = (words) => {
+    words =  words.map((wordData) => {   
+      return this.getPartOfSpeech(wordData);
+    })
 
-    return words.filter((item) => {
-      const translation = item.wordTranslate.length;
-      return (translation >= (length - 1) && translation <= (length + 1));
-    });
+    return Promise.all(words).then((res) => res.flat())    
   }
-
-  registrateAnswer = (answer) => {
-    this.answers[this.currentTurn] = answer;
-    console.log(this.answers)
-  }
-
-  nextTurn = () => {
-    if (this.currentTurn === this.turns) return;
-    this.currentTurn++;
-    this.currentWord = this.questionWords[this.currentTurn];
-    return this.generateGamePageData();
-  }
-
 }
+
+
+
+
