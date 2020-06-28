@@ -15,27 +15,17 @@ export default class GameModel {
   init = () => {
     return this.getQuestionWords()
       .then((res) => {
-        console.log(res)
         this.questionWords = res;
         this.shuffle(this.questionWords);
-        console.log(this.questionWords)
         this.currentWord = this.questionWords[this.currentTurn];
 
         return this.getAnswerWordsArr(Math.round(this.turns / 2));
       })
       .then((res) => {
-        console.log(this.answerWords)
         this.answerWords = res;
         const wordsArr = this.filterWordsByPartOfSpeech(this.answerWords);
 
         return this.generateWrongAnswersData();        
-      })
-      .then((answers) => {
-        const { wordTranslate, id } =  this.currentWord;
-        answers.push({ wordTranslate, id, correct: true });      
-        this.shuffle(answers);
-
-        return [this.currentWord, answers];
       })
   }
 
@@ -43,18 +33,8 @@ export default class GameModel {
     if (this.currentTurn === this.turns) return;
     this.currentTurn++;
     this.currentWord = this.questionWords[this.currentTurn];
-
-    console.log(this.currentWord)
     
-    return this.generateWrongAnswersData()
-      .then((answers) => {        
-        const { wordTranslate, id } =  this.currentWord;
-        answers.push({ wordTranslate, id, correct: true });
-      
-        this.shuffle(answers);
-
-        return [this.currentWord, answers];
-      });
+    return this.generateWrongAnswersData();
   }
 
   getCollectionWords = (level, page) => {
@@ -86,20 +66,13 @@ export default class GameModel {
       })
   }
 
-  // loadAnswerWords = (pages) => {
-  //   this.getAnswerWordsArr(pages).then((res) => {
-  //     this.answerWords.push(...res);
-  //     console.log('loadAnswerWords', this.answerWords)
-  //   });
-  // }
-
   generateWrongAnswersData = () => {
     const wordsArr = this.filterWordsByPartOfSpeech(this.answerWords);
 
     if (wordsArr.length < 4) {
       return this.getAnswerWordsArr(1).then((res) => {
         this.answerWords.push(...res);
-        return this.generateWrongAnswersData()
+        return this.generateWrongAnswersData();
       })
     } else {
       let words = this.filterWordsByLength(this.currentWord, wordsArr); 
@@ -108,12 +81,16 @@ export default class GameModel {
       answers = this.transformWrongAnswersData(answers);  
 
       if (this.currentTurn < (this.turns / 2) && this.answerWords.length < 2000) {
-        this.getAnswerWordsArr(10).then((res) => {
+        this.getAnswerWordsArr(5).then((res) => {
           this.answerWords.push(...res);
         });
       }
-      console.log(this.answerWords, 'generate')
-      return new Promise((resolve) => resolve(answers));
+
+      const { wordTranslate, id } =  this.currentWord;
+      answers.push({ wordTranslate, id, correct: true });      
+      this.shuffle(answers);
+      
+      return new Promise((resolve) => resolve([this.currentWord, answers]));
     }
   }  
 
@@ -135,6 +112,58 @@ export default class GameModel {
     } 
 
     return words;      
+  }  
+
+  getRandomAnswers = (words) => {
+    let answers = [];
+    for (let i = 0; i < 4; i++) {
+      const index = this.getRandomNumber(words);
+      answers.push(words.splice(index, 1));
+    }
+
+    return answers;
+  }
+
+  transformWrongAnswersData = (answers) => {
+    return answers.map((item) => { 
+      const { wordTranslate, id } = item[0];
+      return { wordTranslate, id, correct: false };
+    })
+  }  
+
+  setWordsPartOfSpeech = (words) => {
+    words =  words.map((wordData) => {   
+      return this.getPartOfSpeech(wordData);
+    })
+
+    return Promise.all(words).then((res) => res.flat())    
+  }
+
+  getPartOfSpeech = (wordData) => {
+    const { word, wordTranslate } = wordData;
+
+    return fetch(`https://dictionary.skyeng.ru/api/public/v1/words/search?search=${word}`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((res) => {
+        let wordReq = res.find((item) => item.text === word);
+        if (!wordReq) {
+          wordReq = res[0];
+        }
+        
+        const meanings = wordReq.meanings;
+        const wordMeaning = meanings.find((meaning) => meaning.translation.text === wordTranslate);
+
+        if (wordMeaning)  {
+          wordData.partOfSpeech = wordMeaning.partOfSpeechCode;
+        } else {
+          wordData.partOfSpeech = meanings[0].partOfSpeechCode;
+          wordData.wordTranslate =  meanings[0].translation.text;
+        }
+
+        return wordData;
+      });
   }
 
   getRandomNumber = (length) => {
@@ -161,67 +190,11 @@ export default class GameModel {
 
       if (!isRepeat) {
         pagesArr.push([level, page]);
-        this.usedPages.push([level, page])
+        this.usedPages.push([level, page]);
         i++;
       }
     }
 
     return pagesArr;
   }  
-
-  getRandomAnswers = (words) => {
-    let answers = [];
-    for (let i = 0; i < 4; i++) {
-      const index = this.getRandomNumber(words);
-      answers.push(words.splice(index, 1));
-    }
-
-    return answers;
-  }
-
-  transformWrongAnswersData = (answers) => {
-    return answers.map((item) => { 
-      const {wordTranslate, id} = item[0];
-      return {wordTranslate, id, correct: false};
-    })
-  }
-
-  getPartOfSpeech = (wordData) => {
-    const { word, wordTranslate } = wordData;
-
-    return fetch(`https://dictionary.skyeng.ru/api/public/v1/words/search?search=${word}`)
-      .then((response) => {
-        return response.json();
-      })
-      .then((res) => {
-        let wordReq = res.find((item) => item.text === word)
-        if (!wordReq) {
-          wordReq = res[0];
-        }
-        
-        const meanings = wordReq.meanings;
-        const wordMeaning = meanings.find((meaning) => meaning.translation.text === wordTranslate);
-
-        if (wordMeaning)  {
-          wordData.partOfSpeech = wordMeaning.partOfSpeechCode
-        } else {
-          wordData.partOfSpeech = meanings[0].partOfSpeechCode;
-          wordData.wordTranslate =  meanings[0].translation.text;
-        }
-
-        return wordData;
-      });
-  }
-
-  setWordsPartOfSpeech = (words) => {
-    words =  words.map((wordData) => {   
-      return this.getPartOfSpeech(wordData);
-    })
-
-    return Promise.all(words).then((res) => res.flat())    
-  }
 }
-
-
-
-

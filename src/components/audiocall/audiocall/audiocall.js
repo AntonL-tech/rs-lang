@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import StartPage from '../start-page/start-page';
 import GamePage from '../game-page/game-page';
-import GameModel from '../game-model/game-model';
 import s from './audiocall.module.css';
-import StatisticsPage from '../statistic-page/statistics-page'
+import StatisticsPage from '../statistic-page/statistics-page';
 
 export default class Audiocall extends Component {
     constructor(props) {
       super(props);
-      this.gameModel = null;
       this.state = {
         isStartPage: true,
         isStatisticsPage: false,
@@ -16,13 +14,9 @@ export default class Audiocall extends Component {
       }
     }
 
-    closeGame = () => {
-      console.log('close');
-    }
-
     startGame = () => {     
       if (!this.state.isStartPage) return;
-      this.setState({isStartPage: false})
+      this.setState({ isStartPage: false })
     } 
     
     showStatistics = (correctAnswers, incorrectAnswers) => {
@@ -34,7 +28,7 @@ export default class Audiocall extends Component {
     }
   
     changeLevel = (event) => {
-      this.setState({level: event.target.value});  
+      this.setState({ level: event.target.value });  
     }
     
     render() {
@@ -52,7 +46,7 @@ export default class Audiocall extends Component {
 
       return (
       <>
-        <button className={s.cancel} onClick={this.closeGame} />
+        <button className={s.cancel}/>
         {page}
       </>
       )      

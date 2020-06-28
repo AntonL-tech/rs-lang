@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './word-list.module.css';
 
-const WordList = ({words, callback, isQuestion, answer, answerId}) => {
+const WordList = ({ words, callback, isQuestion, answer, answerId }) => {
   
   const wordList = words.map((item) => {
     let classNames = s.wordItem;

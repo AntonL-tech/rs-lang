@@ -3,23 +3,18 @@ import s from './game-page.module.css';
 import WordList from '../word-list/word-list';
 import Preloader from '../preloader/preloader';
 import GameModel from '../game-model/game-model';
+import error from '../assets/audio/error.mp3';
+import correct from '../assets/audio/correct.mp3';
 
 export default class GamePage extends Component {
   constructor(props) {
     super(props);
-    this.gameModel = this.props.gameModel;
     this.level = this.props.level;
     this.correctAnswers = [];
     this.incorrectAnswers = [];
-    // this.soundSuccess = '../assets/audio/success.mp3';
-    // this.soundFailure = '../assets/audio/failure.mp3';
     this.state = {
       isQuestion: true,
-      currentWord: this.props.currentWord,
-      answers: this.props.answers,
       isCorrectAnswer: true,
-      answerId: null,
-      result: null,
       preloader: true,
       soundOn: true,
     }
@@ -29,26 +24,29 @@ export default class GamePage extends Component {
     this.gameModel = new GameModel(this.level);
     this.gameModel.init().then((res) => {
       let [currentWord, answers] = res;
-      this.setState({currentWord, answers, preloader: false});
+      this.setState({ currentWord, answers, preloader: false });
       this.playWord();
     })
   }
 
   pass = () => {
-    this.incorrectAnswers.push(this.state.currentWord);
-    this.setState({isQuestion: false, isCorrectAnswer: false, answerId: undefined});
+    this.incorrectAnswers.push(this.state.currentWord);    
+    this.playSound(error);
+    this.setState({ isQuestion: false, isCorrectAnswer: false, answerId: undefined });
   }
 
   getAnswer = (event) => {    
-    const { isQuestion, currentWord, soundOn } = this.state;
+    const { isQuestion, currentWord } = this.state;
 
     if (!isQuestion) return;
 
     const answer = event.target.dataset.correct;
     if (answer === 'true') {
-      this.correctAnswers.push(currentWord);      
+      this.correctAnswers.push(currentWord);   
+      this.playSound(correct);  
     } else {
-      this.incorrectAnswers.push(currentWord);
+      this.incorrectAnswers.push(currentWord);  
+      this.playSound(error);  
     }
 
     const id = event.target.id;
@@ -65,11 +63,8 @@ export default class GamePage extends Component {
     }
 
     newPageData.then(([currentWord, answers]) => {
-      // const [currentWord, answers] = newPageData;
-      this.setState({ isQuestion: true, currentWord, answers, preloader:false });
-          
+      this.setState({ isQuestion: true, currentWord, answers, preloader:false });          
       this.playWord();  
-      // this.gameModel.loadAnswerWords(5);
     }); 
   }
 
@@ -83,20 +78,22 @@ export default class GamePage extends Component {
     this.setState(({soundOn: !this.state.soundOn}))
   }
 
-  // playSound = (sound) => {    
-  //   const audio = new Audio(sound);
-  //   audio.play();
-  // }
+  playSound = (sound) => {   
+    if (!this.state.soundOn) return;
+
+    const audio = new Audio(sound);
+    audio.play();
+  }
 
   render() {
     const { preloader } = this.state;
     
     if (!preloader) {
-      const {isQuestion, answers, answerId, isCorrectAnswer, currentWord : {image, wordTranslate}, soundOn} = this.state;
+      const { isQuestion, answers, answerId, isCorrectAnswer, currentWord : { image, wordTranslate }, soundOn } = this.state;
 
       return (
         <div className = {s.page}>
-          <button className={soundOn ? s.sound : `${s.sound} ${s.soundOff}`} onClick={this.switchSound} /*data-audio={``}*/ />
+          <button className={soundOn ? s.sound : `${s.sound} ${s.soundOff}`} onClick={this.switchSound} />
           <div className={s.gameWrapper}> 
             <div className={s.questionBoard}>
               <img className={isQuestion ? s.hidden : s.wordImg} src={`https://raw.githubusercontent.com/yrevtovich/rslang-data/master/${image}`} alt='word illustration'/>

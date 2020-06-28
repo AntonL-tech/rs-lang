@@ -1,0 +1,15 @@
+.background{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(40deg, #323b2f, #26545f 40%);
+}
+
+.name{
+    font-size: 24px;
+    font-style: oblique;
+    font-weight: bold;
+    color: #ffffff;
+}

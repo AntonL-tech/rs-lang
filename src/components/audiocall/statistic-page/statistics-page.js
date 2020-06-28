@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import s from './statistics-page.module.css';
 
-const List = ({words, playAudio}) => {  
+const List = ({ words, playAudio }) => {  
   const wordList = words.map((item) => {
-    let classNames = s.wordBlock;
 
     return (
-      <li className={classNames} key={item.id} id={item.id}>
+      <li className={s.wordBlock} key={item.id} id={item.id}>
         <p className={s.wordBlockItem}>{item.word}</p>
         <p className={s.wordBlockItem}>{item.wordTranslate}</p>
         <button className={s.soundBtn} data-audio={item.audio} onClick={playAudio} />
@@ -16,7 +15,6 @@ const List = ({words, playAudio}) => {
 
   return <ul className={s.answersList}>{wordList}</ul>
 }
-
 
 export default class StatisticsPage extends Component {
   constructor(props) {
