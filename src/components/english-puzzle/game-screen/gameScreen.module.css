@@ -129,18 +129,25 @@
     margin-bottom: 10px;
 }
 
+.game_board {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color:antiquewhite;
+}
+
 .game_words {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: solid 1px red;
     height: 40px;
-    width: calc(100% - 40px);
-    margin-bottom: 10px;
+    width: 100%
 }
 
 .take_puzzles {
     margin-left: 40px;
+    width: calc(100% - 40px);
+    margin-bottom: 10px;
 }
 
 .btn_dont_know {
