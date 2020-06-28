@@ -7,7 +7,7 @@ import Settings from '../app-settings/app-settings';
 import Stats from '../app-stats/app-stats';
 import Team from '../app-team/app-team';
 import Words from '../app-words/app-words';
-import SpeakIt from '../speakit/speakit';
+import SpeakIt from '../speakit';
 import Sprint from '../sprint-game/Sprint';
 import Home from '../app-home/app-home';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';

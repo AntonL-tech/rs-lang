@@ -5,52 +5,22 @@ import Recognition from './components/Recognition';
 import Stars from './components/Stars';
 import Results from './components/Results';
 import StartScreen from './components/StartScreen';
-
+import DifficultSelector from './components/DifficultSelector';
+import WordService from './wordsService';
 class SpeakIt extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [
-        {
-          word: 'alcohol',
-          transcription: '[ǽlkəhɔ̀ːl]',
-          translate: 'Алкоголь',
-          id: '1',
-          image:
-            'https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/files/01_0002.jpg',
-          audio:
-            'https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/files/01_0002.mp3',
-          guessed: false,
-        },
-        {
-          word: 'boat',
-          transcription: '[bout]',
-          translate: 'Лодка',
-          id: '2',
-          image:
-            'https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/files/01_0005.jpg',
-          audio:
-            'https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/files/01_0005.mp3',
-          guessed: false,
-        },
-        {
-          word: 'agree',
-          transcription: '[əgríː]',
-          translate: 'Согласна',
-          id: '3',
-          image:
-            'https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/files/01_0001.jpg',
-          audio:
-            'https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/files/01_0001.mp3',
-          guessed: false,
-        },
-      ],
+      data: [],
       selectedWord: {},
       isGame: false,
       recognizedWord: '',
       showResults: false,
       isStart: true,
     };
+
+    this.wordService = new WordService();
+    this.selectDifficult(0);
 
     this.selectWord = this.selectWord.bind(this);
     this.checkWord = this.checkWord.bind(this);
@@ -59,6 +29,7 @@ class SpeakIt extends Component {
     this.hideResults = this.hideResults.bind(this);
     this.restart = this.restart.bind(this);
     this.hideStartScreen = this.hideStartScreen.bind(this);
+    this.selectDifficult = this.selectDifficult.bind(this);
   }
 
   selectWord(id) {
@@ -99,7 +70,6 @@ class SpeakIt extends Component {
       isGame: false,
       showResults: true,
     });
-    console.log('app state when show: ', this.state);
   }
 
   hideResults() {
@@ -122,6 +92,12 @@ class SpeakIt extends Component {
     this.setState({ isStart: false });
   }
 
+  selectDifficult(lvl) {
+    this.wordService
+      .getRndWordsFromGroup(lvl)
+      .then((data) => this.setState({ data: data }));
+  }
+
   render() {
     const errorsWordsArr = this.state.data.filter((elem) => !elem.guessed);
     const guessedWordsArr = this.state.data.filter((elem) => elem.guessed);
@@ -132,6 +108,7 @@ class SpeakIt extends Component {
         {this.state.isStart ? (
           <StartScreen onClick={this.hideStartScreen} />
         ) : null}
+        <DifficultSelector onChange={this.selectDifficult} />
         <Stars n={guessedCount}></Stars>
         {this.state.isGame ? (
           <Recognition onRecognition={this.checkWord} />
