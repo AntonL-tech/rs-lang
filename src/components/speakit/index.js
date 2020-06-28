@@ -21,25 +21,16 @@ class SpeakIt extends Component {
 
     this.wordService = new WordService();
     this.selectDifficult(0);
-
-    this.selectWord = this.selectWord.bind(this);
-    this.checkWord = this.checkWord.bind(this);
-    this.startGame = this.startGame.bind(this);
-    this.showResults = this.showResults.bind(this);
-    this.hideResults = this.hideResults.bind(this);
-    this.restart = this.restart.bind(this);
-    this.hideStartScreen = this.hideStartScreen.bind(this);
-    this.selectDifficult = this.selectDifficult.bind(this);
   }
 
-  selectWord(id) {
+  selectWord = (id) => {
     this.setState(({ data }) => {
       const index = data.findIndex((elem) => elem.id === id);
       return { selectedWord: data[index] };
     });
-  }
+  };
 
-  checkWord(recognizedWord) {
+  checkWord = (recognizedWord) => {
     let words = this.state.data;
     this.setState({ recognizedWord: recognizedWord });
     words.forEach(({ word }, index) => {
@@ -58,45 +49,53 @@ class SpeakIt extends Component {
         showResults: true,
       });
     }
-  }
+  };
 
-  startGame() {
+  startGame = () => {
     this.setState({ isGame: true });
     console.log('start game click');
-  }
+  };
 
-  showResults() {
+  showResults = () => {
     this.setState({
       isGame: false,
       showResults: true,
     });
-  }
+  };
 
-  hideResults() {
+  hideResults = () => {
     this.setState({
       showResults: false,
       selectedWord: {},
     });
-  }
+  };
 
-  restart() {
-    this.setState({
-      selectedWord: {},
-      isGame: false,
-      recognizedWord: '',
-      showResults: false,
+  restart = () => {
+    this.setState(({ data }) => {
+      const resetData = data.map((word) => {
+        word.guessed = false;
+        return word;
+      });
+
+      return {
+        data: resetData,
+        selectedWord: {},
+        isGame: false,
+        recognizedWord: '',
+        showResults: false,
+      };
     });
-  }
+  };
 
-  hideStartScreen() {
+  hideStartScreen = () => {
     this.setState({ isStart: false });
-  }
+  };
 
-  selectDifficult(lvl) {
+  selectDifficult = (lvl) => {
     this.wordService
       .getRndWordsFromGroup(lvl)
       .then((data) => this.setState({ data: data }));
-  }
+  };
 
   render() {
     const errorsWordsArr = this.state.data.filter((elem) => !elem.guessed);
