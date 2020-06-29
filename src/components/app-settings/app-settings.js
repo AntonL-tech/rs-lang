@@ -157,7 +157,7 @@ class Settings extends React.Component {
 
 
                     <input className={s.game_checkbox} id='translation' type="checkbox" checked={this.state.translation} onChange = {this.handleCheck}/>
-                    <label for='translation' className={s.game_checkbox_label}>Перевод</label>
+                    <label for='translation' className={s.game_checkbox_label}>Перевод слова</label>
 
                     <input className={s.game_checkbox} id='audio' type="checkbox" checked={this.state.audio} onChange = {this.handleCheck}/>
                     <label for='audio' className={s.game_checkbox_label}>Аудио</label>
@@ -199,8 +199,8 @@ class Settings extends React.Component {
                     <label for='voiceAllow' className={s.game_checkbox_label}>Кнопка звука</label>
                 </form>
                 </div>
-                <button type="button" onClick={() => this.getResults()}>Editor</button>
-                {this.state.isCheck ? <div>olololo</div> : null}
+                <button className={s.game_btn} type="button" onClick={() => this.getResults()}>Start</button>
+                {this.state.isCheck ? <div className={s.error_settings}>Необходимо указать количество новых слов, которые планируете выучить за день, а также максимальное количество карточек со словами на день.<p>Хотя бы один пункт из нижеперечисленных должен быть отмечен:<br/>перевод слова<br/>предложение с объяснением значения слова<br/> предложение с примером использования изучаемого слова </p></div> : null}
             </>
         )
     }

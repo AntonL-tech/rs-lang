@@ -20,6 +20,7 @@
 }
 
 .form_inner {
+    padding: 30px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -42,11 +43,6 @@ input {
 .bold {
     font-weight: 700;
 }
-
-/* .card {
-    width: 500px;
-    color: black;
-} */
 
 label {
     font-size: 30px;
@@ -116,4 +112,41 @@ input[type='checkbox']:checked + label::after {
     color: #09d3ac;
     border-radius: 4px;
     cursor: pointer;
+}
+
+.game_btn {
+    padding: 15px 0;
+    border-radius: 20px;
+    height: 100%;
+    font-family: 'Pangolin', cursive;
+    font-size: 30px;
+    color: #09d3ac;
+    border: 1px solid #09d3ac;
+    background: #303846;
+}
+
+.game_btn:hover {
+    color: #303846;
+    background: #09d3ac;
+    border: 1px solid #303846;
+}
+
+.error_settings {
+    max-width: 1000px;
+    text-align: left;
+    font-size: 20px;
+    font-family: 'Pangolin', cursive;
+    text-transform: uppercase;
+    color: #E74C3C;
+}
+
+input[type='number'] {
+    margin-left: 15px;
+    border: 1px solid #09d3ac;
+    background: none;
+    color: #09d3ac;
+    border-radius: 4px;
+    outline: none;
+    padding: 0px 0px 0 15px;
+    width: 70px;
 }
