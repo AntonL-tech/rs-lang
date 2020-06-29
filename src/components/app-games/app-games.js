@@ -9,7 +9,8 @@ function Games() {
     const gameInfo = [
         {image: 'https://avatarko.ru/img/kartinka/33/multfilm_lyagushka_32117.jpg', title: 'SpeakIt', text: 'Описание speakIt', path: '/speakit'},
         {image: SprintImg, title: 'Sprint', text: 'Learn how to quickly translate from English into your native language.', path: '/sprint'},
-        {image: 'https://avatarko.ru/img/kartinka/33/multfilm_lyagushka_32117.jpg', title: 'Savannah', text: 'Описание savannah', path: '/savanna'},
+        {image: 'https://avatarko.ru/img/kartinka/33/multfilm_lyagushka_32117.jpg', title: 'Savannah', text: 'Описание savannah', path: '/savanna'},        
+        {image: 'https://avatarko.ru/img/kartinka/33/multfilm_lyagushka_32117.jpg', title: 'Audiocall', text: 'Описание audiocall', path: '/audiocall'},
     ]
 
     const renderCard = (card, index) => {
