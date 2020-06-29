@@ -68,7 +68,7 @@ class GamePage extends Component {
                     this.playAudio(audioTikTak);
                 }
             }
-        });
+        });          
     };
 
     componentDidMount() {

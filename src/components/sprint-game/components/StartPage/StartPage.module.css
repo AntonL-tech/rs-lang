@@ -48,3 +48,10 @@
     margin: 10px auto;
     border-radius: 5px;
 }
+
+.message{
+    width: 260px;
+    margin: 0 auto;
+    text-align: center;
+    color: red;
+}
