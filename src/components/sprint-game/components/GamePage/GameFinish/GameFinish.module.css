@@ -1,8 +1,8 @@
-button,
+.linkEnd,
 .link {
     display: block;
     width: 260px;
-    height: 30px;
+    height: 32px;
     color: #ffffff;
     background: #ffffff42;
     padding: 5px 0;
@@ -18,18 +18,21 @@ button,
     cursor: pointer;
 }
 
-.link{
+.linkEnd{
     padding-top: 5px;
-    height: 25px;
     background: #f74150;
 }
 
 .link:hover,
-button:hover{
+.linkEnd:hover{
     background: #8a7fca48;
+    color: #ffffff;
+    text-decoration: none;
 }
 
-button:active, button:focus {
+button:active, button:focus,
+.audio:active, .audio:focus,
+.link:active, .link:focus {
     outline: none;
 }
 
@@ -43,7 +46,7 @@ button:active, button:focus {
     padding: 10px;
     width: 100%;
     min-height: 280px;
-    max-height: 590px;
+    max-height: 640px;
     border: 2px solid #ffffff;
     border-radius: 5px;
     background-color: #ffffff1f;
@@ -116,9 +119,16 @@ button:active, button:focus {
     height: 20px;
     margin: 7px 5px 0;
     padding: 0;
+    transition: 0.5s;
 }
 
-img{
+.audio:hover{
+    background-color: #2631421f;
+    border-radius: 15%;
+}
+
+.audio > img{
     width: 80%;
     height: 80%;
+    padding-bottom: 6px;
 }
