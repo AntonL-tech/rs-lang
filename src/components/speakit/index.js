@@ -17,7 +17,7 @@ class SpeakIt extends Component {
       recognizedWord: '',
       showResults: false,
       isStart: true,
-      difficult: 0,
+      difficult: '-1',
       hasUserWords: false,
     };
 
@@ -27,11 +27,11 @@ class SpeakIt extends Component {
   componentDidMount() {
     this.wordService.getUserWordsCount().then((userWordsCount) => {
       if (userWordsCount < 10) {
-        this.selectDifficult('0');
         this.setState({ hasUserWords: false });
+        this.selectDifficult('0');
       } else {
-        this.selectDifficult('-1');
         this.setState({ hasUserWords: true });
+        this.selectDifficult('-1');
       }
     });
   }
@@ -104,6 +104,8 @@ class SpeakIt extends Component {
   };
 
   selectDifficult = (lvl) => {
+    console.log('selectDifficult: ', lvl);
+
     this.setState({ data: [] });
     if (lvl === '-1') {
       this.wordService
@@ -133,6 +135,7 @@ class SpeakIt extends Component {
         <DifficultSelector
           onChange={this.selectDifficult}
           hasUserWords={this.state.hasUserWords}
+          selectedOption={this.state.difficult}
         />
         <Stars n={guessedCount}></Stars>
         {this.state.isGame ? (

@@ -5,7 +5,7 @@ class DifficultSelector extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedOption: '0',
+      selectedOption: 0,
     };
   }
 
@@ -13,8 +13,13 @@ class DifficultSelector extends Component {
     this.setState({
       selectedOption: e.target.value,
     });
+
     this.props.onChange(e.target.value);
   };
+
+  componentDidMount() {
+    this.setState({ selectedOption: this.props.selectedOption });
+  }
 
   render() {
     return (
