@@ -104,6 +104,7 @@ class SpeakIt extends Component {
   };
 
   selectDifficult = (lvl) => {
+    this.setState({ data: [] });
     if (lvl === '-1') {
       this.wordService
         .getRndUserWords()

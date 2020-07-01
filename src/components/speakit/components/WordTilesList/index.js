@@ -1,6 +1,7 @@
 import React from 'react';
 import WordTile from '../WordTile';
 import './wordTilesList.css';
+import Spinner from '../Spinner';
 
 const WordTilesList = ({ tiles, onSelect, selectId }) => {
   const elements = tiles.map((tile) => {
@@ -18,7 +19,11 @@ const WordTilesList = ({ tiles, onSelect, selectId }) => {
     );
   });
 
-  return <section className="word-tiles">{elements}</section>;
+  return (
+    <section className="word-tiles">
+      {elements.length ? elements : <Spinner></Spinner>}
+    </section>
+  );
 };
 
 WordTilesList.defaultProps = {
