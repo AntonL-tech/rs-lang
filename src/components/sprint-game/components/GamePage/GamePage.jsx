@@ -43,7 +43,7 @@ class GamePage extends Component {
             uploaded: false
         });
 
-        createArrayWords(this.props.location.aboutProps).then((el) => {
+        createArrayWords(this.props.location.aboutProps.level, this.props.location.aboutProps.UserWordList).then((el) => {
             this.intervalID = setInterval(
                 () => this.tick(),
                 1000
