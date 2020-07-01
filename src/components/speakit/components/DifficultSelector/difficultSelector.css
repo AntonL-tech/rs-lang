@@ -35,3 +35,7 @@
 .selector__input:checked + .selector__point-border {
   border-color: green;
 }
+
+.selector__input:disabled + .selector__point-border label {
+  background-color: grey;
+}

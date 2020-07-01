@@ -18,14 +18,22 @@ class SpeakIt extends Component {
       showResults: false,
       isStart: true,
       difficult: 0,
+      hasUserWords: false,
     };
 
     this.wordService = new WordService();
   }
 
   componentDidMount() {
-    this.selectDifficult(0);
-    this.wordService.getRndUserWords().then((result) => console.log(result));
+    this.wordService.getUserWordsCount().then((userWordsCount) => {
+      if (userWordsCount < 10) {
+        this.selectDifficult('0');
+        this.setState({ hasUserWords: false });
+      } else {
+        this.selectDifficult('-1');
+        this.setState({ hasUserWords: true });
+      }
+    });
   }
 
   selectWord = (id) => {
@@ -99,11 +107,15 @@ class SpeakIt extends Component {
     if (lvl === '-1') {
       this.wordService
         .getRndUserWords()
-        .then((data) => this.setState({ data: data, difficult: lvl }));
+        .then((data) =>
+          this.setState({ data: data, difficult: lvl, selectedWord: {} })
+        );
     } else {
       this.wordService
         .getRndWordsFromGroup(lvl)
-        .then((data) => this.setState({ data: data, difficult: lvl }));
+        .then((data) =>
+          this.setState({ data: data, difficult: lvl, selectedWord: {} })
+        );
     }
   };
 
@@ -117,7 +129,10 @@ class SpeakIt extends Component {
         {this.state.isStart ? (
           <StartScreen onClick={this.hideStartScreen} />
         ) : null}
-        <DifficultSelector onChange={this.selectDifficult} />
+        <DifficultSelector
+          onChange={this.selectDifficult}
+          hasUserWords={this.state.hasUserWords}
+        />
         <Stars n={guessedCount}></Stars>
         {this.state.isGame ? (
           <Recognition onRecognition={this.checkWord} />

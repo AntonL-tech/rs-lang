@@ -5,12 +5,16 @@ const MIN_PAGE = 0;
 const MAX_GROUP = 5;
 const MIN_GROUP = 0;
 const MAX_WORD_INDEX = 19;
-const MIN_WORD_INDEX = 19;
+const MIN_WORD_INDEX = 0;
 
 export default class WordsService {
   constructor() {
     this.userID = localStorage.getItem('userId');
     this.token = localStorage.getItem('token');
+  }
+
+  async getUserWordsCount() {
+    return await getUserWordsList(this.userID, this.token).length;
   }
 
   async getRndUserWords() {
