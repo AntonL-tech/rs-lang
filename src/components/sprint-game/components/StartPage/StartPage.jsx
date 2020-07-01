@@ -20,21 +20,22 @@ class StartPage extends Component {
 
     componentDidMount() {
         this.setState({
-            uploaded: false
+            uploaded: false,
+            UserWordList: [1],
         });
         getUserAllWord(localStorage.userId, localStorage.token).then((el) => {
             const status = el.status;
             if(status === 200){
                 el.wordList.then((el) => {
                     this.setState({
+                        UserWordList: el,
+                        status: status,
                         uploaded: true,
-                        UserWordList: [...el],
-                        status: status
                     });
                     console.log(this.state.UserWordList)
                 })
+                    
             } else {
-                console.log(status)
                 this.setState({
                     uploaded: true,
                     UserWordList: [],
@@ -46,15 +47,15 @@ class StartPage extends Component {
     };
 
     render() {
-        console.log(this.state.UserWordList ? this.state.UserWordList.length : this.state.UserWordList)
         return !this.state.uploaded ? <Preloader />
         : (<div className={s.block}>
                 <div className={s.name}>
                     Sprint Game
                 </div>
                 <div className={s.message}>
-                    {this.state.status === 200 && this.state.UserWordList.length < 80 ? 'Вы выучили менее 80 слов' : ''}
-                    {this.state.status !== 200 ? 'Вы не авторезированы, статистика не доступна' : ''}
+                    {this.state.status === 200 && this.state.UserWordList.length < 80 
+                    ? `Вы выучили только ${this.state.UserWordList.length}/80 слов пользовотельский режим не доступен` : ''}
+                    {this.state.status !== 200 ? 'Вы не авторезированы, пользовательский режим и статистика не доступны' : ''}
                 </div>
                 <select className={s.level} onChange={this.change.bind(this)}>
                     {this.state.UserWordList.length > 79 ? <option value={1}>User Level</option> : ''}

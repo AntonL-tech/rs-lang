@@ -7,21 +7,29 @@ const getUserAllWord = async (id, token) => {
     headers: {
       'Authorization': `Bearer ${token}`,
       Accept: 'application/json',
+      'Access-Control-Allow-Origin': '*',
     },
   });
-  const status = await rawResponse.status;
-  const content = await rawResponse.json();
+  const result = await rawResponse;
 
-  if(status === 200){
-    let wordArr = []
+    if (result.status === 200){
+      const content = result.json();
+      
     const promise = new Promise((resolve, reject) => {
-        resolve(content.map((el, i) => getUserWord(id, token, el.wordId).then((vl) => wordArr[i] = vl)));
+      resolve( content.then((elm) => {
+        console.log(elm)
+        let wordArr = new Array(elm.length);
+        elm.map((el, i) => getUserWord(id, token, el.wordId).then((vl) => {wordArr[i] = vl}));
+        return wordArr;
+      }));
     });
-    return {status: status, wordList: promise.then(() => wordArr)}
-  } else {
-    return {status: status};
-  }
-  
+      
+    return {status: result.status, wordList: promise}
+
+    } else {
+      return {status: result.status};
+    }
+
 };
 
 export { getUserAllWord as default };
