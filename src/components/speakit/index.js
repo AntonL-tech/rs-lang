@@ -21,7 +21,11 @@ class SpeakIt extends Component {
     };
 
     this.wordService = new WordService();
+  }
+
+  componentDidMount() {
     this.selectDifficult(0);
+    this.wordService.getRndUserWords().then((result) => console.log(result));
   }
 
   selectWord = (id) => {
