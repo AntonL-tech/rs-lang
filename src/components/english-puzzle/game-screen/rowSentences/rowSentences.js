@@ -5,6 +5,19 @@ export default class RowSentences extends Component {
     render() {
         const {array,classNameRow,classNameWord,func} = this.props;
 
+        for (let i = 0; i < classNameWord.length; i++){   // map switch
+            if (classNameWord[i] === 'common'){
+                classNameWord[i] = s.common_color;
+            } else {
+                if (classNameWord[i] === 'success'){
+                    classNameWord[i] = s.success_color;
+                } 
+                if (classNameWord[i] === 'error'){
+                    classNameWord[i] = s.error_color;
+                } 
+            }
+        }
+
         return (
             <div className={classNameRow}>
                 {array.map((word, i) => (
@@ -20,3 +33,14 @@ export default class RowSentences extends Component {
         )
     } 
 }
+
+    /*switch (classNameWord[i]){
+        case 'success':
+            classNameWord[i] = s.success_color;
+            break;
+        case 'error':
+            classNameWord[i] = s.error_color;
+            break;
+        default:
+            classNameWord[i] = s.common_color;
+    }*/
