@@ -1,5 +1,5 @@
 import React from 'react';
-import WordTile from '../WordTile';
+import WordTile from './WordTile';
 import './wordTilesList.css';
 import Spinner from '../Spinner';
 
