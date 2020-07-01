@@ -96,9 +96,15 @@ class SpeakIt extends Component {
   };
 
   selectDifficult = (lvl) => {
-    this.wordService
-      .getRndWordsFromGroup(lvl)
-      .then((data) => this.setState({ data: data, difficult: lvl }));
+    if (lvl === '-1') {
+      this.wordService
+        .getRndUserWords()
+        .then((data) => this.setState({ data: data, difficult: lvl }));
+    } else {
+      this.wordService
+        .getRndWordsFromGroup(lvl)
+        .then((data) => this.setState({ data: data, difficult: lvl }));
+    }
   };
 
   render() {

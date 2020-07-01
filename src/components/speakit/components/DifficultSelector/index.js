@@ -23,6 +23,21 @@ class DifficultSelector extends Component {
           type="radio"
           name="groups"
           className="selector__input"
+          value="-1"
+          checked={this.state.selectedOption === '-1'}
+          onChange={this.handleChange}
+          id="user_group"
+        />
+        <div className="selector__point-border">
+          <label
+            htmlFor="user_group"
+            className="selector__point selector__point--user"
+          ></label>
+        </div>
+        <input
+          type="radio"
+          name="groups"
+          className="selector__input"
           value="0"
           checked={this.state.selectedOption === '0'}
           onChange={this.handleChange}

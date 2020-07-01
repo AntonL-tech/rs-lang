@@ -23,8 +23,13 @@
   border-radius: 50%;
   cursor: pointer;
 }
+
 .selector__point:hover {
   transform: scale(1.1);
+}
+
+.selector__point--user {
+  background-color: blue;
 }
 
 .selector__input:checked + .selector__point-border {
