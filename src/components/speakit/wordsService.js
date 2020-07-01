@@ -14,7 +14,8 @@ export default class WordsService {
   }
 
   async getUserWordsCount() {
-    return await getUserWordsList(this.userID, this.token).length;
+    let words = await getUserWordsList(this.userID, this.token);
+    return words.length;
   }
 
   async getRndUserWords() {

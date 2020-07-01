@@ -6,7 +6,6 @@ class DifficultSelector extends Component {
     super(props);
     this.state = {
       selectedOption: '0',
-      hasUserWords: props.hasUserWords,
     };
   }
 
@@ -28,7 +27,7 @@ class DifficultSelector extends Component {
           checked={this.state.selectedOption === '-1'}
           onChange={this.handleChange}
           id="user_group"
-          disabled={!this.state.hasUserWords}
+          disabled={!this.props.hasUserWords}
         />
         <div className="selector__point-border">
           <label
