@@ -55,7 +55,6 @@ class SpeakIt extends Component {
 
   startGame = () => {
     this.setState({ isGame: true });
-    console.log('start game click');
   };
 
   showResults = () => {
