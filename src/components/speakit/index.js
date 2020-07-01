@@ -17,6 +17,7 @@ class SpeakIt extends Component {
       recognizedWord: '',
       showResults: false,
       isStart: true,
+      difficult: 0,
     };
 
     this.wordService = new WordService();
@@ -33,7 +34,7 @@ class SpeakIt extends Component {
   checkWord = (recognizedWord) => {
     let words = this.state.data;
     this.setState({ recognizedWord: recognizedWord });
-    words.forEach(({ word }, index) => {
+    words.forEach(({ word, id }, index) => {
       if (recognizedWord.toLowerCase() === word.toLowerCase()) {
         this.setState(({ data }) => {
           const guessedWord = data[index];
@@ -42,6 +43,7 @@ class SpeakIt extends Component {
           const after = data.slice(index + 1);
           return [...before, guessedWord, ...after];
         });
+        this.selectWord(id);
       }
     });
     if (words.length === words.filter((word) => word.guessed).length) {
@@ -60,6 +62,7 @@ class SpeakIt extends Component {
     this.setState({
       isGame: false,
       showResults: true,
+      selectedWord: {},
     });
   };
 
@@ -94,7 +97,7 @@ class SpeakIt extends Component {
   selectDifficult = (lvl) => {
     this.wordService
       .getRndWordsFromGroup(lvl)
-      .then((data) => this.setState({ data: data }));
+      .then((data) => this.setState({ data: data, difficult: lvl }));
   };
 
   render() {
