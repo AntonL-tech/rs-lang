@@ -73,20 +73,18 @@ class SpeakIt extends Component {
   };
 
   restart = () => {
-    this.setState(({ data }) => {
-      const resetData = data.map((word) => {
-        word.guessed = false;
-        return word;
-      });
+    let lvl = this.state.difficult;
 
-      return {
-        data: resetData,
+    this.wordService.getRndWordsFromGroup(lvl).then((data) =>
+      this.setState({
+        data: data,
+        difficult: lvl,
         selectedWord: {},
         isGame: false,
         recognizedWord: '',
         showResults: false,
-      };
-    });
+      })
+    );
   };
 
   hideStartScreen = () => {
