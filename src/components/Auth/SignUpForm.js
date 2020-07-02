@@ -1,17 +1,6 @@
 import React, { Component } from 'react';
 import s from './auth.module.css';
 
-// RegExp for validate email
-const EMAIL = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
-//RegExp for validate password:
-// The password must contain:
-// - at least 8 characters
-// - at least one uppercase letter,
-// - at least one uppercase letter,
-// - at least one number
-// - at least  one special character from + -_ @ $!% *? & #.,;: [] {}
-const PASSWORD = /(?=.*[0-9])(?=.*[+-_@$!%*?&#.,;:[]{}])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z+-_@$!%*?&#.,;:[]{}]{8,}/g;
-
 class SignUpForm extends Component {
   constructor(props) {
     super(props);
@@ -43,18 +32,6 @@ class SignUpForm extends Component {
     if (this.state.password !== this.state.confirmPassword) {
       this.setState({
         errorText: 'Password not match',
-      });
-      return;
-    }
-    if (!this.state.email.match(EMAIL)) {
-      this.setState({
-        errorText: 'Not valid email',
-      });
-      return;
-    }
-    if (!this.state.password.match(PASSWORD)) {
-      this.setState({
-        errorText: 'Not valid password',
       });
       return;
     }
