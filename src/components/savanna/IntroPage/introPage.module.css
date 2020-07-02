@@ -47,8 +47,10 @@
 .introSelectMenu {
     display: block;
     margin: 0 auto;
-    max-width: 200px;
-    padding: .75rem 2.3rem .75rem 2.3rem;
+    width: 156px;
+    padding: .75rem 1rem .75rem 1rem;
+    /* max-width: 200px;
+    padding: .75rem 2.3rem .75rem 2.3rem; */
     border: 1px solid rgb(230, 230, 230);
     border-radius: 4px;
     font-size: 1rem;
@@ -56,12 +58,14 @@
 }
 
 .introBtn {
-    min-width: 150px;
+    margin: 0 auto;
+    max-width: 130px;
+    min-width: 130px;
     text-decoration: none;
-    color: #DED7D7 ;
+    color: #DED7D7;
     text-align: center;
     box-shadow: 1px 1px 1px #BEE2F9;
-    padding: 12px 22px;
+    padding: 12px 12px;
     font-size: 24px;
     font-weight: 300;
     letter-spacing: 2px;

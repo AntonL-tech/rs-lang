@@ -1,5 +1,4 @@
 .questionWordBlock {
-    width: 100%;
     min-height: 400px;
     position: relative;
     width: 60%;
@@ -12,13 +11,12 @@
     line-height: 1;
     font-weight: 300;
     white-space: nowrap;
-    color: #fff;
     letter-spacing: 1px;
-    border-bottom: 1px solid rgba(137, 43, 226, 0.37);
 }
 
 .questionWord {
     position: absolute;
+    color: transparent;
     top: 0;
     transform: translate(-50%);
     left: 50%;
@@ -26,19 +24,56 @@
     width: 15rem;
     animation: move-highlight 5s linear;
     animation-fill-mode: forwards;
-
+    display: inline-block;
+    text-shadow: rgb(255, 255, 255) 0 0 0;
 }
 
 @keyframes move-highlight {
     0% {
-        top: 0em;
+        top: 0;
+        text-shadow: rgb(255, 255, 255) 0 0 0;
+    }
+
+    94% {
+        text-shadow: rgb(255, 255, 255) 0 0 0;
     }
 
     100% {
-        top: 8.3em;
-
+        text-shadow: rgb(255, 255, 255) 0 0 19px;
+        top: 7.3em;
     }
 }
+
+/* 
+.boom {
+    left: 50%;
+    height: 2.75rem;
+    width: 15rem;
+    animation: move-highli 5s linear;
+    animation-fill-mode: forwards;
+    display: inline-block;
+    text-shadow: rgb(255, 255, 255) 0 0 0;
+
+}
+
+
+@keyframes move-highli {
+    0% {
+        top: 0;
+        text-shadow: rgb(255, 255, 255) 0 0 0;
+    }
+
+
+    20% {
+        text-shadow: rgb(255, 255, 255) 0 0 19px;
+
+    }
+
+    100% {
+        text-shadow: rgb(255, 255, 255) 0 0 19px;
+
+    }
+} */
 
 .starsBlock {
     margin: 20px 10px;
@@ -64,7 +99,6 @@
     margin: 0 20px;
 }
 
-
 .RightAnswer {
     padding: 15px;
     margin: 0 20px;
@@ -87,22 +121,54 @@
     cursor: pointer;
 }
 
+.statLines {
+    display: flex;
+}
+
 .lineWord {
-    color: blue
+    color: blue;
+    cursor: pointer;
+}
+
+.soundBtn {
+    background-image: url('../Assets/icons/song.svg');
+    background-size: 18px 18px;
+    background-position: 49%;
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    margin-top: -6px
 }
 
 .timer {
     height: 20vmin;
+    line-height: 20vmin;
     left: calc(50% - 10vmin);
     position: fixed;
     top: calc(50% - 10vmin);
     width: 20vmin;
     z-index: 1;
     font-size: 2em;
+    background-image: url('../Assets/icons/timeAnimationRed.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.msg {
+    max-width: 565px;
+    padding: 30px;
+    margin: 0 auto 15px;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 300;
+    color: #fff;
 }
 
 .none {
     display: none;
+
 }
 
 .loader {
@@ -118,10 +184,7 @@
     top: calc(50% - 10vmin);
     width: 20vmin;
     z-index: 2;
-
 }
-
-
 
 .loader:before {
     animation: spin 2s infinite linear;
@@ -159,11 +222,9 @@
     }
 }
 
-
-
 @media (min-width: 300px) and (max-width: 550px) {
     .starsBlock {
-        margin: 10px 10;
+        margin: 10px;
         width: 20px;
         height: 20px;
     }
@@ -179,24 +240,21 @@
     }
 
     .questionWordBlock {
-
         min-height: 300px;
-
     }
 
     .answearBlock {
-
         flex-direction: column;
         margin-top: 80px;
     }
 
     @keyframes move-highlight {
         0% {
-            top: 0em;
+            top: 0;
         }
 
         100% {
-            top: 6.3em;
+            top: 6.2em;
 
         }
     }

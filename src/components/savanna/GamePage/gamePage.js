@@ -3,6 +3,7 @@ import s from './gamePage.module.css';
 
 import GameOverModal from '../GameOverModal/gameOver';
 import GamePauseModal from '../GamePauseModal/gamePauseModal';
+import WordModal from '../WordModal/wordModal';
 import error from '../Assets/sounds/error.mp3';
 import success from '../Assets/sounds/correct.mp3';
 import star from '../Assets/icons/star-win.svg';
@@ -32,12 +33,33 @@ class GamePage extends React.Component {
             isSpinner: true,
             timer: 3,
             isStartFallingWord: false,
+            clickedModalWord: {},
+            isOpenWordModal: false,
         };
     }
 
     componentDidMount() {
-        this.getWords();
+        if (this.state.levelValue === 7) {
+            let arr = this.props.userData;
+            arr.map((el) => (el.class = 'answearWord'));
+            this.randomArraySorted(arr);
+            this.setState({ data: arr, isSpinner: false });
+            this.ourInterval();
+            console.log('YES');
+        } else {
+            console.log('NO');
+            this.getWords();
+        }
+        document.addEventListener('keydown', this.onKeyPressed);
     }
+
+    onKeyPressed = (e) => {
+        this.state.questionArray.forEach((element, i) => {
+            if (i + 1 === +e.key) {
+                this.answearWord(element, this.state.questionWordObj);
+            }
+        });
+    };
 
     ourInterval = () => {
         this.intervalID = setInterval(() => this.tick(), 1000);
@@ -55,18 +77,20 @@ class GamePage extends React.Component {
     }
 
     stopGame = () => {
-        this.setState({ isOpen: true });
-        const highestTimeoutId = setTimeout(() => {}, 1);
-        for (let i = 0; i < highestTimeoutId; i++) {
-            clearTimeout(i);
+        if (this.state.timer > 0) return;
+        else {
+            this.setState({ isOpen: true });
+            const highestTimeoutId = setTimeout(() => {}, 1);
+            for (let i = 0; i < highestTimeoutId; i++) {
+                clearTimeout(i);
+            }
+            this.setState({ countCard: this.state.countCard - 4, isShowBlock: false });
         }
-
-        this.setState({ countCard: this.state.countCard - 4, isShowBlock: false });
     };
 
     clickToMainMenuReturn = () => {
         this.setState({ isOpen: false });
-        window.location.assign('/start');
+        window.location.assign('/savanna');
     };
 
     clickToGameReturn = () => {
@@ -75,27 +99,30 @@ class GamePage extends React.Component {
     };
 
     getWords = () => {
-        let { page, levelValue, numberFive } = this.state;
+        let { page, levelValue } = this.state;
         let arr = [];
-        for (let i = page; i < page + numberFive; i++) {
+        for (let i = page; i < page + 30; i++) {
             fetch(`https://afternoon-falls-25894.herokuapp.com/words?page=${i}&group=${levelValue}`)
                 .then((res) => res.json())
                 .then((data) => {
                     arr.push(...data);
-                    if (arr.length >= 100) {
+                    if (arr.length >= 600) {
                         arr.map((el) => (el.class = 'answearWord'));
                         this.randomArraySorted(arr);
                         this.setState({ data: arr, isSpinner: false });
                         this.ourInterval();
+                        console.log(this.state.data);
                     }
                 });
         }
     };
 
     playSound = (src) => {
-        const audio = new Audio();
-        audio.src = src;
-        audio.autoplay = true;
+        if (this.props.sound) {
+            const audio = new Audio();
+            audio.src = src;
+            audio.autoplay = true;
+        }
     };
 
     randomArraySorted = (array) => {
@@ -171,36 +198,65 @@ class GamePage extends React.Component {
         setTimeout(() => this.changeCountCard(), 500);
     };
 
+    createQuestionAnswearWords = (someWord) => {
+        const { countCard, data } = this.state;
+        this.setState({ questionArray: data.slice(countCard, countCard + 4) });
+        // if (this.state.questionArray.length < 4) {
+        //     this.showGameOverModal();
+        //     this.setState({ isShowBlock: false });
+        // }
+        if (someWord === undefined) {
+            this.setState({
+                questionWordObj: data.slice(countCard, countCard + 4)[Math.floor(Math.random() * 4)],
+            });
+
+            this.setState({
+                questionWordObjCopy: this.state.questionWordObj,
+            });
+        } else {
+            this.setState({
+                questionWordObj: someWord,
+                questionWordObjCopy: someWord,
+            });
+        }
+
+        this.setState({ countCard: countCard + 4 });
+    };
+
     changeCountCard(someWord) {
-        if (this.state.countStarError === 5) {
+        // console.log(this.state.objectword.pageY);
+        const { countCard, data } = this.state;
+        if (this.state.countStarError >= 5 || countCard === 600 || countCard + 4 > data.length) {
             this.showGameOverModal();
             this.setState({ isShowBlock: false });
         } else {
             this.setState({ isShowBlock: true });
 
-            const { countCard, data } = this.state;
-            if (countCard === 100) {
-                this.setState({ countCard: 0 });
-                this.getWords();
-            }
-            if (countCard <= 96) {
-                this.setState({ questionArray: data.slice(countCard, countCard + 4) });
+            // if (countCard === 600) {
+            //     this.showGameOverModal();
+            //     this.setState({ isShowBlock: false });
+            //     // if (data.length !== 0) {
+            //     //     setTimeout(() => this.checkWordFinish(this.state.slideDone), 5000);
+            //     // }
+            // }
+            // if (countCard <= 596) {
+            this.createQuestionAnswearWords(someWord);
 
-                if (someWord === undefined) {
-                    this.setState({
-                        questionWordObj: data.slice(countCard, countCard + 4)[Math.floor(Math.random() * 4)],
-                    });
-                    this.setState({
-                        questionWordObjCopy: this.state.questionWordObj,
-                    });
-                } else {
-                    this.setState({
-                        questionWordObj: someWord, questionWordObjCopy: someWord,
-                    });
-                }
-
-                this.setState({ countCard: countCard + 4 });
-            }
+            // this.setState({ questionArray: data.slice(countCard, countCard + 4) });
+            // if (someWord === undefined) {
+            //     this.setState({
+            //         questionWordObj: data.slice(countCard, countCard + 4)[Math.floor(Math.random() * 4)],
+            //     });
+            //     this.setState({
+            //         questionWordObjCopy: this.state.questionWordObj,
+            //     });
+            // } else {
+            //     this.setState({
+            //         questionWordObj: someWord,
+            //         questionWordObjCopy: someWord,
+            //     });
+            // }
+            // this.setState({ countCard: countCard + 4 });
 
             setTimeout(() => this.checkWordFinish(this.state.slideDone), 5000);
             this.setState({ slideDone: true });
@@ -212,35 +268,60 @@ class GamePage extends React.Component {
     };
 
     handleContinueGame = () => {
-        window.location.assign('/start');
+        window.location.assign('/savanna');
         this.setState({ isGameOver: false });
     };
 
     handleToMainMenu = () => {
-        window.location.assign('/start');
+        window.location.assign('/');
         this.setState({ isGameOver: false });
     };
 
+    playAudioEnd = (str) => {
+        if (this.props.sound) {
+            const audio = new Audio(`https://raw.githubusercontent.com/timon4ik2102/rslang-data/master/${str}`);
+            audio.play();
+        }
+    };
+
+    showWordInfo = (obj) => {
+        this.setState({ clickedModalWord: obj, isOpenWordModal: true });
+    };
+
+    closeWordModal = () => {
+        this.setState({ isOpenWordModal: false });
+    };
+
     render() {
-        const { questionArray, questionWordObj, isShowBlock, countStar, countStarError, isGameOver, isOpen, wrightWords, wrongWords } = this.state;
+        const { questionArray, questionWordObj, isShowBlock, countStar, countStarError, isGameOver, isOpen, wrightWords, wrongWords, clickedModalWord } = this.state;
+
+        const messageForKeyboard = 'Use keys 1, 2, 3 and 4 to give a quick answer';
 
         const wordBlock = isShowBlock && this.state.isStartFallingWord ? <div className={s.questionWord}>{questionWordObj.word}</div> : <div></div>;
 
-        const wordList = questionArray.map((field, i, array) => (
-            <div key={field.id} className={s[field.class]} onClick={(e) => this.answearWord(field, questionWordObj)}>
+        const wordList = questionArray.map((field) => (
+            <div key={field.id} className={s[field.class]} onClick={() => this.answearWord(field, questionWordObj)}>
                 {field.wordTranslate}
             </div>
         ));
 
-        const wrongWordList = wrongWords.map((field, i, array) => (
-            <div key={field.id}>
-                <span className={s.lineWord}>{field.word}</span> <span>- {field.wordTranslate}</span>
+        const wrongWordList = wrongWords.map((field) => (
+            <div className={s.statLines} key={field.id}>
+                <div className={s.soundBtn} onClick={() => this.playAudioEnd(field.audio)}></div>
+                <div className={s.lineWord} onClick={() => this.showWordInfo(field)}>
+                    {field.word}
+                </div>{' '}
+                <span>- {field.wordTranslate}</span>
             </div>
         ));
 
-        const wrightWordList = wrightWords.map((field, i, array) => (
-            <div key={field.id}>
-                <span className={s.lineWord}>{field.word}</span> <span>- {field.wordTranslate}</span>
+        const wrightWordList = wrightWords.map((field) => (
+            <div className={s.statLines} key={field.id}>
+                <div className={s.soundBtn} onClick={() => this.playAudioEnd(field.audio)}></div>
+                <div className={s.lineWord} onClick={() => this.showWordInfo(field)}>
+                    {field.word}
+                </div>{' '}
+                <span>- {field.wordTranslate}</span>
             </div>
         ));
 
@@ -250,6 +331,7 @@ class GamePage extends React.Component {
             <>
                 <div className={s.gamePage}>
                     <div className={!this.state.isSpinner && this.state.timer !== 0 ? `${s.timer}` : `${s.none}`}>{this.state.timer}</div>
+
                     <div className={this.state.isSpinner ? `${s.loader}` : ''}></div>
                     <div>
                         {Array.from({ length: countStarError }, () => null).map((field, i) => (
@@ -259,10 +341,18 @@ class GamePage extends React.Component {
                             <img key={i.toString() + 5} className={s.starsBlock} src={star} alt=''></img>
                         ))}
                     </div>
+                    <div className={!this.state.isSpinner && this.state.timer !== 0 ? `${s.msg}` : `${s.none}`}>{messageForKeyboard}</div>
                     <div className={s.questionWordBlock}>{wordBlock}</div>
                     <div className={s.answearBlock}>{wordList}</div>
                 </div>
-                <GamePauseModal isOpen={isOpen} gamePause={this.stopGame} onGameReturn={this.clickToGameReturn} toMainMenu={this.clickToMainMenuReturn}>
+                <GamePauseModal
+                    isOpen={isOpen}
+                    gamePause={this.stopGame}
+                    sound={this.props.sound}
+                    gameSound={this.props.handleSound}
+                    onGameReturn={this.clickToGameReturn}
+                    toMainMenu={this.clickToMainMenuReturn}
+                >
                     {' '}
                 </GamePauseModal>
                 <GameOverModal
@@ -277,6 +367,10 @@ class GamePage extends React.Component {
                 >
                     {' '}
                 </GameOverModal>
+
+                <WordModal isOpenWordModal={this.state.isOpenWordModal} playAudioWord={this.playAudioEnd} closeWordModal={this.closeWordModal} objectword={clickedModalWord}>
+                    {' '}
+                </WordModal>
             </>
         );
     }

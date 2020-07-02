@@ -6,7 +6,7 @@
     right: 0;
     width: 100%;
     max-width: 100%;
-    z-index: 999;
+    z-index: 909;
     padding: 36px 16px 16px;
     background-color: rgba(0, 0, 0, .7);
     display: flex;
@@ -14,6 +14,7 @@
     align-items: flex-start;
     border-radius: 0;
     box-sizing: border-box;
+    backdrop-filter: blur(6px);
 }
 
 
@@ -26,7 +27,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
 }
 
 
@@ -41,6 +41,17 @@
     padding: 36px 0 22px;
 }
 
+.slider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 300px;
+    width: 100%;
+    max-width: 542px;
+    margin-top: 0;
+    position: relative;
+    overflow: auto;
+}
 
 .modalTitle {
     font-size: 18px;
@@ -57,7 +68,6 @@
     text-transform: uppercase;
 }
 
-
 .invalidTitle {
     font-size: 14px;
     font-weight: 700;
@@ -66,13 +76,14 @@
     text-transform: uppercase;
 }
 
-
 .invalidTextBlock,
 .validTextBlock {
     display: flex;
     flex-direction: column;
     color: black;
     margin-top: 5px;
+    align-items: flex-start;
+    align-items: left;
 }
 
 .modalText {

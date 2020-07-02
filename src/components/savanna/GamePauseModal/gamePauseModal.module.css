@@ -90,6 +90,7 @@
 
 
 .exitGameIcon {
+    background-image: url('../Assets/icons/clear.svg');
     width: 30px;
     height: 30px;
     background-size: 100%;
@@ -97,6 +98,26 @@
     top: 30px;
     right: 45px;
     cursor: pointer;
+}
+
+.muteIcon {
+
+    width: 40px;
+    height: 40px;
+    background-size: 100%;
+    position: absolute;
+    top: 30px;
+    left: 45px;
+    cursor: pointer;
+}
+
+.muteOn {
+    background-image: url('../Assets/icons/sound.svg');
+}
+
+.muteOff {
+    background-image: url('../Assets/icons/no-sound.svg');
+
 }
 
 
@@ -107,12 +128,9 @@
     }
 
     .modalOverlay {
-
         padding: 36px 0 16px;
 
     }
-
-
 
     .exitGameIcon {
         width: 15px;
@@ -122,6 +140,13 @@
         top: 15px;
         right: 15px;
         cursor: pointer;
+    }
+
+    .muteIcon {
+        width: 20px;
+        height: 20px;
+        left: 15px;
+        top: 15px;
     }
 
 
