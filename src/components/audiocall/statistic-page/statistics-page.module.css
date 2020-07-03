@@ -43,6 +43,7 @@
 }
 
 .answers {
+  margin-bottom: 15px;
   padding: 0 22px;
   width: 80%;
   overflow-y: scroll;
@@ -58,7 +59,7 @@
 }
 
 .answersList {
-  padding: 20px;
+  padding: 0 20px;
   width: 100%;
 }
 
