@@ -270,6 +270,14 @@ input[type='number'] {
     margin-bottom: 15px;
 }
 
+.card_word_error, .card_word_miss {
+    font-family: 'Pangolin', cursive;
+    font-size: 25px;
+    color: #E74C3C;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
 .btn_inner {
     width: 100%;
     display: flex;

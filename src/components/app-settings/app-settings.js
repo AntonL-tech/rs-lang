@@ -56,7 +56,10 @@ export default class Settings extends React.Component {
            customLevelWords: [],
            customLine: 0,
            repeat: true,
-           usedWord: true
+           usedWord: true, 
+           match: 0,
+           mistake: 0,
+           miss: 0
         };
         this.setResults = this.setResults.bind(this)
         this.myRef = React.createRef();
@@ -104,6 +107,9 @@ export default class Settings extends React.Component {
         this.setState({customLine: 0})
         this.setState({repeat: true})
         this.setState({usedWord: true})
+        this.setState({match: 0})
+        this.setState({mistake: 0})
+        this.setState({miss: 0})
         this.getUserWord(userId)
         console.log(this.state)
     }
@@ -114,9 +120,10 @@ export default class Settings extends React.Component {
     };
 
     async toggleAnswer(data,line) {
-        const {stopAudio, meaningAudio, audioExample, answerButton, countOfCards, percentage, count, repeat, endGame, customLevelWords} = this.state;
+        const {stopAudio, meaningAudio, audioExample, answerButton, countOfCards, percentage, count, repeat, endGame, customLevelWords, miss} = this.state;
         console.log('Вы сдались')
-
+        this.setState({miss: miss + 1})
+        
         this.myRef.current.textContent = data[line].word;
 
         // Увеличен счёт карточек
@@ -257,7 +264,7 @@ export default class Settings extends React.Component {
                     </label>
 
                     <label>
-                        Новых карточек в день:
+                        Максимальное количество карточек в день:
                         <input id='countOfCards' type="number" onChange = {this.handleChange} min="1" max="50" required/>
                     </label>
 
@@ -299,7 +306,7 @@ export default class Settings extends React.Component {
                     <label htmlFor='hardButton' className={s.game_checkbox_label}>Кнопка cложные слова</label>
 
                     <input className={s.game_checkbox} id='showWordButton' type="checkbox" checked={this.state.showWordButton} onChange = {this.handleCheck}/>
-                    <label htmlFor='showWordButton' className={s.game_checkbox_label}>Кнопка показать перевод</label>
+                    <label htmlFor='showWordButton' className={s.game_checkbox_label}>Кнопка показать ответ</label>
 
                     <input className={s.game_checkbox} id='voiceAllow' type="checkbox" checked={this.state.voiceAllow} onChange = {this.handleCheck}/>
                     <label htmlFor='voiceAllow' className={s.game_checkbox_label}>Кнопка звука</label>
@@ -314,7 +321,7 @@ export default class Settings extends React.Component {
     displayCards(data, line = 0) {
         const {translation, transcription,answerButton, audio, image, meaning, meaningRu, textExample, meaningAudio, 
             textExampleTranslate, audioExample, deleteButton, showWordButton, voiceAllow, hardButton, translationButton, 
-            isAnswerWrong, sound, showTranslation, usedWord} = this.state;
+            isAnswerWrong, sound, showTranslation, usedWord, match, mistake, miss} = this.state;
 
         let hideTextMeaning = !answerButton ? this.hideWord(data[line].textMeaning, data[line].word) : this.showWords(data[line].textMeaning, data[line].word);
         let hideTextExample = !answerButton ? this.hideWord(data[line].textExample, data[line].word) : this.showWords(data[line].textExample, data[line].word);
@@ -354,6 +361,9 @@ export default class Settings extends React.Component {
             </div>
         </div>) : (<div className={s.card}>
                 <h2 className={s.card_word}>Ура! На сегодня всё.</h2>
+                <p className={s.card_word}>Слов отгадано - {match}</p>
+                <p className={s.card_word_error}>Сделано ошибок - {mistake}</p>
+                <p className={s.card_word_miss}>Слов пропущено - {miss}</p>
                 <p className={s.card_word}>Есть ещё новые карточки, но дневной лимит исчерпан. Вы можете увеличить лимит в настройках, но, пожалуйста, имейте в виду, что чем больше новых карточек вы просмотрите, тем больше вам надо будет повтороять в ближайшее время.</p>
                 <p className={s.card_word}>Для обучения сверх обычного расписания, нажмите кнопку 'Учить ещё' ниже</p>
                 <div className={s.game_btn_inner}> 
@@ -371,7 +381,7 @@ export default class Settings extends React.Component {
     };
 
     async increment(data, line) {
-        const {answer, stopAudio, meaningAudio, audioExample, answerButton, countOfCards, percentage, count, repeat, endGame, customLevelWords, usedWord} = this.state;
+        const {answer, stopAudio, meaningAudio, audioExample, answerButton, countOfCards, percentage, count, repeat, endGame, customLevelWords, usedWord, match, mistake} = this.state;
         // Чекаем есть ли слова для повторения
         if (!customLevelWords.length && line === 0) {
             this.setState({repeat: false});
@@ -386,6 +396,7 @@ export default class Settings extends React.Component {
         // Если слово отгадано
         if (answer.toLowerCase() === data[line].word.toLowerCase()) {
             console.log('ответ правильный')
+            this.setState({match: match + 1})
 
             // Добавляем слова в изученые
             if (!usedWord) {
@@ -451,6 +462,9 @@ export default class Settings extends React.Component {
 
             console.log(this.state)
         } else {
+            // Счетчик ошибок
+            this.setState({mistake: mistake + 1})
+
             // Выводит слово с ошибкой
             this.myRef.current.textContent = '';
             this.setState({isAnswerWrong: true})
