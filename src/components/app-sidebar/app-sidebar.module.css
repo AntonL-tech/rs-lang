@@ -1,3 +1,6 @@
+.sidebar_inner {
+    border-right: solid 2px #09d3ac;
+}
 .sidebar_list {
     background-color: #303846;
     width: 150px;

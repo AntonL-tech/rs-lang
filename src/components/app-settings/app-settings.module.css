@@ -32,7 +32,7 @@
 }
 
 .form_inner {
-    padding: 30px;
+    padding: 15px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -57,7 +57,7 @@ input {
 }
 
 label {
-    font-size: 30px;
+    font-size: 25px;
     text-transform: uppercase;
 }
 
@@ -69,7 +69,7 @@ label.game_checkbox_label {
     font-family: 'Pangolin', cursive;
     padding-right: 20px;
     cursor: pointer;
-    font-size: 30px;
+    font-size: 25px;
     text-transform: uppercase;
 }
 
@@ -120,14 +120,14 @@ input[type='checkbox']:checked + label::after {
     -webkit-appearance: none;
     appearance: none;
     font-family: 'Pangolin', cursive;
-    font-size: 30px;
+    font-size: 25px;
     color: #09d3ac;
     border-radius: 4px;
     cursor: pointer;
 }
 
 .game_btn {
-    padding: 15px 0;
+    padding: 15px;
     border-radius: 20px;
     height: 100%;
     font-family: 'Pangolin', cursive;
@@ -135,6 +135,7 @@ input[type='checkbox']:checked + label::after {
     color: #09d3ac;
     border: 1px solid #09d3ac;
     background: #303846;
+    outline: none;
 }
 
 .game_btn:hover {
@@ -144,7 +145,7 @@ input[type='checkbox']:checked + label::after {
 }
 
 .game_btn_audio {
-    padding: 15px 0;
+    padding: 15px;
     border-radius: 20px;
     height: 100%;
     font-family: 'Pangolin', cursive;
@@ -153,6 +154,7 @@ input[type='checkbox']:checked + label::after {
     border: 1px solid #09d3ac;
     background: #303846;
     width: 86px;
+    outline: none;
 }
 
 .game_btn_audio:hover {
@@ -167,7 +169,7 @@ input[type='checkbox']:checked + label::after {
 
 
 .game_btn_translaition {
-    padding: 15px 0;
+    padding: 15px;
     border-radius: 20px;
     height: 100%;
     font-family: 'Pangolin', cursive;
@@ -176,6 +178,7 @@ input[type='checkbox']:checked + label::after {
     border: 1px solid #09d3ac;
     background: #303846;
     width: 400px;
+    outline: none;
 }
 
 .game_btn_translaition:hover {
@@ -250,7 +253,7 @@ input[type='number'] {
 
 .card_word {
     font-family: 'Pangolin', cursive;
-    font-size: 30px;
+    font-size: 25px;
     color: #09d3ac;
     text-transform: uppercase;
     margin-bottom: 15px;
@@ -259,18 +262,20 @@ input[type='number'] {
 .btn_inner {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    margin-bottom: 30px;
 }
 
 .result_btns {
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 30px;
+    justify-content: space-around;
+    margin-bottom: 15px;
+    outline: none;
 }
 
 .card_answer {
-    padding: 0 20px;
+    padding: 0 10px;
     margin: 15px 0 15px 15px;
     box-shadow: 0 0 2px 2px #09d3ac;
     border-radius: 4px;
@@ -284,10 +289,10 @@ input[type='number'] {
     display: flex;
     align-items: center;
     font-family: 'Pangolin', cursive;
-    font-size: 30px;
+    font-size: 25px;
     color: #09d3ac;
     text-transform: uppercase;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 
 .red {
