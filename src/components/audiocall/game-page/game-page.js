@@ -17,8 +17,18 @@ export default class GamePage extends Component {
       isCorrectAnswer: true,
       preloader: true,
       soundOn: true,
+      bgColors: {r: 179, g: 213, b: 216},
+      bgPercent: 40,
+      degree: 0,
+      step1: 213,
+      step2: 100,
+      step3: 71,
     }
   }
+
+  // changeBackgroundColor = () => {
+    
+  // } 
 
   componentDidMount() {
     this.gameModel = new GameModel(this.level);
@@ -27,6 +37,14 @@ export default class GamePage extends Component {
       this.setState({ currentWord, answers, preloader: false });
       this.playWord();
     })
+
+    document.addEventListener("keydown", this.keyboardEvents);
+    console.log('add')
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.keyboardEvents);
+    console.log('remove')
   }
 
   pass = () => {
@@ -54,6 +72,31 @@ export default class GamePage extends Component {
     this.setState({ isQuestion: false, isCorrectAnswer: answer, answerId: id });
   }
 
+  getAnswerByKeyboard = (event) => {
+    const { isQuestion, currentWord, answers } = this.state;
+
+    if (!isQuestion) return;
+
+    const answer = this.state.answers[+event.key - 1].correct.toString();
+    
+    console.log(event, this.state.answers[+event.key - 1], answer ,'1cons')
+
+
+    if (answer === 'true') {
+      this.correctAnswers.push(currentWord);   
+      this.playSound(correct);  
+    } else {
+      this.incorrectAnswers.push(currentWord);  
+      this.playSound(error);  
+    }
+
+    const id = answers[+event.key - 1].id;
+
+    console.log(answer, id)
+
+    this.setState({ isQuestion: false, isCorrectAnswer: answer, answerId: id });
+  }
+
   nextWord = () => {
     this.setState({preloader: true})
     const newPageData = this.gameModel.nextTurn();
@@ -63,9 +106,25 @@ export default class GamePage extends Component {
     }
 
     newPageData.then(([currentWord, answers]) => {
-      this.setState({ isQuestion: true, currentWord, answers, preloader:false });          
+      const { bgColors: { r, g, b }, bgPercent, degree, step1, step2, step3 } = this.state;
+      console.log(typeof bgPercent, bgPercent, bgPercent + 3)
+      this.setState({ isQuestion: true, currentWord, answers, preloader:false,
+        // bgColors: { r: r - 2, g: g + 1, b: b - 3}
+        // bgPercent: (bgPercent + 3) 
+        step1: step1 + 2,
+        step2: step2 - 3,
+        step3: step3 - 1,
+        // degree: degree + 5
+      });          
       this.playWord();  
     }); 
+  }
+
+  nextWordByKeyboard = (event) => {
+    console.log('here')
+    if (event.key === 'Enter') {
+      this.nextWord();
+    }
   }
 
   playWord = () => {
@@ -83,16 +142,51 @@ export default class GamePage extends Component {
 
     const audio = new Audio(sound);
     audio.play();
+  } 
+
+  keyboardEvents = (event) => {
+    console.log('here')
+    const key = event.key;
+    console.log(event, key)
+    
+
+    switch (key) {
+      case 'Enter':
+        if (!this.state.isQuestion) {
+          this.nextWord();
+        } else {
+          this.pass();
+        }
+        break;
+      case '1':
+        this.getAnswerByKeyboard(event);
+        break;
+      case '2':
+        this.getAnswerByKeyboard(event);
+        break; 
+      case '3':
+        this.getAnswerByKeyboard(event);
+        break;
+      case '4':
+        this.getAnswerByKeyboard(event);
+        break; 
+      case '5':
+        this.getAnswerByKeyboard(event);
+        break;       
+      default: 
+        break;
+    }
   }
 
   render() {
-    const { preloader } = this.state;
+    const { preloader, bgColors, bgPercent, degree, step1, step2, step3 } = this.state;
     
     if (!preloader) {
-      const { isQuestion, answers, answerId, isCorrectAnswer, currentWord : { image, wordTranslate }, soundOn } = this.state;
+      const { isQuestion, answers, answerId, isCorrectAnswer, currentWord : { image, wordTranslate }, soundOn , bgColors, bgPercent} = this.state;
+      console.log( bgPercent)
 
       return (
-        <div className = {s.page}>
+        <div className = {s.page} style={{backgroundColor:`hsl(${step1}, ${step2}%, ${step3}%)`}}>
           <button className={soundOn ? s.sound : `${s.sound} ${s.soundOff}`} onClick={this.switchSound} />
           <div className={s.gameWrapper}> 
             <div className={s.questionBoard}>
@@ -107,13 +201,18 @@ export default class GamePage extends Component {
             <WordList words={answers} callback={this.getAnswer} isQuestion={isQuestion} answer={isCorrectAnswer} answerId={answerId} /> 
             
             <button className={isQuestion ? s.pass : s.hidden} onClick={this.pass}>Pass</button>
-            <button className={isQuestion ? s.hidden : s.next} onClick={this.nextWord}>Next word</button>
+            <button className={isQuestion ? s.hidden : s.next} type='button' onClick={this.nextWord} /*onKeyDown={this.nextWordByKeyboard}*/>Next word</button>
           </div>        
         </div>
       )
     }
 
-    return <Preloader />
+    return (
+      <div className = {s.page} style={{backgroundColor:`hsl(${step1}, 100%, 71%)`}}>
+        <Preloader />
+      </div>
+    )
   }
+  
   
 }

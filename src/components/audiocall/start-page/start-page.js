@@ -7,11 +7,12 @@ export default class StartPage extends Component {
    
     return <div className={s.page} >
       <div className={s.about}>        
-        <h1 className={s.header}>Audiocall</h1>
+        <h1 className={s.header}>Audiochallenge</h1>
         <p className={s.description}>          
           Improves your listening skills in English.
         </p>
         <select className={s.select} onChange={changeLevel}>
+          <option value="6">User words</option>
           <option value="0">Level 1</option>
           <option value="1">Level 2</option>
           <option value="2">Level 3</option>

@@ -8,12 +8,13 @@
 .page {  
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(0,#b3d5d8, #ffffff);;
+  /* background: linear-gradient(0,#b3d5d8, #ffffff); */
+  transition: background-color 0.5s linear;
 }
 
 .gameWrapper {
   margin: auto;
-  max-width: 1200px;
+  max-width: 1280px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -41,7 +42,7 @@
   margin-left: 20px;
   font-size: 24px;
   font-weight: 700;
-  color: #4582fd;
+  color: #eff1f3;
   text-transform: lowercase;
 }
 
@@ -63,15 +64,17 @@
 }
 
 .wordItem {
-  margin: 0 20px;
-  padding: 5px 10px;
+  margin: 0 10px;
+  padding: 5px;
   width: 200px;
+  height: 100%;
   font-weight: 700;
-  color: #22acd6;
+  color: #ffffff;
   text-align: center;
-  border: 1px solid #60beca;
+  border: 1px solid transparent;
   border-radius: 3px;
   cursor: pointer;
+  transition: all linear 1s;
 }
 
 .inactive {
@@ -79,9 +82,10 @@
 }
 
 .wordItem:hover {
-  color: #f0f8ff;
+  /* color: #f0f8ff;
   background-color: #60beca;
-  border-color: #f0f8ff;
+  border-color: #f0f8ff; */
+  text-shadow: blue 0 0 10px;
 }
 
 .correctSelected {
@@ -104,7 +108,7 @@
 
 .wordSound {
   font-size: 30px;
-  color: #22acd6;
+  color: #f0f2f3;
   background-color: transparent;
   border: none;
   border-radius: 50%;
@@ -116,7 +120,7 @@
 }
 
 .wordSound:hover {
-  color: #3390ac;
+  color: #f9f9fa;
   transform: scale(1.2);
 }
 
@@ -150,7 +154,7 @@
   content: '\e804'; 
   font-family: "fontello";
   font-size: 30px;
-  color: #22acd6;
+  color:  #ffffff;
   font-style: normal;
   font-weight: normal;
   display: inline-block;
@@ -169,7 +173,7 @@
   width: 30px;
   height: 2px;
   border-radius: 1px;
-  background-color: #1687b5;
+  background-color: #d1f1ff;
   position: absolute;
   left: 0;
   top: 50%;
@@ -180,10 +184,10 @@
   width: 200px;
   font-size: 18px;
   font-weight: 700;
-  color: #f56b6b;
+  color: #fff0f0;
   text-transform: uppercase;
   background-color: transparent;
-  border: 2px solid #f77f7fbb;
+  border: 2px solid #f5a3a3ab;
 }
 
 .pass:hover {
@@ -195,15 +199,16 @@
   width: 200px;
   font-size: 18px;
   font-weight: 700;
-  color: #6b8bf5;
+  color: #fff;  
   text-transform: uppercase;
-  background-color: transparent;
+  background-color: #c2d6ffbb;
   border: 2px solid #7fa5f7bb;
 }
 
 .next:hover {
-  color: #fff;
-  background-color: #7fa5f7bb;
+  
+  color: #6b8bf5;
+  background-color: #edf0f3;
 }
 
 .cancel:focus, .start:focus, .sound:focus, .wordSound:focus, .pass:focus, .next:focus {

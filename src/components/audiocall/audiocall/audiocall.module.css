@@ -7,9 +7,9 @@
   color: #699bff;
   background-color: #699bff00;
   border: none;
-  position: absolute;
-  top: 30px;
-  right: 60px;
+  position: absolute;  
+  top: 2vh;
+  right: 5vw;
   cursor: pointer;
 }
 
@@ -17,8 +17,8 @@
   padding: 0;
   content: "";
   width: 100%;
-  background-color: #949292;
-  border: 2px solid #949292;  
+  background-color: #fffefe;
+  border: 2px solid #fffefe; 
   border-radius: 5px;
   transform: rotate(45deg);
   display: block;
@@ -31,8 +31,8 @@
   padding: 0;
   content: "";
   width: 100%;
-  background-color: #949292;
-  border: 2px solid #949292;  
+  background-color: #fffefe;
+  border: 2px solid #fffefe;  
   border-radius: 5px;  
   transform: rotate(-45deg);
   display: block;
