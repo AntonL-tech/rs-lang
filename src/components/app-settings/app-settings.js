@@ -62,6 +62,50 @@ export default class Settings extends React.Component {
         this.setUserWord = this.setUserWord.bind(this)
     }
 
+    continueGame() {
+        this.setState({answer: ''})
+        this.setState({settingPage: true})
+        this.setState({audio: false})
+        this.setState({translation: false})
+        this.setState({transcription: false})
+        this.setState({textExample: false})
+        this.setState({textExampleTranslate: false})
+        this.setState({meaning: false})
+        this.setState({meaningRu: false})
+        this.setState({meaningAudio: false})
+        this.setState({audioExample: false})
+        this.setState({example: false})
+        this.setState({image: false})
+        this.setState({deleteButton: false})
+        this.setState({hardButton: false})
+        this.setState({showWordButton: false})
+        this.setState({voiceAllow: false})
+        this.setState({stopAudio: true})
+        this.setState({answerButton: false})
+        this.setState({translationButton: true})
+        this.setState({countOfWords: ''})
+        this.setState({countOfCards: ''})
+        this.setState({level: ''})
+        this.setState({data: []})
+        this.setState({line: 0})
+        this.setState({page: 1})
+        this.setState({count: 0})
+        this.setState({endGame: true})
+        this.setState({percentage: 0})
+        this.setState({isCheck: false})
+        this.setState({isAnswerWrong: false})
+        this.setState({sound: true})
+        this.setState({showTranslation: true})
+        this.setState({arrayOfDeletedWords: []})
+        this.setState({arrayOfHardWords: []})
+        this.setState({arrayOfLearnedWords: []})
+        this.setState({customLevelWords: []})
+        this.setState({customLine: 0})
+        this.setState({repeat: true})
+        this.setState({usedWord: true})
+        this.getUserWord(userId)
+        console.log(this.state)
+    }
 
     toggleSpeaking() {
         this.setState({stopAudio: !this.state.stopAudio});
@@ -309,9 +353,9 @@ export default class Settings extends React.Component {
             </div>
         </div>) : (<div className={s.card}>
                 <h2 className={s.card_word}>Ура! На сегодня всё.</h2>
-                <p className={s.card_word}>Есть ещё новые карточки, но дневной лимит исчерпан. Вы можете увеличить лимит в настройках, но, пожалуйста, имейте в виду, что чем больше новых карточек вы просмотрите, тем больше вас надо будет повтороять в ближайшее время.</p>
+                <p className={s.card_word}>Есть ещё новые карточки, но дневной лимит исчерпан. Вы можете увеличить лимит в настройках, но, пожалуйста, имейте в виду, что чем больше новых карточек вы просмотрите, тем больше вам надо будет повтороять в ближайшее время.</p>
                 <p className={s.card_word}>Для обучения сверх обычного расписания, нажмите кнопку 'Учить ещё' ниже</p>
-                <button className={s.game_btn}>Учить ещё</button>
+                <button className={s.game_btn} onClick={() => this.continueGame()}>Учить ещё</button>
         </div>)
 
         return(
