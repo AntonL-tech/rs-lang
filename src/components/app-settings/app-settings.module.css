@@ -138,10 +138,21 @@ input[type='checkbox']:checked + label::after {
     outline: none;
 }
 
+.game_btn a {
+    color: #09d3ac;
+    text-decoration: none;
+}
+
 .game_btn:hover {
     color: #303846;
+    text-decoration: none;
     background: #09d3ac;
     border: 1px solid #303846;
+}
+
+.game_btn:hover a {
+    color: #303846;
+    text-decoration: none;
 }
 
 .game_btn_audio {
@@ -309,4 +320,10 @@ input[type='number'] {
     align-items: center;
     font-family: 'Pangolin', cursive;
     font-size: 30px;
+}
+
+.game_btn_inner {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
 }

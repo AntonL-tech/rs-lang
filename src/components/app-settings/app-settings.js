@@ -5,6 +5,7 @@ import Header from '../app-header/app-header'
 import Sidebar from '../app-sidebar/app-sidebar'
 import ProgressBar from './progress-bar/index'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom';
 
 const ProggresBarContainer = styled.div`
     width: 100%;
@@ -355,7 +356,11 @@ export default class Settings extends React.Component {
                 <h2 className={s.card_word}>Ура! На сегодня всё.</h2>
                 <p className={s.card_word}>Есть ещё новые карточки, но дневной лимит исчерпан. Вы можете увеличить лимит в настройках, но, пожалуйста, имейте в виду, что чем больше новых карточек вы просмотрите, тем больше вам надо будет повтороять в ближайшее время.</p>
                 <p className={s.card_word}>Для обучения сверх обычного расписания, нажмите кнопку 'Учить ещё' ниже</p>
-                <button className={s.game_btn} onClick={() => this.continueGame()}>Учить ещё</button>
+                <div className={s.game_btn_inner}> 
+                    <button className={s.game_btn} onClick={() => this.continueGame()}>Учить ещё</button>
+                    <button className={s.game_btn}><Link to="/app-words">Словарь</Link></button>
+                    <button className={s.game_btn}><Link to="/">На главную</Link></button>
+                </div>
         </div>)
 
         return(
