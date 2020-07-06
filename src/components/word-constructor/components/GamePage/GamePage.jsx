@@ -75,7 +75,7 @@ class GamePage extends Component {
                 score: 0,
                 goodWordsScore: 0,
                 classMark: block,
-                audio: true,
+                audio: this.props.location.aboutProps.audioStatus,
                 word: elSort[0].word.split('').map((el) => ''),
                 wordLetters: shuffle(elSort[0].word.split('')),
                 lives: 7,

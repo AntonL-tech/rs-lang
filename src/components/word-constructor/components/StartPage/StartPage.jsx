@@ -3,6 +3,8 @@ import s from './StartPage.module.css';
 import { Link } from 'react-router-dom';
 import getUserAllWord from '../../api/getUserAllWord';
 import Preloader from '../Preloader/Preloader';
+import imgAudioOn from '../../files/img/audioOn.png';
+import imgAudioOff from '../../files/img/audioOff.png';
 
 
 const user = 'user'
@@ -11,6 +13,12 @@ class StartPage extends Component {
         super(props);
         this.state = {};
     }
+
+    changeAudio() {
+        this.setState({
+            audioStatus: this.state.audioStatus ? false : true,
+        });
+    };
 
     change (value) {
         this.setState({
@@ -22,6 +30,7 @@ class StartPage extends Component {
         this.setState({
             uploaded: false,
             UserWordList: [1],
+            audioStatus: true,
         });
         getUserAllWord(localStorage.userId, localStorage.token).then((el) => {
             const status = el.status;
@@ -47,8 +56,12 @@ class StartPage extends Component {
     };
 
     render() {
+        console.log(this.state.audioStatus)
         return !this.state.uploaded ? <Preloader />
         : (<div className={s.block}>
+                <button className={s.audio} onClick={() => this.changeAudio()}>
+                        {this.state.audioStatus ? <img src={imgAudioOn} alt=""/> : <img src={imgAudioOff} alt=""/> }
+                </button>
                 <div className={s.name}>
                     Word Constructor Game
                 </div>
@@ -70,7 +83,8 @@ class StartPage extends Component {
                         {
                             pathname: '/constructor/game',
                             aboutProps: {level: this.state.level,
-                                         UserWordList: this.state.UserWordList
+                                         UserWordList: this.state.UserWordList,
+                                         audioStatus: this.state.audioStatus,
                                         }
                         }
                     }>Start Game</Link>

@@ -63,7 +63,7 @@ class GamePage extends Component {
                 score: 0,
                 goodWordsScore: 0,
                 classMark: false,
-                audio: true,
+                audio: this.props.location.aboutProps.audioStatus,
             });
             if (this.state.kv === 64) {
                 if(this.state.audio){
