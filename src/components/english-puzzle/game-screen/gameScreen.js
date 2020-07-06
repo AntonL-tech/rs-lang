@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import s from './gameScreen.module.css'
+import { Link } from 'react-router-dom';
 
 import EpHeader from "../ep-header/epHeader";
 import ButtonSettings from './buttonSettings/buttonSettings'
 import RowSentences from './rowSentences/rowSentences'
 export default class GameScreen extends Component {
     state = {
-        level: 0,
-        page: 0,
+        level: localStorage.getItem('level') || 0,
+        page: localStorage.getItem('page') || 0,
         sentencesArray: [], // массив предложений
         sentencesTranslateArray: [], // массив рус предложений  // заполянется запросом
         currentSentencesIndex: 0, // текущий индекс предложения
@@ -19,11 +20,15 @@ export default class GameScreen extends Component {
         isCheckButton: false, // check : display none
         isContinueButton: false,
         isIgnoranceButton: true,
-        sentencesArrayBoard:[] // массив собирания !! цвета при чеке !!
+        isResultButton: false,
+        sentencesArrayBoard:[], // массив собирания !! цвета при чеке !!
+        statistic: {falseSentences: [] ,trueSentences: []},
+
     }
 
-    async componentDidMount() {
-        await this.getWords(this.state.page);
+
+    getRequest =  async (level,page) => {
+        await this.getWords(level,page);
         
         this.setState({currentSentences:  this.state.sentencesArray[this.state.currentSentencesIndex]}); // задаем предложение текущее
         
@@ -37,24 +42,30 @@ export default class GameScreen extends Component {
         wordShuffleArray.forEach(()=>{
             collectedArray.push('');
             colorArray.push('common');
-        })  // создаем массив пустых слов на доске
+        })  
 
         const board  = [...this.state.sentencesArrayBoard]
         const currentIndex = this.state.currentSentencesIndex; 
         board[currentIndex] = {
-            wordArray: collectedArray, // слова в массиве 
-            colorArray: colorArray // цвета в массиве 
+            wordArray: collectedArray, 
+            colorArray: colorArray 
         }
         this.setState({sentencesArrayBoard: board})
+        
     }
 
+    async componentDidMount() {
+      //  const level = localStorage.getItem('level') || this.state.level;
+       // const page = localStorage.getItem('page') || this.state.page;
+        await this.getRequest(this.state.level,this.state.page);
+    }
 
     show = () => {
         console.log(this.state)
     }
 
-    getWords = async (page) => {
-        const url = `https://afternoon-falls-25894.herokuapp.com/words?group=${this.state.level}&page=${page}&wordsPerExampleSentenceLTE=10&wordsPerPage=10`;
+    getWords = async (level,page) => {
+        const url = `https://afternoon-falls-25894.herokuapp.com/words?group=${level}&page=${page}&wordsPerExampleSentenceLTE=10&wordsPerPage=10`;
         const res = await fetch(url);
         const data = await res.json();
 
@@ -73,15 +84,14 @@ export default class GameScreen extends Component {
     }
 
     changeGameParam = async () => {
-
         this.setState({sentencesArray: []}) // делаем пустым массив 10 предложений
         this.setState({sentencesTranslateArray:[]}) // делаем пустым рус массив 10 предложений
         this.setState({currentSentencesIndex: 0}) // обнуляем индекс текущий
-
-        await this.getWords(this.state.page); // новый запрос
-        this.setState({currentSentences:  this.state.sentencesArray[this.state.currentSentencesIndex]}); 
+        this.setState({sentencesArrayBoard: []})
+        localStorage.setItem('level', this.state.level);
+        localStorage.setItem('page', this.state.page);
+        await this.getRequest(this.state.level,this.state.page); // новый запрос
     }
-
 
     levelChange = (event) => {
         this.setState({level: +event.target.value})
@@ -123,44 +133,84 @@ export default class GameScreen extends Component {
         this.setState({offerTranslation: !this.state.offerTranslation})
     }
 
-    onContinue = () => {
-        if ( this.state.currentSentencesIndex === 9 ){
-            
-        }
-        else {
-            const currentIndex = this.state.currentSentencesIndex;
-
-            this.setState({currentSentencesIndex: currentIndex+ 1})
-            
-            const currentSentences = this.state.sentencesArray[currentIndex + 1];
-            this.setState({currentSentences:  currentSentences});
-
-            let wordShuffleArray = currentSentences.split(' ').sort(function() {
-                return 0.5 - Math.random();
-            });
-            this.setState({currentSentencesArray: wordShuffleArray});
-            
-            let collectedArray = [];
-            let colorArray = []
-            wordShuffleArray.forEach(()=>{
-                collectedArray.push('')
-                colorArray.push('common')
-            })
-
-            const board  = [...this.state.sentencesArrayBoard]
-            board[currentIndex+1] = {
-                wordArray: collectedArray, 
-                colorArray: colorArray 
+    onResult = () => {
+        if (this.state.level === 5 && this.state.page === 9 && this.state.currentSentencesIndex === 9){
+            localStorage.setItem('level', 0);
+            localStorage.setItem('page', 0);
+        } else {
+            if (this.state.page === 9 && this.state.currentSentencesIndex === 9 ){
+                const level = this.state.level;
+                localStorage.setItem('level', level + 1);
+                localStorage.setItem('page', 0);
+            } else {
+                const page = this.state.page;
+                localStorage.setItem('level', this.state.level);
+                localStorage.setItem('page', page+1);
             }
-            this.setState({sentencesArrayBoard: board})
-
-            this.setState({isContinueButton: false})
-            this.setState({isIgnoranceButton: true})
         }
-
     }
 
-    onCheck = () => { // ПРОВЕРИТЬ
+    onContinue = async () => {
+
+        if (this.state.level === 5 && this.state.page === 9 && this.state.currentSentencesIndex === 9){
+            this.setState({sentencesArrayBoard: []})
+            this.setState({currentSentencesIndex: 0})
+            this.setState({level: 0})
+            this.setState({page: 0})
+            await this.getRequest(0,0);
+        } else {
+            if (this.state.page === 9 && this.state.currentSentencesIndex === 9 ){
+                const level = this.state.level;
+                this.setState({sentencesArrayBoard: []})
+                this.setState({currentSentencesIndex: 0})
+                this.setState({page: 0})
+                await this.getRequest(level + 1,0);
+                this.setState({level: level + 1})
+            }
+            else {
+                if ( this.state.currentSentencesIndex === 9 ){
+                    const page = this.state.page;
+                    this.setState({sentencesArrayBoard: []})
+                    this.setState({currentSentencesIndex: 0})
+                    await this.getRequest(this.state.level,page+1);
+                    this.setState({page: page + 1})
+                }
+                else {
+                    const currentIndex = this.state.currentSentencesIndex;
+        
+                    this.setState({currentSentencesIndex: currentIndex+ 1})
+                    
+                    const currentSentences = this.state.sentencesArray[currentIndex + 1];
+                    this.setState({currentSentences:  currentSentences});
+        
+                    let wordShuffleArray = currentSentences.split(' ').sort(function() {
+                        return 0.5 - Math.random();
+                    });
+                    this.setState({currentSentencesArray: wordShuffleArray});
+                    
+                    let collectedArray = [];
+                    let colorArray = []
+                    wordShuffleArray.forEach(()=>{
+                        collectedArray.push('')
+                        colorArray.push('common')
+                    })
+        
+                    const board  = [...this.state.sentencesArrayBoard]
+                    board[currentIndex+1] = {
+                        wordArray: collectedArray, 
+                        colorArray: colorArray 
+                    }
+                    this.setState({sentencesArrayBoard: board})
+                }
+            }
+        }
+        this.setState({isCheckButton: false})
+        this.setState({isContinueButton: false})
+        this.setState({isResultButton: false})
+        this.setState({isIgnoranceButton: true})
+    }
+
+    onCheck = () => {
         let currentArray = this.state.currentSentences.split(' ');
         const board  = [...this.state.sentencesArrayBoard]
         const currentIndex = this.state.currentSentencesIndex; 
@@ -186,12 +236,14 @@ export default class GameScreen extends Component {
             if (this.state.pronounceAfterSuccessful){
                 this.saySentences(this.state.currentSentences)
             }
+            const statistic = {...this.state.statistic};
+            statistic.trueSentences.push(this.state.currentSentences);
+            this.setState({statistic: statistic})
         }
         else {
             this.setState({isIgnoranceButton: true})
         }
     }
-
 
     onSwapWordsForPuzzles = (index,arr) => { // клики с пазлов
         const board  = [...this.state.sentencesArrayBoard]
@@ -269,6 +321,14 @@ export default class GameScreen extends Component {
         this.setState({sentencesArrayBoard: board})
 
         this.setState({isContinueButton: true}) // показываем кнопку продолжить
+
+        const statistic = {...this.state.statistic};
+        statistic.falseSentences.push(this.state.currentSentences);
+        this.setState({statistic: statistic})
+        
+        if (this.state.currentSentencesIndex === 9){
+            this.setState({isResultButton: true})
+        }
         if (this.state.pronounceAfterSuccessful){
             this.saySentences(this.state.currentSentences)
         }
@@ -286,7 +346,8 @@ export default class GameScreen extends Component {
             isContinueButton,
             isIgnoranceButton,
             sentencesArrayBoard,
-            offerTranslation
+            offerTranslation,
+            isResultButton
         } = this.state;
 
         const settingButton = s.setting_button;  //стили
@@ -324,6 +385,11 @@ export default class GameScreen extends Component {
             continueButton = settingButton;
         }
 
+        let resultButton = settingButton
+        if (!isResultButton){
+            resultButton = settingButton +' '+ s.display_none;
+        }
+
         return (
             <div>
                  <div className={s.background}>
@@ -335,23 +401,23 @@ export default class GameScreen extends Component {
                         <div className={s.menu_select_level}> 
                             <select className={s.choose_level} value={level} onChange={this.levelChange}>
                                     <option value={0}>1</option>
-                                    <option value="1">2</option>
-                                    <option value="2">3</option>
-                                    <option value="3">4</option>
-                                    <option value="4">5</option>
-                                    <option value="5">6</option>
+                                    <option value={1}>2</option>
+                                    <option value={2}>3</option>
+                                    <option value={3}>4</option>
+                                    <option value={4}>5</option>
+                                    <option value={5}>6</option>
                             </select>
                             <select className={s.choose_level} value={page} onChange={this.pageChange}>
-                                    <option value="0">1</option>
-                                    <option value="1">2</option>
-                                    <option value="2">3</option>
-                                    <option value="3">4</option>
-                                    <option value="4">5</option>
-                                    <option value="5">6</option>
-                                    <option value="6">7</option>
-                                    <option value="7">8</option>
-                                    <option value="8">9</option>
-                                    <option value="9">10</option>
+                                    <option value={0}>1</option>
+                                    <option value={1}>2</option>
+                                    <option value={2}>3</option>
+                                    <option value={3}>4</option>
+                                    <option value={4}>5</option>
+                                    <option value={5}>6</option>
+                                    <option value={6}>7</option>
+                                    <option value={7}>8</option>
+                                    <option value={8}>9</option>
+                                    <option value={9}>10</option>
                             </select>
                             <ButtonSettings label = {'GO'} classNameBtn={chooseButton} clickBtn={this.changeGameParam}/>
                         </div>
@@ -410,9 +476,18 @@ export default class GameScreen extends Component {
                         </div>
 
                         <div className={s.game_buttons}>
-                            <ButtonSettings label = {'i don`t know'} classNameBtn={collectButton} clickBtn={this.collectSentences}/>
-                            <ButtonSettings label = {'check'} classNameBtn={checkButton} clickBtn={this.onCheck}/>
-                            <ButtonSettings label = {'continue'} classNameBtn={continueButton} clickBtn={this.onContinue}/>
+                            <ButtonSettings label = {'I don`t know'} classNameBtn={collectButton} clickBtn={this.collectSentences}/>
+                            <ButtonSettings label = {'Check'} classNameBtn={checkButton} clickBtn={this.onCheck}/>
+                            <ButtonSettings label = {'Continue'} classNameBtn={continueButton} clickBtn={this.onContinue}/>
+                            <Link to={
+                            {
+                                pathname: '/statistic',
+                                state: {
+                                    statistic: this.state.statistic
+                                }
+                            }
+                            }><button className={resultButton} onClick = {this.onResult}>Result</button>
+                            </Link>
                         </div> 
                     </div>
     

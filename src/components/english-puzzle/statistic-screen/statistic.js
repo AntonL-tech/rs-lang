@@ -1,14 +1,44 @@
-import React from 'react';
+import React,{Component} from 'react';
+import EpHeader from "../ep-header/epHeader";
+import { Link } from 'react-router-dom';
+import s from './statistic.module.css'
 
+export default class StatisticScreen extends Component {
 
+    render () {
+        const { location } = this.props;
 
-const StatisticScreen = () => {
-    return (
-        <div>
+        return (
+            <div>
+                <div className={s.background}>
+                </div>
+                <EpHeader/>
+                <div className={s.mainBase}>
+                    <div>
+                    {location.state.statistic.falseSentences.map((field,i) => (
+                        <p  key={i.toString() + 'd3'} >
+                            {field}
+                        </p>
+                    ))}
+                    </div>
+                    <div>
+                    {location.state.statistic.trueSentences.map((field,i) => (
+                        <p  key={i.toString() + 'd4'} >
+                            {field}
+                        </p>
+                    ))}
+                    <Link to={
+                            {
+                                pathname: '/game',
 
-        </div>
-    )
+                            }
+
+                            }><button >Continue</button>
+                            </Link>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 }
 
-
-export default StatisticScreen;
