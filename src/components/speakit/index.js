@@ -17,7 +17,7 @@ class SpeakIt extends Component {
       recognizedWord: '',
       showResults: false,
       isStart: true,
-      difficult: '-1',
+      difficult: '',
       hasUserWords: false,
     };
 
@@ -26,6 +26,8 @@ class SpeakIt extends Component {
 
   componentDidMount() {
     this.wordService.getUserWordsCount().then((userWordsCount) => {
+      console.log('user words count ', userWordsCount);
+
       if (userWordsCount < 10) {
         this.setState({ hasUserWords: false });
         this.selectDifficult('0');

@@ -18,6 +18,8 @@ class DifficultSelector extends Component {
   };
 
   componentDidMount() {
+    console.log('selected option ', this.props.selectedOption);
+
     this.setState({ selectedOption: this.props.selectedOption });
   }
 
