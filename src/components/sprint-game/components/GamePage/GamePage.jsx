@@ -9,6 +9,7 @@ import audioStart from '../../files/audio/start.mp3';
 import audioFinish from '../../files/audio/finish.mp3';
 import audioNewLevel from '../../files/audio/newLevel.mp3';
 import audioTikTak from '../../files/audio/tikTak.mp3';
+import {BrowserRouter as Router, Redirect} from 'react-router-dom';
 
 const intervals = [];
 
@@ -39,6 +40,7 @@ class GamePage extends Component {
     };
     
     wordList() {
+        if (this.props.location.aboutProps){
         this.setState({
             uploaded: false
         });
@@ -68,7 +70,8 @@ class GamePage extends Component {
                     this.playAudio(audioTikTak);
                 }
             }
-        });          
+        });      
+    }    
     };
 
     componentDidMount() {
@@ -176,6 +179,11 @@ class GamePage extends Component {
     };
 
     render() {
+        if (!this.props.location.aboutProps){
+            return <Router>
+                        <Redirect  to='/sprint/start' />
+                    </Router>
+        }
         if (this.state.uploaded) {
             if (this.state.kv >= 0 && this.state.step < 80) {
                 return <GamePlay score = {this.state.score} time = {this.state.kv}
