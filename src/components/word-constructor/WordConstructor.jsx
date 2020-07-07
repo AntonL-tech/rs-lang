@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './Sprint.module.css';
+import s from './WordConstructor.module.css';
 import StartPage from './components/StartPage/StartPage';
 import GamePage from './components/GamePage/GamePage';
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
@@ -9,11 +9,11 @@ const Sprint = () => {
         <Router>
                 <div className={s.background}>
                     <Switch>
-                        <Route path='/sprint/start' render={() => <StartPage />} />
-                        <Route path='/sprint/game' component={GamePage} />
+                        <Route path='/constructor/start' render={() => <StartPage />} />
+                        <Route path='/constructor/game' component={GamePage} />
                     </Switch>
                 </div>
-                <Redirect  to='/sprint/start' />
+                <Redirect  to='/constructor/start' />
         </Router>
         
         

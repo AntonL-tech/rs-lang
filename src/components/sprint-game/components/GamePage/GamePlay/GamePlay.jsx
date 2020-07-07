@@ -25,7 +25,7 @@ const GamePlay = (props) => {
                     <button className={s.audio} onClick={() => props.changeAudio()}>
                         {props.audioStatus ? <img src={imgAudioOn} alt=""/> : <img src={imgAudioOff} alt=""/> }
                     </button>
-                    <Link className={s.link} to='/sprint/start'>
+                    <Link className={s.link} onClick={() => props.stopGame()} to='/sprint/start'>
                         <div className={s.linkEl}>|</div>
                         <div className={s.linkEl}>|</div>
                     </Link>
@@ -44,7 +44,6 @@ const GamePlay = (props) => {
                 </div>
                 <button className={s.false} onClick={() => { props.checkWord(false) }}>неверно</button>
                 <button className={s.true} onClick={() => { props.checkWord(true) }}>верно</button>
-                <div>{props.status}</div>
             </div>
         </div>
     )
