@@ -1,5 +1,6 @@
 .gameBg {
     font-family: ' Open Sans', sans-serif;
+    background-image: url('./Assets/img/bgImage.svg');
     margin: 0;
     padding: 0;
     position: relative;

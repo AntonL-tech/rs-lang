@@ -45,9 +45,7 @@ class GamePage extends React.Component {
             this.randomArraySorted(arr);
             this.setState({ data: arr, isSpinner: false });
             this.ourInterval();
-            console.log('YES');
         } else {
-            console.log('NO');
             this.getWords();
         }
         document.addEventListener('keydown', this.onKeyPressed);
@@ -111,7 +109,6 @@ class GamePage extends React.Component {
                         this.randomArraySorted(arr);
                         this.setState({ data: arr, isSpinner: false });
                         this.ourInterval();
-                        console.log(this.state.data);
                     }
                 });
         }
@@ -136,8 +133,9 @@ class GamePage extends React.Component {
         if (slideDone) {
             this.setState({ isShowBlock: false });
             this.playSound(error);
-            this.setState({ countStarError: this.state.countStarError + 1, countStar: this.state.countStar - 1 });
             this.setState({
+                countStarError: this.state.countStarError + 1,
+                countStar: this.state.countStar - 1,
                 wrongWords: [...this.state.wrongWords, this.state.questionWordObj],
             });
 
@@ -201,10 +199,7 @@ class GamePage extends React.Component {
     createQuestionAnswearWords = (someWord) => {
         const { countCard, data } = this.state;
         this.setState({ questionArray: data.slice(countCard, countCard + 4) });
-        // if (this.state.questionArray.length < 4) {
-        //     this.showGameOverModal();
-        //     this.setState({ isShowBlock: false });
-        // }
+
         if (someWord === undefined) {
             this.setState({
                 questionWordObj: data.slice(countCard, countCard + 4)[Math.floor(Math.random() * 4)],
@@ -224,42 +219,14 @@ class GamePage extends React.Component {
     };
 
     changeCountCard(someWord) {
-        // console.log(this.state.objectword.pageY);
         const { countCard, data } = this.state;
         if (this.state.countStarError >= 5 || countCard === 600 || countCard + 4 > data.length) {
             this.showGameOverModal();
             this.setState({ isShowBlock: false });
         } else {
-            this.setState({ isShowBlock: true });
-
-            // if (countCard === 600) {
-            //     this.showGameOverModal();
-            //     this.setState({ isShowBlock: false });
-            //     // if (data.length !== 0) {
-            //     //     setTimeout(() => this.checkWordFinish(this.state.slideDone), 5000);
-            //     // }
-            // }
-            // if (countCard <= 596) {
             this.createQuestionAnswearWords(someWord);
-
-            // this.setState({ questionArray: data.slice(countCard, countCard + 4) });
-            // if (someWord === undefined) {
-            //     this.setState({
-            //         questionWordObj: data.slice(countCard, countCard + 4)[Math.floor(Math.random() * 4)],
-            //     });
-            //     this.setState({
-            //         questionWordObjCopy: this.state.questionWordObj,
-            //     });
-            // } else {
-            //     this.setState({
-            //         questionWordObj: someWord,
-            //         questionWordObjCopy: someWord,
-            //     });
-            // }
-            // this.setState({ countCard: countCard + 4 });
-
             setTimeout(() => this.checkWordFinish(this.state.slideDone), 5000);
-            this.setState({ slideDone: true });
+            this.setState({ slideDone: true, isShowBlock: true });
         }
     }
 
@@ -342,7 +309,9 @@ class GamePage extends React.Component {
                         ))}
                     </div>
                     <div className={!this.state.isSpinner && this.state.timer !== 0 ? `${s.msg}` : `${s.none}`}>{messageForKeyboard}</div>
+
                     <div className={s.questionWordBlock}>{wordBlock}</div>
+
                     <div className={s.answearBlock}>{wordList}</div>
                 </div>
                 <GamePauseModal

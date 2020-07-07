@@ -8,14 +8,13 @@
     max-width: 100%;
     z-index: 999;
     padding: 36px 16px 16px;
-    background-color: rgba(0, 0, 0, .7);
+    background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: flex-start;
     border-radius: 0;
     box-sizing: border-box;
 }
-
 
 .modalWindow {
     padding: 40px 0;
@@ -26,21 +25,18 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
 }
-
 
 .modalContent {
     width: 398px;
     border-radius: 8px;
-    box-shadow: 1px 0 2px 0 rgba(0, 0, 0, .16);
+    box-shadow: 1px 0 2px 0 rgba(0, 0, 0, 0.16);
     background-color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 36px 0 22px;
 }
-
 
 .modalTitle {
     font-size: 18px;
@@ -88,7 +84,6 @@
     text-decoration: none;
 }
 
-
 .exitGameIcon {
     background-image: url('../Assets/icons/clear.svg');
     width: 30px;
@@ -101,7 +96,6 @@
 }
 
 .muteIcon {
-
     width: 40px;
     height: 40px;
     background-size: 100%;
@@ -111,15 +105,13 @@
     cursor: pointer;
 }
 
-.muteOn {
-    background-image: url('../Assets/icons/sound.svg');
+.none {
+    display: none;
 }
 
-.muteOff {
-    background-image: url('../Assets/icons/no-sound.svg');
-
+img {
+    width: 100%;
 }
-
 
 @media (min-width: 300px) and (max-width: 550px) {
     .modalContent {
@@ -129,7 +121,6 @@
 
     .modalOverlay {
         padding: 36px 0 16px;
-
     }
 
     .exitGameIcon {
@@ -148,6 +139,4 @@
         left: 15px;
         top: 15px;
     }
-
-
 }

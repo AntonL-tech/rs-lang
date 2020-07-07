@@ -8,7 +8,7 @@
     max-width: 100%;
     z-index: 909;
     padding: 36px 16px 16px;
-    background-color: rgba(0, 0, 0, .7);
+    background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -16,7 +16,6 @@
     box-sizing: border-box;
     backdrop-filter: blur(6px);
 }
-
 
 .modalWindow {
     padding: 40px 0;
@@ -29,11 +28,10 @@
     justify-content: space-between;
 }
 
-
 .modalContent {
     width: 398px;
     border-radius: 8px;
-    box-shadow: 1px 0 2px 0 rgba(0, 0, 0, .16);
+    box-shadow: 1px 0 2px 0 rgba(0, 0, 0, 0.16);
     background-color: #fff;
     display: flex;
     flex-direction: column;
@@ -137,5 +135,4 @@
         width: 310px;
         margin: auto;
     }
-
 }

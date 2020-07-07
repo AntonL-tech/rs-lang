@@ -15,6 +15,7 @@
 }
 
 .questionWord {
+    display: inline-block;
     position: absolute;
     color: transparent;
     top: 0;
@@ -22,9 +23,10 @@
     left: 50%;
     height: 2.75rem;
     width: 15rem;
+    animation: move 5s linear;
+    animation-direction: normal;
     animation: move-highlight 5s linear;
     animation-fill-mode: forwards;
-    display: inline-block;
     text-shadow: rgb(255, 255, 255) 0 0 0;
 }
 
@@ -32,48 +34,20 @@
     0% {
         top: 0;
         text-shadow: rgb(255, 255, 255) 0 0 0;
+        letter-spacing: 0;
     }
 
     94% {
         text-shadow: rgb(255, 255, 255) 0 0 0;
+        letter-spacing: 0;
     }
 
     100% {
         text-shadow: rgb(255, 255, 255) 0 0 19px;
         top: 7.3em;
+        letter-spacing: 2rem;
     }
 }
-
-/* 
-.boom {
-    left: 50%;
-    height: 2.75rem;
-    width: 15rem;
-    animation: move-highli 5s linear;
-    animation-fill-mode: forwards;
-    display: inline-block;
-    text-shadow: rgb(255, 255, 255) 0 0 0;
-
-}
-
-
-@keyframes move-highli {
-    0% {
-        top: 0;
-        text-shadow: rgb(255, 255, 255) 0 0 0;
-    }
-
-
-    20% {
-        text-shadow: rgb(255, 255, 255) 0 0 19px;
-
-    }
-
-    100% {
-        text-shadow: rgb(255, 255, 255) 0 0 19px;
-
-    }
-} */
 
 .starsBlock {
     margin: 20px 10px;
@@ -138,7 +112,7 @@
     width: 32px;
     height: 32px;
     cursor: pointer;
-    margin-top: -6px
+    margin-top: -6px;
 }
 
 .timer {
@@ -168,7 +142,6 @@
 
 .none {
     display: none;
-
 }
 
 .loader {
@@ -193,7 +166,7 @@
     border-right-color: rgb(218, 97, 255);
     border-top-color: rgb(218, 97, 255);
     box-sizing: border-box;
-    content: "";
+    content: '';
     height: 16vmin;
     left: 0;
     position: absolute;
@@ -208,7 +181,7 @@
     border-right-color: rgba(255, 102, 247, 0.616);
     border-top-color: rgba(255, 102, 247, 0.616);
     box-sizing: border-box;
-    content: "";
+    content: '';
     height: 12vmin;
     left: 2vmin;
     position: absolute;
@@ -255,7 +228,6 @@
 
         100% {
             top: 6.2em;
-
         }
     }
 }

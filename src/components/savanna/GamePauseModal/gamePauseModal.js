@@ -3,14 +3,16 @@ import PropTypes from 'prop-types';
 import s from './gamePauseModal.module.css';
 
 const Modal = ({ title, isOpen, onGameReturn, toMainMenu, subTitle, gamePause, gameSound, sound }) => {
+    const logo = require('../Assets/icons/sound.svg');
+    const logot = require('../Assets/icons/no-sound.svg');
+    const wordBlock = sound ? <img src={logo} alt='' /> : <img src={logot} alt='' />;
+
     return (
         <div>
-            <div className={sound ? `${s.muteIcon} ${s.muteOn}` : `${s.muteIcon} ${s.muteOff}`} onClick={gameSound}>
-                {' '}
+            <div class={s.muteIcon} onClick={gameSound}>
+                {wordBlock}
             </div>
-
             <div className={s.exitGameIcon} onClick={gamePause}></div>
-
             {isOpen && (
                 <div className={s.modalOverlay}>
                     <div className={s.modalWindow}>

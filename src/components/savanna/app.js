@@ -1,14 +1,7 @@
 import React from 'react';
 import s from './app.module.css';
-
-import contentImg from './bgImage.svg';
-
 import GamePage from './GamePage/gamePage';
 import IntroPage from './IntroPage/introPage';
-
-const contentStyle = {
-    backgroundImage: `url(${contentImg})`,
-};
 
 class Savanna extends React.Component {
     state = {
@@ -50,7 +43,6 @@ class Savanna extends React.Component {
 
     handleStartGame = () => {
         if (this.state.levelValue === 7) {
-            console.log(localStorage.userId, localStorage.token);
             this.getUserWord(localStorage.userId, localStorage.token);
         } else {
             this.setState({ startPage: false });
@@ -67,10 +59,8 @@ class Savanna extends React.Component {
     handleSound = () => {
         if (this.state.sound) {
             this.setState({ sound: false });
-            console.log('WOW');
         } else {
             this.setState({ sound: true });
-            console.log('YEHOOO');
         }
     };
 
@@ -90,11 +80,7 @@ class Savanna extends React.Component {
         ) : (
             <GamePage levelValue={levelValue} handleSound={this.handleSound} sound={sound} timer={this.state.timer} userData={userData} />
         );
-        return (
-            <div className={s.gameBg} style={contentStyle}>
-                {page}
-            </div>
-        );
+        return <div className={s.gameBg}>{page}</div>;
     }
 }
 
