@@ -30,11 +30,11 @@ class StartPage extends Component {
                 </select>
                     <Link className={s.link} to={
                         {
-                            pathname: '/game',
+                            pathname: '/sprint/game',
                             aboutProps: this.state.level
                         }
                     }>Start Game</Link>
-                    <Link className={s.link} to='/statistic'>Statistic</Link>
+                    <Link className={s.link} to='/sprint/statistic'>Statistic</Link>
             </div>
         )
     }
