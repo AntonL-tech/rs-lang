@@ -41,7 +41,7 @@
     align-items: center;
     justify-content: center;
     user-select: none;
-    border: solid 1px cyan;
+    border: solid 1px #09d3ac;
 }
 
 .drag_word:not(:first-child):before,

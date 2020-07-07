@@ -39,7 +39,7 @@
 
 .chose_btn {
     font-size: 16px;
-    color: cyan;
+    color: #09d3ac;
     width: 70px;
     background-color:  #37393d;
 }
@@ -49,10 +49,10 @@
     width: 55px;
     height: 45px;
     border-radius: 5px;
-    border: 1px solid cyan;
+    border: 1px solid #09d3ac;
     cursor: pointer;
     color: #fff;
-    background: #37393d;
+    background-color: #37393d;
     font-style: normal;
     font-weight: bold;
     font-size: 14px;
@@ -73,6 +73,10 @@
 .megafon_btn {
     width: 50px;
     background-image: url(../assets/megaphone.svg);
+}
+
+.active_btn {
+    background-color: #09d3ac;
 }
 
 .translate_btn {
@@ -153,8 +157,10 @@
 .btn_dont_know {
     cursor: pointer;
     margin: 0 auto;
-
 }
+
+
+
 
 .game_numbering {
     margin-right: 10px;
@@ -170,7 +176,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: cyan;
+    color: #09d3ac;
 }
 
 .drag_word {
@@ -185,7 +191,7 @@
     align-items: center;
     justify-content: center;
     user-select: none;
-    border: solid 1px cyan;
+    border: solid 1px #09d3ac;
 }
 
 

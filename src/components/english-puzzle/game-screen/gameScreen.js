@@ -242,12 +242,20 @@ export default class GameScreen extends Component {
 
         if (!colorArray.includes('error')){
             this.setState({isContinueButton: true})
+            if (this.state.currentSentencesIndex === 9){
+                this.setState({isResultButton: true})
+            }
             if (this.state.pronounceAfterSuccessful){
                 this.saySentences(this.state.audioArray[this.state.currentSentencesIndex])
             }
             let statistic = {...this.state.statistic};
-            statistic.trueSentences.push(this.state.currentSentences); 
+            
+            statistic.trueSentences.push({
+                sentences: this.state.currentSentences,
+                audio: this.state.audioArray[this.state.currentSentencesIndex]
+            }); 
             this.setState({statistic: statistic})
+
         }
         else {
             this.setState({isIgnoranceButton: true})
@@ -333,7 +341,10 @@ export default class GameScreen extends Component {
 
         const statistic = {...this.state.statistic};
 
-        statistic.falseSentences.push(this.state.currentSentences);  
+        statistic.falseSentences.push({
+            sentences: this.state.currentSentences,
+            audio: this.state.audioArray[this.state.currentSentencesIndex]
+        });  
         this.setState({statistic: statistic})
         
         if (this.state.currentSentencesIndex === 9){
@@ -361,7 +372,10 @@ export default class GameScreen extends Component {
         } = this.state;
 
         const settingButton = s.setting_button;  
+
+
         const megafon = settingButton + ' ' + s.megafon_btn;
+
         let translate = settingButton + ' ' + s.translate_btn;
         const song = settingButton + ' ' + s.song_btn;
         const image = settingButton + ' ' + s.image_btn;
