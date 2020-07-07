@@ -18,6 +18,9 @@
     height: 100%;
     max-width: 700px;
     margin: 0 auto;
+    background-color: ghostwhite;
+    border-radius: 10px;
+    padding: 15px;
 }
 
 .statistic_wrapper {
@@ -31,4 +34,29 @@
     align-items: center;
     margin-bottom: 20px;
     
+}
+
+.title_false {
+    color: #fff;
+    background-color: red;
+    border-radius: 30px;
+    padding: 0 5px;
+}
+
+.title_true {
+    color: #fff;
+    background-color: forestgreen;
+    border-radius: 30px;
+    padding: 0 5px;
+}
+
+.continue_btn {
+    height: 40px;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-left: 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    color: #fff;
+    background-color: #37393d;  
 }

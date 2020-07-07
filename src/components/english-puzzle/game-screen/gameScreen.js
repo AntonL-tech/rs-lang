@@ -7,32 +7,35 @@ import ButtonSettings from './buttonSettings/buttonSettings'
 import RowSentences from './rowSentences/rowSentences'
 export default class GameScreen extends Component {
     state = {
-        level: localStorage.getItem('level') || 0,
-        page: localStorage.getItem('page') || 0,
+        level: +localStorage.getItem('level') || 0,
+        page: +localStorage.getItem('page') || 0,
         sentencesArray: [], // массив предложений
         sentencesTranslateArray: [], // массив рус предложений  // заполянется запросом
         currentSentencesIndex: 0, // текущий индекс предложения
         currentSentences: '', // текущее предложение
         currentSentencesArray: [], // массив откуда собираем !! предложения
-        promptAlwaysPronunciation : true, // разрешить перевеод
-        pronounceAfterSuccessful : true, // произнести в конце
-        offerTranslation : true, // показать перевод
+        promptAlwaysPronunciation :localStorage.getItem('promptAlwaysPronunciation') ? JSON.parse(localStorage.getItem('promptAlwaysPronunciation')) : true,
+        pronounceAfterSuccessful : localStorage.getItem('pronounceAfterSuccessful') ? JSON.parse(localStorage.getItem('pronounceAfterSuccessful')) : true, 
+        offerTranslation : localStorage.getItem('offerTranslation') ? JSON.parse(localStorage.getItem('offerTranslation')) : true, 
         isCheckButton: false, // check : display none
         isContinueButton: false,
         isIgnoranceButton: true,
         isResultButton: false,
         sentencesArrayBoard:[], // массив собирания !! цвета при чеке !!
         statistic: {falseSentences: [] ,trueSentences: []},
-
+        audioArray: []
     }
-
 
     getRequest =  async (level,page) => {
         await this.getWords(level,page);
-        
-        this.setState({currentSentences:  this.state.sentencesArray[this.state.currentSentencesIndex]}); // задаем предложение текущее
-        
-        let wordShuffleArray = this.state.currentSentences.split(' ').sort(function() {
+        const array = this.state.sentencesArray;
+        const currentIndex = this.state.currentSentencesIndex; 
+
+        this.setState({currentSentences:  array[currentIndex]}); // задаем предложение текущее
+
+        const currentSentences = array[currentIndex];
+
+        let wordShuffleArray = currentSentences.split(' ').sort(function() {
             return 0.5 - Math.random();
         });
         this.setState({currentSentencesArray: wordShuffleArray}); // мешаем предложение текущее
@@ -45,18 +48,20 @@ export default class GameScreen extends Component {
         })  
 
         const board  = [...this.state.sentencesArrayBoard]
-        const currentIndex = this.state.currentSentencesIndex; 
+
         board[currentIndex] = {
             wordArray: collectedArray, 
             colorArray: colorArray 
         }
         this.setState({sentencesArrayBoard: board})
-        
+
+        const statistic = {...this.state.statistic}
+        statistic.falseSentences = []
+        statistic.trueSentences = []
+        this.setState({statistic: statistic})
     }
 
     async componentDidMount() {
-      //  const level = localStorage.getItem('level') || this.state.level;
-       // const page = localStorage.getItem('page') || this.state.page;
         await this.getRequest(this.state.level,this.state.page);
     }
 
@@ -71,16 +76,19 @@ export default class GameScreen extends Component {
 
         const sentences = [];
         const sentencesTranslate = [];
+        const audioArray = [];
 
         data.forEach(item => {
             sentences.push(item.textExample
                 .replace('<b>', '')
                 .replace('</b>', ''));
             sentencesTranslate.push(item.textExampleTranslate)
+            audioArray.push(item.audioExample)
         });
 
         this.setState({sentencesArray: sentences})  // получаем 10 предложений
         this.setState({sentencesTranslateArray:sentencesTranslate}) //получаем 10 рус предложений
+        this.setState({audioArray:audioArray}) //получаем 10 рус предложений
     }
 
     changeGameParam = async () => {
@@ -102,25 +110,18 @@ export default class GameScreen extends Component {
     }  
 
     saySentences = (sentences) => {
-        window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
-        const msg = new SpeechSynthesisUtterance();
-        const recognition = new window.SpeechRecognition();
-        msg.volume = 1;
-        msg.rate = 0.8;
-        msg.pitch = 1;
-        msg.text = sentences;
-        recognition.lang = 'en-US';
-        speechSynthesis.speak(msg);
+        const audio = new Audio(`https://raw.githubusercontent.com/timon4ik2102/rslang-data/master/${sentences}`);
+        audio.play();
     }
 
     switchPromptAlwaysPronunciation = () => {  // включить отключить говорилку
-        this.setState(({promptAlwaysPronunciation}) => ({
-            promptAlwaysPronunciation : !promptAlwaysPronunciation
-        }))
+        this.setState({promptAlwaysPronunciation: !this.state.promptAlwaysPronunciation})
+        localStorage.setItem('promptAlwaysPronunciation', !this.state.promptAlwaysPronunciation )
     }
 
     pronounceAfter = () => { // включить произношение вконце
         this.setState({pronounceAfterSuccessful: !this.state.pronounceAfterSuccessful})
+        localStorage.setItem('pronounceAfterSuccessful', !this.state.pronounceAfterSuccessful)
     }
 
     promptPronunciation = (sentences) => {   // сказать предложение
@@ -131,6 +132,8 @@ export default class GameScreen extends Component {
 
     disableTranslation = () => {
         this.setState({offerTranslation: !this.state.offerTranslation})
+        console.log(this.state.offerTranslation)
+        localStorage.setItem('offerTranslation', !this.state.offerTranslation)
     }
 
     onResult = () => {
@@ -145,7 +148,7 @@ export default class GameScreen extends Component {
             } else {
                 const page = this.state.page;
                 localStorage.setItem('level', this.state.level);
-                localStorage.setItem('page', page+1);
+                localStorage.setItem('page', +page+1);
             }
         }
     }
@@ -157,6 +160,8 @@ export default class GameScreen extends Component {
             this.setState({currentSentencesIndex: 0})
             this.setState({level: 0})
             this.setState({page: 0})
+            localStorage.setItem('level', 0);
+            localStorage.setItem('page', 0);
             await this.getRequest(0,0);
         } else {
             if (this.state.page === 9 && this.state.currentSentencesIndex === 9 ){
@@ -164,6 +169,8 @@ export default class GameScreen extends Component {
                 this.setState({sentencesArrayBoard: []})
                 this.setState({currentSentencesIndex: 0})
                 this.setState({page: 0})
+                localStorage.setItem('level', level + 1);
+                localStorage.setItem('page', 0);
                 await this.getRequest(level + 1,0);
                 this.setState({level: level + 1})
             }
@@ -172,8 +179,10 @@ export default class GameScreen extends Component {
                     const page = this.state.page;
                     this.setState({sentencesArrayBoard: []})
                     this.setState({currentSentencesIndex: 0})
+                    localStorage.setItem('level', this.state.level);
+                    localStorage.setItem('page', +page+1);
                     await this.getRequest(this.state.level,page+1);
-                    this.setState({page: page + 1})
+                    this.setState({page: +page + 1})
                 }
                 else {
                     const currentIndex = this.state.currentSentencesIndex;
@@ -234,9 +243,9 @@ export default class GameScreen extends Component {
         if (!colorArray.includes('error')){
             this.setState({isContinueButton: true})
             if (this.state.pronounceAfterSuccessful){
-                this.saySentences(this.state.currentSentences)
+                this.saySentences(this.state.audioArray[this.state.currentSentencesIndex])
             }
-            const statistic = {...this.state.statistic};
+            let statistic = {...this.state.statistic};
             statistic.trueSentences.push(this.state.currentSentences);
             this.setState({statistic: statistic})
         }
@@ -323,6 +332,7 @@ export default class GameScreen extends Component {
         this.setState({isContinueButton: true}) // показываем кнопку продолжить
 
         const statistic = {...this.state.statistic};
+
         statistic.falseSentences.push(this.state.currentSentences);
         this.setState({statistic: statistic})
         
@@ -330,7 +340,7 @@ export default class GameScreen extends Component {
             this.setState({isResultButton: true})
         }
         if (this.state.pronounceAfterSuccessful){
-            this.saySentences(this.state.currentSentences)
+            this.saySentences(this.state.audioArray[index])
         }
     }
 
@@ -340,14 +350,14 @@ export default class GameScreen extends Component {
             page, 
             sentencesTranslateArray, 
             currentSentencesIndex, 
-            currentSentences, 
             currentSentencesArray,
             isCheckButton,
             isContinueButton,
             isIgnoranceButton,
             sentencesArrayBoard,
             offerTranslation,
-            isResultButton
+            isResultButton,
+            audioArray
         } = this.state;
 
         const settingButton = s.setting_button;  //стили
@@ -436,7 +446,7 @@ export default class GameScreen extends Component {
                         <div className={s.game_group}>
                             <div className={s.game_settings}>
                                 <h3 className={translateSentence}>{sentencesTranslateArray[currentSentencesIndex]}</h3>
-                                <ButtonSettings classNameBtn={s.game_speaker} clickBtn={()=>this.promptPronunciation(currentSentences)}/>
+                                <ButtonSettings classNameBtn={s.game_speaker} clickBtn={()=>this.promptPronunciation(audioArray[currentSentencesIndex])}/>
                             </div>
                         </div>
 
@@ -448,17 +458,17 @@ export default class GameScreen extends Component {
                             </div>
       
                             <div className={s.game_board}>
-
                                 {sentencesArrayBoard.map((field,i) => (
                                     <RowSentences 
                                         key={i.toString() + 'd2'}  
                                         array={field.wordArray} 
                                         classNameRow = {s.game_words} 
-                                        classNameWord = {field.colorArray}  
+                                        classNameWord = {field.colorArray}
+                                        boardLength = {sentencesArrayBoard.length}
+                                        currentRow = {i} 
                                         func={onSwapWordsForBoard} 
                                     />
                                 ))}
-
                             </div>
 
                         </div>

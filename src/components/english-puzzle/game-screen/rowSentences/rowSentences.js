@@ -3,7 +3,7 @@ import s from './rowSentences.module.css'
 
 export default class RowSentences extends Component {
     render() {
-        const {array,classNameRow,classNameWord,func} = this.props;
+        const {array,classNameRow,classNameWord,func,currentRow,boardLength} = this.props;
 
         for (let i = 0; i < classNameWord.length; i++){   // map switch
             if (classNameWord[i] === 'common'){
@@ -17,14 +17,18 @@ export default class RowSentences extends Component {
                 } 
             }
         }
-
+        
         return (
             <div className={classNameRow}>
                 {array.map((word, i) => (
                     <div 
                         key={i.toString() + 'd'} 
                         className={classNameWord[i]}
-                        onClick={()=>func(i,array)}
+                        onClick={()=>{
+                            if ((currentRow+1) === boardLength){
+                                func(i,array)
+                            }
+                        }}
                     >
                         {word}
                     </div> 
