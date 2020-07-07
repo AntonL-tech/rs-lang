@@ -87,7 +87,6 @@ class StartPage extends Component {
                                         }
                         }
                     }>Start Game</Link>
-                    <Link className={s.link} to='/sprint/statistic'>Statistic</Link>
             </div>
         )
     }

@@ -80,7 +80,7 @@ const GamePlay = (props) => {
                                 </div>
                     })}
                 </div>
-                <div className={s.wordArr}>
+                <div className={s.wordLetterArr}>
                     {wordLetters.map((el, i) => {
                         const letter = el;
                             return <div key={i} className={s.wordLetterBlock}
@@ -90,7 +90,6 @@ const GamePlay = (props) => {
                                     </div>
                         })} 
                 </div>
-                {props.wordText}
             </div>
         </div>
     )

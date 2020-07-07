@@ -56,7 +56,6 @@ class StartPage extends Component {
     };
 
     render() {
-        console.log(this.state.audioStatus)
         return !this.state.uploaded ? <Preloader />
         : (<div className={s.block}>
                 <button className={s.audio} onClick={() => this.changeAudio()}>
@@ -88,7 +87,7 @@ class StartPage extends Component {
                                         }
                         }
                     }>Start Game</Link>
-                    <Link className={s.link} to='/constructor/statistic'>Statistic</Link>
+                    
             </div>
         )
     }

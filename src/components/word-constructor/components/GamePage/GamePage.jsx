@@ -69,7 +69,6 @@ class GamePage extends Component {
                 wordId: 0,
                 letterId: 0,
                 kv: 64,
-                step: 0,
                 goodWord: [],
                 badWord: [],
                 score: 0,
@@ -112,12 +111,7 @@ class GamePage extends Component {
                 this.playAudio(audioStart);
             }
         }
-        // if (this.state.kv === 4) {
-        //     if(this.state.audio){
-        //         this.playAudio(audioTikTak);
-        //     }
-        // }
-        if (this.state.kv === 0 || this.state.goodWordsScore === 80) {
+        if (this.state.kv === 0 || this.state.wordId === 79 || this.state.lives === 0) {
             if(this.state.audio){
                 this.playAudio(audioFinish);
             }
@@ -223,40 +217,6 @@ class GamePage extends Component {
         });
     }
 
-    // calcNum () {
-    //     let n = this.state.goodWordsScore < 4 ? 10 
-    //     : (this.state.goodWordsScore < 8 ? 20 
-    //     : (this.state.goodWordsScore < 12 ? 40 : 80));
-    //     return n;
-    // };
-
-    // true () {
-    //     if(this.state.audio){
-    //         this.playAudio(audioGot);
-    //     }
-    //     const wordList = [...this.state.goodWord];
-    //     this.setState({
-    //         goodWord: wordList.concat([this.state.wordList[this.state.wordId]]),
-    //         goodWordsScore: this.state.goodWordsScore + 1,
-    //         score: this.state.score + this.calcNum(),
-    //     });
-    //     if(this.state.goodWordsScore === 3 || this.state.goodWordsScore === 7 || this.state.goodWordsScore === 11){
-    //         if(this.state.audio){
-    //             this.playAudio(audioNewLevel);
-    //         }
-    //     }
-    // };
-
-    // false () {
-    //     if(this.state.audio){
-    //         this.playAudio(audioError);
-    //     }
-    //     this.setState({
-    //         badWord: this.state.badWord.concat([this.state.wordList[this.state.wordId]]),
-    //         goodWordsScore: 0
-    //     });
-    // };
-
     render() {
         if (!this.props.location.aboutProps){
             return <Router>
@@ -264,7 +224,7 @@ class GamePage extends Component {
                     </Router>
         }
         if (this.state.uploaded) {
-            if (this.state.kv >= 0 && this.state.step < 80 && this.state.lives > 0) {
+            if (this.state.kv >= 0 && this.state.wordId < 79 && this.state.lives > 0) {
                 return <GamePlay score = {this.state.score} time = {this.state.kv}
                         transcription = {this.state.wordList[this.state.wordId].transcription}
                         wordTranslate = {this.state.wordList[this.state.wordId].wordTranslate}

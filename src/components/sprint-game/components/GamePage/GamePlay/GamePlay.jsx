@@ -44,7 +44,6 @@ const GamePlay = (props) => {
                 </div>
                 <button className={s.false} onClick={() => { props.checkWord(false) }}>неверно</button>
                 <button className={s.true} onClick={() => { props.checkWord(true) }}>верно</button>
-                <div>{props.status}</div>
             </div>
         </div>
     )
