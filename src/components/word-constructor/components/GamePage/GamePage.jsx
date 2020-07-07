@@ -20,7 +20,7 @@ class GamePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            kv: 0,
+            time: 0,
             wordCard: {},
             wordCardStatus: false,
         };
@@ -29,7 +29,7 @@ class GamePage extends Component {
 
     stopGame() {
         this.setState({
-            kv: 0,
+            time: 0,
         });
         intervals.forEach(clearInterval);
     }
@@ -68,7 +68,7 @@ class GamePage extends Component {
                 wordList: elSort,
                 wordId: 0,
                 letterId: 0,
-                kv: 64,
+                time: 64,
                 goodWord: [],
                 badWord: [],
                 score: 0,
@@ -83,7 +83,7 @@ class GamePage extends Component {
                 level: 0,
                 success: 0,
             });
-            if (this.state.kv === 64) {
+            if (this.state.time === 64) {
                 if(this.state.audio){
                     this.playAudio(audioTikTak);
                 }
@@ -101,17 +101,17 @@ class GamePage extends Component {
         intervals.forEach(clearInterval);
     };
 
-    toOffsetKv(offset) {
+    toOffsetTime(offset) {
         return offset-1;
     };
 
     tick() {
-        if (this.state.kv === 61) {
+        if (this.state.time === 61) {
             if(this.state.audio){
                 this.playAudio(audioStart);
             }
         }
-        if (this.state.kv === 0 || this.state.wordId === 79 || this.state.lives === 0) {
+        if (this.state.time === 0 || this.state.wordId === 79 || this.state.lives === 0) {
             if(this.state.audio){
                 this.playAudio(audioFinish);
             }
@@ -119,7 +119,7 @@ class GamePage extends Component {
         }
 
         this.setState({
-            kv: this.toOffsetKv(this.state.kv),
+            time: this.toOffsetTime(this.state.time),
         });
     };
 
@@ -177,7 +177,7 @@ class GamePage extends Component {
                     wordLetters: this.createWordLetters(this.state.wordList[newId].word.split(''), newLevel),
                     wordError: 0,
                     level: newLevel,
-                    kv: (this.state.success + 1 ) % 6 === 0 && this.state.level < 4 ? 60 :  this.state.kv,
+                    time: (this.state.success + 1 ) % 6 === 0 && this.state.level < 4 ? 60 :  this.state.time,
                     score: this.state.wordError === 0 ? (this.state.score + (10 * (this.state.level + 1))) : ( this.state.score + 5),
                 });
             }
@@ -224,8 +224,8 @@ class GamePage extends Component {
                     </Router>
         }
         if (this.state.uploaded) {
-            if (this.state.kv >= 0 && this.state.wordId < 79 && this.state.lives > 0) {
-                return <GamePlay score = {this.state.score} time = {this.state.kv}
+            if (this.state.time >= 0 && this.state.wordId < 79 && this.state.lives > 0) {
+                return <GamePlay score = {this.state.score} time = {this.state.time}
                         transcription = {this.state.wordList[this.state.wordId].transcription}
                         wordTranslate = {this.state.wordList[this.state.wordId].wordTranslate}
                         word={this.state.word}

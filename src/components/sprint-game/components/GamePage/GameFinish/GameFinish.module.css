@@ -36,7 +36,6 @@ button:active, button:focus,
 .link:active, .link:focus {
     outline: none;
 }
-
   
 .block{
     position: relative;
@@ -55,7 +54,6 @@ button:active, button:focus,
     box-shadow: 0 0 0px #ffffff;
     transition: 0.5s;
 }
-
 
 .result{
     font-size: 36px;

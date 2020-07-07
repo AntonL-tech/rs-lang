@@ -10,13 +10,11 @@ const getUserAllWord = async (id, token) => {
   });
   const result = await rawResponse;
 
-    if (result.status === 200){
-      const content = result.json();      
-      return {status: result.status, wordList: content}
-    } else {
-      return {status: result.status};
-    }
-
+  if (result.status === 200) {
+    const content = result.json();
+    return { status: result.status, wordList: content }
+  }
+  return { status: result.status };
 };
 
 export { getUserAllWord as default };

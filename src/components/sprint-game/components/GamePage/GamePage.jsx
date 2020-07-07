@@ -17,7 +17,7 @@ class GamePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            kv: 0,
+            time: 0,
             wordCard: {},
             wordCardStatus: false,
         };
@@ -26,7 +26,7 @@ class GamePage extends Component {
 
     stopGame() {
         this.setState({
-            kv: 0,
+            time: 0,
         });
         intervals.forEach(clearInterval);
     }
@@ -56,7 +56,7 @@ class GamePage extends Component {
                 uploaded: true,
                 wordList: el,
                 wordId: 0,
-                kv: 64,
+                time: 64,
                 step: 0,
                 goodWord: [],
                 badWord: [],
@@ -65,7 +65,7 @@ class GamePage extends Component {
                 classMark: false,
                 audio: this.props.location.aboutProps.audioStatus,
             });
-            if (this.state.kv === 64) {
+            if (this.state.time === 64) {
                 if(this.state.audio){
                     this.playAudio(audioTikTak);
                 }
@@ -83,22 +83,22 @@ class GamePage extends Component {
         intervals.forEach(clearInterval);
     };
 
-    toOffsetKv(offset) {
+    toOffsetTime(offset) {
         return offset-1;
     };
 
     tick() {
-        if (this.state.kv === 61) {
+        if (this.state.time === 61) {
             if(this.state.audio){
                 this.playAudio(audioStart);
             }
         }
-        if (this.state.kv === 4) {
+        if (this.state.time === 4) {
             if(this.state.audio){
                 this.playAudio(audioTikTak);
             }
         }
-        if (this.state.kv === 0 || this.state.goodWordsScore === 80) {
+        if (this.state.time === 0 || this.state.goodWordsScore === 80) {
             if(this.state.audio){
                 this.playAudio(audioFinish);
             }
@@ -106,7 +106,7 @@ class GamePage extends Component {
         }
 
         this.setState({
-            kv: this.toOffsetKv(this.state.kv),
+            time: this.toOffsetTime(this.state.time),
         });
     };
 
@@ -185,8 +185,8 @@ class GamePage extends Component {
                     </Router>
         }
         if (this.state.uploaded) {
-            if (this.state.kv >= 0 && this.state.step < 80) {
-                return <GamePlay score = {this.state.score} time = {this.state.kv}
+            if (this.state.time >= 0 && this.state.step < 80) {
+                return <GamePlay score = {this.state.score} time = {this.state.time}
                         wordEnglish = {this.state.wordList[this.state.wordId].word}
                         gameWordTranslate = {this.state.wordList[this.state.wordId].gameWordTranslate}
                         status = {String(this.state.wordList[this.state.wordId].wordStatus)}
