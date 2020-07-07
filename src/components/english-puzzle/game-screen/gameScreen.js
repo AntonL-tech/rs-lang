@@ -9,19 +9,19 @@ export default class GameScreen extends Component {
     state = {
         level: +localStorage.getItem('level') || 0,
         page: +localStorage.getItem('page') || 0,
-        sentencesArray: [], // массив предложений
-        sentencesTranslateArray: [], // массив рус предложений  // заполянется запросом
-        currentSentencesIndex: 0, // текущий индекс предложения
-        currentSentences: '', // текущее предложение
-        currentSentencesArray: [], // массив откуда собираем !! предложения
+        sentencesArray: [], 
+        sentencesTranslateArray: [], 
+        currentSentencesIndex: 0, 
+        currentSentences: '', 
+        currentSentencesArray: [], 
         promptAlwaysPronunciation :localStorage.getItem('promptAlwaysPronunciation') ? JSON.parse(localStorage.getItem('promptAlwaysPronunciation')) : true,
         pronounceAfterSuccessful : localStorage.getItem('pronounceAfterSuccessful') ? JSON.parse(localStorage.getItem('pronounceAfterSuccessful')) : true, 
         offerTranslation : localStorage.getItem('offerTranslation') ? JSON.parse(localStorage.getItem('offerTranslation')) : true, 
-        isCheckButton: false, // check : display none
+        isCheckButton: false, 
         isContinueButton: false,
         isIgnoranceButton: true,
         isResultButton: false,
-        sentencesArrayBoard:[], // массив собирания !! цвета при чеке !!
+        sentencesArrayBoard:[], 
         statistic: {falseSentences: [] ,trueSentences: []},
         audioArray: []
     }
@@ -31,14 +31,14 @@ export default class GameScreen extends Component {
         const array = this.state.sentencesArray;
         const currentIndex = this.state.currentSentencesIndex; 
 
-        this.setState({currentSentences:  array[currentIndex]}); // задаем предложение текущее
+        this.setState({currentSentences:  array[currentIndex]}); 
 
         const currentSentences = array[currentIndex];
 
         let wordShuffleArray = currentSentences.split(' ').sort(function() {
             return 0.5 - Math.random();
         });
-        this.setState({currentSentencesArray: wordShuffleArray}); // мешаем предложение текущее
+        this.setState({currentSentencesArray: wordShuffleArray}); 
 
         let collectedArray = [];
         let colorArray = [];
@@ -86,19 +86,19 @@ export default class GameScreen extends Component {
             audioArray.push(item.audioExample)
         });
 
-        this.setState({sentencesArray: sentences})  // получаем 10 предложений
-        this.setState({sentencesTranslateArray:sentencesTranslate}) //получаем 10 рус предложений
-        this.setState({audioArray:audioArray}) //получаем 10 рус предложений
+        this.setState({sentencesArray: sentences})  
+        this.setState({sentencesTranslateArray:sentencesTranslate}) 
+        this.setState({audioArray:audioArray}) 
     }
 
     changeGameParam = async () => {
-        this.setState({sentencesArray: []}) // делаем пустым массив 10 предложений
-        this.setState({sentencesTranslateArray:[]}) // делаем пустым рус массив 10 предложений
-        this.setState({currentSentencesIndex: 0}) // обнуляем индекс текущий
+        this.setState({sentencesArray: []}) 
+        this.setState({sentencesTranslateArray:[]}) 
+        this.setState({currentSentencesIndex: 0}) 
         this.setState({sentencesArrayBoard: []})
         localStorage.setItem('level', this.state.level);
         localStorage.setItem('page', this.state.page);
-        await this.getRequest(this.state.level,this.state.page); // новый запрос
+        await this.getRequest(this.state.level,this.state.page); 
     }
 
     levelChange = (event) => {
@@ -114,17 +114,17 @@ export default class GameScreen extends Component {
         audio.play();
     }
 
-    switchPromptAlwaysPronunciation = () => {  // включить отключить говорилку
+    switchPromptAlwaysPronunciation = () => {  
         this.setState({promptAlwaysPronunciation: !this.state.promptAlwaysPronunciation})
         localStorage.setItem('promptAlwaysPronunciation', !this.state.promptAlwaysPronunciation )
     }
 
-    pronounceAfter = () => { // включить произношение вконце
+    pronounceAfter = () => { 
         this.setState({pronounceAfterSuccessful: !this.state.pronounceAfterSuccessful})
         localStorage.setItem('pronounceAfterSuccessful', !this.state.pronounceAfterSuccessful)
     }
 
-    promptPronunciation = (sentences) => {   // сказать предложение
+    promptPronunciation = (sentences) => {  
         if (this.state.promptAlwaysPronunciation) {
             this.saySentences(sentences)
         }
@@ -246,7 +246,7 @@ export default class GameScreen extends Component {
                 this.saySentences(this.state.audioArray[this.state.currentSentencesIndex])
             }
             let statistic = {...this.state.statistic};
-            statistic.trueSentences.push(this.state.currentSentences); // удачное предложение
+            statistic.trueSentences.push(this.state.currentSentences); 
             this.setState({statistic: statistic})
         }
         else {
@@ -254,7 +254,7 @@ export default class GameScreen extends Component {
         }
     }
 
-    onSwapWordsForPuzzles = (index,arr) => { // клики с пазлов
+    onSwapWordsForPuzzles = (index,arr) => { 
         const board  = [...this.state.sentencesArrayBoard]
         const currentIndex = this.state.currentSentencesIndex; 
 
@@ -269,17 +269,17 @@ export default class GameScreen extends Component {
 
         this.setState({sentencesArrayBoard: board});
 
-        const currentArray = this.state.currentSentencesArray; // внизу массив текущего предложения
+        const currentArray = this.state.currentSentencesArray; 
         currentArray[index] = '';
-        this.setState({currentSentencesArray: currentArray}) // меняем там на пустоту
+        this.setState({currentSentencesArray: currentArray}) 
 
-        if (!collectedArray.includes('')){  // если вверху нет пустых то кнопка чек
+        if (!collectedArray.includes('')){  
             this.setState({isCheckButton: true})
             this.setState({isIgnoranceButton: false})
         }
     }
 
-    onSwapWordsForBoard = (index, arr) => { // клики по доске
+    onSwapWordsForBoard = (index, arr) => { 
         const board  = [...this.state.sentencesArrayBoard]
         const currentIndex = this.state.currentSentencesIndex; 
 
@@ -292,26 +292,26 @@ export default class GameScreen extends Component {
         }
         this.setState({currentSentencesArray: collectedArray})
 
-        board[currentIndex].wordArray[index] = ''; // массив в доске на пустой
+        board[currentIndex].wordArray[index] = ''; 
         
-        this.setState({isCheckButton: false}) // скрываем чек
-        this.setState({isContinueButton: false}) // скрываем продолжить
-        this.setState({isIgnoranceButton: true}); // показываем ай донт
+        this.setState({isCheckButton: false}) 
+        this.setState({isContinueButton: false}) 
+        this.setState({isIgnoranceButton: true}); 
 
         let colorArray = []
         collectedArray.forEach(()=>{
             colorArray.push('common')
         }) 
-        board[currentIndex].colorArray = colorArray; //  опустошаем цвета 
+        board[currentIndex].colorArray = colorArray; 
 
         this.setState({sentencesArrayBoard: board})
  
     }
 
-    collectSentences = () => {  // I DONT KNOW !!!! 
+    collectSentences = () => {  
 
         const collectedArray = this.state.currentSentences.split(' ');
-        const index = this.state.currentSentencesIndex; // 0
+        const index = this.state.currentSentencesIndex; 
         
         const board  = [...this.state.sentencesArrayBoard]
         board[index].wordArray = collectedArray;
@@ -325,15 +325,15 @@ export default class GameScreen extends Component {
 
         this.setState({currentSentencesArray: currentArray})
 
-        board[index].colorArray = colorArray; // все цвета зеленые
+        board[index].colorArray = colorArray; 
 
         this.setState({sentencesArrayBoard: board})
 
-        this.setState({isContinueButton: true}) // показываем кнопку продолжить
+        this.setState({isContinueButton: true}) 
 
         const statistic = {...this.state.statistic};
 
-        statistic.falseSentences.push(this.state.currentSentences);  // неудачное предложение
+        statistic.falseSentences.push(this.state.currentSentences);  
         this.setState({statistic: statistic})
         
         if (this.state.currentSentencesIndex === 9){
@@ -360,7 +360,7 @@ export default class GameScreen extends Component {
             audioArray
         } = this.state;
 
-        const settingButton = s.setting_button;  //стили
+        const settingButton = s.setting_button;  
         const megafon = settingButton + ' ' + s.megafon_btn;
         let translate = settingButton + ' ' + s.translate_btn;
         const song = settingButton + ' ' + s.song_btn;
@@ -377,8 +377,8 @@ export default class GameScreen extends Component {
         
         const onSwapWordsForBoard = this.onSwapWordsForBoard;
 
-        let collectButton = settingButton; // i dont know btn
-        let checkButton = s.drag_word +' '+s.display_none; // check btn
+        let collectButton = settingButton; 
+        let checkButton = s.drag_word +' '+s.display_none; 
         let continueButton = s.drag_word +' '+s.display_none;
 
         if (!isIgnoranceButton) {

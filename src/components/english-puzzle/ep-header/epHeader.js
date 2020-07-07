@@ -10,6 +10,5 @@ const EpHeader = () => {
         </div>
     )
 }
-//const classs = classes.SectionOne + ' ' + classes.SectionTwo;
 
 export default EpHeader;
