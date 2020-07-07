@@ -7,7 +7,7 @@ import Settings from '../app-settings/app-settings';
 import Stats from '../app-stats/app-stats';
 import Team from '../app-team/app-team';
 import Words from '../app-words/app-words';
-import SpeakIt from '../speakit/speakit';
+import SpeakIt from '../speakit';
 import Sprint from '../sprint-game/Sprint';
 import WordConstructor from '../word-constructor/WordConstructor';
 import Home from '../app-home/app-home';
@@ -15,14 +15,14 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute';
 import Auth from '../Auth';
 import '../../index.css';
-import Savanna from "../savanna/app";
-import Audiocall from '../audiocall/audiocall/audiocall'
+import Savanna from '../savanna/app';
+import Audiocall from '../audiocall/audiocall/audiocall';
 
 function App() {
   return (
     <>
       <Router>
-        <div className={"block"}>
+        <div className={'block'}>
           <Switch>
             <Route exact path="/">
               <Home />
