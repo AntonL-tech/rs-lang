@@ -34,7 +34,7 @@ export default class StatisticScreen extends Component {
                             {field}
                         </p>
                     ))}
-                    <Link to={{pathname: '/game'}} >
+                    <Link to={{pathname: '/english-puzzle/game'}} >
                         <button className={s.continue_btn } >Continue</button>
                     </Link>
                     </div>

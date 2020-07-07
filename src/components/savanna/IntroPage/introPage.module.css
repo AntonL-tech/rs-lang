@@ -1,0 +1,92 @@
+.introPage {
+    position: absolute;
+    top: 50%;
+    margin-top: -170px;
+    height: 300px;
+    text-align: center;
+    right: 0;
+    left: 0;
+}
+
+.introTitle {
+    margin-bottom: 45px;
+    font-size: 40px;
+    font-weight: 300;
+    line-height: 1;
+    color: #c786e0;
+    opacity: .9;
+    text-transform: uppercase;
+    letter-spacing: 14px;
+}
+
+.introSubTitle {
+    max-width: 565px;
+    margin: 0 auto 38px;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 300;
+    color: #fff;
+    opacity: .9;
+}
+
+.introLevelText {
+    max-width: 565px;
+    margin: 0 auto 15px;
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 300;
+    color: #fff;
+    opacity: .9;
+}
+
+.introSelectWrap {
+    max-width: 565px;
+    margin: 0 auto 25px;
+}
+
+.introSelectMenu {
+    display: block;
+    margin: 0 auto;
+    max-width: 200px;
+    padding: .75rem 2.3rem .75rem 2.3rem;
+    border: 1px solid rgb(230, 230, 230);
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #444;
+}
+
+.introBtn {
+    min-width: 150px;
+    text-decoration: none;
+    color: #DED7D7 ;
+    text-align: center;
+    box-shadow: 1px 1px 1px #BEE2F9;
+    padding: 12px 22px;
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    border-radius: 6px;
+    border: 2px solid #FFFAFA;
+    background: linear-gradient(#9b2fe4, #d287d9);
+    text-transform: uppercase;
+    transition: all .15s ease;
+    cursor: pointer;
+    outline: 0;
+}
+
+.introBtn:hover {
+    color: #F0D5DE !important;
+    background: #468CCF;
+    background: linear-gradient(#a70eee, #af66d9);
+}
+
+@media (min-width: 300px) and (max-width: 550px) {
+    .introTitle {
+        margin-bottom: 27px;
+        font-size: 25px
+    }
+
+    .introSubTitle {
+        margin: 0 10px 38px;
+    }
+}

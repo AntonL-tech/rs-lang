@@ -1,0 +1,48 @@
+.header_inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 130px;
+    background-color: #303846;
+    border-bottom: solid 2px #09d3ac;
+    width: 100%;
+}
+
+.header_logo,
+.header_user {
+    font-family: 'Pangolin', cursive;
+    font-size: 25px;
+    color: #09d3ac;
+    font-weight: 700;
+}
+
+.header_logo {
+    font-size: 30px;
+}
+
+.header_button {
+    font-size: 20px;
+    cursor: pointer;
+    color: #09d3ac;
+    border: solid 1px #09d3ac;
+    background-color: #303846;
+    padding: 10px 30px;
+    border-radius: 10px;
+    outline: none;
+    font-family: 'Pangolin', cursive;
+    font-size: 25px;
+    margin-left: 50px;
+    transition: all .2s linear;
+}
+
+.header_button:hover { 
+    color: #303846;
+    border: solid 1px #303846;
+    background-color: #09d3ac;
+}
+
+.header_content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

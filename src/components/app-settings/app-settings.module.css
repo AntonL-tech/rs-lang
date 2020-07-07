@@ -1,0 +1,337 @@
+.settings_inner, .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 20px gray;
+    border-radius: 10px;
+    padding: 20px;
+    color: #09d3ac;
+    background-color: #303846;
+}
+
+.card {
+    margin: 0 auto;
+    box-shadow: 0 0 20px grey;
+    border-radius: 10px;
+    padding: 20px;
+    color: #09d3ac;
+    background-color: #303846;
+    width: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+
+.settings_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Pangolin', cursive;
+}
+
+.form_inner {
+    padding: 15px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #09d3ac;
+    width: 100%;
+    transition: all .2s ease-in;
+}
+
+input {
+    margin-left: 30px;
+}
+
+.card_word input {
+    font-size: 25px;
+    color: green;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+label {
+    font-size: 25px;
+    text-transform: uppercase;
+}
+
+input[type='checkbox'] {
+    display: none;
+}
+
+label.game_checkbox_label {
+    font-family: 'Pangolin', cursive;
+    padding-right: 20px;
+    cursor: pointer;
+    font-size: 25px;
+    text-transform: uppercase;
+}
+
+label.game_checkbox_label::after {
+    content: '';
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background: #303846;
+    border: solid 1px #09d3ac;
+    vertical-align: middle;
+    margin-left: 10px;
+    transition: all .2s ease-in;
+    border-radius: 4px;
+}
+
+input[type='checkbox']:checked + label::after {
+    border-radius: 50%;
+    content: '';
+    text-align: center;
+    font-family: sans-serif;
+    background: url(./svg/check-circle-solid.svg);
+    background-color: #303846;
+    border: solid 1px #303846;
+}
+
+.select {
+    position: relative;
+    display: inline;
+    margin-left: 15px;
+}
+
+.select::after {
+    content: '';
+    border-style: solid;
+    border-width: 8px 7px 0 7px;
+    border-color: #09d3ac transparent transparent transparent;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 50px;
+}
+
+.select select {
+    padding: 0 25px;
+    background: none;
+    border: solid 1px #09d3ac;
+    -webkit-appearance: none;
+    appearance: none;
+    font-family: 'Pangolin', cursive;
+    font-size: 25px;
+    color: #09d3ac;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.game_btn {
+    padding: 15px;
+    border-radius: 20px;
+    height: 100%;
+    font-family: 'Pangolin', cursive;
+    font-size: 30px;
+    color: #09d3ac;
+    border: 1px solid #09d3ac;
+    background: #303846;
+    outline: none;
+}
+
+.game_btn a {
+    color: #09d3ac;
+    text-decoration: none;
+}
+
+.game_btn:hover {
+    color: #303846;
+    text-decoration: none;
+    background: #09d3ac;
+    border: 1px solid #303846;
+}
+
+.game_btn:hover a {
+    color: #303846;
+    text-decoration: none;
+}
+
+.game_btn_audio {
+    padding: 15px;
+    border-radius: 20px;
+    height: 100%;
+    font-family: 'Pangolin', cursive;
+    font-size: 30px;
+    color: #09d3ac;
+    border: 1px solid #09d3ac;
+    background: #303846;
+    width: 86px;
+    outline: none;
+}
+
+.game_btn_audio:hover {
+    color: #303846;
+    background: #09d3ac;
+    border: 1px solid #303846;
+}
+
+.game_btn_audio:hover > i {
+    color: #303846;
+}
+
+
+.game_btn_translaition {
+    padding: 15px;
+    border-radius: 20px;
+    height: 100%;
+    font-family: 'Pangolin', cursive;
+    font-size: 30px;
+    color: #09d3ac;
+    border: 1px solid #09d3ac;
+    background: #303846;
+    width: 400px;
+    outline: none;
+}
+
+.game_btn_translaition:hover {
+    color: #303846;
+    background: #09d3ac;
+    border: 1px solid #303846;
+}
+
+.game_btn_translaition_active {
+    padding: 15px 0;
+    border-radius: 20px;
+    height: 100%;
+    font-family: 'Pangolin', cursive;
+    font-size: 30px;
+    color: #303846;
+    border: 1px solid #303846;
+    background: #09d3ac;
+    width: 400px;
+}
+
+.game_btn_translaition_active:hover {
+    color: #09d3ac;
+    border: 1px solid #09d3ac;
+    background: #303846;
+}
+
+.game_btn_audio_active {
+    color: #303846;
+    background: #09d3ac;
+    border: 1px solid #303846;
+    padding: 15px 0;
+    border-radius: 20px;
+    height: 100%;
+    font-family: 'Pangolin', cursive;
+    font-size: 30px;
+    width: 86px;
+}
+
+.game_btn_audio_active:hover {
+    color: #09d3ac;
+    background: #303846;
+    border: 1px solid #09d3ac;
+}
+
+.game_btn_audio_active > i {
+    color: #303846;
+}
+
+.game_btn_audio_active:hover > i {
+    color: #09d3ac;
+}
+
+.error_settings {
+    max-width: 1000px;
+    text-align: left;
+    font-size: 20px;
+    font-family: 'Pangolin', cursive;
+    text-transform: uppercase;
+    color: #E74C3C;
+}
+
+input[type='number'] {
+    margin-left: 15px;
+    border: 1px solid #09d3ac;
+    background: none;
+    color: #09d3ac;
+    border-radius: 4px;
+    outline: none;
+    padding: 0px 0px 0 15px;
+    width: 70px;
+}
+
+.card_word {
+    font-family: 'Pangolin', cursive;
+    font-size: 25px;
+    color: #09d3ac;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.card_word_error, .card_word_miss {
+    font-family: 'Pangolin', cursive;
+    font-size: 25px;
+    color: #E74C3C;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.btn_inner {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+
+.result_btns {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 15px;
+    outline: none;
+}
+
+.card_answer {
+    padding: 0 10px;
+    margin: 15px 0 15px 15px;
+    box-shadow: 0 0 2px 2px #09d3ac;
+    border-radius: 4px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.answer {
+    display: flex;
+    align-items: center;
+    font-family: 'Pangolin', cursive;
+    font-size: 25px;
+    color: #09d3ac;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
+.progress_bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Pangolin', cursive;
+    font-size: 30px;
+}
+
+.game_btn_inner {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}

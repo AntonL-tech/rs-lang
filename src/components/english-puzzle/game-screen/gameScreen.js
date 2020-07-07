@@ -491,7 +491,7 @@ export default class GameScreen extends Component {
                             <ButtonSettings label = {'Continue'} classNameBtn={continueButton} clickBtn={this.onContinue}/>
                             <Link to={
                             {
-                                pathname: '/statistic',
+                                pathname: '/english-puzzle/statistic',
                                 state: {
                                     statistic: this.state.statistic
                                 }

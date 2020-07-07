@@ -9,7 +9,7 @@ const HomeScreen = () => {
             <div className={s.background}>
                 <div className={s.title}>
                     <h1>English-puzzle</h1>
-                    <Link to='/game' className={s.link}>
+                    <Link to='/english-puzzle/game' className={s.link}>
                     <button className={s.start_btn}>start</button>
                     </Link>
                 </div>
