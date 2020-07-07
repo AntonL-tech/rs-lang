@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import s from './gamePauseModal.module.css';
-import closeBtn from '../Assets/icons/clear.svg';
 
-const closeIcon = {
-    backgroundImage: `url(${closeBtn})`,
-};
+const Modal = ({ title, isOpen, onGameReturn, toMainMenu, subTitle, gamePause, gameSound, sound }) => {
+    const logo = require('../Assets/icons/sound.svg');
+    const logot = require('../Assets/icons/no-sound.svg');
+    const wordBlock = sound ? <img src={logo} alt='' /> : <img src={logot} alt='' />;
 
-const Modal = ({ title, isOpen, onGameReturn, toMainMenu, subTitle, gamePause }) => {
     return (
         <div>
-            <div className={s.muteIcon}></div>
-            <div className={s.exitGameIcon} style={closeIcon} onClick={gamePause}></div>
-
+            <div class={s.muteIcon} onClick={gameSound}>
+                {wordBlock}
+            </div>
+            <div className={s.exitGameIcon} onClick={gamePause}></div>
             {isOpen && (
                 <div className={s.modalOverlay}>
                     <div className={s.modalWindow}>
@@ -39,6 +39,7 @@ Modal.propTypes = {
     onGameReturn: PropTypes.func,
     toMainMenu: PropTypes.func,
     gamePause: PropTypes.func,
+    gameSound: PropTypes.func,
     subTitle: PropTypes.string,
 };
 
@@ -48,6 +49,7 @@ Modal.defaultProps = {
     onGameReturn: () => {},
     toMainMenu: () => {},
     gamePause: () => {},
+    gameSound: () => {},
     subTitle: 'If you return to the list, your results will not be saved',
 };
 

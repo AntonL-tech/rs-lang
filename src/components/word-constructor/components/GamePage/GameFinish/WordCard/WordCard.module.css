@@ -1,0 +1,136 @@
+.wordCard{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    top: 0;
+    left: 0;
+    background-color: #f1f1f1;
+    overflow: scroll;
+}
+
+.container{
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.link:hover{
+    text-decoration: none;
+}
+
+.link:active, .link:focus {
+    outline: none;
+}
+
+.link{
+    position: absolute;
+    display: block;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    font-size: 26px;
+    color: #000000;
+    text-decoration: none;
+}
+
+.linkEl{
+    position: absolute;
+    font-size: 42px;
+    box-shadow: 0 0 0px #00000080;
+    transition: 0.5s;
+}
+
+.linkEl:nth-child(1){
+    transform: rotate(45deg);
+    top: -18px;
+    left: 11px;
+}
+
+.linkEl:nth-child(2){
+    transform: rotate(-45deg);
+    top: -18px;
+    left: 5px;
+}
+
+.link:hover .linkEl{
+    text-shadow: 1px 1px 7px  #00000080;
+    color: #f74150;
+}
+
+.imgBlock{
+    display: flex;
+    width: 200px;
+    height: 150px;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.img{
+    width: 200px;
+}
+
+.audio{
+    display: block;
+    width: 200px;
+    height: 30px;
+    margin: 5px auto 0;
+    font-weight: 500;
+    font-size: 18px;
+    color: #003494;
+}
+
+.audio > img{
+    height: 100%;
+    margin-right: 10px;
+    transition: 0.5s;
+}
+
+.audio:hover > img{
+    background-color: #2631421f;
+    border-radius: 15%;
+}
+
+.audio:active, .audio:focus{
+    outline: none;
+}
+
+.transcription{
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+}
+
+.wordTranslate{
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+}
+
+.textExample,
+.textMeaning{
+    width: 100%;
+    text-align: center;
+    padding-top: 10px;
+    color: #003494;
+}
+
+.textExampleTranslate,
+.textMeaningTranslate{
+    width: 100%;
+    text-align: center;
+    padding-bottom: 10px;
+    font-size: 14px;
+}
+
+@media screen and (max-width: 370px){
+    .imgBlock{
+       margin: 0;
+    }
+
+}
