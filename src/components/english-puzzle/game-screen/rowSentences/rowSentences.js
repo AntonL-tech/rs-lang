@@ -7,7 +7,7 @@ export default class RowSentences extends Component {
 
         for (let i = 0; i < classNameWord.length; i++){   // map switch
             if (classNameWord[i] === 'common'){
-                classNameWord[i] = s.common_color;
+                classNameWord[i] = s.drag_word ;
             } else {
                 if (classNameWord[i] === 'success'){
                     classNameWord[i] = s.success_color;
@@ -17,7 +17,7 @@ export default class RowSentences extends Component {
                 } 
             }
         }
-        
+
         return (
             <div className={classNameRow}>
                 {array.map((word, i) => (
@@ -37,14 +37,3 @@ export default class RowSentences extends Component {
         )
     } 
 }
-
-    /*switch (classNameWord[i]){
-        case 'success':
-            classNameWord[i] = s.success_color;
-            break;
-        case 'error':
-            classNameWord[i] = s.error_color;
-            break;
-        default:
-            classNameWord[i] = s.common_color;
-    }*/
