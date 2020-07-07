@@ -1,0 +1,11 @@
+.stars {
+  display: flex;
+  justify-content: flex-end;
+}
+.starsItem {
+  height: 30px;
+  width: 30px;
+  margin-left: 5px;
+  background-image: url('./star.png');
+  background-size: contain;
+}

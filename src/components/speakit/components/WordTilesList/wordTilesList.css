@@ -1,0 +1,9 @@
+.word-tiles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.word-tiles__item {
+  margin: 1rem;
+}

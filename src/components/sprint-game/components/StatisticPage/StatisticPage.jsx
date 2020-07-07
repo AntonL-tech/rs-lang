@@ -9,7 +9,7 @@ const StatisticPage = () => {
                 StatisticPage
             </div>
             <div className={s.linkBlock}>
-                <Link className={s.link} to='/start'>
+                <Link className={s.link} to='/sprint/start'>
                     <div className={s.linkEl}>|</div>
                     <div className={s.linkEl}>|</div>
                 </Link>
