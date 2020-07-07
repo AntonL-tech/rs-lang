@@ -67,7 +67,7 @@ const GameFinish = (props) => {
                 </div>
             </div>
             <button className={s.link} onClick={() => props.wordList()}>Продолжить тренеровку</button>
-            <Link className={s.linkEnd} to='/sprint/start'>Завершить тренеровку</Link>
+            <Link className={s.linkEnd} to='/constructor/start'>Завершить тренеровку</Link>
         </div>);
 
 }

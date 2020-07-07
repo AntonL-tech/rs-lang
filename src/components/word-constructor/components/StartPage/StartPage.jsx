@@ -62,7 +62,7 @@ class StartPage extends Component {
                         {this.state.audioStatus ? <img src={imgAudioOn} alt=""/> : <img src={imgAudioOff} alt=""/> }
                 </button>
                 <div className={s.name}>
-                    Sprint Game
+                    Word Constructor Game
                 </div>
                 <div className={s.message}>
                     {this.state.status === 200 && this.state.UserWordList.length < 80 
@@ -80,13 +80,14 @@ class StartPage extends Component {
                 </select>
                     <Link className={s.link} to={
                         {
-                            pathname: '/sprint/game',
+                            pathname: '/constructor/game',
                             aboutProps: {level: this.state.level,
                                          UserWordList: this.state.UserWordList,
                                          audioStatus: this.state.audioStatus,
                                         }
                         }
                     }>Start Game</Link>
+                    
             </div>
         )
     }
