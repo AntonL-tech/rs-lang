@@ -246,7 +246,7 @@ export default class GameScreen extends Component {
                 this.saySentences(this.state.audioArray[this.state.currentSentencesIndex])
             }
             let statistic = {...this.state.statistic};
-            statistic.trueSentences.push(this.state.currentSentences);
+            statistic.trueSentences.push(this.state.currentSentences); // удачное предложение
             this.setState({statistic: statistic})
         }
         else {
@@ -333,7 +333,7 @@ export default class GameScreen extends Component {
 
         const statistic = {...this.state.statistic};
 
-        statistic.falseSentences.push(this.state.currentSentences);
+        statistic.falseSentences.push(this.state.currentSentences);  // неудачное предложение
         this.setState({statistic: statistic})
         
         if (this.state.currentSentencesIndex === 9){
