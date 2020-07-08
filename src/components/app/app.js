@@ -7,8 +7,9 @@ import Settings from '../app-settings/app-settings';
 import Stats from '../app-stats/app-stats';
 import Team from '../app-team/app-team';
 import Words from '../app-words/app-words';
-import SpeakIt from '../speakit/speakit';
+import SpeakIt from '../speakit';
 import Sprint from '../sprint-game/Sprint';
+import WordConstructor from '../word-constructor/WordConstructor';
 import Home from '../app-home/app-home';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute';
@@ -22,7 +23,7 @@ function App() {
   return (
     <>
       <Router>
-        <div className={"block"}>
+        <div className={'block'}>
           <Switch>
             <Route exact path="/">
               <Home />
@@ -35,6 +36,7 @@ function App() {
             <ProtectedRoute path="/app-team" component={Team} />
             <ProtectedRoute path="/speakit" component={SpeakIt} />
             <ProtectedRoute path="/sprint" component={Sprint} />
+            <ProtectedRoute path="/constructor" component={WordConstructor} />
             <ProtectedRoute path="/savanna" component={Savanna} />
             <ProtectedRoute path="/audiocall" component={Audiocall} />
             <ProtectedRoute path="/promo" component={Promo} />

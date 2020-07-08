@@ -10,18 +10,20 @@ const GameOverModal = ({ title, isOpen, onCancel, onSubmit, notValidTitle, isVal
                     <div className={s.modalWindow}>
                         <div className={s.modalContent}>
                             <div className={s.modalTitle}>{title}</div>
-                            <div className={s.validTitle}>
-                                {isValidTitle}
-                                {numtrue}
-                            </div>
-                            <div className={s.validTextBlock}>{validBlock}</div>
-                            <div className={s.line} />
-                            <div className={s.invalidTitle}>
-                                {notValidTitle}
-                                {numfalse}
-                            </div>
-                            <div className={s.invalidTextBlock}>{notValidBlock}</div>
 
+                            <div className={s.slider}>
+                                <div className={s.validTitle}>
+                                    {isValidTitle}
+                                    {numtrue}
+                                </div>
+                                <div className={s.validTextBlock}>{validBlock}</div>
+                                <div className={s.line} />
+                                <div className={s.invalidTitle}>
+                                    {notValidTitle}
+                                    {numfalse}
+                                </div>
+                                <div className={s.invalidTextBlock}>{notValidBlock}</div>
+                            </div>
                             <div className={s.modalCloseBtn} onClick={onSubmit}>
                                 To main page
                             </div>

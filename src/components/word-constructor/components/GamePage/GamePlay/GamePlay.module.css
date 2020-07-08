@@ -1,0 +1,381 @@
+button,
+.true,
+.false {
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+button:active, button:focus,
+.true:active, .true:focus,
+.audio:active, .audio:focus,
+.false:active, .false:focus,
+.playWord:active, .playWord:focus {
+    outline: none;
+}
+
+.GameBlock{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+  
+.block{
+    position: relative;
+    margin-top: 3%;
+    max-width: 600px;
+    width: calc(100% - 20px);
+    min-width: 280px;
+    margin: 5px;
+    padding: 10px;
+    width: 100%;
+    min-height: 310px;
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+    background-color: #ffffff1f;
+    box-shadow: 0 0 0px #ffffff;
+    transition: 0.5s;
+}
+
+.blockGood{
+    animation: show1 0.2s forwards;
+}
+
+.blockBad{
+    animation: show2 0.2s forwards;
+}
+
+@keyframes show1 {
+    0%{
+        box-shadow: 0 0 0px #41f778;
+    }
+    50%{
+        box-shadow: 0 0 30px #41f778;
+    }
+    100% {
+        box-shadow: 0 0 0px #41f778;
+    }
+}
+@keyframes show2 {
+    0%{
+        box-shadow: 0 0 0px #f74150;
+    }
+    50%{
+        box-shadow: 0 0 30px #f74150;
+    }
+    100% {
+        box-shadow: 0 0 0px #f74150;
+    }
+}
+
+.true,
+.false{
+    display: inline-block;
+    width: calc((100%/2) - 21px);
+    height: 40px;
+    text-transform: uppercase;
+    margin: 10px;
+    border: none;
+    box-shadow: 0 0 0px #00000080;
+    transition: 0.5s;
+    font-size: 18px;
+}
+
+.false{
+    background-color: #f74150;
+}
+
+.true{
+    background-color: #41f778;
+}
+
+.true:hover,
+.false:hover{
+    box-shadow: 0 0 10px #00000080;
+    color: #ffffff;
+}
+
+.header{
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+}
+
+.playWord,
+.heart{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    top: 10px;
+    right: 10px;
+    background-color: #ffffff00;
+    border-radius: 15%;
+    transition: 0.5s;
+}
+
+.heart {
+    left: 30px;
+}
+
+.playWord > img{
+    width: 80%;
+    height: 80%;
+}
+
+.heart > img{
+    width: 100%;
+    height: 100%;
+}
+
+.lives{
+    display: block;
+    position: relative;
+    min-width: 40px;
+    left: -40px;
+    text-align: center;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.audio:hover, .playWord:hover {
+    background-color: #ffffff1f;
+}
+
+.time{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 60px;
+    margin: 20px;
+    font-size: 26px;
+    color: #ffffff;
+    background-image: url('../../../files/img/timeAnimation.svg');
+    background-size: 75%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+
+.timeRed{
+    background-image: url('../../../files/img/timeAnimationRed.svg');
+}
+
+.timeStart{
+    width: 300px;
+    height: 300px;
+    margin: 0px;
+    font-size: 52px;
+}
+
+.score{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 20px;
+    top: 20px;
+    width: 60px;
+    height: 60px;
+    margin: 20px;
+    font-size: 26px;
+    color: #ffffff;
+}
+
+.linkBlock{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 120px;
+    height: 60px;
+    margin: 20px;
+    font-size: 26px;
+    color: #ffffff;
+}
+
+.link{
+    position: relative;
+    display: block;
+    width: 30px;
+    height: 30px;
+    font-size: 26px;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.audio{
+    width: 34px;
+    height: 34px;
+    background-color: #ffffff00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15%;
+    transition: 0.5s;
+}
+
+.audio > img{
+    width: 80%;
+    height: 80%;
+}
+
+.linkEl{
+    position: absolute;
+    font-size: 42px;
+    box-shadow: 0 0 0px #00000080;
+    transition: 0.5s;
+}
+
+.linkEl:nth-child(1){
+    transform: rotate(45deg);
+    top: -18px;
+    left: 11px;
+}
+
+.linkEl:nth-child(2){
+    transform: rotate(-45deg);
+    top: -18px;
+    left: 5px;
+}
+
+.link:hover .linkEl{
+    text-shadow: 1px 1px 7px  #00000080;
+    color: #f74150;
+}
+
+
+.word{
+    display: block;
+    width: 280px;
+    min-height: 100px;
+    margin: 60px auto 0;
+}
+
+.wordOriginal{
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 32px;
+    color: #ffffff;
+    line-height: 80%
+}
+
+.wordTranslate{
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 24px;
+    color: #ffffffb0;
+}
+
+.displayNone{
+    display: none;
+}
+
+.wordArr{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+    margin: 0 auto 40px;
+    background-color: #ffffff54;
+    padding: 10px 5px 10px;
+    border-radius: 5px;
+}
+
+.wordLetterArr{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    
+}
+
+.letterBlock,
+.wordLetterBlock{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 30px;
+    border-bottom: 2px solid black;
+    text-align: center;
+    margin: 1px;
+    transition: 0.5s;
+    border-radius: 10%;
+}
+
+.wordLetterBlock{
+    background-color: #ffffffd8;
+    border: 1px solid #ffffff;
+    margin: 2px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.wordLetterBlock:hover{
+    background-color: #ffffff98;
+}
+
+.success{
+    position: absolute;
+    bottom: -38px;
+    left: 0px;
+    width: 100%;
+    height: 20px;
+}
+
+.level{
+    display: inline-block;
+    width: 70px;
+    height: 20px;
+    color: #ffffff;
+    font-size: 22px;
+}
+
+.successLoader{
+    display: inline-block;
+    border: 2px solid #f74150;
+    border-radius: 10px;
+    width: calc(100% - 75px);
+    height: 20px;
+    overflow: hidden;
+}
+
+.successProgress{
+    position: relative;
+    top: 0px;
+    left: 0px;
+    background-color: #ffe65c;
+    border-radius: 10px;
+    width: 10%;
+    height: 16px;
+    transition: 0.5s;
+}
+
+.litterNum{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: -5px;
+    right: -5px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    font-size: 12px;
+    color: #ffffff;
+    background-color: #008deb;
+}

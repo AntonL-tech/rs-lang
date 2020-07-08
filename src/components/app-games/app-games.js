@@ -11,6 +11,7 @@ function Games() {
         {image: SprintImg, title: 'Sprint', text: 'Learn how to quickly translate from English into your native language.', path: '/sprint'},
         {image: 'https://avatarko.ru/img/kartinka/33/multfilm_lyagushka_32117.jpg', title: 'Savannah', text: 'Описание savannah', path: '/savanna'},        
         {image: 'https://avatarko.ru/img/kartinka/33/multfilm_lyagushka_32117.jpg', title: 'Audiocall', text: 'Описание audiocall', path: '/audiocall'},
+        {image: SprintImg, title: 'Word Constructor', text: 'Описание audiocall', path: '/constructor'},
     ]
 
     const renderCard = (card, index) => {
@@ -31,9 +32,9 @@ function Games() {
     return (
         <div>
             <Header/>
-            <div className={'flex'}>
+            <div className={s.game_page}>
                 <Sidebar/>
-                <div className={'flex'}>
+                <div className={s.cards_container}>
                     {gameInfo.map(renderCard)}
                 </div>
             </div>

@@ -5,51 +5,82 @@ import Header from '../app-header/app-header';
 import Sidebar from '../app-sidebar/app-sidebar';
 import learnEasy from './assets/english-learn-easy.jpg'
 
-class GameCard extends Component {
 
+class GallerySlider extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      currentGallerySlide: `${this.props.slide}1`
+    }
   }
 
-// componentWillMount() {
-//   this.setState({className: 'currentSlide'})
-// }
+  changeImage = (event) => {
+    console.log(event.target)
+    const id = event.target.dataset.id;
+    this.setState({currentGallerySlide: id});
+  }
 
-// componentWillUnmount() {
-//   this.setState({className: 'previuoseSlide'});
-// }
+  render() {
+    const { slide } = this.props;
+    const { currentGallerySlide } = this.state;
 
-render() {
+    return (
+      <div className={s.gameGallery}>
+        <div className={s.cssSlider}>
+
+          <ul className={s.slides}>
+            <li className={`${s[currentGallerySlide]} ${s.slide}`} id={currentGallerySlide}></li>
+          </ul>
+
+          <ul className={s.thumbnails}>
+            <li className={`${s[`${slide}1`]} ${s.thumbnail}`} onClick={this.changeImage} data-id={`${slide}1`} />
+            <li className={`${s[`${slide}2`]} ${s.thumbnail}`} onClick={this.changeImage} data-id={`${slide}2`}></li>
+            <li className={`${s[`${slide}3`]} ${s.thumbnail}`} onClick={this.changeImage} data-id={`${slide}3`}></li>
+            <li className={`${s[`${slide}4`]} ${s.thumbnail}`} onClick={this.changeImage} data-id={`${slide}4`}></li>
+            <li className={`${s[`${slide}5`]} ${s.thumbnail}`} onClick={this.changeImage} data-id={`${slide}5`}></li>
+          </ul>
+
+        </div>
+      </div>
+    )
+  }
+}
+const GameCard = ({ slidesData, currentGamesSlide, previouseGamesSlide, direction }) => {
+
   // console.log(slidesData, currentGallerySlide)
-  const {slidesData, currentGallerySlide , callback, variant} = this.props;
+  // const {slidesData, currentGamesSlide, previouseGamesSlide} = this.props;
 
-  const clName = variant ? s.currentSlide : s.previouseSlide;
+  // const clName = variant ? s.currentSlide : s.previouseSlide;
   
   const slides = slidesData.map((slide) => {
+
+    let animation = ' ';
+
+    if (slide === currentGamesSlide) {
+      animation = direction ? s.showRight : s.showLeft;
+    }
+
+    if (slide === previouseGamesSlide) {
+      animation = direction ? s.hideRight : s.hideLeft;
+    }
+
+
+    // const clName = slide === currentGamesSlide ? s.showRight : slide === previouseGamesSlide ? s.hideRight : ' ';
+
+
+
+    console.log(slide, currentGamesSlide,  'clNAme')
+
     return (
-      <div className={`${s.gameCard} ${clName}`}>
-        <div className={s.game}>                    
-          <h4>{slide.name}</h4>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing</p>
-        </div>
-
-        <div className={s.gameGallery}>
-          <div className={s.cssSlider}>
-
-            <ul className={s.slides}>
-              <li className={`${s[currentGallerySlide]} ${s.slide}`} id="audiochallenge1"></li>
-            </ul>
-
-            <ul className={s.thumbnails}>
-              <li className={`${s.audiochallenge1} ${s.thumbnail}`} onClick={callback} data-id="audiochallenge1" />
-              <li className={`${s.audiochallenge2} ${s.thumbnail}`} onClick={callback} data-id="audiochallenge2"></li>
-              <li className={`${s.audiochallenge3} ${s.thumbnail}`} onClick={callback} data-id="audiochallenge3"></li>
-              <li className={`${s.audiochallenge4} ${s.thumbnail}`} onClick={callback} data-id="audiochallenge4"></li>
-              <li className={`${s.audiochallenge5} ${s.thumbnail}`} onClick={callback} data-id="audiochallenge5"></li>
-            </ul>
-
+      <div className={`${s.gameCardWrapper} ${animation}`}>
+        <div className={`${s.gameCard} `}>
+          <div className={s.game}>                    
+            <h4>{slide}</h4>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing</p>
           </div>
-        </div>
+
+          <GallerySlider slide={slide} />
+        </div>        
       </div>
     )
   })
@@ -60,7 +91,7 @@ render() {
     </>
 
   );
-}
+
 }
 
 
@@ -68,70 +99,73 @@ export default class Promo extends Component {
   constructor(props) {
     super(props);
     // this.previouseCard = '';
-    this.games = ['audiochallenge', 'sprint']
+    this.games = ['audiochallenge', 'sprint', 'speakit', 'savannah', 'englishPuzzle', 'wordConstructor'];
     this.state = {
       currentGallerySlide: 'audiochallenge1',
       currentGamesSlide: 'audiochallenge',
       previouseGamesSlide: 'sprint',
-      variat: true,
+      sliderDirection: true,
     }
   }
 
-  changeImage = (event) => {
-    console.log(event.target)
-    const id = event.target.dataset.id;
-    this.setState({currentGallerySlide: id});
-  }
+  // changeImage = (event) => {
+  //   console.log(event.target)
+  //   const id = event.target.dataset.id;
+  //   this.setState({currentGallerySlide: id});
+  // }
 
   showNextSlide = () => {
     console.log('showNextSlide')
-    const { currentGamesSlide, variat } = this.state;
+    const { currentGamesSlide } = this.state;
     let index = this.games.findIndex((item) => item === currentGamesSlide);
     index += 1;
 
     if (index === this.games.length) {
       index = 0;
     }
-    console.log(index, this.games[index])
+    // console.log(index, this.games[index])
 
     this.setState({
-      // previouseGamesSlide: currentGamesSlide, 
-      // currentGamesSlide: this.games[index], 
-      variat: !variat,
+      previouseGamesSlide: currentGamesSlide, 
+      currentGamesSlide: this.games[index], 
+      sliderDirection: true,
     });
   }
 
   showPrevSlide = () => {
     console.log('showPrevSlide')
-    const { currentGamesSlide, variat } = this.state;
+    const { currentGamesSlide } = this.state;
     let index = this.games.findIndex((item) => item === currentGamesSlide);
     index -= 1;
 
     if (index < 0) {
       index = this.games.length - 1;
-    }
+    }    
 
-    
-
-    this.setState({previouseGamesSlide: currentGamesSlide, currentGamesSlide: this.games[index], variat: !this.state.variat});
+    this.setState({
+      previouseGamesSlide: currentGamesSlide, 
+      currentGamesSlide: this.games[index], 
+      sliderDirection: false,
+    });
   }
 
   render() {
     console.log(this.state.currentGallerySlide);
-    const {currentGamesSlide, currentGallerySlide, previouseGamesSlide, variat} = this.state;
+    const { currentGamesSlide,  previouseGamesSlide, sliderDirection } = this.state;
 
-    const slidesData = [
-      {type: 'currentSlide', name: currentGamesSlide}, 
-      // {type: 'previouseSlide', name: previouseGamesSlide}
-    ];
-    const slidesData2 = [
-      // {type: 'currentSlide', name: currentGamesSlide}, 
-      {type: 'previouseSlide', name: previouseGamesSlide}
-    ];
-    console.log(slidesData, 'sD')
+    // const slidesData = [
+    //   {type: 'currentSlide', name: currentGamesSlide}, 
+    //   {type: 'previouseSlide', name: previouseGamesSlide}
+    // ];
+    const slidesData = this.games;
+    // const slidesData2 = [
+    //   // {type: 'currentSlide', name: currentGamesSlide}, 
+    //   {type: 'previouseSlide', name: previouseGamesSlide}
+    // ];
+    // console.log(slidesData, 'sD')
     
       
-    console.log(this.state.currentGamesSlide, 'qwert')
+    // console.log(this.state.currentGamesSlide, 'qwert')
 
     return (
 
@@ -204,80 +238,17 @@ export default class Promo extends Component {
 
                           <div className={s.gameSlides}>
 
-                            {/* <div className={s.gameCard}>
-                              <div className={s.game}>                    
-                                <h4 >Audiochallenge</h4>
-                                <p>Improves your listening skills in English.</p>
-                              </div>
-                              <div className={s.gameGallery}>
-                                <div className={s.cssSlider}>
-                                  <ul className={s.slides}>
-                                    <li className={`${s[this.state.currentGallerySlide]} ${s.slide}`} id="audiochallenge1"></li>
-                                  </ul>
-                                  <ul className={s.thumbnails}>
-                                    <li className={`${s.audiochallenge1} ${s.thumbnail}`} onClick={this.changeImage} data-id="audiochallenge1" />
-                                    <li className={`${s.audiochallenge2} ${s.thumbnail}`} onClick={this.changeImage} data-id="audiochallenge2"><a href="#audiochallenge2" ></a></li>
-                                    <li className={`${s.audiochallenge3} ${s.thumbnail}`} onClick={this.changeImage} data-id="audiochallenge3"><a href="#audiochallenge3"></a></li>
-                                    <li className={`${s.audiochallenge4} ${s.thumbnail}`} onClick={this.changeImage} data-id="audiochallenge4"><a href="#audiochallenge4"></a></li>
-                                    <li className={`${s.audiochallenge5} ${s.thumbnail}`} onClick={this.changeImage} data-id="audiochallenge5"><a href="#audiochallenge5"></a></li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div> */}
-
-{/* 
-                            <div className={`${s.gameCard} ${s.previouseSlide}`}>
-                              <div className={s.game}>                    
-                                <h4>{previouseGamesSlide}</h4>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing</p>
-                              </div>
-
-                              <div className={s.gameGallery}>
-                                  <div className={s.cssSlider}>
-                                    <ul className={s.slides}>
-                                      <li className={`${s[currentGallerySlide]} ${s.slide}`} id="audiochallenge1"></li>
-                                    </ul>
-                                    <ul className={s.thumbnails}>
-                                      <li className={`${s.audiochallenge1} ${s.thumbnail}`} onClick={this.changeImage} data-id="audiochallenge1" />
-                                      <li className={`${s.audiochallenge2} ${s.thumbnail}`} onClick={this.changeImage} data-id="audiochallenge2"><a href="#audiochallenge2" ></a></li>
-                                      <li className={`${s.audiochallenge3} ${s.thumbnail}`} onClick={this.changeImage} data-id="audiochallenge3"><a href="#audiochallenge3"></a></li>
-                                      <li className={`${s.audiochallenge4} ${s.thumbnail}`} onClick={this.changeImage} data-id="audiochallenge4"><a href="#audiochallenge4"></a></li>
-                                      <li className={`${s.audiochallenge5} ${s.thumbnail}`} onClick={this.changeImage} data-id="audiochallenge5"><a href="#audiochallenge5"></a></li>
-                                  </ul>
-                                  </div>
-                                </div>
-                            </div> */}
-
-                         
-                            {/* <div className={`${s.gameCard} ${s.currentSlide}`}>
-                              <div className={s.game}>                    
-                                <h4>{currentGamesSlide}</h4>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing</p>
-                              </div>
-
-                              <div className={s.gameGallery}>
-                                  <div className={s.cssSlider}>
-                                    <ul className={s.slides}>
-                                      <li className={`${s[currentGallerySlide]} ${s.slide}`} id="audiochallenge1"></li>
-                                    </ul>
-                                    <ul className={s.thumbnails}>
-                                      <li className={`${s.audiochallenge1} ${s.thumbnail}`} onClick={this.changeImage} data-id="audiochallenge1" />
-                                      <li className={`${s.audiochallenge2} ${s.thumbnail}`} onClick={this.changeImage} data-id="audiochallenge2"><a href="#audiochallenge2" ></a></li>
-                                      <li className={`${s.audiochallenge3} ${s.thumbnail}`} onClick={this.changeImage} data-id="audiochallenge3"><a href="#audiochallenge3"></a></li>
-                                      <li className={`${s.audiochallenge4} ${s.thumbnail}`} onClick={this.changeImage} data-id="audiochallenge4"><a href="#audiochallenge4"></a></li>
-                                      <li className={`${s.audiochallenge5} ${s.thumbnail}`} onClick={this.changeImage} data-id="audiochallenge5"><a href="#audiochallenge5"></a></li>
-                                  </ul>
-                                  </div>
-                                </div>
-                            </div> */}
-
-                          <GameCard slidesData={/*this.state.variat ?*/ slidesData /*: slidesData2*/} currentGallerySlide={currentGallerySlide} callback={this.changeImage} variant={variat}/>
-                            {/* <GameCard slidesData={this.state.variat ? slidesData2 : slidesData} currentGallerySlide={currentGallerySlide} callback={this.changeImage} /> */}
+                          <GameCard 
+                            slidesData={this.games} 
+                            direction={sliderDirection} 
+                            previouseGamesSlide={previouseGamesSlide} 
+                            currentGamesSlide={currentGamesSlide} />
 
                           </div>
 
-                          <button className={s.btnPrev} onClick={this.showNextSlide}/>
                           <button className={s.btnNext} onClick={this.showPrevSlide}/>
+                          <button className={s.btnPrev} onClick={this.showNextSlide}/>
+
                         </div>
                         
 

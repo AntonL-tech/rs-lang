@@ -1,3 +1,8 @@
+* {
+	margin: 0;
+	box-sizing: border-box;
+}
+
 .page {
 	padding: 1px;
 	width: 100%;
@@ -193,13 +198,14 @@
 
 .gameCard {
 	margin: auto;
-	padding: 20px 10px;
-	max-width: 900px;
+	padding: 20px;
+	width: 100%;
   background-color: #f0f8ffd1;
   border-radius: 5px;  
   box-shadow: 0 0 5px #87c4ff;
 	display: flex;
 	/* transition: all linear 2s; */
+	/* display: none; */
 }
 
 
@@ -221,11 +227,23 @@
 
 
 /* ------------------------------------- */
+.gameCardWrapper {
+	padding: 15px;
+	width: 100%;
+	display: none;
+	position: absolute;
+	top: 0;
+}
 
 .gameSlides {
-	padding: 10px 0;
+	margin: auto;
+	/* padding: 10px 0; */
+	max-width: 900px;
+	height: 400px;
 	overflow: hidden;
-	transition: ease-in-out 3s all;
+	box-sizing: border-box;
+	/* transition: ease-in-out 3s all; */
+	position: relative;
 }
 
 .gameSlider {
@@ -282,16 +300,80 @@
 	right: 38%;
 }
 
-.currentSlide {
-	animation: slide 2s 1;
-	/* transition: slide 2s linear; */
+.showRight {
+	animation: showRight 1s linear;
+	display: flex;
+	transform: translateX(0%);
 }
 
-.previouseSlide {
-	/* display: none; */
-	/* translate: ; */
-	animation: hide 2s linear;
+.hideRight {
+	animation: hideRight 1s linear;
+	transform: translateX(100%);
+	display: flex;
 }
+
+.showLeft {
+	animation: showLeft 1s linear;
+	display: flex;
+	transform: translateX(0%);
+}
+
+.hideLeft {
+	animation: hideLeft 1s linear;
+	transform: translateX(100%);
+	display: flex;
+}
+
+@keyframes showRight {
+	0% {
+		-webkit-transform: translateX(-100%);
+		        transform: translateX(-100%);
+	}
+	100% {
+		-webkit-transform: translateX(0%);
+		        transform: translateX(0%);
+	}
+}
+
+@keyframes showLeft {
+	0% {
+		-webkit-transform: translateX(100%);
+		        transform: translateX(100%);
+	}
+	100% {
+		-webkit-transform: translateX(0%);
+		        transform: translateX(0%);
+	}
+}
+
+
+@keyframes hideRight {
+	0% {
+		z-index: 2;
+		-webkit-transform: translateX(0%);
+		        transform: translateX(0%);
+	}
+	100% {
+		z-index: 2;
+		-webkit-transform: translateX(100%);
+		        transform: translateX(100%);
+	}
+} 
+
+@keyframes hideLeft {
+	0% {
+		z-index: 2;
+		-webkit-transform: translateX(0%);
+		        transform: translateX(0%);
+	}
+	100% {
+		z-index: 2;
+		-webkit-transform: translateX(-100%);
+		        transform: translateX(-100%);
+	}
+} 
+
+
 
 
 /* ------------------------------------- */
@@ -326,6 +408,131 @@
 }
 
 .audiochallenge5 {
+  background-image: url('./assets/audiochallenge/audio-results.png');
+  background-size: cover;
+}
+
+.speakit1 {
+  background-image: url('./assets/audiochallenge/audio-start-page.png');
+  background-size: cover;
+}
+
+.speakit2 {
+  background-image: url('./assets/audiochallenge/audio-game-page.png');
+  background-size: cover;
+}
+
+.speakit3 {
+  background-image: url('./assets/audiochallenge/audio-correct.png');
+  background-size: cover;
+}
+
+.speakit4 {
+  background-image: url('./assets/audiochallenge/audio-incorrect.png');
+  background-size: cover;
+}
+
+.speakit5 {
+  background-image: url('./assets/audiochallenge/audio-results.png');
+  background-size: cover;
+}
+
+.savannah1 {
+  background-image: url('./assets/audiochallenge/audio-start-page.png');
+  background-size: cover;
+}
+
+.savannah2 {
+  background-image: url('./assets/audiochallenge/audio-game-page.png');
+  background-size: cover;
+}
+
+.savannah3 {
+  background-image: url('./assets/audiochallenge/audio-correct.png');
+  background-size: cover;
+}
+
+.savannah4 {
+  background-image: url('./assets/audiochallenge/audio-incorrect.png');
+  background-size: cover;
+}
+
+.savannah5 {
+  background-image: url('./assets/audiochallenge/audio-results.png');
+  background-size: cover;
+}
+
+.sprint1 {
+  background-image: url('./assets/audiochallenge/audio-start-page.png');
+  background-size: cover;
+}
+
+.sprint2 {
+  background-image: url('./assets/audiochallenge/audio-game-page.png');
+  background-size: cover;
+}
+
+.sprint3 {
+  background-image: url('./assets/audiochallenge/audio-correct.png');
+  background-size: cover;
+}
+
+.sprint4 {
+  background-image: url('./assets/audiochallenge/audio-incorrect.png');
+  background-size: cover;
+}
+
+.sprint5 {
+  background-image: url('./assets/audiochallenge/audio-results.png');
+  background-size: cover;
+}
+
+.englishPuzzle1 {
+  background-image: url('./assets/audiochallenge/audio-start-page.png');
+  background-size: cover;
+}
+
+.englishPuzzle2 {
+  background-image: url('./assets/audiochallenge/audio-game-page.png');
+  background-size: cover;
+}
+
+.englishPuzzle3 {
+  background-image: url('./assets/audiochallenge/audio-correct.png');
+  background-size: cover;
+}
+
+.englishPuzzle4 {
+  background-image: url('./assets/audiochallenge/audio-incorrect.png');
+  background-size: cover;
+}
+
+.englishPuzzle5 {
+  background-image: url('./assets/audiochallenge/audio-results.png');
+  background-size: cover;
+}
+
+.wordConstructor1 {
+  background-image: url('./assets/audiochallenge/audio-start-page.png');
+  background-size: cover;
+}
+
+.wordConstructor2 {
+  background-image: url('./assets/audiochallenge/audio-game-page.png');
+  background-size: cover;
+}
+
+.wordConstructor3 {
+  background-image: url('./assets/audiochallenge/audio-correct.png');
+  background-size: cover;
+}
+
+.wordConstructor4 {
+  background-image: url('./assets/audiochallenge/audio-incorrect.png');
+  background-size: cover;
+}
+
+.wordConstructor5 {
   background-image: url('./assets/audiochallenge/audio-results.png');
   background-size: cover;
 }
@@ -399,32 +606,6 @@
 .cssSlider .slides li:not(:target) {
 	-webkit-animation: hidden 1s 1;
 }*/
-
-
-@keyframes slide {
-	0% {
-		-webkit-transform: translateX(-100%);
-		        transform: translateX(-100%);
-	}
-	100% {
-		-webkit-transform: translateX(0%);
-		        transform: translateX(0%);
-	}
-}
-
-
-@keyframes hide {
-	0% {
-		z-index: 2;
-		-webkit-transform: translateX(0%);
-		        transform: translateX(0%);
-	}
-	100% {
-		z-index: 2;
-		-webkit-transform: translateX(100%);
-		        transform: translateX(100%);
-	}
-} 
 
 
 

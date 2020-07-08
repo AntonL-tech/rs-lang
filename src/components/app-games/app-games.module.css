@@ -18,3 +18,13 @@
 .card_img {
     width: 100%;
 }
+
+.game_page {
+    width: 100%;
+    display: flex;
+}
+
+.cards_container {
+    display: flex;
+    flex-wrap: wrap;    
+}
