@@ -15,7 +15,8 @@ import ProtectedRoute from '../ProtectedRoute';
 import Auth from '../Auth';
 import '../../index.css';
 import Savanna from "../savanna/app";
-import Audiocall from '../audiocall/audiocall/audiocall'
+import Audiocall from '../audiocall/audiocall/audiocall';
+import Promo from '../promo/promo';
 
 function App() {
   return (
@@ -36,9 +37,12 @@ function App() {
             <ProtectedRoute path="/sprint" component={Sprint} />
             <ProtectedRoute path="/savanna" component={Savanna} />
             <ProtectedRoute path="/audiocall" component={Audiocall} />
+            <ProtectedRoute path="/promo" component={Promo} />
           </Switch>
         </div>
       </Router>
+
+      {/* <Promo /> */}
     </>
   );
 }

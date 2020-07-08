@@ -36,6 +36,12 @@ function Sidebar() {
             <i className="fas fa-users fa-5x" />
           </Link>
         </li>
+        
+        <li className={a.sidebar_item}>
+          <Link to="/promo">
+            <i className="fas fa-users fa-5x" />
+          </Link>
+        </li>
       </ul>
     </div>
   );
