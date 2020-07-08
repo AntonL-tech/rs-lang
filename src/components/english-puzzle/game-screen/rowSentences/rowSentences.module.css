@@ -41,7 +41,6 @@
     align-items: center;
     justify-content: center;
     user-select: none;
-    border: solid 1px #09d3ac;
 }
 
 .drag_word:not(:first-child):before,
@@ -53,7 +52,7 @@
     width: 20px;
     height: 20px;
     content: "";
-    border-radius: 50%;
+    border-radius: 40%;
     background-color: antiquewhite;
 }
 
@@ -66,7 +65,7 @@
     width: 20px;
     height: 20px;
     content: "";
-    border-radius: 50%;
+    border-radius: 40%;
 }
 
 .drag_word:not(:last-child):after {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import s from './gameScreen.module.css'
 import { Link } from 'react-router-dom';
-
+import { Draggable, Droppable } from 'react-drag-and-drop'
 import EpHeader from "../ep-header/epHeader";
 import ButtonSettings from './buttonSettings/buttonSettings'
 import RowSentences from './rowSentences/rowSentences'
@@ -355,6 +355,12 @@ export default class GameScreen extends Component {
         }
     }
 
+    onDrop(data) {
+        const index = +(data.word);
+        const arr = this.state.sentencesArrayBoard[this.state.currentSentencesIndex].wordArray;
+        this.onSwapWordsForBoard(index,arr);
+    }
+
     render () {
         const { 
             level, 
@@ -481,6 +487,8 @@ export default class GameScreen extends Component {
                                         boardLength = {sentencesArrayBoard.length}
                                         currentRow = {i} 
                                         func={onSwapWordsForBoard} 
+                                        currentArray = {currentSentencesArray}
+                                        funcDrag={this.onSwapWordsForPuzzles}
                                     />
                                 ))}
                             </div>
@@ -489,13 +497,25 @@ export default class GameScreen extends Component {
 
                         <div className={takePuzzles}>
                             {currentSentencesArray.map((word, i) => (
-                                <div 
-                                key={i.toString() + 'd1'} 
-                                className={s.drag_word} 
-                                onClick={()=>this.onSwapWordsForPuzzles(i,currentSentencesArray)}
-                                >
-                                    {word}
-                                </div> 
+                                
+                                    <Draggable
+                                        type="word" 
+                                        data={i}
+                                       
+                                        className={s.drag_word} 
+                                        key={i.toString() + 'd1'} 
+                                        >   
+                                        <Droppable 
+                                            
+                                            onClick={()=>this.onSwapWordsForPuzzles(i,currentSentencesArray)}
+                                            types={['word']} 
+                                            onDrop={this.onDrop.bind(this)}
+                                            className={s.drag_word} 
+                                        >
+                                            {word}
+                                        </Droppable>
+                                    </Draggable> 
+                                
                             ))}
                         </div>
 
