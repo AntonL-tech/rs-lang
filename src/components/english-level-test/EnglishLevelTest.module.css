@@ -1,0 +1,21 @@
+.block{
+    position: absolute;
+    top: 20px;
+    width: 90%;
+    min-width: 320px;
+    max-width: 600px;
+    max-height: calc(100%-20px);
+    border: 1px solid red;
+}
+
+.startButton{
+    width: 280px;
+    height: 35px;
+    padding-top: 5px;
+    margin: 0 auto;
+    background-color: #ffffff33;
+    text-align: center;
+    cursor: pointer;
+    color: #ffffff;
+    border-radius: 5px;
+}
