@@ -2,10 +2,6 @@ import React, {Component} from 'react';
 import s from './rowSentences.module.css'
 import { Draggable, Droppable } from 'react-drag-and-drop'
 
-//import HTML5Backend from 'react-dnd-html5-backend'
-//import { DragDropContext } from 'react-dnd'
-//const update = require('immutability-helper');
-
 export default class RowSentences extends Component {
 
     constructor(props) {

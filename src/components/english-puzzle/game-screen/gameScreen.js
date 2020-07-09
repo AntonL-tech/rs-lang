@@ -110,7 +110,7 @@ export default class GameScreen extends Component {
     }  
 
     saySentences = (sentences) => {
-        const audio = new Audio(`https://raw.githubusercontent.com/timon4ik2102/rslang-data/master/${sentences}`);
+        const audio = new Audio(`https://raw.githubusercontent.com/wimmind/rslang-data/master/${sentences}`);
         audio.play();
     }
 

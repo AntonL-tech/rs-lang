@@ -11,11 +11,9 @@ import paintings6 from '../image-description/level6';
 export default class StatisticScreen extends Component {
 
     saySentences = (sentences) => {
-        const audio = new Audio(`https://raw.githubusercontent.com/timon4ik2102/rslang-data/master/${sentences}`);
+        const audio = new Audio(`https://raw.githubusercontent.com/wimmind/rslang-data/master/${sentences}`);
         audio.play();
     }
-
-    //`https://raw.githubusercontent.com/wimmind/rslang_data_paintings/master/level1/9th_wave.jpg`
 
     render () {
         const { location } = this.props;
