@@ -527,7 +527,9 @@ export default class GameScreen extends Component {
                             {
                                 pathname: '/english-puzzle/statistic',
                                 state: {
-                                    statistic: this.state.statistic
+                                    statistic: this.state.statistic,
+                                    level: this.state.level,
+                                    page: this.state.page
                                 }
                             }
                             }><button className={resultButton} onClick = {this.onResult}>Result</button>

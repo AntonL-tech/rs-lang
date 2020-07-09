@@ -8,11 +8,14 @@ import { Draggable, Droppable } from 'react-drag-and-drop'
 
 export default class RowSentences extends Component {
 
+    constructor(props) {
+        super(props);
+        this.puzzle = React.createRef();
+    }
+
     onDrop(data) {
-        if ((this.props.currentRow+1) === this.props.boardLength){
-            const index = +(data.word);
-            this.props.funcDrag(index,this.props.currentArray)
-        }
+        const index = +(data.word);
+        this.props.funcDrag(index,this.props.currentArray)
     }
 
     render() {
@@ -35,22 +38,23 @@ export default class RowSentences extends Component {
             <div className={classNameRow}>
                 {array.map((word, i) => (
                       <Draggable
+                        ref={this.puzzle}
                         type="word" 
                         data={i}
                         className={classNameWord[i]}
                         key={i.toString() + 'd'} 
                         > 
                         <Droppable 
-                            types={['word']} 
-                            onDrop={this.onDrop.bind(this)} 
                             className={classNameWord[i]}
+                            types={['word']} 
+                            onDrop={this.onDrop.bind(this)}
                             onClick={()=>{
                                 if ((currentRow+1) === boardLength){
                                     func(i,array)
                                 }
                             }}
                         >
-                            {word}
+                        {word}
                         </Droppable> 
                     </Draggable> 
                 ))}
