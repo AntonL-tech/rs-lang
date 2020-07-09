@@ -2,16 +2,12 @@ import React from 'react';
 import s from './app-words.module.css'
 import Header from '../app-header/app-header'
 import Sidebar from '../app-sidebar/app-sidebar'
-import PropTypes from 'prop-types'
 
 
 const token = window.localStorage.getItem('token');
 const userId = window.localStorage.getItem('userId');
 
-
-
-class Words extends React.Component {
-
+export default class Words extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -69,7 +65,12 @@ class Words extends React.Component {
         } else if (array === this.state.arrayOfLearnedWords) {
             textOfButton = 'Удалить из изученых'
         }
-        return (array.map(element => (<div className={s.word}><span> {element.word} </span> <button id={element.id}  onClick={(event) => this.deleteWord(event, event.target.id, array)} className={s.word_button}>{textOfButton}</button></div>)));
+        return (array.map(element => (<div className={s.word}><span> {element.word} </span> 
+            <span>{element.transcription}</span>    
+            <span>{element.wordTranslate}</span>
+            {/* <span>{element.textExample}</span>     */}
+            <button id={element.id}  onClick={(event) => this.deleteWord(event, event.target.id, array)} className={s.word_button}>{textOfButton}</button>
+            </div>)));
     };
 
     deleteWord(event,wordId, array) {
@@ -121,4 +122,4 @@ class Words extends React.Component {
     }
     
 }
-export default Words;
+

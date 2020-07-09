@@ -1,8 +1,8 @@
 .header_inner {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    padding: 30px 130px;
+    padding: 30px 0;
     background-color: #303846;
     border-bottom: solid 2px #09d3ac;
     width: 100%;

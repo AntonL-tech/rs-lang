@@ -16,7 +16,7 @@ function Games() {
     const renderCard = (card, index) => {
         return (
             <div className={s.game_card} key={index}>
-                <img style={{ width: '100%', height:'220px' }} className={s.card_img} src={card.image} />
+                <img style={{ width: '100%', height:'220px' }} className={s.card_img} src={card.image} alt=''/>
                 <div>
                     <div>{card.title}</div>
                     <div>
