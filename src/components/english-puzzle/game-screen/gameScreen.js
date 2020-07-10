@@ -65,10 +65,6 @@ export default class GameScreen extends Component {
         await this.getRequest(this.state.level,this.state.page);
     }
 
-    show = () => {
-        
-    }
-
     getWords = async (level,page) => {
         const url = `https://afternoon-falls-25894.herokuapp.com/words?group=${level}&page=${page}&wordsPerExampleSentenceLTE=10&wordsPerPage=10`;
         const res = await fetch(url);
@@ -561,7 +557,6 @@ export default class GameScreen extends Component {
                             <ButtonSettings classNameBtn={megafon} clickBtn={this.pronounceAfter}/>
                             <ButtonSettings classNameBtn={translate} clickBtn={this.disableTranslation}/>
                             <ButtonSettings classNameBtn={song} clickBtn={this.switchPromptAlwaysPronunciation}/>
-                            <ButtonSettings classNameBtn={image} clickBtn={this.show}/>
                         </div>
                     </div>
     
