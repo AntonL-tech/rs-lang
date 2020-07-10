@@ -27,7 +27,6 @@
     flex-direction: column;
     justify-content: space-between;
     filter: blur(10px);
-    filter: none;
 }
 
 .modalContent {
