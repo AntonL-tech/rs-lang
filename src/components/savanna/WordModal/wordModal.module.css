@@ -1,0 +1,114 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    z-index: 999;
+    padding: 36px 16px 16px;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    border-radius: 0;
+    box-sizing: border-box;
+    backdrop-filter: blur(2px);
+}
+
+.modalWindow {
+    padding: 40px 0;
+    margin: 40px 0;
+    overflow: visible;
+    max-height: calc(100vh - 80px);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    filter: blur(10px);
+}
+
+.modalContent {
+    width: 398px;
+    border-radius: 8px;
+    box-shadow: 1px 0 2px 0 rgba(0, 0, 0, 0.16);
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 36px 0 79px;
+}
+
+.exitGameIcon {
+    background-image: url('../Assets/icons/clear.svg');
+    width: 20px;
+    height: 20px;
+    background-size: 15px;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    right: 10px;
+    top: 62px;
+    cursor: pointer;
+}
+
+.imgBlock {
+    display: flex;
+    width: 200px;
+    height: 150px;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.img {
+    width: 200px;
+}
+
+.audio {
+    background-image: url('../Assets/icons/song.svg');
+    background-size: 30px 30px;
+    background-position: 49%;
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.wordblock {
+    display: flex;
+    margin-top: 10px;
+}
+
+.word {
+    color: red;
+    margin-left: 5px;
+    font-size: 24px;
+    line-height: 24px;
+}
+
+.transcription,
+.wordTranslate {
+    padding-top: 10px;
+    font-size: 16px;
+    color: blue;
+}
+
+.textExample,
+.textMeaning,
+.textExampleTranslate,
+.textMeaning,
+.textMeaningTranslate {
+    padding-top: 10px;
+    color: black;
+    font-size: 14px;
+}
+
+@media (min-width: 300px) and (max-width: 550px) {
+    .modalContent {
+        width: 310px;
+        margin: auto;
+    }
+}

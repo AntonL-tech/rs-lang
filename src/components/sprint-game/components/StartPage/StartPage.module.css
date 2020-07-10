@@ -21,7 +21,7 @@
 .link{
     display: block;
     width: 260px;
-    height: 40px;
+    height: 30px;
     color: #ffffff;
     border-radius: 5px;
     background:  #ffffff42;
@@ -47,4 +47,38 @@
     border: 1px solid #ffffff;
     margin: 10px auto;
     border-radius: 5px;
+}
+
+.message{
+    width: 260px;
+    margin: 0 auto;
+    text-align: center;
+    color: rgb(255, 112, 112);
+}
+
+.audio{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 34px;
+    height: 34px;
+    background-color: #ffffff00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15%;
+    transition: 0.5s;
+}
+
+.audio > img{
+    width: 80%;
+    height: 80%;
+}
+
+.audio:hover{
+    background-color: #ffffff1f;
+}
+
+.audio:active, .audio:focus{
+    outline: none;
 }
