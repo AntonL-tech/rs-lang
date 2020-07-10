@@ -9,6 +9,9 @@ const StyledBurger = styled.div`
   display: flex;
   justify-content: space-around;
   flex-flow: column nowrap;
+  position: fixed;
+  top: 20px;
+  left: 15px;
   div {
     width: 2rem;
     height: 0.25rem;
@@ -29,12 +32,18 @@ const StyledBurger = styled.div`
   }
 `;
 
-const Burger = () => {
-  const [open, setOpen] = useState(false)
+const Burger = ({showMenu, isSidebarOpen}) => {
+
+  // const [open, setOpen] = useState(false)
+  const handleBurgerOnClickEvent = (event) => {
+    // setOpen(!open);
+    showMenu();
+
+  } 
   
   return (
     <>
-      <StyledBurger open={open} onClick={() => setOpen(!open)}>
+      <StyledBurger open={isSidebarOpen} onClick={handleBurgerOnClickEvent}>
         <div />
         <div />
         <div />

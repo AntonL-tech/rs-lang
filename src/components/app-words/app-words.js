@@ -3,6 +3,7 @@ import s from './app-words.module.css'
 import Header from '../app-header/app-header'
 import Sidebar from '../app-sidebar/app-sidebar'
 import PropTypes from 'prop-types'
+import Page from '../app-page-structure/app-page-structure';
 
 
 const token = window.localStorage.getItem('token');
@@ -97,10 +98,10 @@ class Words extends React.Component {
     render() {
         const {arrayOfDeletedWords, arrayOfHardWords, show, arrayOfLearnedWords} = this.state;
         return (
-            <div>
-                <Header/>
+            <Page>
+                {/* <Header/> */}
                 <div className={'flex'}>
-                        <Sidebar/>
+                        {/* <Sidebar/> */}
                         <div className={s.words_inner}>
                             <div className={s.words_item}>
                                 Удалённые слова:
@@ -116,7 +117,7 @@ class Words extends React.Component {
                             </div>
                         </div>
                 </div>
-            </div>
+            </Page>
         )
     }
     

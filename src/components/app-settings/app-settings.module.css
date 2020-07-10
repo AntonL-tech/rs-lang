@@ -8,6 +8,7 @@
     padding: 20px;
     color: #09d3ac;
     background-color: #303846;
+    height: 100%;
 }
 
 .card {
@@ -31,15 +32,22 @@
     font-family: 'Pangolin', cursive;
 }
 
-.form_inner {
+.container { /*---*/
+    width: 100%;    
+    min-height: 100vh; /**/
+    background-color: #09d3ac;
+}
+
+.form_inner {    
+    margin: 70px 10vh 0;
     padding: 15px;
-    margin: 0 auto;
-    height: 100vh; /**/
+    /* padding-top: 75px; */
+    /* margin: 0 auto; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #09d3ac;
+    /* background-color: #09d3ac; */
     width: 100%;
     transition: all .2s ease-in;
     box-sizing: border-box; /**/

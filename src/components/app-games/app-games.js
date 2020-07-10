@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import Header from '../app-header/app-header';
 import Sidebar from '../app-sidebar/app-sidebar';
 import SprintImg from '../sprint-game/files/img/sprintPromoBackground.jpg';
+import Page from '../app-page-structure/app-page-structure';
 
 function Games() {
     const gameInfo = [
@@ -19,26 +20,28 @@ function Games() {
             <div className={s.game_card} key={index}>
                 <img style={{ width: '100%', height:'220px' }} className={s.card_img} src={card.image} />
                 <div>
-                    <div>{card.title}</div>
-                    <div>
+                    <div className={s.card_title}>{card.title}</div>
+                    <div className={s.card_description}>
                         {card.text}
                     </div>
-                    <button><Link target='_blank' to={card.path}>Start</Link></button>
+                    <button className={s.card_button}><Link target='_blank' to={card.path}>Start</Link></button>
                 </div>
             </div>
         )
     }
 
     return (
-        <div>
-            <Header/>
+        <Page>
+            {/* <Header/> */}
             <div className={s.game_page}>
-                <Sidebar/>
-                <div className={s.cards_container}>
-                    {gameInfo.map(renderCard)}
+                {/* <Sidebar/> */}
+                <div className={s.main_content_wrapper}>
+                    <div className={s.cards_container}>
+                        {gameInfo.map(renderCard)}
+                    </div>
                 </div>
             </div>
-        </div>
+        </Page>
 
     )
 }
