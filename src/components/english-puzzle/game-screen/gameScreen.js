@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import s from './gameScreen.module.css'
 import { Link } from 'react-router-dom';
-import { Draggable, Droppable } from 'react-drag-and-drop'
+
 import EpHeader from "../ep-header/epHeader";
 import ButtonSettings from './buttonSettings/buttonSettings'
 import RowSentences from './rowSentences/rowSentences'
@@ -65,10 +65,6 @@ export default class GameScreen extends Component {
         await this.getRequest(this.state.level,this.state.page);
     }
 
-    show = () => {
-        console.log(this.state)
-    }
-
     getWords = async (level,page) => {
         const url = `https://afternoon-falls-25894.herokuapp.com/words?group=${level}&page=${page}&wordsPerExampleSentenceLTE=10&wordsPerPage=10`;
         const res = await fetch(url);
@@ -110,7 +106,7 @@ export default class GameScreen extends Component {
     }  
 
     saySentences = (sentences) => {
-        const audio = new Audio(`https://raw.githubusercontent.com/timon4ik2102/rslang-data/master/${sentences}`);
+        const audio = new Audio(`https://raw.githubusercontent.com/wimmind/rslang-data/master/${sentences}`);
         audio.play();
     }
 
@@ -249,18 +245,39 @@ export default class GameScreen extends Component {
                 this.saySentences(this.state.audioArray[this.state.currentSentencesIndex])
             }
             let statistic = {...this.state.statistic};
-            
-            statistic.trueSentences.push({
-                sentences: this.state.currentSentences,
-                audio: this.state.audioArray[this.state.currentSentencesIndex]
-            }); 
-            this.setState({statistic: statistic})
+
+            if (!this.isCollectedSentences(this.state.currentSentences)){
+                statistic.trueSentences.push({
+                    sentences: this.state.currentSentences,
+                    audio: this.state.audioArray[this.state.currentSentencesIndex]
+                }); 
+                this.setState({statistic: statistic})
+            }
 
         }
         else {
             this.setState({isIgnoranceButton: true})
         }
     }
+
+
+    isCollectedSentences = (sentences) =>{
+        let isCollected = false;
+        let statistic = {...this.state.statistic};
+
+        statistic.trueSentences.forEach((item)=>{
+           if (sentences === item.sentences){
+            isCollected = true;
+           }
+        })
+        statistic.falseSentences.forEach((item)=>{
+            if (sentences === item.sentences){
+             isCollected = true;
+            }
+         })
+         return isCollected;
+    }
+
 
     onSwapWordsForPuzzles = (index,arr) => { 
         const board  = [...this.state.sentencesArrayBoard]
@@ -341,12 +358,14 @@ export default class GameScreen extends Component {
 
         const statistic = {...this.state.statistic};
 
-        statistic.falseSentences.push({
-            sentences: this.state.currentSentences,
-            audio: this.state.audioArray[this.state.currentSentencesIndex]
-        });  
-        this.setState({statistic: statistic})
-        
+        if (!this.isCollectedSentences(this.state.currentSentences)){
+            statistic.falseSentences.push({
+                sentences: this.state.currentSentences,
+                audio: this.state.audioArray[this.state.currentSentencesIndex]
+            });  
+            this.setState({statistic: statistic})
+        }
+
         if (this.state.currentSentencesIndex === 9){
             this.setState({isResultButton: true})
         }
@@ -355,11 +374,91 @@ export default class GameScreen extends Component {
         }
     }
 
-    onDrop(data) {
-        const index = +(data.word);
-        const arr = this.state.sentencesArrayBoard[this.state.currentSentencesIndex].wordArray;
-        this.onSwapWordsForBoard(index,arr);
+    swapBoxes = (fromArray,toArray) => {
+
+        const board  = [...this.state.sentencesArrayBoard]
+        const currentIndex = this.state.currentSentencesIndex; 
+        const collectedArray = board[currentIndex].wordArray;
+        const currentArray = this.state.currentSentencesArray; 
+      
+        if (fromArray.arr === 'currentSentences' && toArray.arr === 'currentSentences'){
+            const firstWord = currentArray[fromArray.index]
+            const secondWord = currentArray[toArray.index]
+            currentArray[fromArray.index] = secondWord
+            currentArray[toArray.index] = firstWord
+        }
+        if (fromArray.arr === 'boardSentences' && toArray.arr === 'boardSentences'){
+            const firstWord = collectedArray[fromArray.index]
+            const secondWord = collectedArray[toArray.index]
+            collectedArray[fromArray.index] = secondWord
+            collectedArray[toArray.index] = firstWord
+            
+            let colorArray = []
+            collectedArray.forEach(()=>{
+                colorArray.push('common')
+            }) 
+            board[currentIndex].colorArray = colorArray; 
+            this.setState({isContinueButton: false}) 
+
+        }
+        if (fromArray.arr === 'currentSentences' && toArray.arr === 'boardSentences'){
+            const firstWord = currentArray[fromArray.index]
+            const secondWord = collectedArray[toArray.index]
+            currentArray[fromArray.index] = secondWord
+            collectedArray[toArray.index] = firstWord
+            
+        }
+        if (fromArray.arr === 'boardSentences' && toArray.arr === 'currentSentences'){
+            const firstWord = collectedArray[fromArray.index]
+            const secondWord = currentArray[toArray.index]
+            collectedArray[fromArray.index] = secondWord
+            currentArray[toArray.index] = firstWord
+
+            this.setState({isCheckButton: false}) 
+            this.setState({isContinueButton: false}) 
+            this.setState({isIgnoranceButton: true}); 
+
+            let colorArray = []
+            collectedArray.forEach(()=>{
+                colorArray.push('common')
+            }) 
+            board[currentIndex].colorArray = colorArray; 
+        }
+
+        if (!collectedArray.includes('')){  
+            this.setState({isCheckButton: true})
+            this.setState({isIgnoranceButton: false})
+        }
+
+        this.setState({sentencesArrayBoard: board});
+        this.setState({currentSentencesArray: currentArray});
     }
+
+    handleDrop = (index,arr) => event => {
+        event.preventDefault();
+        let fromArray = JSON.parse(event.dataTransfer.getData("dragContent"));
+        const toArray = {
+            arr: arr,
+            index: index
+        }
+        this.swapBoxes(fromArray, toArray);
+        return false;
+    };
+
+    handleDragOver = (data,arr) => event => {
+        event.preventDefault();
+        return false;
+    };
+
+    handleDragStart = (index,arr) => event => {
+        const word = {
+            arr: arr,
+            index: index
+        }
+        let fromArray = JSON.stringify(word);
+        event.dataTransfer.setData("dragContent", fromArray);
+    };
+
 
     render () {
         const { 
@@ -458,7 +557,6 @@ export default class GameScreen extends Component {
                             <ButtonSettings classNameBtn={megafon} clickBtn={this.pronounceAfter}/>
                             <ButtonSettings classNameBtn={translate} clickBtn={this.disableTranslation}/>
                             <ButtonSettings classNameBtn={song} clickBtn={this.switchPromptAlwaysPronunciation}/>
-                            <ButtonSettings classNameBtn={image} clickBtn={this.show}/>
                         </div>
                     </div>
     
@@ -486,9 +584,10 @@ export default class GameScreen extends Component {
                                         classNameWord = {field.colorArray}
                                         boardLength = {sentencesArrayBoard.length}
                                         currentRow = {i} 
-                                        func={onSwapWordsForBoard} 
-                                        currentArray = {currentSentencesArray}
-                                        funcDrag={this.onSwapWordsForPuzzles}
+                                        func={onSwapWordsForBoard}
+                                        dragStartFunc = {this.handleDragStart}
+                                        dragOverFunc = {this.handleDragOver} 
+                                        dragDropFunc = {this.handleDrop}  
                                     />
                                 ))}
                             </div>
@@ -497,25 +596,18 @@ export default class GameScreen extends Component {
 
                         <div className={takePuzzles}>
                             {currentSentencesArray.map((word, i) => (
-                                
-                                    <Draggable
-                                        type="word" 
-                                        data={i}
-                                       
-                                        className={s.drag_word} 
-                                        key={i.toString() + 'd1'} 
-                                        >   
-                                        <Droppable 
-                                            
-                                            onClick={()=>this.onSwapWordsForPuzzles(i,currentSentencesArray)}
-                                            types={['word']} 
-                                            onDrop={this.onDrop.bind(this)}
-                                            className={s.drag_word} 
-                                        >
-                                            {word}
-                                        </Droppable>
-                                    </Draggable> 
-                                
+                                <div
+                                    draggable={word.length ? 'true' : 'false'}
+                                    onDragStart={this.handleDragStart(i,'currentSentences')}
+                                    onDragOver={this.handleDragOver(i,'currentSentences')}
+                                    onDrop={this.handleDrop(i,'currentSentences')}
+                                    
+                                    className={s.drag_word} 
+                                    key={i.toString() + 'd1'}
+                                    onClick={()=>this.onSwapWordsForPuzzles(i,currentSentencesArray)}
+                                >
+                                    {word}
+                                </div>
                             ))}
                         </div>
 
@@ -527,7 +619,9 @@ export default class GameScreen extends Component {
                             {
                                 pathname: '/english-puzzle/statistic',
                                 state: {
-                                    statistic: this.state.statistic
+                                    statistic: this.state.statistic,
+                                    level: this.state.level,
+                                    page: this.state.page
                                 }
                             }
                             }><button className={resultButton} onClick = {this.onResult}>Result</button>
