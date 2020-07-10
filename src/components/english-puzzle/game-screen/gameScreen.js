@@ -66,7 +66,7 @@ export default class GameScreen extends Component {
     }
 
     show = () => {
-        console.log(this.state)
+        
     }
 
     getWords = async (level,page) => {
@@ -249,18 +249,39 @@ export default class GameScreen extends Component {
                 this.saySentences(this.state.audioArray[this.state.currentSentencesIndex])
             }
             let statistic = {...this.state.statistic};
-            
-            statistic.trueSentences.push({
-                sentences: this.state.currentSentences,
-                audio: this.state.audioArray[this.state.currentSentencesIndex]
-            }); 
-            this.setState({statistic: statistic})
+
+            if (!this.isCollectedSentences(this.state.currentSentences)){
+                statistic.trueSentences.push({
+                    sentences: this.state.currentSentences,
+                    audio: this.state.audioArray[this.state.currentSentencesIndex]
+                }); 
+                this.setState({statistic: statistic})
+            }
 
         }
         else {
             this.setState({isIgnoranceButton: true})
         }
     }
+
+
+    isCollectedSentences = (sentences) =>{
+        let isCollected = false;
+        let statistic = {...this.state.statistic};
+
+        statistic.trueSentences.forEach((item)=>{
+           if (sentences === item.sentences){
+            isCollected = true;
+           }
+        })
+        statistic.falseSentences.forEach((item)=>{
+            if (sentences === item.sentences){
+             isCollected = true;
+            }
+         })
+         return isCollected;
+    }
+
 
     onSwapWordsForPuzzles = (index,arr) => { 
         const board  = [...this.state.sentencesArrayBoard]
@@ -341,12 +362,14 @@ export default class GameScreen extends Component {
 
         const statistic = {...this.state.statistic};
 
-        statistic.falseSentences.push({
-            sentences: this.state.currentSentences,
-            audio: this.state.audioArray[this.state.currentSentencesIndex]
-        });  
-        this.setState({statistic: statistic})
-        
+        if (!this.isCollectedSentences(this.state.currentSentences)){
+            statistic.falseSentences.push({
+                sentences: this.state.currentSentences,
+                audio: this.state.audioArray[this.state.currentSentencesIndex]
+            });  
+            this.setState({statistic: statistic})
+        }
+
         if (this.state.currentSentencesIndex === 9){
             this.setState({isResultButton: true})
         }
@@ -373,12 +396,13 @@ export default class GameScreen extends Component {
             const secondWord = collectedArray[toArray.index]
             collectedArray[fromArray.index] = secondWord
             collectedArray[toArray.index] = firstWord
-
+            
             let colorArray = []
             collectedArray.forEach(()=>{
                 colorArray.push('common')
             }) 
             board[currentIndex].colorArray = colorArray; 
+            this.setState({isContinueButton: false}) 
 
         }
         if (fromArray.arr === 'currentSentences' && toArray.arr === 'boardSentences'){
@@ -578,7 +602,7 @@ export default class GameScreen extends Component {
                         <div className={takePuzzles}>
                             {currentSentencesArray.map((word, i) => (
                                 <div
-                                    draggable='true'
+                                    draggable={word.length ? 'true' : 'false'}
                                     onDragStart={this.handleDragStart(i,'currentSentences')}
                                     onDragOver={this.handleDragOver(i,'currentSentences')}
                                     onDrop={this.handleDrop(i,'currentSentences')}

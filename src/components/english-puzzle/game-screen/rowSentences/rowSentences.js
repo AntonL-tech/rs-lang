@@ -28,14 +28,13 @@ export default class RowSentences extends Component {
             }
         }
         
-        const draggable = (currentRow+1) < boardLength ? 'false' : 'true';
-
+        const draggable = (currentRow+1) < boardLength ? true : false;
         return (
             <div className={classNameRow}>
                 {array.map((word, i) => (
 
                     <div
-                        draggable={draggable}
+                        draggable={(!word.length || draggable) ? 'false' : 'true'}
                         onDragStart={dragStartFunc(i,'boardSentences')}
                         onDragOver={dragOverFunc(i,'boardSentences')}
                         onDrop={dragDropFunc(i,'boardSentences')}
