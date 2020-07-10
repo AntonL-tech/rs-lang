@@ -17,6 +17,7 @@ import Auth from '../Auth';
 import '../../index.css';
 import Savanna from '../savanna/app';
 import Audiocall from '../audiocall/audiocall/audiocall';
+import Puzzle from '../english-puzzle/EnglishPuzzle'
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
             <ProtectedRoute path="/constructor" component={WordConstructor} />
             <ProtectedRoute path="/savanna" component={Savanna} />
             <ProtectedRoute path="/audiocall" component={Audiocall} />
+            <ProtectedRoute path="/english-puzzle" component={Puzzle} />
           </Switch>
         </div>
       </Router>
