@@ -5,6 +5,7 @@ import getUserAllWord from '../../api/getUserAllWord';
 import Preloader from '../Preloader/Preloader';
 import imgAudioOn from '../../files/img/audioOn.png';
 import imgAudioOff from '../../files/img/audioOff.png';
+import EnglishLevelTest from '../../../english-level-test/EnglishLevelTest';
 
 
 const user = 'user'
@@ -58,6 +59,7 @@ class StartPage extends Component {
     render() {
         return !this.state.uploaded ? <Preloader />
         : (<div className={s.block}>
+            <EnglishLevelTest />
                 <button className={s.audio} onClick={() => this.changeAudio()}>
                         {this.state.audioStatus ? <img src={imgAudioOn} alt=""/> : <img src={imgAudioOff} alt=""/> }
                 </button>

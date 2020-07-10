@@ -74,3 +74,8 @@
     color: #fff;
     text-decoration: none;
 }
+
+.flex{
+    display: flex;
+    flex-wrap: wrap;
+}
