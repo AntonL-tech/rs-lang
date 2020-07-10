@@ -9,23 +9,23 @@ const cards = [
     },
     {
         name: 'Roman Tymchenko',
-        job: 'Savanna, about team page',
+        job: 'Savannah, about team page',
         image: require('./Assets/avatar.jpg'),
     },
     {
-        name: 'Yulia Yertovich',
+        name: 'Yulia Reutovich',
         job: 'Audiocall, promo page',
-        image: require('./Assets/dino.jpg'),
+        image: require('./Assets/yulia.jpg'),
     },
     {
         name: 'Maxim Mirashnichenka',
-        job: 'Sprint, word-contructor',
+        job: 'Sprint, word-constructor',
         image: require('./Assets/maxmir.jpg'),
     },
     {
         name: 'Leonid Petrov',
-        job: 'Autorization, statistics',
-        image: require('./Assets/dino.jpg'),
+        job: 'Authorization, speakIt',
+        image: require('./Assets/leo.jpg'),
     },
     {
         name: 'Anton Terekhov',
