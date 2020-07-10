@@ -19,7 +19,7 @@ const cards = [
     },
     {
         name: 'Maxim Mirashnichenka',
-        job: 'Sprint, word-constructor',
+        job: 'Sprint, word-constructor, test',
         image: require('./Assets/maxmir.jpg'),
     },
     {
