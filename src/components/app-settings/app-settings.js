@@ -230,6 +230,9 @@ export default class Settings extends React.Component {
 
     async setResults(data) {
         data = await this.filterArray(this.state.allCustomWords, data)
+        if (!this.state.customLevelWords.length) {
+            this.setState({usedWord: false})
+        }
         if (!data.length) {
             this.setState({ page: this.state.page + 1 });
             this.getResults();
@@ -370,9 +373,9 @@ export default class Settings extends React.Component {
                     {!isRightAnswer ? <button className={s.game_btn} type="button" onClick={() => this.increment(data,line)}>Ответить</button> : null}
                 </div>
                 <ProggresBarContainer className={s.progress_bar}>
-                    {this.state.percentage.toFixed()}%
+                    {this.state.match}
                     <ProgressBar percentage={this.state.percentage}/>
-                    100%
+                    {this.state.countOfCards}
                 </ProggresBarContainer>
             </div>
         </div>) : (<div className={s.card}>
@@ -401,7 +404,7 @@ export default class Settings extends React.Component {
 
         // Чекаем есть ли слова для повторения
         if (!customLevelWords.length && line === 0) {
-            this.setState({repeat: false});
+            
             this.getWord(userId, data[line].id);
             // Добавляем слова в изученые
             this.createUserWord({
@@ -409,8 +412,13 @@ export default class Settings extends React.Component {
                 wordId: data[line].id,
                 word: { "difficulty": "weak", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 5).toISOString().split('T')[0], 'repeat' : 0}},
                 });
-            this.setState({line: line + 1})
-            this.setState({usedWord: false})
+            setTimeout(() => {
+                if (answer.toLowerCase() === data[line].word.toLowerCase()) {
+                    this.setState({line: line + 1})
+                    this.setState({usedWord: false})
+                    this.setState({repeat: false}); 
+                }
+            }, 1000)
         };
         // Если слово отгадано
         if (answer.toLowerCase() === data[line].word.toLowerCase()) {
@@ -436,14 +444,12 @@ export default class Settings extends React.Component {
                         word: { "difficulty": "weak", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 5).toISOString().split('T')[0], 'repeat' : this.state.currentWord.optional.repeat + 1}},
                     });
                 }, 1000)
-                
             }
             
             // Увеличен счёт карточек
             this.setState({ count: count + 1 });
 
-            // Фокус в поле ввода
-            this.myRef.current.focus();
+           
 
             // Показывает слово 
             this.setState({answerButton: true});
@@ -462,6 +468,9 @@ export default class Settings extends React.Component {
                     await this.sayWord(data[line].textExample)
                 }
             }
+
+             // Фокус в поле ввода
+             this.myRef.current.focus();
 
             this.setState({isRightAnswer: true});
 
@@ -680,9 +689,15 @@ export default class Settings extends React.Component {
         let arrayOfWordLetters = word.split('');
         let arrayOfAnswerLetters = answer.split('');
         let result=[];
+        let count = 0
         for (let i = 0; i < arrayOfWordLetters.length; i++) {
             if (arrayOfWordLetters[i] !== arrayOfAnswerLetters[i]) {
-                arrayOfWordLetters[i] = (<span className={s.red}>{arrayOfWordLetters[i]}</span>)
+                count = count + 1;
+            }
+        }
+        for (let i = 0; i < arrayOfWordLetters.length; i++) {
+            if (arrayOfWordLetters[i] !== arrayOfAnswerLetters[i]) {
+                arrayOfWordLetters[i] = (<span className={count > 2 ? s.red : s.orange}>{arrayOfWordLetters[i]}</span>)
             } else {
                 arrayOfWordLetters[i] = (<span className={s.green}>{arrayOfWordLetters[i]}</span>)
             }
@@ -728,7 +743,7 @@ export default class Settings extends React.Component {
         this.createUserWord({
             userId: userId,
             wordId: data[line].id,
-            word: { "difficulty": "weak", "optional": {'word': data[line], 'deleted': true}},
+            word: { "difficulty": "weak", "optional": {'word': data[line], 'deleted': true, 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': 'Deleted', 'repeat' : 0}},
         });
         console.log(data[line].word, 'удалено');
         this.toggleAnswer(data, line)
@@ -738,7 +753,7 @@ export default class Settings extends React.Component {
         this.createUserWord({
             userId: userId,
             wordId: data[line].id,
-            word: { "difficulty": "hard", "optional": {'word': data[line]}}
+            word: { "difficulty": "hard", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 1).toISOString().split('T')[0], 'repeat' : 0}}
         });
         console.log(data[line].word, 'добавлено в сложные');
         this.toggleAnswer(data, line)

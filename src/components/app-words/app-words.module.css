@@ -43,3 +43,9 @@
     flex-direction: column;
     justify-content: center;
 }
+
+.star i {
+    color: orange;
+    width: 10px;
+    margin-left: 15px;
+}

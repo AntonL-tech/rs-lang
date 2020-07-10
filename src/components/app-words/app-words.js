@@ -15,7 +15,9 @@ export default class Words extends React.Component {
             arrayOfDeletedWords: [],
             arrayOfHardWords: [],
             arrayOfLearnedWords: [],
-            show: false
+            show: false,
+            response: [],
+            arrayOfCurrentDatesForHard: []
         }
 
         this.setUserWord = this.setUserWord.bind(this)
@@ -26,7 +28,7 @@ export default class Words extends React.Component {
         this.getUserWord(userId);
         setTimeout(() => {
             this.setState({show: true});
-        }, 1000)
+        }, 3000)
     }
 
     getUserWord (userId) {
@@ -44,17 +46,26 @@ export default class Words extends React.Component {
     };
 
     setUserWord(data) {
-        console.log(data)
+        this.setState({response: data})
         for (let i = 0; i < data.length; i++) {
             if (data[i].optional.deleted) {
-                this.state.arrayOfDeletedWords.push(data[i].optional.word)
+                this.state.arrayOfDeletedWords.push(data[i])
             } else if (data[i].difficulty === 'hard') {
-                this.state.arrayOfHardWords.push(data[i].optional.word)
-            } else (
-                this.state.arrayOfLearnedWords.push(data[i].optional.word)
-            )
+                this.state.arrayOfHardWords.push(data[i]);
+            } else {
+                this.state.arrayOfLearnedWords.push(data[i])
+            }
         }
         console.log(this.state)
+    }
+
+    showRepeatStars(count) {
+        let array = [];
+        const star = (<i class="fas fa-star"></i>)
+        for (let i=0 ; i < count; i++) {
+            array.push(star)
+        }
+        return (array.map(element => (<span className={s.star}>{element} </span>)))
     }
 
     showWords (array, textOfButton) {
@@ -65,11 +76,13 @@ export default class Words extends React.Component {
         } else if (array === this.state.arrayOfLearnedWords) {
             textOfButton = 'Удалить из изученых'
         }
-        return (array.map(element => (<div className={s.word}><span> {element.word} </span> 
-            <span>{element.transcription}</span>    
-            <span>{element.wordTranslate}</span>
-            {/* <span>{element.textExample}</span>     */}
-            <button id={element.id}  onClick={(event) => this.deleteWord(event, event.target.id, array)} className={s.word_button}>{textOfButton}</button>
+        return (array.map(element => (<div className={s.word}><span> {element.optional.word.word}{this.showRepeatStars(element.optional.repeat)}</span> 
+            <span>{element.optional.word.transcription}</span>    
+            <span>{element.optional.word.wordTranslate}</span>
+            <span>Повторено/Изучено: {element.optional.currentDate}</span>
+            <span>Следующее повторение: {element.optional.repeatDate}</span>
+            <span>Всего повторений: {element.optional.repeat}</span>
+            <button id={element.optional.word.id}  onClick={(event) => this.deleteWord(event, event.target.id, array)} className={s.word_button}>{textOfButton}</button>
             </div>)));
     };
 
@@ -82,7 +95,7 @@ export default class Words extends React.Component {
                 'Accept': 'application/json',
             }
         })
-        array = array.filter(item => item.id !== event.target.id);
+        array = array.filter(item => item.optional.word.id !== event.target.id);
         console.log(event.target.textContent)
         if (event.target.textContent === 'Восстановить') {
             this.setState({arrayOfDeletedWords: array})
