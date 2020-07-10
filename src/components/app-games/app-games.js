@@ -35,7 +35,7 @@ function Games() {
             <Header/>
             <div className={'flex'}>
                 <Sidebar/>
-                <div className={'flex'}>
+                <div className={s.flex}>
                     {gameInfo.map(renderCard)}
                 </div>
             </div>

@@ -68,7 +68,7 @@ class GamePage extends Component {
                 wordList: elSort,
                 wordId: 0,
                 letterId: 0,
-                time: 64,
+                time: 60,
                 goodWord: [],
                 badWord: [],
                 score: 0,
@@ -106,21 +106,21 @@ class GamePage extends Component {
     };
 
     tick() {
-        if (this.state.time === 61) {
-            if(this.state.audio){
-                this.playAudio(audioStart);
-            }
-        }
-        if (this.state.time === 0 || this.state.wordId === 79 || this.state.lives === 0) {
-            if(this.state.audio){
-                this.playAudio(audioFinish);
-            }
-            intervals.forEach(clearInterval);
-        }
+        // if (this.state.time === 61) {
+        //     if(this.state.audio){
+        //         this.playAudio(audioStart);
+        //     }
+        // }
+        // if (this.state.time === 0 || this.state.wordId === 79 || this.state.lives === 0) {
+        //     if(this.state.audio){
+        //         this.playAudio(audioFinish);
+        //     }
+        //     intervals.forEach(clearInterval);
+        // }
 
-        this.setState({
-            time: this.toOffsetTime(this.state.time),
-        });
+        // this.setState({
+        //     time: this.toOffsetTime(this.state.time),
+        // });
     };
 
     createWordLetters (arr, level) {
