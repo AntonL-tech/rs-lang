@@ -71,21 +71,14 @@ export default class Words extends React.Component {
         return (array.map(element => (<span className={s.star}>{element} </span>)))
     }
 
-    showWords (array, textOfButton) {
-        if (array === this.state.arrayOfDeletedWords) {
-            textOfButton = 'Восстановить'
-        } else if (array === this.state.arrayOfHardWords) {
-            textOfButton = 'Удалить из сложных'
-        } else if (array === this.state.arrayOfLearnedWords) {
-            textOfButton = 'Удалить из изученых'
-        }
+    showWords (array) {
         return (array.map(element => (<div className={s.word}><span> {element.optional.word.word}{this.showRepeatStars(element.optional.repeat)}</span> 
             {this.state.transcription === 'true' ? <span>{element.optional.word.transcription}</span> : null}    
             {this.state.translation === 'true' ? <span>{element.optional.word.wordTranslate}</span> : null}
             <span>Повторено/Изучено: {element.optional.currentDate}</span>
             <span>Следующее повторение: {element.optional.repeatDate}</span>
             <span>Всего повторений: {element.optional.repeat}</span>
-            <button id={element.optional.word.id}  onClick={(event) => this.deleteWord(event, event.target.id, array)} className={s.word_button}>{textOfButton}</button>
+            <button id={element.optional.word.id}  onClick={(event) => this.deleteWord(event, event.target.id, array)} className={s.word_button}>RESTORE</button>
             </div>)));
     };
 
@@ -138,15 +131,15 @@ export default class Words extends React.Component {
                             <button className={learnedWords ? s.nav_btn_active : s.nav_btn} onClick={(event) => this.showContent(event)}>Learned words</button>
                         </div>
                         {deletedWords ? <div className={s.words_item}>
-                            <div>Удалённые слова</div>
+                            <div className={s.word_title}>DELETED WORDS</div>
                             <div className={s.words_content}>{show ? this.showWords(arrayOfDeletedWords) : null}</div>
                         </div> : null}
                         {hardWords ? <div className={s.words_item}>
-                            <div>Сложные слова</div>
+                            <div className={s.word_title}>Hard words</div>
                             <div className={s.words_content}>{show ? this.showWords(arrayOfHardWords) : null}</div>
                         </div> : null} 
                         {learnedWords ? <div className={s.words_item}>
-                            <div>Изученные слова</div>
+                            <div className={s.word_title}>Learned words</div>
                             <div className={s.words_content}>{show ? this.showWords(arrayOfLearnedWords) : null}</div>
                         </div> : null}
                     </div>

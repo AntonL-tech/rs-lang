@@ -90,3 +90,9 @@
     display: flex;
     justify-content: center;
 }
+
+.word_title {
+    color: #6c9ed5;
+    font-weight: 700;
+    text-transform: uppercase;
+}
