@@ -16,9 +16,11 @@
     border: none;
     font: inherit;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 .linkEnd{
+    height: 27px;
     padding-top: 5px;
     background: #f74150;
 }
