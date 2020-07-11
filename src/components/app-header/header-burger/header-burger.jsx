@@ -30,6 +30,22 @@ const StyledBurger = styled.div`
       transform: ${({ open }) => open ? 'rotate(-45deg)' : 'rotate(0)'};
     }
   }
+  @media (max-width: 768px) {
+    height: 29px;
+    top: 13px;
+    left: 16px;
+    div {
+      width: 1.8rem;
+    }
+  }
+  @media (max-width: 378px) {
+    height: 23px;
+    top: 9px;
+    left: 12px;
+    div {
+      width: 1.5rem;
+    }
+  }
 `;
 
 const Burger = ({showMenu, isSidebarOpen}) => {

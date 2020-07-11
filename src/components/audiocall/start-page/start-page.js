@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import s from './start-page.module.css';
+import Select from '../select/select'
 
 export default class StartPage extends Component {
   render() {

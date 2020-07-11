@@ -1,6 +1,8 @@
 .page * {
 	margin: 0;
 	box-sizing: border-box;
+	position: relative;
+	z-index: 1;
 }
 
 .page {
@@ -8,33 +10,32 @@
 	width: 100%;
   background: url('./assets/_88188-215.jpg') no-repeat;
   background-size: cover;
-  /* background-size: ; */
-  /* background-repeat: repeat-y; */
   background-attachment: fixed;
 }
 
 .promo {
-  margin: 0 auto;
-  padding: 20px;
-  /* width: 90vw; */
-  max-width: 1280px;
-  height: fit-content;
-  /* background-color: #ffffde; */
-  border-radius: 25px;
+	margin: 0 auto;
+	padding: 20px;
+	max-width: 1280px;
+	height: -moz-fit-content;
+	height: fit-content;
+	font-size: 16px;
+	border-radius: 25px;
 }
 
 .promoWrapper {
-	padding: 100px;
+	margin: 75px 10vh 10px 15vh;
+	margin-top: 75px;
 }
 
 .promoHeader, .promoOpportunities {
 	margin-bottom: 40px;
 	padding: 40px;
-	/* border: wheat 2px solid; */
 	border-radius: 10px;
 	background-color: #fefff4a8;
 	box-shadow: 0 0 5px #f5deb3;
 }
+
 
 .promoHeader {
 	margin-bottom: 100px;
@@ -47,6 +48,10 @@
 	color: #ef3011;
 }
 
+.mainDescription {
+	font-size: 20px;
+}
+
 /* ---  About --- */
 
 .promoOpportunities {
@@ -57,7 +62,6 @@
 .promoAboutWrapper {
 	padding: 20px 45px;
 	position: absolute;
-	/* height: 300px; */
 	background: transparent;
 	top: -63px;
 	left: 25px;
@@ -71,11 +75,11 @@
 	font-size: 35px;
 	color: #ffffff;
 	background: #beb2eb;
-	/* border: 1px solid grey; */
 	border-radius: 5px;
 	position: absolute;
-	bottom: 10px;
-	right: 80px;
+	bottom: 0;
+	right: 80px;	
+	z-index: 2;
 }
 
 .aboutDescription {
@@ -85,16 +89,13 @@
 	max-width: 675px;
 	color: #22362b;
 	background: #fff8dc;
-	/* border: 1px solid grey; */
 	border-radius: 5px;
-	/* position: absolute; */
 	box-shadow: 0 0 10px #d6abfd;
 }
 
 /* --- main application --- */
 
 .mainApplicationHeader {
-	/*margin-bottom: 20px; */
   padding: 10px 20px;
   width: -moz-fit-content;
 	width: fit-content;
@@ -102,7 +103,6 @@
   font-size: 33px;
 	color: #19a121;
 	background: #b4f3b7;
-    /* border: 1px solid grey; */
   border-radius: 5px;
   position: absolute;
   top: -30px;
@@ -113,11 +113,10 @@
 	padding: 100px 45px;
 	color: #22362b;
 	background: #fffdf5;
-	/* border: 1px solid grey; */
 	border-radius: 5px;
 	position: relative;
 	box-shadow: 0 0 10px #55fb87;
-	right: -95px;
+	right: -15vh;
 }
 
 .mainAppDescriptionBlock {
@@ -142,8 +141,8 @@
 
 .mainAppImg:nth-child(1) {
 	top: -86px;
-    right: 10px;
-    z-index: 1;
+  right: 10px;
+  z-index: 1;
 }
 
 .mainAppImg:nth-child(2) {
@@ -180,16 +179,14 @@
 	padding: 120px 80px;
 	color: #22362b;
 	background: #fffdf5;
-	/* border: 1px solid grey; */
 	border-radius: 5px;
 	position: relative;
 	box-shadow: 0 0 10px #fb9055;
 	top: -35px;
-	left: -95px;
+	left: -10vh;
 }
 
 .gamesHeader {
-	    /* margin-bottom: 20px; */
     padding: 10px 20px;
     width: -moz-fit-content;
 		width: fit-content;
@@ -197,7 +194,6 @@
     font-size: 33px;
     color: #840101;
     background: #fda77b;
-    /* border: 1px solid grey; */
     border-radius: 5px;
     position: absolute;
     top: -30px;
@@ -212,8 +208,6 @@
   border-radius: 5px;  
   box-shadow: 0 0 5px #87c4ff;
 	display: flex;
-	/* transition: all linear 2s; */
-	/* display: none; */
 }
 
 
@@ -246,12 +240,10 @@
 
 .gameSlides {
 	margin: auto;
-	/* padding: 10px 0; */
 	max-width: 900px;
 	height: 400px;
 	overflow: hidden;
 	box-sizing: border-box;
-	/* transition: ease-in-out 3s all; */
 	position: relative;
 }
 
@@ -383,14 +375,10 @@
 } 
 
 
-
-
 /* ------------------------------------- */
 
 
 .slide {  
-  /* width: 450px;
-  height: 200px; */
   list-style: none;
   border: 1px solid #fff;
   transition: background-image 0.5s cubic-bezier(0, 0, 0.83, 1.17);
@@ -573,13 +561,6 @@
 	width: 100%;
 	height: auto;
 }
-/*
-.cssSlider .slides > li:first-child:not(:target) {
-	z-index: 1;
-	-webkit-transform: translateY(0%);
-	        transform: translateY(0%);
-}
-*/
 
 .thumbnail {
   width: 200px;
@@ -595,38 +576,18 @@
 	margin: 0;
 	list-style: none;
 }
+
 .cssSlider .thumbnails > li {
 	float: left;
 	width: 20%;
 }
-/*
-.cssSlider .thumbnails > li > a {
-	display: block;
-}
-.cssSlider .thumbnails > li > a > img {
-	/* width: 100%; *//*
-	height: auto;
-}
-
-.cssSlider .slides li:target {
-	z-index: 3;
-	-webkit-animation: slide 1s 1;
-}
-.cssSlider .slides li:not(:target) {
-	-webkit-animation: hidden 1s 1;
-}*/
-
-
 
 /* --- Stats --- */
 
 .statistics {
 	padding: 80px 45px;
 	color: #22362b;
-	
-	/* background: url('./assets/grafik.png'), linear-gradient(0, #fffdf5, #fffdf5); */
 	background: #fffdf5;
-	/* border: 1px solid grey; */
 	border-radius: 5px;
 	position: relative;
 	box-shadow: 0 0 10px #fbdc55;
@@ -636,14 +597,12 @@
 }
 
 .statisticsHeader {
-    /* margin-bottom: 20px; */
     padding: 10px 20px;
 		width: fit-content;
 		font-family: 'Cabin Sketch', cursive;
     font-size: 33px;
     color: #a18019;
     background: #fff074;
-    /* border: 1px solid grey; */
     border-radius: 5px;
     position: absolute;
     top: -30px;
@@ -655,8 +614,6 @@
 	line-height: 1.5;
 	display: flex;
 	justify-content: space-around;
-	/* background: url('./assets/grafik.png'); */
-	
 	background-size: contain;
   background-repeat: no-repeat;
 	background-position: 75% 55%;
@@ -665,4 +622,8 @@
 .statisticsImg {
 	max-width: 300px;
 	position: absolute;
+}
+
+.promo p {
+	line-height: 1.5;
 }

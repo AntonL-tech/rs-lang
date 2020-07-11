@@ -1,7 +1,5 @@
 import React from 'react';
 import s from './Team.module.css';
-// import Header from '../app-header/app-header'
-// import Sidebar from '../app-sidebar/app-sidebar'
 import Page from '../app-page-structure/app-page-structure';
 
 const cards = [
@@ -55,11 +53,11 @@ class Team extends React.Component {
         return (
 
             <Page>
-                {/* <Header/> */}
                 <div className={'flex'}>
-                    {/* <Sidebar/> */}
                     <div className={s.wrap}>
-                        <div className={s.mainContainer}>{ourTeamBlocks}</div>
+                        <div className={s.contentContainer}>
+                            <div className={s.mainContainer}>{ourTeamBlocks}</div>
+                        </div>
                     </div>
                 </div>
             </Page>

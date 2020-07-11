@@ -188,13 +188,16 @@ export default class Promo extends Component {
                   <div className={s.promo}>                  
                       <div className={s.promoHeader}>
                         <h2 className={s.promoHeaderTitle}>Welcome to RSLang</h2>
-                        <p className={s.mainDescription}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur minima recusandae sed consequuntur ut qui voluptatibus beatae dicta soluta dolore! </p>
+                        <p className={s.mainDescription}>This is an application for learning English words with interval repetition techniques, tracking individual progress and mini-games.
+                        </p>
                       </div>
 
                       <div className={s.promoOpportunities}>
                         <div className={s.promoAboutWrapper}>                        
                           <h2 className={s.aboutHeader}>About application</h2>
-                          <p className={s.aboutDescription}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur minima recusandae sed consequuntur ut qui voluptatibus beatae dicta soluta dolore! Reprehenderit, maxime dignissimos. Et fuga atque reprehenderit exercitationem cumque! Excepturi?</p>
+                          <p className={s.aboutDescription}>
+                            This application contains training for learning 3600 commonly used English words, and is based on the collection of "4000 essential english words". The first 400 most frequently used words were not included in the collection, because it is believed that this is the basic stock of an adult left over from a school / university or previous attempts to learn a language.
+                          </p>
                         </div>
 
                         <div>
@@ -203,7 +206,7 @@ export default class Promo extends Component {
                             
                             <div className={s.mainAppDescriptionBlock}>
                               <p className={s.mainApplicationDescription}>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur minima recusandae sed consequuntur ut qui voluptatibus beatae dicta soluta dolore! Reprehenderit, maxime dignissimos. Et fuga atque reprehenderit exercitationem cumque! Excepturi?
+                                The main functionality of the application is to learn and repeat words. It is presented in the form of cards with words to be guessed. Word cards contain both new words and words that need to be repeated. During the game, both knowledge of English words and their spelling is checked.  
                               </p>
                               <div className={s.mainAppImgBlock}>
                                 <img className={s.mainAppImg} src={learnEasy} />
@@ -213,7 +216,7 @@ export default class Promo extends Component {
                             </div>
                             <div className={s.mainAppDescriptionBlock}>
                               <p className={s.mainApplicationDescription}>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur minima recusandae sed consequuntur ut qui voluptatibus beatae dicta soluta dolore! Reprehenderit, maxime dignissimos. Et fuga atque reprehenderit exercitationem cumque! Excepturi?
+                                In the application settings, you can specify the number of new words that you plan to learn per day, and the maximum number of cards with words per day. You can also indicate what information is displayed on cards with words: translation of a word, sentence with an explanation of the meaning of the word, sentence with an example of the use of the word being studied.
                               </p>
                               <div className={s.mainAppImgBlock}>
                                 <img className={s.mainAppImg} src={learnEasy} />

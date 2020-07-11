@@ -43,8 +43,6 @@ function App() {
           </Switch>
         </div>
       </Router>
-
-      {/* <Promo /> */}
     </>
   );
 }

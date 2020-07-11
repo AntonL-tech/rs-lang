@@ -12,7 +12,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 100px;
+    padding: 5px 5% 5px 100px;
     /* background-color: #303846; */
     
     background-color: #50678e;
@@ -55,13 +55,52 @@
 }
 
 .header_button:hover { 
-    color: #303846;
-    border: solid 1px #303846;
-    background-color: #09d3ac;
+    color: #ffd0d0;
+    background-color: #bb3737;
 }
 
 .header_content {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .header_inner {
+        padding: 5px 5% 5px 65px;
+    }
+
+    .header_logo {
+        font-size: 28px;
+    }
+
+    .header_user {
+        font-size: 16px;
+    }
+
+    .header_button {
+        margin-left: 10px;
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 378px) {
+    .header_inner {
+        padding: 5px 5% 5px 45px;
+    }
+
+    .header_user {
+        display: none;
+    }
+    
+    .header_button {
+        margin-left: 10px;
+        padding: 3px 7px;
+        font-size: 10px;
+    }
+
+    .header_logo {
+        font-size: 20px;
+    }
 }

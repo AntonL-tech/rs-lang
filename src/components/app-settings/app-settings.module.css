@@ -8,7 +8,6 @@
     padding: 20px;
     color: #09d3ac;
     background-color: #303846;
-    height: 100%;
 }
 
 .card {
@@ -36,10 +35,11 @@
     width: 100%;    
     min-height: 100vh; /**/
     background-color: #09d3ac;
+    display: flex;
 }
 
 .form_inner {    
-    margin: 70px 10vh 0;
+    margin: 70px 0 0 10vh;
     padding: 15px;
     /* padding-top: 75px; */
     /* margin: 0 auto; */
