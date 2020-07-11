@@ -31,9 +31,9 @@
     font-family: 'Pangolin', cursive;
 }
 
-.container { /*---*/
+.container { 
     width: 100%;    
-    min-height: 100vh; /**/
+    min-height: 100vh;
     background-color: #09d3ac;
     display: flex;
 }
@@ -41,16 +41,13 @@
 .form_inner {    
     margin: 70px 0 0 10vh;
     padding: 15px;
-    /* padding-top: 75px; */
-    /* margin: 0 auto; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* background-color: #09d3ac; */
     width: 100%;
     transition: all .2s ease-in;
-    box-sizing: border-box; /**/
+    box-sizing: border-box; 
 }
 
 input {
@@ -69,6 +66,7 @@ input {
 label {
     font-size: 25px;
     text-transform: uppercase;
+    margin-bottom: 10px;
 }
 
 input[type='checkbox'] {
@@ -269,7 +267,8 @@ input[type='number'] {
     border-radius: 4px;
     outline: none;
     padding: 0px 0px 0 15px;
-    width: 70px;
+    width: 45px;
+    font-size: 25px;
 }
 
 .card_word {
@@ -328,6 +327,10 @@ input[type='number'] {
     color: red;
 }
 
+.orange {
+    color: orange;
+}
+
 .green {
     color: green;
 }
@@ -344,4 +347,11 @@ input[type='number'] {
     width: 100%;
     display: flex;
     justify-content: space-around;
+}
+
+.complexity_btns {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    margin-bottom: 25px;
 }

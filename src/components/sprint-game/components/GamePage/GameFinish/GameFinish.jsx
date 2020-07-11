@@ -23,7 +23,7 @@ const GameFinish = (props) => {
     return (
 
         <div className={s.block}>
-            <div className={s.result}>Твой результат: {props.score} очков</div>
+            <div className={s.result}>Your result: {props.score} points</div>
             {props.wordCardStatus 
                 ? <WordCard changeWordCardStatus={props.changeWordCardStatus}
                             wordCard={props.wordCard}
@@ -32,7 +32,7 @@ const GameFinish = (props) => {
             <div className={s.statistic}>
                 <div className={s.bad}>
                     <div className={s.badName}>
-                        Ошибок: {props.badWord.length}
+                        Errors: {props.badWord.length}
                     </div>
                     {props.badWord.map((el, i) => {
                         const id = i;
@@ -50,7 +50,7 @@ const GameFinish = (props) => {
                 <div className={s.line}></div>
                 <div className={s.good}>
                     <div className={s.goodName}>
-                        Знаю: {props.goodWord.length}
+                        I know: {props.goodWord.length}
                     </div>
                     {props.goodWord.map((el, i) => {
                         const id = i;
@@ -66,8 +66,8 @@ const GameFinish = (props) => {
                     })}
                 </div>
             </div>
-            <button className={s.link} onClick={() => props.wordList()}>Продолжить тренеровку</button>
-            <Link className={s.linkEnd} to='/sprint/start'>Завершить тренеровку</Link>
+            <button className={s.link} onClick={() => props.wordList()}>Continue training</button>
+            <Link className={s.linkEnd} to='/sprint/start'>Finish training</Link>
         </div>);
 
 }

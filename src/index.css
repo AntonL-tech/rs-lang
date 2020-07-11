@@ -30,6 +30,7 @@ code {
 .flex {
   width: 100%;
   display: flex;
+  min-height: 1000px;
 }
 
 .block{

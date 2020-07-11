@@ -126,13 +126,3 @@
         width: 6vh;
     }
 }
-
-/* @media (max-width: 378px) {
-    .sidebar_list {        
-        display: none;
-    }
-
-    .sidebar_list_open {
-        display: flex;
-    }
-} */

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 const Track = styled.div`
-    width: 100%;
+    width: 95%;
     height: 20px;
     background-color: #222;
     border-radius: 10px;
