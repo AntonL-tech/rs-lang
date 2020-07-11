@@ -1,22 +1,19 @@
 import React, {Component} from 'react';
 import s from './rowSentences.module.css'
-import { Draggable, Droppable } from 'react-drag-and-drop'
-
-//import HTML5Backend from 'react-dnd-html5-backend'
-//import { DragDropContext } from 'react-dnd'
-//const update = require('immutability-helper');
 
 export default class RowSentences extends Component {
-
-    onDrop(data) {
-        if ((this.props.currentRow+1) === this.props.boardLength){
-            const index = +(data.word);
-            this.props.funcDrag(index,this.props.currentArray)
-        }
-    }
-
     render() {
-        const {array,classNameRow,classNameWord,func,currentRow,boardLength} = this.props;
+        const {
+            array,
+            classNameRow,
+            classNameWord,
+            func,
+            currentRow,
+            boardLength,
+            dragStartFunc,
+            dragOverFunc,
+            dragDropFunc,
+        } = this.props;
 
         for (let i = 0; i < classNameWord.length; i++){  
             if (classNameWord[i] === 'common'){
@@ -30,31 +27,33 @@ export default class RowSentences extends Component {
                 } 
             }
         }
-
+        
+        const draggable = (currentRow+1) < boardLength ? true : false;
         return (
             <div className={classNameRow}>
                 {array.map((word, i) => (
-                      <Draggable
-                        type="word" 
-                        data={i}
+
+                    <div
+                        draggable={(!word.length || draggable) ? 'false' : 'true'}
+                        onDragStart={dragStartFunc(i,'boardSentences')}
+                        onDragOver={dragOverFunc(i,'boardSentences')}
+                        onDrop={dragDropFunc(i,'boardSentences')}
+
                         className={classNameWord[i]}
                         key={i.toString() + 'd'} 
-                        > 
-                        <Droppable 
-                            types={['word']} 
-                            onDrop={this.onDrop.bind(this)} 
-                            className={classNameWord[i]}
-                            onClick={()=>{
-                                if ((currentRow+1) === boardLength){
-                                    func(i,array)
-                                }
-                            }}
-                        >
-                            {word}
-                        </Droppable> 
-                    </Draggable> 
+                        onClick={()=>{
+                            if ((currentRow+1) === boardLength){
+                                func(i,array)
+                            }
+                        }}
+                    >
+                        {word}
+                    </div>
+
                 ))}
             </div> 
         )
     } 
 }
+
+
