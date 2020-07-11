@@ -1,7 +1,6 @@
 import React from 'react';
-import s from './app-words.module.css'
-import Header from '../app-header/app-header'
-import Sidebar from '../app-sidebar/app-sidebar'
+import s from './app-words.module.css';
+import Page from '../app-page-structure/app-page-structure';
 
 
 const token = window.localStorage.getItem('token');
@@ -104,33 +103,29 @@ export default class Words extends React.Component {
         } else if (event.target.textContent === 'Удалить из изученых'){
             this.setState({arrayOfLearnedWords: array})
         }
-        // this.setState({array: array})
-        console.log(array)
     }
 
     render() {
         const {arrayOfDeletedWords, arrayOfHardWords, show, arrayOfLearnedWords} = this.state;
         return (
-            <div>
-                <Header/>
+            <Page>
                 <div className={'flex'}>
-                        <Sidebar/>
-                        <div className={s.words_inner}>
-                            <div className={s.words_item}>
-                                Удалённые слова:
-                                {show ? this.showWords(arrayOfDeletedWords) : null}
-                            </div>
-                            <div className={s.words_item}>
-                                Сложные слова:
-                                {show ? this.showWords(arrayOfHardWords) : null}
-                            </div>
-                            <div className={s.words_item}>
-                                Изученные слова:
-                                {show ? this.showWords(arrayOfLearnedWords) : null}
-                            </div>
+                    <div className={s.words_inner}>
+                        <div className={s.words_item}>
+                            Удалённые слова:
+                            {show ? this.showWords(arrayOfDeletedWords) : null}
                         </div>
+                        <div className={s.words_item}>
+                            Сложные слова:
+                            {show ? this.showWords(arrayOfHardWords) : null}
+                        </div>
+                        <div className={s.words_item}>
+                            Изученные слова:
+                            {show ? this.showWords(arrayOfLearnedWords) : null}
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </Page>
         )
     }
     

@@ -31,16 +31,23 @@
     font-family: 'Pangolin', cursive;
 }
 
-.form_inner {
+.container { 
+    width: 100%;    
+    min-height: 100vh;
+    background-color: #09d3ac;
+    display: flex;
+}
+
+.form_inner {    
+    margin: 70px 0 0 10vh;
     padding: 15px;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #09d3ac;
     width: 100%;
     transition: all .2s ease-in;
+    box-sizing: border-box; 
 }
 
 input {

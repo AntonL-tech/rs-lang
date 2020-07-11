@@ -6,6 +6,7 @@ import Sidebar from '../app-sidebar/app-sidebar'
 import ProgressBar from './progress-bar/index'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom';
+import Page from '../app-page-structure/app-page-structure';
 
 const ProggresBarContainer = styled.div`
     width: 100%;
@@ -843,15 +844,16 @@ export default class Settings extends React.Component {
         </div>);
 
         return (
-            <div>
-                <Header/>
-                <div className={'flex'}>
-                    <Sidebar/>
+            <Page>
+                {/* <Header/> */}
+                <div className={s.container}>
+                    {/* <Sidebar/> */}
+
                     <div className={s.form_inner}>
                         {page}
                     </div>
                 </div>
-            </div>
+            </Page>
 
         );
     }

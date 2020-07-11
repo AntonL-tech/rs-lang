@@ -15,7 +15,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute';
 import Auth from '../Auth';
 import '../../index.css';
-import Savanna from '../savanna/app';
+import Savanna from "../savanna/app";
 import Audiocall from '../audiocall/audiocall/audiocall';
 import Puzzle from '../english-puzzle/EnglishPuzzle'
 
