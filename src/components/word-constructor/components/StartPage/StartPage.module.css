@@ -82,3 +82,10 @@
 .audio:active, .audio:focus{
     outline: none;
 }
+
+@media screen and (max-width: 450px){
+    .audio{
+        right: calc(50% - 17px);
+        top: 140px;
+    }
+}

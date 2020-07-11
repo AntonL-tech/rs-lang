@@ -2,7 +2,7 @@
     position: absolute;
     top: 120px;
     width: 90%;
-    min-width: 320px;
+    min-width: 314px;
     max-width: 600px;
     max-height: calc(98% - 120px);
     border-radius: 5px;
