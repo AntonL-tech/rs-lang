@@ -16,6 +16,10 @@ const List = ({ words, playAudio }) => {
   return <ul className={s.answersList}>{wordList}</ul>
 }
 
+// const WordBlock = (answers) => {
+
+// }
+
 export default class StatisticsPage extends Component {
   constructor(props) {
     super(props);
@@ -31,24 +35,32 @@ export default class StatisticsPage extends Component {
   }
 
   render() {
-    const { correctAnswers, incorrectAnswers, level } = this.props;
+    const { correctAnswers, incorrectAnswers, level,  showStartPage } = this.props;
 
     return (
       <div className={s.page}>
-        <p className={s.header}>Statistics</p>
-        <p className={s.info}>Level: {level}, Amount of words: {correctAnswers.length + incorrectAnswers.length}</p>
+        <div className={s.results}>
+          <p className={s.header}>Statistics</p>
+          <p className={s.info}>Level: {level}, Amount of words: {correctAnswers.length + incorrectAnswers.length}</p>
         
-        <div className={s.answers}>          
-          <div className={s.answersCorrect}>
-            <p className={s.answersTitle}>Correct: {correctAnswers.length}</p>
-            <List words={correctAnswers} playAudio={this.playAudio} />
+          <div className={s.answers}>          
+            <div className={s.answersBlock}>
+              <p className={s.answersTitle}>Correct: {correctAnswers.length}</p>
+              <List words={correctAnswers} playAudio={this.playAudio} />
+            </div>
+        
+            <div className={s.answersBlock}>
+              <p className={s.answersTitle}>Incorrect: {incorrectAnswers.length}</p>
+              <List words={incorrectAnswers}  playAudio={this.playAudio} />
+            </div>
           </div>
-        
-          <div className={s.answersIncorrect}>
-            <p className={s.answersTitle}>Incorrect: {incorrectAnswers.length}</p>
-            <List words={incorrectAnswers}  playAudio={this.playAudio} />
+
+          <div className={s.buttons}>
+            <button className={s.btn} onClick={showStartPage}>Play again</button>
+            <button className={s.btn}>Return</button>
           </div>
         </div>
+        
       </div>
     )
   

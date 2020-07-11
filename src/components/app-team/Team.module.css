@@ -1,7 +1,10 @@
 .wrap {
     width: 100%;
+    min-height: 100vh;
     background-image: url('./Assets/tttt.jpg');
-    background-size: cover;
+    background-size: cover;   
+    display: flex;
+    justify-content: center;
 }
 
 .mainContainer {
@@ -49,4 +52,8 @@
 .job {
     margin-top: 10px;
     font-size: 16px;
+}
+
+.contentContainer {
+    margin: 75px 10vh 0;
 }
