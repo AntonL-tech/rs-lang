@@ -2,52 +2,91 @@
     padding: 80px;
     width: 100%;
     min-height: 100vh;
-    background: #303846;
+    background: #ffffff;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
     box-sizing: border-box;
+    margin: 0 auto;
 }
 
 .words_item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 25%;
+    text-align: center;
     margin: 0 30px;
-    background: #09d3ac;
+    background: #ffffff;
     height: auto;
     border-radius: 10px;
     font-family: 'Pangolin', cursive;
     font-size: 25px;
-    padding: 50px 25px;
-    width: 100%;
+    padding: 25px 25px;
+    flex-wrap: wrap;
+}
+
+.words_content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .word_button {
-    color: #303846;
-    background: #09d3ac;
-    border: 1px solid #303846;
-    border-radius: 5px;
-    padding: 5px;
     transition: all .2s ease-out;
     outline: none;
+    padding: 5px 10px;
+    border: 1px solid #6c9ed5;
+    border-radius: 5px;
+    background-color: #6c9ed5;
+    color: #fff;
+    margin-top: 15px;
 }
 
 .word_button:hover {
-    color: #09d3ac;
-    background: #303846;
-    border: 1px solid #09d3ac;
+    color: #6c9ed5;
+    background-color: #e3f3fc;
 }
 
 .word {
-    margin-top: 15px;
+    margin-top: 35px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    box-shadow: 0 0 15px #22a2b2;
+    padding: 30px 20px;
+    border-radius: 8px;
 }
 
 .star i {
     color: orange;
     width: 10px;
     margin-left: 15px;
+}
+
+.nav_btn {
+    font-size: 20px;
+    margin-right: 20px;
+    padding: 10px 20px;
+    color: #6c9ed5;
+    background-color: #e3f3fc;
+    border: 1px solid #6c9ed5;
+    border-radius: 5px;
+    transition: all .2s linear;
+}
+
+.nav_btn:hover {
+    background-color: #6c9ed5;
+    color: #fff;
+}
+
+.nav_btn_active {
+    font-size: 20px;
+    margin-right: 20px;
+    padding: 10px 20px;
+    border: 1px solid #6c9ed5;
+    border-radius: 5px;
+    transition: all .2s linear;
+    background-color: #6c9ed5;
+    color: #fff;
+}
+
+.words_nav {
+    display: flex;
+    justify-content: center;
 }

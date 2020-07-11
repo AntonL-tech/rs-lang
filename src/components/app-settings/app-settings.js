@@ -65,7 +65,8 @@ export default class Settings extends React.Component {
            isRightAnswer: false,
            response: [],
            currentWord: {},
-           allCustomWords: []
+           allCustomWords: [],
+           isAllow: true
         };
         this.setResults = this.setResults.bind(this)
         this.myRef = React.createRef();
@@ -210,7 +211,7 @@ export default class Settings extends React.Component {
 
     handleCheck = (event) => {
         this.setState({[event.target.id]: event.target.checked})
-
+        localStorage.setItem(`${event.target.id}`, `${event.target.checked}`)
     };
 
     handleSelect = (event) => {
@@ -335,7 +336,7 @@ export default class Settings extends React.Component {
     displayCards(data, line = 0) {
         const {translation, transcription,answerButton, audio, image, meaning, meaningRu, textExample, meaningAudio, 
             textExampleTranslate, audioExample, deleteButton, showWordButton, voiceAllow, hardButton, translationButton, 
-            isAnswerWrong, sound, showTranslation, usedWord, match, mistake, miss, isRightAnswer} = this.state;
+            isAnswerWrong, sound, showTranslation, usedWord, match, mistake, miss, isRightAnswer, isAllow} = this.state;
 
         let hideTextMeaning = !answerButton ? this.hideWord(data[line].textMeaning, data[line].word) : this.showWords(data[line].textMeaning, data[line].word);
         let hideTextExample = !answerButton ? this.hideWord(data[line].textExample, data[line].word) : this.showWords(data[line].textExample, data[line].word);
@@ -370,8 +371,8 @@ export default class Settings extends React.Component {
                     {isRightAnswer ? <button  className={s.game_btn} onClick={(event) => this.setComplexityOfWord(event, data, line)}>Легко</button> : null}
                 </div>
                 <div className={s.result_btns}>
-                    {showWordButton ? <button className={s.game_btn} onClick={() => this.toggleAnswer(data,line)}>Показать ответ</button> : null}
-                    {!isRightAnswer ? <button className={s.game_btn} type="button" onClick={() => this.increment(data,line)}>Ответить</button> : null}
+                    {showWordButton && !isRightAnswer && isAllow ? <button className={s.game_btn} onClick={() => this.toggleAnswer(data,line)}>Показать ответ</button> : null}
+                    {!isRightAnswer && isAllow ? <button className={s.game_btn} type="button" onClick={() => this.increment(data,line)}>Ответить</button> : null}
                 </div>
                 <ProggresBarContainer className={s.progress_bar}>
                     {this.state.match}
@@ -415,11 +416,11 @@ export default class Settings extends React.Component {
                 });
             setTimeout(() => {
                 if (answer.toLowerCase() === data[line].word.toLowerCase()) {
-                    this.setState({line: line + 1})
-                    this.setState({usedWord: false})
+                    this.setState({usedWord: false});
                     this.setState({repeat: false}); 
+                    this.setState({line: line + 1});
                 }
-            }, 1000)
+            }, 4000)
         };
         // Если слово отгадано
         if (answer.toLowerCase() === data[line].word.toLowerCase()) {
@@ -539,6 +540,7 @@ export default class Settings extends React.Component {
 
             console.log(this.state)
         } else {
+            this.setState({isAllow: false});
             data.push(data[line]);
             // Счетчик ошибок
             this.setState({mistake: mistake + 1})
@@ -560,6 +562,7 @@ export default class Settings extends React.Component {
 
             setTimeout(()=> {
                     this.setState({isAnswerWrong: false});
+                    this.setState({isAllow: true});
                     // this.gameProcess(data,line)
             }, 2000)
 
