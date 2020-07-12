@@ -16,11 +16,11 @@ const cards = [
     },
     {
         name: 'Yulia Reutovich',
-        job: 'Audiocall, promo page',
+        job: 'Audiocall, promo page, styles',
         image: require('./Assets/yulia.jpg'),
     },
     {
-        name: 'Maxim Mirashnichenka',
+        name: 'Maksim Mirashnichenka',
         job: 'Sprint, word-constructor, test',
         image: require('./Assets/maxmir.jpg'),
     },

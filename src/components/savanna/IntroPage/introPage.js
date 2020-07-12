@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './introPage.module.css';
 import GamePauseModal from '../GamePauseModal/gamePauseModal';
+import EnglishLevelTest from '../../english-level-test/EnglishLevelTest'
 
 class IntroPage extends React.Component {
     constructor(props) {
@@ -36,7 +37,9 @@ class IntroPage extends React.Component {
 
         return (
             <>
+
                 <div className={s.introPage}>
+                    <EnglishLevelTest/>
                     <h1 className={s.introTitle}>SAVANNAH</h1>
                     <h3 className={s.introSubTitle}>The Savannah training helps you build your vocabulary. The more words you know, the more experience points you'll get.</h3>
                     <p className={s.introLevelText}>Choose your difficulty level and start the game</p>

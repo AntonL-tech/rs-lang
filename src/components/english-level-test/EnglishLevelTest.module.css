@@ -1,12 +1,17 @@
 .block{
-    position: absolute;
+    position: fixed;
+    margin: 0 auto;
+    z-index: 1000;
+    left: calc(50% - 300px);
     top: 120px;
     width: 90%;
-    min-width: 320px;
+    min-width: 280px;
     max-width: 600px;
     max-height: calc(98% - 120px);
     border-radius: 5px;
     overflow: scroll;
+    color: #000000;
+    text-align: left;
 }
 
 .startButton{
@@ -48,7 +53,7 @@
 
 .testBlock{
     display: block;
-    width: 90%;
+    width: 100%;
     max-height: 90%;
     margin: 10px auto 0;
     padding: 20px 0;
@@ -105,4 +110,10 @@
 
 .submit:hover{
     background-color: #493c3c;
+}
+
+@media screen and (max-width: 660px){
+    .block{
+        left: 5%;
+    }
 }
