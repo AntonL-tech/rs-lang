@@ -71,14 +71,21 @@ export default class Words extends React.Component {
         return (array.map(element => (<span className={s.star}>{element} </span>)))
     }
 
-    showWords (array) {
+    showWords (array, textOfButton) {
+        if (array === this.state.arrayOfDeletedWords) {
+            textOfButton = 'RESTORE'
+        } else if (array === this.state.arrayOfHardWords) {
+            textOfButton = 'REMOVE'
+        } else if (array === this.state.arrayOfLearnedWords) {
+            textOfButton = 'DELETE'
+        }
         return (array.map(element => (<div className={s.word}><span> {element.optional.word.word}{this.showRepeatStars(element.optional.repeat)}</span> 
             {this.state.transcription === 'true' ? <span>{element.optional.word.transcription}</span> : null}    
             {this.state.translation === 'true' ? <span>{element.optional.word.wordTranslate}</span> : null}
-            <span>Повторено/Изучено: {element.optional.currentDate}</span>
-            <span>Следующее повторение: {element.optional.repeatDate}</span>
-            <span>Всего повторений: {element.optional.repeat}</span>
-            <button id={element.optional.word.id}  onClick={(event) => this.deleteWord(event, event.target.id, array)} className={s.word_button}>RESTORE</button>
+            <span>Repeated / Studied: {element.optional.currentDate}</span>
+            <span>Next repeat: {element.optional.repeatDate}</span>
+            <span>Total reps: {element.optional.repeat}</span>
+            <button id={element.optional.word.id}  onClick={(event) => this.deleteWord(event, event.target.id, array)} className={s.word_button}>{textOfButton}</button>
             </div>)));
     };
 
@@ -93,11 +100,11 @@ export default class Words extends React.Component {
         })
         array = array.filter(item => item.optional.word.id !== event.target.id);
         console.log(event.target.textContent)
-        if (event.target.textContent === 'Восстановить') {
+        if (event.target.textContent === 'RESTORE') {
             this.setState({arrayOfDeletedWords: array})
-        } else if (event.target.textContent === 'Удалить из сложных') {
+        } else if (event.target.textContent === 'REMOVE') {
             this.setState({arrayOfHardWords: array})
-        } else if (event.target.textContent === 'Удалить из изученых'){
+        } else if (event.target.textContent === 'DELETE'){
             this.setState({arrayOfLearnedWords: array})
         }
     }

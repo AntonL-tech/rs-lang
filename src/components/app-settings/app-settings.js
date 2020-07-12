@@ -66,7 +66,13 @@ export default class Settings extends React.Component {
            response: [],
            currentWord: {},
            allCustomWords: [],
-           isAllow: true
+           isAllow: true, 
+           isActiveDeleteBtn: false,
+           isActiveHardBtn: false,
+           isActiveAgainBtn: false,
+           isActiveBadBtn: false,
+           isActiveGoodBtn: false,
+           isActiveEasyBtn: false
         };
         this.setResults = this.setResults.bind(this)
         this.myRef = React.createRef();
@@ -234,20 +240,23 @@ export default class Settings extends React.Component {
         data = await this.filterArray(this.state.allCustomWords, data)
         if (!this.state.customLevelWords.length) {
             this.setState({usedWord: false})
+            this.setState({repeat: false})
         }
-        if (!data.length) {
+        if (data.length === 0) {
             this.setState({ page: this.state.page + 1 });
             this.getResults();
-        }
-        this.setState({data: data})
-        if ((this.state.translation || this.state.meaning || this.state.textExample) && (this.state.countOfWords > 0 && this.state.countOfCards > 0)) {
-            this.setState({ settingPage: false });
-
-            // Фокус в поле ввода
-            this.myRef.current.focus();
-
         } else {
-            this.setState({isCheck: true})
+            this.setState({data: data})
+            console.log(this.state)
+            if ((this.state.translation || this.state.meaning || this.state.textExample) && (this.state.countOfWords > 0 && this.state.countOfCards > 0)) {
+                this.setState({ settingPage: false });
+    
+                // Фокус в поле ввода
+                this.myRef.current.focus();
+    
+            } else {
+                this.setState({isCheck: true})
+            }
         }
     };
 
@@ -272,12 +281,12 @@ export default class Settings extends React.Component {
 
                     <label>
                         Новых слов в день:
-                        <input id='countOfWords' type="number" onChange = {this.handleChange} min="1" max="50" required/>
+                        <input id='countOfWords' type="number" onChange = {this.handleChange} min="1" max="50" required autoComplete='false'/>
                     </label>
 
                     <label>
                         Максимальное количество карточек в день:
-                        <input id='countOfCards' type="number" onChange = {this.handleChange} min="1" max="50" required/>
+                        <input id='countOfCards' type="number" onChange = {this.handleChange} min="1" max="50" required autoComplete='false'/>
                     </label>
 
 
@@ -336,12 +345,12 @@ export default class Settings extends React.Component {
     displayCards(data, line = 0) {
         const {translation, transcription,answerButton, audio, image, meaning, meaningRu, textExample, meaningAudio, 
             textExampleTranslate, audioExample, deleteButton, showWordButton, voiceAllow, hardButton, translationButton, 
-            isAnswerWrong, sound, showTranslation, usedWord, match, mistake, miss, isRightAnswer, isAllow} = this.state;
+            isAnswerWrong, sound, showTranslation, usedWord, match, mistake, miss, isRightAnswer, isAllow, isActiveDeleteBtn, isActiveHardBtn, isActiveAgainBtn, isActiveBadBtn, isActiveGoodBtn, isActiveEasyBtn} = this.state;
 
         let hideTextMeaning = !answerButton ? this.hideWord(data[line].textMeaning, data[line].word) : this.showWords(data[line].textMeaning, data[line].word);
         let hideTextExample = !answerButton ? this.hideWord(data[line].textExample, data[line].word) : this.showWords(data[line].textExample, data[line].word);
         
-        const inputWidth = data[line].word.length * 20;
+        const inputWidth = data[line].word.length * 18;
         const {endGame} = this.state;
         let answerBox = (<div style={{width: inputWidth + 'px'}} className={s.card_answer} contentEditable={true} onBlur = {this.handleChangeDiv} id="answer" onKeyPress={(event) => this.handleKeyPress(event, data, line)} ref={this.myRef}></div>);
         let errorBox =  this.compareWords(data[line].word, this.state.answer);
@@ -359,16 +368,16 @@ export default class Settings extends React.Component {
                 {textExampleTranslate && translationButton ? <div className={s.card_word}>Предложение с примером использования изучаемого слова на русском: {data[line].textExampleTranslate}</div> : null}
                 {audioExample ? <div className={s.card_word}>Аудио предложение на англе: <audio controls src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].audioExample}`}></audio></div> : null}
                 <div className={s.btn_inner}>
-                    {deleteButton && !usedWord ? <button  className={s.game_btn} onClick={() => this.deleteUserWord(data, line)}>Удалить</button> : null}
-                    {hardButton && !usedWord ? <button className={s.game_btn} onClick={() => this.hardUserWord(data, line)}>Сложные</button> : null }
+                    {deleteButton && !usedWord ? <button  className={isActiveDeleteBtn ? s.game_btn_active : s.game_btn} onClick={() => this.deleteUserWord(data, line)}>Удалить</button> : null}
+                    {hardButton && !usedWord ? <button className={isActiveHardBtn ? s.game_btn_active : s.game_btn} onClick={() => this.hardUserWord(data, line)}>Сложные</button> : null }
                     <button className={!showTranslation ? s.game_btn_translaition : s.game_btn_translaition_active} onClick={() => this.toggletranslationButton()}>Показывать перевод</button>
                     {voiceAllow ? <button className={!sound ? s.game_btn_audio : s.game_btn_audio_active} onClick={(event) => this.toggleSpeaking(event)}><i className="fas fa-volume-up"/></button> : null}
                 </div>
                 <div className={s.complexity_btns}>
-                    {isRightAnswer ? <button  className={s.game_btn} onClick={(event) => this.setComplexityOfWord(event, data, line)}>Снова</button> : null}
-                    {isRightAnswer ? <button  className={s.game_btn} onClick={(event) => this.setComplexityOfWord(event, data, line)}>Трудно</button> : null}
-                    {isRightAnswer ? <button  className={s.game_btn} onClick={(event) => this.setComplexityOfWord(event, data, line)}>Хорошо</button> : null}
-                    {isRightAnswer ? <button  className={s.game_btn} onClick={(event) => this.setComplexityOfWord(event, data, line)}>Легко</button> : null}
+                    {isRightAnswer ? <button  className={isActiveAgainBtn ? s.game_btn_active : s.game_btn} onClick={(event) => this.setComplexityOfWord(event, data, line)}>Снова</button> : null}
+                    {isRightAnswer ? <button  className={isActiveBadBtn ? s.game_btn_active : s.game_btn} onClick={(event) => this.setComplexityOfWord(event, data, line)}>Трудно</button> : null}
+                    {isRightAnswer ? <button  className={isActiveGoodBtn ? s.game_btn_active : s.game_btn} onClick={(event) => this.setComplexityOfWord(event, data, line)}>Хорошо</button> : null}
+                    {isRightAnswer ? <button  className={isActiveEasyBtn ? s.game_btn_active : s.game_btn} onClick={(event) => this.setComplexityOfWord(event, data, line)}>Легко</button> : null}
                 </div>
                 <div className={s.result_btns}>
                     {showWordButton && !isRightAnswer && isAllow ? <button className={s.game_btn} onClick={() => this.toggleAnswer(data,line)}>Показать ответ</button> : null}
@@ -403,10 +412,17 @@ export default class Settings extends React.Component {
 
     async increment(data, line) {
         const {answer, stopAudio, meaningAudio, audioExample, answerButton, countOfCards, percentage, count, repeat, endGame, customLevelWords, usedWord, match, mistake, isRightAnswer, complexity} = this.state;
+        this.setState({isActiveAgainBtn: false})
+        this.setState({isActiveBadBtn: false})
+        this.setState({isActiveGoodBtn: false})
+        this.setState({isActiveEasyBtn: false})
 
         // Чекаем есть ли слова для повторения
         if (!customLevelWords.length && line === 0) {
-            
+            this.setState({page: this.state.page + 1})
+            if (!this.state.data.length) {
+                this.getResults();
+            }
             this.getWord(userId, data[line].id);
             // Добавляем слова в изученые
             this.createUserWord({
@@ -414,18 +430,9 @@ export default class Settings extends React.Component {
                 wordId: data[line].id,
                 word: { "difficulty": "weak", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 5).toISOString().split('T')[0], 'repeat' : 0}},
                 });
-            setTimeout(() => {
-                if (answer.toLowerCase() === data[line].word.toLowerCase()) {
-                    this.setState({usedWord: false});
-                    this.setState({repeat: false}); 
-                    this.setState({line: line + 1});
-                }
-            }, 4000)
         };
         // Если слово отгадано
         if (answer.toLowerCase() === data[line].word.toLowerCase()) {
-            console.log('ответ правильный')
-
             this.setState({match: match + 1});
 
             // Добавляем слова в изученые
@@ -436,22 +443,18 @@ export default class Settings extends React.Component {
                     word: { "difficulty": "weak", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 5).toISOString().split('T')[0], 'repeat' : 0}},
                 });
             } else if (customLevelWords.length){
-                console.log('слово повторено', new Date())
-                console.log(this.state);
                 this.getWord(userId, data[line].id);
                 setTimeout(() => {
                     this.updateUserWord({
                         userId: userId,
                         wordId: data[line].id,
-                        word: { "difficulty": "weak", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 5).toISOString().split('T')[0], 'repeat' : this.state.currentWord.optional.repeat + 1}},
+                        word: { "difficulty": "weak", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 5).toISOString().split('T')[0], 'repeat' : this.state.currentWord.optional.repeat}},
                     });
                 }, 1000)
             }
             
             // Увеличен счёт карточек
             this.setState({ count: count + 1 });
-
-           
 
             // Показывает слово 
             this.setState({answerButton: true});
@@ -537,8 +540,6 @@ export default class Settings extends React.Component {
                     this.setState({isRightAnswer: false});
                 }, 3000)
             }
-
-            console.log(this.state)
         } else {
             this.setState({isAllow: false});
             data.push(data[line]);
@@ -563,17 +564,15 @@ export default class Settings extends React.Component {
             setTimeout(()=> {
                     this.setState({isAnswerWrong: false});
                     this.setState({isAllow: true});
-                    // this.gameProcess(data,line)
             }, 2000)
-
-            console.log('ответ не правильный')
         }
     };
 
     setComplexityOfWord(event, data, line) {
-        const {customLevelWords} = this.state;
-        if (!this.state.currentWord.optional) {
+        const {customLevelWords, usedWord} = this.state;
+        if (!this.state.currentWord.optional || !usedWord) {
             if (event.target.textContent === 'Снова') {
+                this.setState({isActiveAgainBtn: true})
                 data.push(data[line]);
                 this.updateUserWord({
                     userId: userId,
@@ -583,6 +582,7 @@ export default class Settings extends React.Component {
             } 
 
             if (event.target.textContent === 'Трудно') {
+                this.setState({isActiveBadBtn: true})
                 this.updateUserWord({
                     userId: userId,
                     wordId: data[line].id,
@@ -591,6 +591,7 @@ export default class Settings extends React.Component {
             } 
     
             if (event.target.textContent === 'Хорошо') {
+                this.setState({isActiveGoodBtn: true})
                 this.updateUserWord({
                     userId: userId,
                     wordId: data[line].id,
@@ -599,6 +600,7 @@ export default class Settings extends React.Component {
             }
     
             if (event.target.textContent === 'Легко') {
+                this.setState({isActiveEasyBtn: true})
                 this.updateUserWord({
                     userId: userId,
                     wordId: data[line].id,
@@ -607,6 +609,7 @@ export default class Settings extends React.Component {
             }
         } else {
             if (event.target.textContent === 'Снова') {
+                this.setState({isActiveAgainBtn: true})
                 data.push(data[line]);
                 this.updateUserWord({
                     userId: userId,
@@ -616,6 +619,7 @@ export default class Settings extends React.Component {
             } 
 
             if (event.target.textContent === 'Трудно') {
+                this.setState({isActiveBadBtn: true})
                 this.updateUserWord({
                     userId: userId,
                     wordId: data[line].id,
@@ -624,6 +628,7 @@ export default class Settings extends React.Component {
             } 
     
             if (event.target.textContent === 'Хорошо') {
+                this.setState({isActiveGoodBtn: true})
                 this.updateUserWord({
                     userId: userId,
                     wordId: data[line].id,
@@ -632,6 +637,8 @@ export default class Settings extends React.Component {
             }
     
             if (event.target.textContent === 'Легко') {
+                this.setState({isActiveEasyBtn: true})
+
                 this.updateUserWord({
                     userId: userId,
                     wordId: data[line].id,
@@ -743,24 +750,26 @@ export default class Settings extends React.Component {
     };
     
 
-    deleteUserWord (data,line) {
+    async deleteUserWord (data,line) {
+        this.setState({isActiveDeleteBtn: true})
         this.createUserWord({
             userId: userId,
             wordId: data[line].id,
             word: { "difficulty": "weak", "optional": {'word': data[line], 'deleted': true, 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': 'Deleted', 'repeat' : 0}},
         });
-        console.log(data[line].word, 'удалено');
-        this.toggleAnswer(data, line)
+        await this.toggleAnswer(data, line)
+        this.setState({isActiveDeleteBtn: false})
     }
 
-    hardUserWord (data,line) {
+    async hardUserWord (data,line) {
+        this.setState({isActiveHardBtn: true})
         this.createUserWord({
             userId: userId,
             wordId: data[line].id,
             word: { "difficulty": "hard", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 1).toISOString().split('T')[0], 'repeat' : 0}}
         });
-        console.log(data[line].word, 'добавлено в сложные');
-        this.toggleAnswer(data, line)
+        await this.toggleAnswer(data, line)
+        this.setState({isActiveHardBtn: false})
     }
 
     getWord (userId, wordId) {
@@ -848,10 +857,7 @@ export default class Settings extends React.Component {
 
         return (
             <Page>
-                {/* <Header/> */}
                 <div className={s.container}>
-                    {/* <Sidebar/> */}
-
                     <div className={s.form_inner}>
                         {page}
                     </div>
