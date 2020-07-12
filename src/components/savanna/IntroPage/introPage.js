@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './introPage.module.css';
 import GamePauseModal from '../GamePauseModal/gamePauseModal';
+import EnglishLevelTest from '../../english-level-test/EnglishLevelTest';
 
 
 class IntroPage extends React.Component {
