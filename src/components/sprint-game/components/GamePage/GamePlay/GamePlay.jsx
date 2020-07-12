@@ -42,8 +42,8 @@ const GamePlay = (props) => {
                     <div className={s.wordOriginal}> {props.wordEnglish} </div>
                     <div className={s.wordTranslate}> {props.gameWordTranslate} </div>
                 </div>
-                <button className={s.false} onClick={() => { props.checkWord(false) }}>неверно</button>
-                <button className={s.true} onClick={() => { props.checkWord(true) }}>верно</button>
+                <button className={s.false} onClick={() => { props.checkWord(false) }}>false</button>
+                <button className={s.true} onClick={() => { props.checkWord(true) }}>true</button>
             </div>
         </div>
     )

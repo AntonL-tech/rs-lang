@@ -1,16 +1,13 @@
 import React from 'react';
-import s from './app-home.module.css'
-import Header from '../app-header/app-header'
-import Sidebar from '../app-sidebar/app-sidebar'
+import Promo from '../promo/promo';
+import Page from '../app-page-structure/app-page-structure';
 
-function Home() {
+const Home = () => {
     return (
-        <div className={s.home_inner}>
-            <Header/>
-            <div  className={'flex'}>
-                    <Sidebar/>
-                    <p>Home</p>
-            </div>
+        <div>
+            <Page>
+                <Promo />
+            </Page>
         </div>
     )
 }

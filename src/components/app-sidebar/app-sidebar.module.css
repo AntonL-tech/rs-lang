@@ -1,22 +1,128 @@
-.sidebar_inner {
-    border-right: solid 2px #09d3ac;
+.sidebar_inner {    
+    height: 100%;   
+    border-right: solid 2px #09d3ac;    
+    position: fixed;
+    left: 0;
+    z-index: 2;
 }
+
 .sidebar_list {
-    background-color: #303846;
-    width: 150px;
+    margin: 0;
+    padding: 80px 0 20px;
+    background-color: #44597e;
+    width: 10vh;   
     height: 100%;
+    list-style: none;
     display: flex;
     flex-direction: column;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+    align-items: center;
+    justify-content: space-around;
+    box-sizing: border-box;
+    opacity: 0.5;
+    transition: all 0.5s linear;   
+    animation: closeMenu 0.5s linear;
+}
+
+.sidebar_list:hover {
+    opacity: 1;
 }
 
 .sidebar_item {
-    margin: 40px auto 70px;
+    margin: auto ;
     cursor: pointer;
 }
 
-i {
-    color: #09d3ac;
+.sidebar_item  i {  
+    font-size: 6vh;
+    color: #09d3ca;
+}
+
+.sidebar_item a {    
+    height: 100%;
+    font-family: 'Carter One', cursive;
+    color: #09d3ca;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+}
+
+.hideLinkDescription {
+    display: none;
+}
+
+.sidebar_list_open {
+    margin: 0;
+    padding: 80px 0 20px;
+    background-color: #44597e;
+    height: 100%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    box-sizing: border-box;
+    transition: all 0.5s linear;
+    animation: openMenu 0.5s linear;
+}
+
+.sidebar_list_open li {
+    margin: 0 30px;
+    cursor: pointer;
+    width: 200px;    
+    animation: showMenuTags 0.5s linear;
+}
+
+.sidebar_list li {
+    animation: hideMenuTags 0.5s linear;
+}
+
+.sidebar_list_open  i {  
+    margin-right: 10px; 
+}
+
+.sidebar_list_open  span {
+    padding: 0 5px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+@keyframes openMenu {
+    0% {
+        width: 10vh;
+    }
+
+    100% {
+        width: 260px;
+    }
+}
+
+@keyframes closeMenu {
+    0% {
+        width: 260px;
+    }
+
+    100% {
+        width: 10vh;
+    }
+}
+
+@keyframes showMenuTags {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 200px;
+    }
+}
+
+@keyframes hideMenuTags {
+    0% {
+        width: 200px;
+    }
+
+    100% {
+        width: 6vh;
+    }
 }

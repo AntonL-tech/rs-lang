@@ -37,12 +37,44 @@ export default class GameModel {
     return this.generateWrongAnswersData();
   }
 
+  getUserWords = () => {
+    const userId = localStorage.userId;
+    const token = localStorage.token;
+    return fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words`, {
+      method: 'GET',
+      withCredentials: true,
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json',
+      }
+    })
+      .then((response) => response.json())
+      .then((words) => words.map((word) => word.optional.word));
+  }
+
   getCollectionWords = (level, page) => {
     return fetch(`https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${level}`)
       .then((response) => response.json());
   }
 
   getQuestionWords = () => {
+    if (this.level === '6') {
+      return this.getUserWords()
+        .then((res) => {
+          let userWords = res;
+          
+          if (userWords.length > 20) {
+            userWords = this.getRandomWords(userWords, 20);            
+          }
+
+          if (userWords.length < 20) {
+            this.turns = userWords.length - 1;
+          }
+          
+          return this.setWordsPartOfSpeech(userWords);
+        })
+    }
+    
     this.round = this.getRandomNumber(this.amountOfPages);
     this.usedPages.push([this.level, this.round]);
 
@@ -77,7 +109,9 @@ export default class GameModel {
     } else {
       let words = this.filterWordsByLength(this.currentWord, wordsArr); 
 
-      let answers = this.getRandomAnswers(words);
+      words = words.filter((item) => item.word !== this.currentWord.word)
+
+      let answers = this.getRandomWords(words, 4);
       answers = this.transformWrongAnswersData(answers);  
 
       if (this.currentTurn < (this.turns / 2) && this.answerWords.length < 2000) {
@@ -112,13 +146,13 @@ export default class GameModel {
     } 
 
     return words;      
-  }  
+  }   
 
-  getRandomAnswers = (words) => {
+  getRandomWords = (words, amount) => {
     let answers = [];
-    for (let i = 0; i < 4; i++) {
-      const index = this.getRandomNumber(words);
-      answers.push(words.splice(index, 1));
+    for (let i = 0; i < amount; i++) {
+      const index = this.getRandomNumber(words.length);
+      answers.push(...words.splice(index, 1));
     }
 
     return answers;
@@ -126,7 +160,7 @@ export default class GameModel {
 
   transformWrongAnswersData = (answers) => {
     return answers.map((item) => { 
-      const { wordTranslate, id } = item[0];
+      const { wordTranslate, id } = item;
       return { wordTranslate, id, correct: false };
     })
   }  
