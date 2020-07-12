@@ -6,6 +6,7 @@ import GamePauseModal from '../GamePauseModal/gamePauseModal';
 import WordModal from '../WordModal/wordModal';
 import error from '../Assets/sounds/error.mp3';
 import success from '../Assets/sounds/correct.mp3';
+import start from '../Assets/sounds/start.mp3';
 import star from '../Assets/icons/star-win.svg';
 import starError from '../Assets/icons/star.svg';
 
@@ -65,9 +66,11 @@ class GamePage extends React.Component {
 
     tick() {
         if (this.state.timer === 0) {
+            this.playSound(start)
             this.setState({ isStartFallingWord: true });
             this.changeCountCard();
             clearInterval(this.intervalID);
+
         }
         if (this.state.timer > 0) {
             this.setState({ timer: this.state.timer - 1 });
