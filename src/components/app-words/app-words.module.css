@@ -96,3 +96,10 @@
     font-weight: 700;
     text-transform: uppercase;
 }
+
+
+@media (max-width:790px) {
+    .words_content {
+        justify-content: center;
+    }
+}

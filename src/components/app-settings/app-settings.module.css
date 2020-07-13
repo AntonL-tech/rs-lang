@@ -179,7 +179,7 @@ input[type='checkbox']:checked + label::after {
 }
 
 .game_btn_audio {
-    padding: 15px;
+    padding: 15px 25px;
     border-radius: 20px;
     height: 100%;
     font-family: 'Pangolin', cursive;
@@ -187,7 +187,6 @@ input[type='checkbox']:checked + label::after {
     color: #6c9ed5;
     border: 1px solid #6c9ed5;
     background: #e3f3fc;
-    width: 86px;
     outline: none;
 }
 
@@ -205,12 +204,11 @@ input[type='checkbox']:checked + label::after {
     color: #fff;
     background: #6c9ed5;
     border: 1px solid #6c9ed5;
-    padding: 15px 0;
+    padding: 15px 25px;
     border-radius: 20px;
     height: 100%;
     font-family: 'Pangolin', cursive;
     font-size: 22px;
-    width: 86px;
 }
 
 .game_btn_audio_active:hover {
@@ -229,7 +227,7 @@ input[type='checkbox']:checked + label::after {
 
 
 .game_btn_translaition {
-    padding: 15px;
+    padding: 15px 20px;
     border-radius: 20px;
     height: 100%;
     font-family: 'Pangolin', cursive;
@@ -237,7 +235,6 @@ input[type='checkbox']:checked + label::after {
     color: #6c9ed5;
     border: 1px solid #6c9ed5;
     background: #e3f3fc;
-    width: 400px;
     outline: none;
 }
 
@@ -248,7 +245,7 @@ input[type='checkbox']:checked + label::after {
 }
 
 .game_btn_translaition_active {
-    padding: 15px 0;
+    padding: 15px 20px;
     border-radius: 20px;
     height: 100%;
     font-family: 'Pangolin', cursive;
@@ -256,7 +253,6 @@ input[type='checkbox']:checked + label::after {
     color: #fff;
     border: 1px solid #6c9ed5;
     background: #6c9ed5;
-    width: 400px;
 }
 
 .game_btn_translaition_active:hover {
@@ -274,6 +270,8 @@ input[type='checkbox']:checked + label::after {
     font-family: 'Pangolin', cursive;
     text-transform: uppercase;
     color: #E74C3C;
+    text-align: center;
+    margin-top: 15px;
 }
 
 input[type='number'] {
@@ -328,6 +326,7 @@ input[type='number'] {
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 
 .answer {
@@ -371,4 +370,105 @@ input[type='number'] {
     width: 100%;
     justify-content: space-around;
     margin-bottom: 25px;
+}
+
+@media (max-width:790px) {
+
+    .settings_inner, .card {
+        padding: 10px;
+    }
+
+    .select select {
+        padding: 3px 15px;
+        font-size: 15px;
+    }
+
+    label {
+        font-size: 15px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+    }
+
+    label.game_checkbox_label {
+        font-size: 15px;
+    }
+
+    label.game_checkbox_label::after {
+        width: 23px;
+        height: 23px;
+    }
+
+    input[type='number'] {
+        padding: 3px 5px;
+        width: 25px;
+        font-size: 15px;
+    }
+
+    .error_settings {
+        max-width: 1000px;
+        font-size: 15px;
+    }
+
+    .card_word {
+        font-size: 15px;
+        margin-bottom: 5px;
+    }
+
+    .answer {
+        font-size: 15px;
+    }
+
+    .card_answer {
+        padding: 3px;
+        height: 20px;
+        margin: 10px 0 10px 10px;
+    }
+    .card_word img { 
+        width: 200px;
+    }
+
+    .game_btn {
+        font-size: 20px;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .game_btn_active {
+        font-size: 20px;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .game_btn_translaition {
+        font-size: 20px;
+        padding: 10px 15px;    
+        border-radius: 10px;
+    }
+
+    .game_btn_translaition_active {
+        font-size: 20px;
+        padding: 10px 15px;
+        border-radius: 10px;
+    }
+
+    .game_btn_audio {
+        font-size: 20px;
+        padding: 10px 15px;
+        border-radius: 10px;
+    }
+
+    .game_btn_audio_active {
+        font-size: 20px;
+        padding: 10px 15px;   
+        border-radius: 10px;
+    }
+
+    .btn_inner {
+        margin: 10px 0;
+    }
+
+    .card_word_error, .card_word_miss {
+        font-size: 15px;
+        margin-bottom: 5px;
+    }
 }
