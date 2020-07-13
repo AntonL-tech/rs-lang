@@ -11,13 +11,15 @@ import Page from '../app-page-structure/app-page-structure';
 const ProggresBarContainer = styled.div`
     width: 100%;
 `
-const token = window.localStorage.getItem('token');
-const userId = window.localStorage.getItem('userId');
+// const token = window.localStorage.getItem('token');
+// const userId = window.localStorage.getItem('userId');
 
 export default class Settings extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+           token: localStorage.getItem('token'),
+           userId: localStorage.getItem('userId'),
            answer: '',
            settingPage: true,
            audio: false,
@@ -126,7 +128,7 @@ export default class Settings extends React.Component {
         this.setState({miss: 0})
         this.setState({complexity: false})
         this.setState({isRightAnswer: false})
-        this.getUserWord(userId)
+        this.getUserWord(this.state.userId)
         console.log(this.state)
     }
 
@@ -423,10 +425,10 @@ export default class Settings extends React.Component {
             if (!this.state.data.length) {
                 this.getResults();
             }
-            this.getWord(userId, data[line].id);
+            this.getWord(this.state.userId, data[line].id);
             // Добавляем слова в изученые
             this.createUserWord({
-                userId: userId,
+                userId: this.state.userId,
                 wordId: data[line].id,
                 word: { "difficulty": "weak", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 5).toISOString().split('T')[0], 'repeat' : 0}},
                 });
@@ -438,15 +440,15 @@ export default class Settings extends React.Component {
             // Добавляем слова в изученые
             if (!usedWord) {
                 this.createUserWord({
-                    userId: userId,
+                    userId: this.state.userId,
                     wordId: data[line].id,
                     word: { "difficulty": "weak", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 5).toISOString().split('T')[0], 'repeat' : 0}},
                 });
             } else if (customLevelWords.length){
-                this.getWord(userId, data[line].id);
+                this.getWord(this.state.userId, data[line].id);
                 setTimeout(() => {
                     this.updateUserWord({
-                        userId: userId,
+                        userId: this.state.userId,
                         wordId: data[line].id,
                         word: { "difficulty": "weak", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 5).toISOString().split('T')[0], 'repeat' : this.state.currentWord.optional.repeat}},
                     });
@@ -575,7 +577,7 @@ export default class Settings extends React.Component {
                 this.setState({isActiveAgainBtn: true})
                 data.push(data[line]);
                 this.updateUserWord({
-                    userId: userId,
+                    userId: this.state.userId,
                     wordId: data[line].id,
                     word: { "difficulty": "hard", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': new Date().toISOString().split('T')[0], 'repeat' : 0}},
                 });
@@ -584,7 +586,7 @@ export default class Settings extends React.Component {
             if (event.target.textContent === 'Трудно') {
                 this.setState({isActiveBadBtn: true})
                 this.updateUserWord({
-                    userId: userId,
+                    userId: this.state.userId,
                     wordId: data[line].id,
                     word: { "difficulty": "hard", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 1).toISOString().split('T')[0], 'repeat' : 0}},
                 });
@@ -593,7 +595,7 @@ export default class Settings extends React.Component {
             if (event.target.textContent === 'Хорошо') {
                 this.setState({isActiveGoodBtn: true})
                 this.updateUserWord({
-                    userId: userId,
+                    userId: this.state.userId,
                     wordId: data[line].id,
                     word: { "difficulty": "weak", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 7).toISOString().split('T')[0], 'repeat' : 0}},
                 });
@@ -602,7 +604,7 @@ export default class Settings extends React.Component {
             if (event.target.textContent === 'Легко') {
                 this.setState({isActiveEasyBtn: true})
                 this.updateUserWord({
-                    userId: userId,
+                    userId: this.state.userId,
                     wordId: data[line].id,
                     word: { "difficulty": "weak", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 21).toISOString().split('T')[0], 'repeat' : 0}},
                 });
@@ -612,7 +614,7 @@ export default class Settings extends React.Component {
                 this.setState({isActiveAgainBtn: true})
                 data.push(data[line]);
                 this.updateUserWord({
-                    userId: userId,
+                    userId: this.state.userId,
                     wordId: data[line].id,
                     word: { "difficulty": "hard", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': new Date().toISOString().split('T')[0], 'repeat' : this.state.currentWord.optional.repeat + 1}},
                 });
@@ -621,7 +623,7 @@ export default class Settings extends React.Component {
             if (event.target.textContent === 'Трудно') {
                 this.setState({isActiveBadBtn: true})
                 this.updateUserWord({
-                    userId: userId,
+                    userId: this.state.userId,
                     wordId: data[line].id,
                     word: { "difficulty": "hard", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 1).toISOString().split('T')[0], 'repeat' : this.state.currentWord.optional.repeat + 1}},
                 });
@@ -630,7 +632,7 @@ export default class Settings extends React.Component {
             if (event.target.textContent === 'Хорошо') {
                 this.setState({isActiveGoodBtn: true})
                 this.updateUserWord({
-                    userId: userId,
+                    userId: this.state.userId,
                     wordId: data[line].id,
                     word: { "difficulty": "weak", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 7).toISOString().split('T')[0], 'repeat' : this.state.currentWord.optional.repeat + 1}},
                 });
@@ -640,7 +642,7 @@ export default class Settings extends React.Component {
                 this.setState({isActiveEasyBtn: true})
 
                 this.updateUserWord({
-                    userId: userId,
+                    userId: this.state.userId,
                     wordId: data[line].id,
                     word: { "difficulty": "weak", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 21).toISOString().split('T')[0], 'repeat' : this.state.currentWord.optional.repeat + 1}},
                 });
@@ -722,7 +724,7 @@ export default class Settings extends React.Component {
             method: 'POST',
             withCredentials: true,
             headers: {
-            'Authorization': `Bearer ${token}`,
+            'Authorization': `Bearer ${this.state.token}`,
             'Accept': 'application/json',
             'Content-Type': 'application/json'
             },
@@ -738,7 +740,7 @@ export default class Settings extends React.Component {
             method: 'PUT',
             withCredentials: true,
             headers: {
-            'Authorization': `Bearer ${token}`,
+            'Authorization': `Bearer ${this.state.token}`,
             'Accept': 'application/json',
             'Content-Type': 'application/json'
             },
@@ -753,7 +755,7 @@ export default class Settings extends React.Component {
     async deleteUserWord (data,line) {
         this.setState({isActiveDeleteBtn: true})
         this.createUserWord({
-            userId: userId,
+            userId: this.state.userId,
             wordId: data[line].id,
             word: { "difficulty": "weak", "optional": {'word': data[line], 'deleted': true, 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': 'Deleted', 'repeat' : 0}},
         });
@@ -764,7 +766,7 @@ export default class Settings extends React.Component {
     async hardUserWord (data,line) {
         this.setState({isActiveHardBtn: true})
         this.createUserWord({
-            userId: userId,
+            userId: this.state.userId,
             wordId: data[line].id,
             word: { "difficulty": "hard", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 1).toISOString().split('T')[0], 'repeat' : 0}}
         });
@@ -777,7 +779,7 @@ export default class Settings extends React.Component {
           method: 'GET',
           withCredentials: true,
           headers: {
-            'Authorization': `Bearer ${token}`,
+            'Authorization': `Bearer ${this.state.token}`,
             'Accept': 'application/json',
           }
         }).then(data => {
@@ -792,7 +794,7 @@ export default class Settings extends React.Component {
 
 
     componentDidMount() {
-        this.getUserWord(userId);
+        this.getUserWord(this.state.userId);
     }
 
     getUserWord (userId) {
@@ -800,7 +802,7 @@ export default class Settings extends React.Component {
           method: 'GET',
           withCredentials: true,
           headers: {
-            'Authorization': `Bearer ${token}`,
+            'Authorization': `Bearer ${this.state.token}`,
             'Accept': 'application/json',
           }
         }).then(data => {
