@@ -59,7 +59,6 @@ export default class Words extends React.Component {
                 this.state.arrayOfLearnedWords.push(data[i])
             }
         }
-        console.log(this.state)
     }
 
     showRepeatStars(count) {
@@ -99,7 +98,6 @@ export default class Words extends React.Component {
             }
         })
         array = array.filter(item => item.optional.word.id !== event.target.id);
-        console.log(event.target.textContent)
         if (event.target.textContent === 'RESTORE') {
             this.setState({arrayOfDeletedWords: array})
         } else if (event.target.textContent === 'REMOVE') {
@@ -110,7 +108,6 @@ export default class Words extends React.Component {
     }
 
     showContent(event) {
-        console.log(event.target.textContent)
         this.setState({deletedWords: false})
         this.setState({hardWords: false})
         this.setState({learnedWords: false})

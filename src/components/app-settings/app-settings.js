@@ -1,18 +1,13 @@
 import React, {Component} from 'react';
 import styled from 'styled-components'
 import s from './app-settings.module.css'
-import Header from '../app-header/app-header'
-import Sidebar from '../app-sidebar/app-sidebar'
 import ProgressBar from './progress-bar/index'
-import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom';
 import Page from '../app-page-structure/app-page-structure';
 
 const ProggresBarContainer = styled.div`
     width: 100%;
 `
-// const token = window.localStorage.getItem('token');
-// const userId = window.localStorage.getItem('userId');
 
 export default class Settings extends React.Component {
     constructor(props) {
@@ -75,7 +70,7 @@ export default class Settings extends React.Component {
            isActiveBadBtn: false,
            isActiveGoodBtn: false,
            isActiveEasyBtn: false,
-           isCompl: false
+           isCompl: false,
         };
         this.setResults = this.setResults.bind(this)
         this.myRef = React.createRef();
@@ -130,7 +125,6 @@ export default class Settings extends React.Component {
         this.setState({complexity: false})
         this.setState({isRightAnswer: false})
         this.getUserWord(this.state.userId)
-        console.log(this.state)
     }
 
     toggleSpeaking() {
@@ -141,7 +135,6 @@ export default class Settings extends React.Component {
     async toggleAnswer(data,line) {
         const {stopAudio, meaningAudio, audioExample, answerButton, countOfCards, percentage, count, repeat, endGame, customLevelWords, miss} = this.state;
         this.setState({isAllow: false});
-        console.log('Вы сдались')
         this.setState({miss: miss + 1})
         
         this.myRef.current.textContent = data[line].word;
@@ -149,8 +142,7 @@ export default class Settings extends React.Component {
         // Увеличен счёт карточек
         this.setState({ count: count + 1 });
 
-        // Фокус в поле ввода
-        this.myRef.current.focus();
+        
 
         // Показывает слово 
         this.setState({answerButton: true});
@@ -158,46 +150,51 @@ export default class Settings extends React.Component {
         // Произносит слово и предложения
         if(stopAudio) {
             await this.sayWord(data[line].word)
-            if (meaningAudio) {
+            if (meaningAudio && this.myRef.current) {
             await this.sayWord(data[line].textMeaning)
             }
-            if (audioExample) {
+            if (audioExample && this.myRef.current) {
                 await this.sayWord(data[line].textExample)
             }
         }
 
-        // Скрывает слово 
-        this.setState({answerButton: false});
-        // Очищает поле ввода
-        this.myRef.current.textContent = '';
+        if(this.myRef.current) {
+            // Фокус в поле ввода
+            this.myRef.current.focus();
 
-        //  Когда кончаются слова для повторения подкидывает новые
-        if (repeat && count === data.length - 1) {
-            this.setState({usedWord: false})
-            this.setState({repeat: false})
-        } else if (count === countOfCards - 1) {
-            this.setState({endGame: false})
-        } 
+            // Скрывает слово 
+            this.setState({answerButton: false});
+            // Очищает поле ввода
+            this.myRef.current.textContent = '';
 
-        // Чекаем есть ли слова для повторения
-        if (!customLevelWords.length && line === 0) {
-            this.setState({repeat: false});
-        };
+            //  Когда кончаются слова для повторения подкидывает новые
+            if (repeat && count === data.length - 1) {
+                this.setState({usedWord: false})
+                this.setState({repeat: false})
+            } else if (count === countOfCards - 1) {
+                this.setState({endGame: false})
+            } 
 
-        // Переход к следующему слову
-        if (repeat) {
-            this.setState({customLine: line + 1})
-        } else {
-            if (line === data.length - 1) {
-                this.setState({ line: 0 });
-                this.setState({ page: this.state.page + 1 });
-                this.getResults();
+            // Чекаем есть ли слова для повторения
+            if (!customLevelWords.length && line === 0) {
+                this.setState({repeat: false});
+            };
+
+            // Переход к следующему слову
+            if (repeat) {
+                this.setState({customLine: line + 1})
             } else {
-                this.setState({line: line + 1})
+                if (line === data.length - 1) {
+                    this.setState({ line: 0 });
+                    this.setState({ page: this.state.page + 1 });
+                    this.getResults();
+                } else {
+                    this.setState({line: line + 1})
+                }
             }
+            this.setState({isAllow: true});
         }
-        this.setState({isAllow: true});
-        console.log(this.state)
+        
     };
 
     toggletranslationButton() {
@@ -211,7 +208,6 @@ export default class Settings extends React.Component {
 
     handleChangeInput = (event) => {
         this.setState({[event.target.id]: event.target.value})
-        console.log(this.state)
     };
 
     handleChangeDiv = (event) => {
@@ -250,7 +246,6 @@ export default class Settings extends React.Component {
             this.getResults();
         } else {
             this.setState({data: data})
-            console.log(this.state)
             if ((this.state.translation || this.state.meaning || this.state.textExample) && (this.state.countOfWords > 0 && this.state.countOfCards > 0)) {
                 this.setState({ settingPage: false });
     
@@ -397,6 +392,7 @@ export default class Settings extends React.Component {
                 <p className={s.card_word}>Слов отгадано - {match}</p>
                 <p className={s.card_word_error}>Сделано ошибок - {mistake}</p>
                 <p className={s.card_word_miss}>Слов пропущено - {miss}</p>
+                <p className={s.card_word}>Процент правильных ответов - {((match - mistake)/match * 100).toFixed()}%</p>
                 <p className={s.card_word}>Есть ещё новые карточки, но дневной лимит исчерпан. Вы можете увеличить лимит в настройках, но, пожалуйста, имейте в виду, что чем больше новых карточек вы просмотрите, тем больше вам надо будет повтороять в ближайшее время.</p>
                 <p className={s.card_word}>Для обучения сверх обычного расписания, нажмите кнопку 'Учить ещё' ниже</p>
                 <div className={s.game_btn_inner}> 
@@ -471,47 +467,52 @@ export default class Settings extends React.Component {
             // Произносит слово и предложения
             if(stopAudio) {
                 await this.sayWord(data[line].word)
-                if (meaningAudio) {
+                if (meaningAudio && this.myRef.current) {
                 await this.sayWord(data[line].textMeaning)
                 }
-                if (audioExample) {
+                if (audioExample && this.myRef.current) {
                     await this.sayWord(data[line].textExample)
                 }
             }
 
-             // Фокус в поле ввода
-             this.myRef.current.focus();
-             this.setState({isCompl: true})
+            if (this.myRef.current) {
+                // Фокус в поле ввода
+                this.myRef.current.focus();
+                this.setState({isCompl: true})
 
-            if (!complexity) {
-                // Скрывает слово 
-                this.setState({answerButton: false});
-                // Очищает поле ввода
-                this.myRef.current.textContent = '';
+                if (!complexity) {
+                    // Скрывает слово 
+                    this.setState({answerButton: false});
+                    // Очищает поле ввода
+                    this.myRef.current.textContent = '';
 
-                //  Когда кончаются слова для повторения подкидывает новые
-                if (repeat && count === data.length - 1) {
-                    this.setState({repeat: false})
-                    this.setState({usedWord: false})
-                }  
-                if (count === countOfCards - 1) {
-                    this.setState({endGame: false})
-                } 
+                    //  Когда кончаются слова для повторения подкидывает новые
+                    if (repeat && count === data.length - 1) {
+                        this.setState({repeat: false})
+                        this.setState({usedWord: false})
+                    }  
+                    if (count === countOfCards - 1) {
+                        this.setState({endGame: false})
+                    } 
 
-                // Переход к следующему слову
-                if (repeat) {
-                    this.setState({customLine: line + 1})
-                } else {
-                    if (line === data.length - 1) {
-                        this.setState({ line: 0 });
-                        this.setState({ page: this.state.page + 1 });
-                        this.getResults();
+                    // Переход к следующему слову
+                    if (repeat) {
+                        this.setState({customLine: line + 1})
                     } else {
-                        this.setState({line: line + 1})
+                        if (line === data.length - 1) {
+                            this.setState({ line: 0 });
+                            this.setState({ page: this.state.page + 1 });
+                            this.getResults();
+                        } else {
+                            this.setState({line: line + 1})
+                        }
                     }
+                    this.setState({isRightAnswer: false});
                 }
-                this.setState({isRightAnswer: false});
+            } else {
+                speechSynthesis.cancel()
             }
+            
         } else {
             this.setState({isAllow: false});
             data.push(data[line]);
@@ -534,12 +535,17 @@ export default class Settings extends React.Component {
             }
 
             setTimeout(()=> {
+                if (this.myRef.current) {
                     this.setState({isAnswerWrong: false});
                     this.setState({isRightAnswer: false});
                     this.setState({isAllow: true});
-                     // Фокус в поле ввода
+                        // Фокус в поле ввода
                     this.myRef.current.focus();
+                } else {
+                    speechSynthesis.cancel()
+                }
             }, 2000)
+            
         }
     };
 
@@ -952,8 +958,6 @@ export default class Settings extends React.Component {
             body: JSON.stringify(word)
         });
         const content = await rawResponse.json();
-        
-        console.log(content);
     };
 
     updateUserWord = async ({ userId, wordId, word }) => {
@@ -969,7 +973,6 @@ export default class Settings extends React.Component {
         });
         const content = await rawResponse.json();
         
-        console.log(content);
     };
     
 
@@ -1049,7 +1052,6 @@ export default class Settings extends React.Component {
                 this.state.customLevelWords.push(data[i].optional.word);
             }
         }
-        console.log(this.state)
     }
 
     filterArray(arr1, arr2) {
@@ -1067,6 +1069,9 @@ export default class Settings extends React.Component {
         return new Date(theDate.getTime() + days*24*60*60*1000);
     }
 
+    componentWillUnmount() {
+        speechSynthesis.cancel()
+    }
     
 
     render() {
