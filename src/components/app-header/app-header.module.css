@@ -1,24 +1,88 @@
 .header_inner {
+    position: fixed;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    padding: 30px 0;
-    background-color: #303846;
+    padding: 5px 5% 5px 100px;    
+    background-color: #50678e;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 10;
 }
 
 .header_logo,
 .header_user {
-    font-size: 30px;
-    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+    color: #a9e7ff;
+}
+
+.header_logo {    
+    font-family: 'Carter One', cursive;
+    font-size: 40px;
 }
 
 .header_button {
-    font-size: 20px;
+    font-size: 18px;
     cursor: pointer;
-    color: #09d3ac;
-    border: solid 1px #09d3ac;
-    background-color: #303846;
-    padding: 10px 30px;
+    color: #d4b083;
+    border: solid 1px #a18960;
+    background-color: #6e84ab63;
+    padding: 5px 15px;
     border-radius: 10px;
     outline: none;
+    font-family: 'Pangolin', cursive;
+    margin-left: 50px;
+    transition: all .2s linear;
+}
+
+.header_button:hover { 
+    color: #ffd0d0;
+    background-color: #bb3737;
+}
+
+.header_content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .header_inner {
+        padding: 5px 5% 5px 65px;
+    }
+
+    .header_logo {
+        font-size: 28px;
+    }
+
+    .header_user {
+        font-size: 16px;
+    }
+
+    .header_button {
+        margin-left: 10px;
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 378px) {
+    .header_inner {
+        padding: 5px 5% 5px 45px;
+    }
+
+    .header_user {
+        display: none;
+    }
+    
+    .header_button {
+        margin-left: 10px;
+        padding: 3px 7px;
+        font-size: 10px;
+    }
+
+    .header_logo {
+        font-size: 20px;
+    }
 }

@@ -9,9 +9,9 @@ import bird4 from '../../../../files/img/bird4.png';
 const GamePlay = (props) => {
 const score = props.goodWordsScore % 4;
 const text = props.goodWordsScore < 4 ? '' 
-            : (props.goodWordsScore < 8 ? '+ 20 очков за слово'
-            : (props.goodWordsScore < 12 ? '+ 40 очков за слово' 
-            : '+ 80 очков за слово'));
+            : (props.goodWordsScore < 8 ? '+ 20 points per word'
+            : (props.goodWordsScore < 12 ? '+ 40 points per word' 
+            : '+ 80 points per word'));
     return props.goodWordsScore < 12 ? (    
         <div>
             <div className={s.point}>

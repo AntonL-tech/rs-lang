@@ -7,12 +7,28 @@ import audioGot from '../../files/audio/good.mp3';
 import audioError from '../../files/audio/error.mp3';
 import audioStart from '../../files/audio/start.mp3';
 import audioFinish from '../../files/audio/finish.mp3';
+import audioNewLevel from '../../files/audio/newLevel.mp3';
+import audioTikTak from '../../files/audio/tikTak.mp3';
+import {BrowserRouter as Router, Redirect} from 'react-router-dom';
 
+const intervals = [];
 
 class GamePage extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            time: 0,
+            wordCard: {},
+            wordCardStatus: false,
+        };
+    }
+    
+
+    stopGame() {
+        this.setState({
+            time: 0,
+        });
+        intervals.forEach(clearInterval);
     }
 
     playAudio(sound) {
@@ -20,60 +36,77 @@ class GamePage extends Component {
             audio.preload = 'auto';
             audio.src = sound;
             audio.play();
+            setTimeout(() => audio.pause(), 4000);
     };
-
+    
     wordList() {
+        if (this.props.location.aboutProps){
         this.setState({
             uploaded: false
         });
-        createArrayWords(this.props.location.aboutProps).then((el) => {
+
+        createArrayWords(this.props.location.aboutProps.level, this.props.location.aboutProps.UserWordList).then((el) => {
             this.intervalID = setInterval(
                 () => this.tick(),
                 1000
+                
             );
+            intervals.push(this.intervalID);
             this.setState({
                 uploaded: true,
                 wordList: el,
                 wordId: 0,
-                kv: 64,
+                time: 64,
                 step: 0,
                 goodWord: [],
                 badWord: [],
                 score: 0,
                 goodWordsScore: 0,
                 classMark: false,
-                audio: true,
+                audio: this.props.location.aboutProps.audioStatus,
             });
-        });
+            if (this.state.time === 64) {
+                if(this.state.audio){
+                    this.playAudio(audioTikTak);
+                }
+            }
+        });      
+    }    
     };
 
     componentDidMount() {
+        intervals.forEach(clearInterval);
         this.wordList();
     };
 
     componentWillUnmount() {
-        clearInterval(this.intervalID);
+        intervals.forEach(clearInterval);
     };
 
-    toOffsetKv(offset) {
+    toOffsetTime(offset) {
         return offset-1;
     };
 
     tick() {
-        if (this.state.kv === 61) {
+        if (this.state.time === 61) {
             if(this.state.audio){
                 this.playAudio(audioStart);
             }
         }
-        if (this.state.kv === 0 || this.state.goodWordsScore === 80) {
+        if (this.state.time === 4) {
+            if(this.state.audio){
+                this.playAudio(audioTikTak);
+            }
+        }
+        if (this.state.time === 0 || this.state.goodWordsScore === 80) {
             if(this.state.audio){
                 this.playAudio(audioFinish);
             }
-            clearInterval(this.intervalID);
+            intervals.forEach(clearInterval);
         }
 
         this.setState({
-            kv: this.toOffsetKv(this.state.kv),
+            time: this.toOffsetTime(this.state.time),
         });
     };
 
@@ -104,6 +137,13 @@ class GamePage extends Component {
         this.playAudio(`https://raw.githubusercontent.com/irinainina/rslang-data/master/${audio}`)
     };
 
+    changeWordCardStatus(word) {
+        this.setState({
+            wordCard: word ? word : {},
+            wordCardStatus: this.state.wordCardStatus ? false : true,
+        });
+    }
+
     calcNum () {
         let n = this.state.goodWordsScore < 4 ? 10 
         : (this.state.goodWordsScore < 8 ? 20 
@@ -121,6 +161,11 @@ class GamePage extends Component {
             goodWordsScore: this.state.goodWordsScore + 1,
             score: this.state.score + this.calcNum(),
         });
+        if(this.state.goodWordsScore === 3 || this.state.goodWordsScore === 7 || this.state.goodWordsScore === 11){
+            if(this.state.audio){
+                this.playAudio(audioNewLevel);
+            }
+        }
     };
 
     false () {
@@ -134,9 +179,14 @@ class GamePage extends Component {
     };
 
     render() {
+        if (!this.props.location.aboutProps){
+            return <Router>
+                        <Redirect  to='/sprint/start' />
+                    </Router>
+        }
         if (this.state.uploaded) {
-            if (this.state.kv >= 0 && this.state.step < 80) {
-                return <GamePlay score = {this.state.score} time = {this.state.kv}
+            if (this.state.time >= 0 && this.state.step < 80) {
+                return <GamePlay score = {this.state.score} time = {this.state.time}
                         wordEnglish = {this.state.wordList[this.state.wordId].word}
                         gameWordTranslate = {this.state.wordList[this.state.wordId].gameWordTranslate}
                         status = {String(this.state.wordList[this.state.wordId].wordStatus)}
@@ -145,13 +195,18 @@ class GamePage extends Component {
                         playAudioWord={() => this.playAudioWord()}
                         audioStatus={this.state.audio}
                         goodWordsScore = {this.state.goodWordsScore}
-                        classMark={this.state.classMark}/>
+                        classMark={this.state.classMark}
+                        stopGame={this.stopGame.bind(this)}/>
             }
             return <GameFinish wordList={() => this.wordList()}
                                goodWord={this.state.goodWord}
                                badWord={this.state.badWord}
                                score={this.state.score}
-                               playAudioWord={(e) => this.playAudioWord(e)}/>
+                               playAudioWord={(e) => this.playAudioWord(e)}
+                               changeWordCardStatus={this.changeWordCardStatus.bind(this)}
+                               wordCardStatus={this.state.wordCardStatus}
+                               wordCard={this.state.wordCard}/>
+                               
         }
         return <Preloader />
     }

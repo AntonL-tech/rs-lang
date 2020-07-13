@@ -7,53 +7,101 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  box-sizing: border-box;
 }
 
-.wordItem {
-  margin: 0 20px;
-  padding: 5px 10px;
+.wordItem {  
+  margin: 0 10px 10px;
+  padding: 5px;
   width: 200px;
+  /* height: 100%; */
+  font-size: 14px;
   font-weight: 700;
-  color: #22acd6;
+  color: #eff1f3;
   text-align: center;
-  border: 1px solid #60beca;
+  text-transform: uppercase;
+  border: 1px solid transparent;
   border-radius: 3px;
   cursor: pointer;
+  transition: all linear 0.1s;  
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box
 }
 
-.wordItemInactive {  
-  margin: 0 20px;
-  padding: 5px 10px;
+.wordItemInactive {   
+  margin: 0 10px 10px;
+  padding: 5px;
   width: 200px;
+  /* height: 100%; */
+  font-size: 14px;
   font-weight: 700;
-  color: #22acd6;
+  color: #eff1f3;
   text-align: center;
-  border: 1px solid #60beca;
+  text-transform: uppercase;
+  border: 1px solid transparent;
   border-radius: 3px;
-  cursor: default;
-  opacity: 0.8;
+  cursor: pointer;
+  transition: all linear 0.1s;  
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .wordItem:hover {
-  color: #f0f8ff;
+  /* color: #f0f8ff;
   background-color: #60beca;
-  border-color: #f0f8ff;
+  border-color: #f0f8ff; */
+  text-shadow: #1414ff 0 0 10px;
+  transform: scale(1.05);
 }
 
 .correctSelected {
   color: #fff;
   background-color: #51d38a;
   border-color: #3dd47f;
+  opacity: 1;  
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .correct {
   color: #ec9636;
   background-color: #ebe7be;
   border-color: #eeb63ce7;
+  opacity: 1;  
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .incorrect {  
   color: #fff;
   background-color: #fd6464;
   border-color: #f73939;
+  opacity: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;  
+}
+
+.wordNumber {
+  margin-right: 5px;
+}
+
+@media (max-width: 768px) {
+  .wordList {
+    margin-top: 0;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 375px) {
+  .wordList {
+    margin-bottom: 25px;
+  }
 }
