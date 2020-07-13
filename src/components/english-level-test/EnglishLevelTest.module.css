@@ -9,7 +9,7 @@
     max-width: 600px;
     max-height: calc(98% - 120px);
     border-radius: 5px;
-    overflow: scroll;
+    overflow-y: scroll;
     color: #000000;
     text-align: left;
 }
