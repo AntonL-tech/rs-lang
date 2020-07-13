@@ -46,7 +46,6 @@
     transition: 0.3s;
 }
 
-
 .choose_level {
     width: 55px;
     height: 45px;
@@ -82,7 +81,6 @@
     transition: 0.3s;
 }
 
-
 .game_button {
     height: 40px;
     cursor: pointer;
@@ -116,7 +114,6 @@
     width: 50px;
     background-image: url(../assets/photo.svg);
 }
-
 
 .game_wrapper {
     display: flex;
@@ -277,7 +274,6 @@
         visibility: hidden;
     }
 }
-
 
 .info_screen {
     position: absolute;

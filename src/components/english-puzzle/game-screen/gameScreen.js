@@ -495,8 +495,11 @@ export default class GameScreen extends Component {
 
         let song = settingButton + ' ' + s.song_btn;
 
+        let speaker_btn = s.game_speaker;
+
         if (!promptAlwaysPronunciation) {
             song = settingButton + ' ' + s.song_btn + ' ' + s.non_active_btn;
+            speaker_btn = s.game_speaker + ' ' + s.vis_hidden;
         }
 
         const chooseButton = settingButton+ ' ' + s.chose_btn;
@@ -565,9 +568,9 @@ export default class GameScreen extends Component {
                             <ButtonSettings label = {'GO'} classNameBtn={chooseButton} clickBtn={this.changeGameParam}/>
                         </div>
                         <div className={s.menu_settings}>
-                            <ButtonSettings classNameBtn={megafon} clickBtn={this.pronounceAfter}/>
-                            <ButtonSettings classNameBtn={translate} clickBtn={this.disableTranslation}/>
-                            <ButtonSettings classNameBtn={song} clickBtn={this.switchPromptAlwaysPronunciation}/>
+                            <ButtonSettings classNameBtn={megafon} clickBtn={this.pronounceAfter} help={'pronounce the sentence after assembly'}/>
+                            <ButtonSettings classNameBtn={translate} clickBtn={this.disableTranslation} help={'show offer translation'}/>
+                            <ButtonSettings classNameBtn={song} clickBtn={this.switchPromptAlwaysPronunciation} help={'display pronunciation button'}/>
                         </div>
                     </div>
 
@@ -577,7 +580,7 @@ export default class GameScreen extends Component {
                         <div className={s.game_group}>
                             <div className={s.game_settings}>
                                 <h3 className={translateSentence}>{sentencesTranslateArray[currentSentencesIndex]}</h3>
-                                <ButtonSettings classNameBtn={s.game_speaker} clickBtn={()=>this.promptPronunciation(audioArray[currentSentencesIndex])}/>
+                                <ButtonSettings classNameBtn={speaker_btn} clickBtn={()=>this.promptPronunciation(audioArray[currentSentencesIndex])} help={'pronunciation button'}/>
                             </div>
                         </div>
 

@@ -81,7 +81,7 @@ export default class StatisticScreen extends Component {
                         </h3>
                         {location.state.statistic.trueSentences.map((field,i) => (
                             <div className={s.sentences} key={i.toString() + 'd4'} >
-                                <button className={s.speaker_btn} onClick={()=>this.saySentences(field.audio)}></button>
+                                <button className={s.speaker_btn} onClick={()=>this.saySentences(field.audio)} title={'pronunciation button'}></button>
                                 {field.sentences}
                             </div>
                         ))}
