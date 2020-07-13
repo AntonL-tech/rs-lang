@@ -3,6 +3,7 @@ import s from './app-stats.module.css';
 import Header from '../app-header/app-header';
 import Sidebar from '../app-sidebar/app-sidebar';
 import BarChart from './BarChart';
+import { getUserStatistic, updateUserStatistic } from './statisticApi';
 
 function Stats() {
   const barData = {
@@ -31,6 +32,19 @@ function Stats() {
       },
     ],
   };
+
+  const userId = localStorage.getItem('userId');
+  const token = localStorage.getItem('token');
+
+  const stats = {
+    gameName: 'game name',
+    correct: 10,
+    series: 2,
+  };
+
+  updateUserStatistic(userId, token, stats).then(() => {
+    getUserStatistic(userId, token).then((res) => console.log(res));
+  });
 
   return (
     <div>
