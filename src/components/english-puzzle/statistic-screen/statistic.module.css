@@ -51,15 +51,20 @@
 }
 
 .continue_btn {
+    color: #fff;
     height: 40px;
     cursor: pointer;
     border-radius: 10px;
     margin-left: 10px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    color: #fff;
-    background-color: #37393d;  
+    transition: 0.3s;
+    background-color: #37393d;
+    padding: 0 5px;
 }
+
+.continue_btn:hover {
+    transform: scale(1.2);
+}
+
 
 .speaker_btn {
     height: 25px;
