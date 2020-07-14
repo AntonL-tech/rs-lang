@@ -1,7 +1,8 @@
 import React from 'react';
 import s from './app-stats.module.css';
-import Header from '../app-header/app-header';
-import Sidebar from '../app-sidebar/app-sidebar';
+// import Header from '../app-header/app-header'
+// import Sidebar from '../app-sidebar/app-sidebar'
+import Page from '../app-page-structure/app-page-structure';
 import BarChart from './BarChart';
 import { getUserStatistic, updateUserStatistic } from './statisticApi';
 
@@ -47,10 +48,10 @@ function Stats() {
   });
 
   return (
-    <div>
-      <Header />
+    <Page>
+      {/* <Header/> */}
       <div className={'flex'}>
-        <Sidebar />
+        {/* <Sidebar/> */}
         <p>Statistic</p>
         <BarChart
           data={barData.data}
@@ -58,7 +59,7 @@ function Stats() {
           color={barData.color}
         />
       </div>
-    </div>
+    </Page>
   );
 }
 export default Stats;

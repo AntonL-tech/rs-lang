@@ -67,8 +67,8 @@ class StartPage extends Component {
                 </div>
                 <div className={s.message}>
                     {this.state.status === 200 && this.state.UserWordList.length < 80 
-                    ? `Вы выучили только ${this.state.UserWordList.length}/80 слов пользовотельский режим не доступен` : ''}
-                    {this.state.status !== 200 ? 'Вы не авторезированы, пользовательский режим и статистика не доступны' : ''}
+                    ? `You have learned only ${this.state.UserWordList.length}/80 words. User mode is not available.` : ''}
+                    {this.state.status !== 200 ? 'You are not autoresized, user mode and statistics are not available' : ''}
                 </div>
                 <select className={s.level} onChange={this.change.bind(this)}>
                     {this.state.UserWordList.length > 79 ? <option value={user}>User Level</option> : ''}

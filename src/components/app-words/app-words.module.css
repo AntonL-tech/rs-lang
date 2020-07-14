@@ -1,23 +1,26 @@
-.words_inner {
+.words_inner {   
+    padding: 80px;
+    width: 100%;
+    min-height: 100vh;
+    background: #303846;
     display: flex;
     justify-content: space-around;
-    width: 100%;
-    background: #303846;
-    padding: 50px 0;
+    box-sizing: border-box;
 }
 
 .words_item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 33%;
+    width: 25%;
     margin: 0 30px;
     background: #09d3ac;
     height: auto;
     border-radius: 10px;
     font-family: 'Pangolin', cursive;
     font-size: 25px;
-    padding: 50px 0;
+    padding: 50px 25px;
+    width: 100%;
 }
 
 .word_button {
@@ -38,4 +41,13 @@
 
 .word {
     margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.star i {
+    color: orange;
+    width: 10px;
+    margin-left: 15px;
 }

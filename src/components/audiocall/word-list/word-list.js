@@ -3,7 +3,7 @@ import s from './word-list.module.css';
 
 const WordList = ({ words, callback, isQuestion, answer, answerId }) => {
   
-  const wordList = words.map((item) => {
+  const wordList = words.map((item, index) => {
     let classNames = s.wordItem;
 
     if (!isQuestion) {
@@ -21,7 +21,10 @@ const WordList = ({ words, callback, isQuestion, answer, answerId }) => {
       }
     }
 
-    return <li className={classNames} onClick={callback} data-correct={item.correct} key={item.id} id={item.id}>{item.wordTranslate}</li>
+    return <li className={classNames} onClick={callback} data-correct={item.correct} key={item.id} id={item.id}>
+      <span className={s.wordNumber}>{`${index + 1}. `}</span>
+      {item.wordTranslate}
+    </li>
   })
 
   return <ul className={s.wordList}>{wordList}</ul>
