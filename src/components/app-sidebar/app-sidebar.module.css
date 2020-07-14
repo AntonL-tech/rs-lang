@@ -28,9 +28,14 @@
 .sidebar_item {
     margin: auto ;
     cursor: pointer;
+    width: 200px;
+    transition: all 0.5s linear;  
 }
 
 .sidebar_item  i {  
+    margin: 0;
+    padding: 0;
+    line-height: 1;
     font-size: 6vh;
     color: #09d3ca;
 }
@@ -88,7 +93,13 @@
 }
 
 .sidebar_list_close li {
-    width: initial;
+    width: 10vh;
+}
+
+.sidebar_list_close a {
+    width: 10vh;
+    text-align: center;
+    display: inline-block;
 }
 
 .sidebar_item {
@@ -105,33 +116,13 @@
     }
 }
 
-@keyframes closeMenu {
-    0% {
-        width: 260px;
-    }
-
-    100% {
-        width: 10vh;
-    }
-}
-
 @keyframes showMenuTags {
     0% {
-        width: 0;
+        width: 10vh;
     }
 
     100% {
         width: 200px;
-    }
-}
-
-@keyframes hideMenuTags {
-    0% {
-        width: 200px;
-    }
-
-    100% {
-        width: 0;
     }
 }
 
