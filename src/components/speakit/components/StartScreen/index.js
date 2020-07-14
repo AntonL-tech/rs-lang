@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import s from './StartScreen.module.css';
 import sUI from '../../ui-speakit.module.css';
+import EnglishLevelTest from '../../../english-level-test/EnglishLevelTest';
 
 class StartScreen extends Component {
   constructor(props) {
@@ -10,6 +11,7 @@ class StartScreen extends Component {
   render() {
     return (
       <div className={s.startScreen}>
+        <EnglishLevelTest />
         <p>SPEAKIT</p>
         <p>Click on the words to hear them sound.</p>
         <p>Click on the button and speak the words into the microphone</p>
