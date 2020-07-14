@@ -146,6 +146,7 @@ input[type='checkbox']:checked + label::after {
     background: #e3f3fc;
     outline: none;
     transition: all .2s linear;
+    margin-right: 5px;
 }
 
 .game_btn_active {
@@ -159,6 +160,8 @@ input[type='checkbox']:checked + label::after {
     background: #6c9ed5;
     outline: none;
     transition: all .2s linear;
+    margin-right: 5px;
+
 }
 
 .game_btn a {
@@ -188,6 +191,7 @@ input[type='checkbox']:checked + label::after {
     border: 1px solid #6c9ed5;
     background: #e3f3fc;
     outline: none;
+
 }
 
 .game_btn_audio:hover {
@@ -209,6 +213,7 @@ input[type='checkbox']:checked + label::after {
     height: 100%;
     font-family: 'Pangolin', cursive;
     font-size: 22px;
+
 }
 
 .game_btn_audio_active:hover {
@@ -236,6 +241,8 @@ input[type='checkbox']:checked + label::after {
     border: 1px solid #6c9ed5;
     background: #e3f3fc;
     outline: none;
+    margin-right: 5px;
+
 }
 
 .game_btn_translaition:hover {
@@ -253,6 +260,8 @@ input[type='checkbox']:checked + label::after {
     color: #fff;
     border: 1px solid #6c9ed5;
     background: #6c9ed5;
+    margin-right: 5px;
+
 }
 
 .game_btn_translaition_active:hover {
@@ -470,5 +479,43 @@ input[type='number'] {
     .card_word_error, .card_word_miss {
         font-size: 15px;
         margin-bottom: 5px;
+    }
+}
+
+@media (max-width:790px) {
+    label.game_checkbox_label {
+        text-align: center;
+    }
+
+    .select::after {
+        display: none;
+    }
+
+    audio {
+        max-width: 200px;
+    }
+
+    .btn_inner, .game_btn_inner {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .game_btn,.game_btn_active, .game_btn_translaition, .game_btn_translaition_active, .game_btn_audio, .game_btn_audio_active {
+        margin-bottom: 5px;
+    }
+
+    .result_btns {
+        margin-top: 5px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .complexity_btns {
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 0;
+    }
+    .card_answer {
+        max-width: 140px;
     }
 }

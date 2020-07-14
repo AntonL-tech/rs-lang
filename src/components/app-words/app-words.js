@@ -49,6 +49,8 @@ export default class Words extends React.Component {
     };
 
     setUserWord(data) {
+        console.log(data)
+        console.log(this.state)
         this.setState({response: data})
         for (let i = 0; i < data.length; i++) {
             if (data[i].optional.deleted) {
@@ -63,7 +65,7 @@ export default class Words extends React.Component {
 
     showRepeatStars(count) {
         let array = [];
-        const star = (<i class="fas fa-star"></i>)
+        const star = (<i className="fas fa-star"></i>)
         for (let i=0 ; i < count; i++) {
             array.push(star)
         }

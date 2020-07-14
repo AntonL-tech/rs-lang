@@ -133,9 +133,10 @@ export default class Settings extends React.Component {
     };
 
     async toggleAnswer(data,line) {
-        const {stopAudio, meaningAudio, audioExample, answerButton, countOfCards, percentage, count, repeat, endGame, customLevelWords, miss} = this.state;
+        const {stopAudio, meaningAudio, audioExample, answerButton, countOfCards, percentage, count, repeat, endGame, customLevelWords, miss, match} = this.state;
         this.setState({isAllow: false});
         this.setState({miss: miss + 1})
+        this.setState({match: match + 1})
         
         this.myRef.current.textContent = data[line].word;
 
@@ -171,9 +172,10 @@ export default class Settings extends React.Component {
             if (repeat && count === data.length - 1) {
                 this.setState({usedWord: false})
                 this.setState({repeat: false})
-            } else if (count === countOfCards - 1) {
+            }
+            if (count === countOfCards - 1) {
                 this.setState({endGame: false})
-            } 
+            }
 
             // Чекаем есть ли слова для повторения
             if (!customLevelWords.length && line === 0) {
@@ -389,10 +391,10 @@ export default class Settings extends React.Component {
             </div>
         </div>) : (<div className={s.card}>
                 <h2 className={s.card_word}>Ура! На сегодня всё.</h2>
-                <p className={s.card_word}>Слов отгадано - {match}</p>
+                <p className={s.card_word}>Карточек завершено - {match}</p>
                 <p className={s.card_word_error}>Сделано ошибок - {mistake}</p>
-                <p className={s.card_word_miss}>Слов пропущено - {miss}</p>
-                <p className={s.card_word}>Процент правильных ответов - {((match - mistake)/match * 100).toFixed()}%</p>
+                <p className={s.card_word_miss}>Карточек пропущено - {miss}</p>
+                <p className={s.card_word}>Процент правильных ответов - {match > 0 ? ((match - mistake - miss)/match * 100).toFixed() : 0}%</p>
                 <p className={s.card_word}>Есть ещё новые карточки, но дневной лимит исчерпан. Вы можете увеличить лимит в настройках, но, пожалуйста, имейте в виду, что чем больше новых карточек вы просмотрите, тем больше вам надо будет повтороять в ближайшее время.</p>
                 <p className={s.card_word}>Для обучения сверх обычного расписания, нажмите кнопку 'Учить ещё' ниже</p>
                 <div className={s.game_btn_inner}> 
@@ -535,15 +537,15 @@ export default class Settings extends React.Component {
             }
 
             setTimeout(()=> {
-                if (this.myRef.current) {
                     this.setState({isAnswerWrong: false});
                     this.setState({isRightAnswer: false});
                     this.setState({isAllow: true});
                         // Фокус в поле ввода
-                    this.myRef.current.focus();
-                } else {
-                    speechSynthesis.cancel()
-                }
+                    if (this.myRef.current) {
+                        this.myRef.current.focus();
+                    } else {
+                        speechSynthesis.cancel()
+                    }
             }, 2000)
             
         }
