@@ -49,8 +49,6 @@ export default class Words extends React.Component {
     };
 
     setUserWord(data) {
-        console.log(data)
-        console.log(this.state)
         this.setState({response: data})
         for (let i = 0; i < data.length; i++) {
             if (data[i].optional.deleted) {
@@ -73,7 +71,6 @@ export default class Words extends React.Component {
     }
 
     showWords (array, textOfButton) {
-        console.log(this.state)
         if (array === this.state.arrayOfDeletedWords) {
             textOfButton = 'RESTORE'
         } else if (array === this.state.arrayOfHardWords) {
@@ -83,15 +80,27 @@ export default class Words extends React.Component {
         }
         return (array.map(element => (<div className={s.word}>
             {localStorage.image === 'true' ? <span> <img className={s.word_image} src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${element.optional.word.image}`} alt='meaning' /></span>: null}
-            <span> {element.optional.word.word}{this.showRepeatStars(element.optional.repeat)}</span> 
+            <span className={s.word_wraper}> {element.optional.word.word}<i onClick={() => this.playSound(element.optional.word.audio)} className="fas fa-volume-up sound"></i></span> 
             {localStorage.transcription === 'true' ? <span>{element.optional.word.transcription}</span> : null}    
-            {localStorage.translation === 'true' ? <span>{element.optional.word.wordTranslate}</span> : null}
+            <span>{element.optional.word.wordTranslate}{this.showRepeatStars(element.optional.repeat)}</span>
+            {localStorage.textExample === 'true' ? <span>{this.hideWord(element.optional.word.textExample)}</span> : null}    
+            {localStorage.meaning === 'true' ? <span>{this.hideWord(element.optional.word.textMeaning)}</span> : null}    
             <span>Repeated / Studied: {element.optional.currentDate}</span>
             <span>Next repeat: {element.optional.repeatDate}</span>
             <span>Total reps: {element.optional.repeat}</span>
             <button id={element.optional.word.id}  onClick={(event) => this.deleteWord(event, event.target.id, array)} className={s.word_button}>{textOfButton}</button>
             </div>)));
     };
+
+    hideWord(str) {
+        let hidenString = str.replace(new RegExp('<i>', 'g'), '').replace(new RegExp('</i>', 'g'), '').replace(new RegExp('<b>', 'g'), '').replace(new RegExp('</b>', 'g'), '');
+        return hidenString
+    };
+
+    playSound(path) {
+        let audio = new Audio(`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${path}`);
+        audio.play();
+    }
 
     deleteWord(event,wordId, array) {
         fetch(`https://afternoon-falls-25894.herokuapp.com/users/${this.state.userId}/words/${wordId}`, {

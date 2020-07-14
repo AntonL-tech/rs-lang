@@ -191,7 +191,7 @@ input[type='checkbox']:checked + label::after {
     border: 1px solid #6c9ed5;
     background: #e3f3fc;
     outline: none;
-
+    padding: 15px 25px 15px 16px;
 }
 
 .game_btn_audio:hover {
@@ -208,11 +208,11 @@ input[type='checkbox']:checked + label::after {
     color: #fff;
     background: #6c9ed5;
     border: 1px solid #6c9ed5;
-    padding: 15px 25px;
     border-radius: 20px;
     height: 100%;
     font-family: 'Pangolin', cursive;
     font-size: 22px;
+    padding: 15px 25px 15px 16px;
 
 }
 
@@ -462,13 +462,13 @@ input[type='number'] {
 
     .game_btn_audio {
         font-size: 20px;
-        padding: 10px 15px;
+        padding: 10px 15px 10px 10px;
         border-radius: 10px;
     }
 
     .game_btn_audio_active {
         font-size: 20px;
-        padding: 10px 15px;   
+        padding: 10px 15px 10px 10px;   
         border-radius: 10px;
     }
 
@@ -479,6 +479,10 @@ input[type='number'] {
     .card_word_error, .card_word_miss {
         font-size: 15px;
         margin-bottom: 5px;
+    }
+
+    .card_answer {
+        max-width: 140px;
     }
 }
 
@@ -517,5 +521,15 @@ input[type='number'] {
     }
     .card_answer {
         max-width: 140px;
+    }
+
+    .game_btn_audio {
+        padding: 10px 15px 10px 6px;
+        border-radius: 10px;
+    }
+
+    .game_btn_audio_active {
+        padding: 10px 15px 10px 6px;   
+        border-radius: 10px;
     }
 }

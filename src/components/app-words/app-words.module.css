@@ -48,9 +48,16 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    box-shadow: 0 0 15px #22a2b2;
+    box-shadow: 0 0 15px #6c9ed5;
     padding: 30px 20px;
     border-radius: 8px;
+    width: 490px;
+}
+
+i {
+    color: #6c9ed5;
+    margin-left: 10px;
+    cursor: pointer;
 }
 
 .star i {
@@ -107,6 +114,10 @@
     .words_content {
         justify-content: center;
     }
+
+    .word {
+        width: 390px;
+    }
 }
 
 @media (max-width:340px) {
@@ -137,6 +148,7 @@
     .word {
         margin-top: 15px; 
         padding: 20px 10px;
+        width: 195px;
     }
 
     .star i {
