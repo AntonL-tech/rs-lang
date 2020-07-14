@@ -9,7 +9,7 @@ export async function updateUserStatistic(
 
   gameStatistics = gameStatistics || [];
 
-  gameStatistic = gameStatistics.slice(-10);
+  gameStatistics = gameStatistics.slice(-10);
 
   gameStatistics.push({
     correct,
