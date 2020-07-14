@@ -13,6 +13,7 @@ class Auth extends Component {
       token: '',
       redirect: null,
       failureText: '',
+      failureMessage: false,
     };
 
     this.onSignIn = this.onSignIn.bind(this);
@@ -36,7 +37,10 @@ class Auth extends Component {
 
       this.setState({ redirect: '/' });
     } else {
-      this.setState({ failureText: result.data });
+      this.setState({ 
+        failureText: result.data, 
+        failureMessage: true,
+      });
     }
   }
 
@@ -45,7 +49,10 @@ class Auth extends Component {
     if (result.status === 'success') {
       this.onSignIn(userData);
     } else {
-      this.setState({ failureText: result.data });
+      this.setState({ 
+        failureText: result.data,
+        failureMessage: true,
+      });
     }
   }
 
@@ -66,7 +73,10 @@ class Auth extends Component {
               <button
                 className={this.state.signin ? activeClass : s.linksItem}
                 onClick={() => {
-                  this.setState({ signin: true });
+                  this.setState({ 
+                    signin: true,
+                    failureMessage: false, 
+                  });
                 }}
               >
                 Sign In
@@ -74,7 +84,10 @@ class Auth extends Component {
               <button
                 className={this.state.signin ? s.linksItem : activeClass}
                 onClick={() => {
-                  this.setState({ signin: false });
+                  this.setState({ 
+                    signin: false,
+                    failureMessage: false,
+                  });
                 }}
               >
                 Sign Up
@@ -85,7 +98,10 @@ class Auth extends Component {
             ) : (
               <SignUpForm onSubmit={this.onSignUp} />
             )}
-            <div className={s.failure}>{this.state.failureText}</div>
+            {this.state.failureMessage ? (
+              <div className={s.failure}>{this.state.failureText}</div>
+            ) : null}
+            
           </div>
         </div>
       </div>

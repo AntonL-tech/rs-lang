@@ -85,8 +85,8 @@ export default class Promo extends Component {
     super(props);
     this.games = [
       { 
-        key: 'audiochallenge', 
-        name: 'audiochallenge', 
+        key: 'audiocall', 
+        name: 'audiocall', 
         description: 'Improves listening skills'
       }, 
       { 
@@ -116,8 +116,8 @@ export default class Promo extends Component {
       },
     ];
     this.state = {
-      currentGallerySlide: 'audiochallenge1',
-      currentGamesSlide: 'audiochallenge',
+      currentGallerySlide: 'audiocall1',
+      currentGamesSlide: 'audiocall',
       previouseGamesSlide: 'Let\'s check how many words you can guess in 1 minute. Choose correct tranclation to get best score.',
       sliderDirection: true,
     }
@@ -186,7 +186,7 @@ export default class Promo extends Component {
                         The main functionality of the application is to learn and repeat words. It is presented in the form of cards with words to be guessed. Word cards contain both new words and words that need to be repeated. During the game, both knowledge of English words and their spelling is checked.  
                       </p>
                       <div className={s.mainAppImgBlock}>
-                        <img className={s.mainAppImg} src={owl} />
+                        <img className={s.mainAppImg} src={owl} alt='Illustration - owl' />
                       </div>
                     </div>
                     <div className={s.mainAppDescriptionBlock}>
@@ -194,7 +194,7 @@ export default class Promo extends Component {
                         In the application settings, you can specify the number of new words that you plan to learn per day, and the maximum number of cards with words per day. You can also indicate what information is displayed on cards with words: translation of a word, sentence with an explanation of the meaning of the word, sentence with an example of the use of the word being studied.
                       </p>
                       <div className={s.mainAppImgBlock}>
-                        <img className={s.mainAppImg} src={settingsImg} />
+                        <img className={s.mainAppImg} src={settingsImg} alt='Illustration - settings' />
                       </div>
                     </div>
                     <div className={s.mainAppDescriptionBlock}>
@@ -202,10 +202,15 @@ export default class Promo extends Component {
                         The application has a dictionary that contains information on which words were learned, which were removed from the study, and which were marked as difficult words. The user can manage the words in his dictionary: delete from the study, return difficult words to the general list of words to be studied.
                       </p>
                       <div className={s.mainAppImgBlock}>
-                          <img className={s.mainAppImg} src={books} />
+                          <img className={s.mainAppImg} src={books} alt='Illustration - books' />
                       </div>
                     </div>
-                  </div>
+                    <div className={s.intervalMethodDescription}>   
+                      <p className={s.intervalMethod}>
+                        The application implements a technique of interval repetition for better memorization of words. In the process of learning words, the user has the opportunity to mark the word as difficult, medium-difficult, easy, or repeat it again. If the user marks the word as easy, it will appear in the study after 21 days. If the user marks the word as medium-heavy, it will appear in the study after 7 days. If the word is marked out as heavy, it will appear in the study the next day. If the user chooses to repeat the word again, it will appear in the current workout.
+                      </p>
+                    </div>  
+                  </div>                   
                 </div>        
                 <div className={s.games}>
                   <h3 className={s.gamesHeader}>Games</h3>
@@ -226,8 +231,7 @@ export default class Promo extends Component {
                           
                 </div>        
                 <div  className={s.statistics}>
-                  <h3 className={s.statisticsHeader}>Statistics</h3>
-                          
+                  <h3 className={s.statisticsHeader}>Statistics</h3>                          
                   <div className={s.statisticsDescriptionBlock}>
                     <p className={s.statisticsDescription}>
                       In the application there is a statistics page where, in the form of a graph, information on the learning outcomes for each day is presented. Also, the statistics page provides long-term statistics of mini-games, you can see when and how many times they played a mini-game and with what result.
@@ -241,7 +245,11 @@ export default class Promo extends Component {
               </div>
               <div>                           
                 <div className={s.promoVideo}>
-                  <img src={videoImg} />
+                  <img className={s.video} src={videoImg} />
+                  <div>
+                    <span className={s.linkRepoTitle}>Repository link: </span>
+                    <a className={s.linkRepo} href='https://github.com/AntonL-tech/rs-lang' target='_blank'>https://github.com/AntonL-tech/rs-lang</a>
+                  </div>                  
                 </div>
               </div>        
             </div>

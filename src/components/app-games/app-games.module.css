@@ -24,7 +24,6 @@
     box-shadow: 0 0 10px #00b1ff;
 }
 
-
 .card_img {
     width: 100%;
     border: 0.5px solid #bfe7f9;
@@ -32,7 +31,6 @@
 
 .game_page {
     width: 100%;
-    /* height: 100%; */
     display: flex;
 }
 
@@ -87,3 +85,12 @@
     color: #1b599dd9;
 } 
 
+@media (max-width: 765px) {
+    .main_content_wrapper {
+        margin-left: 0;
+    }
+
+    .game_card {
+        margin-right: 0;
+    }
+}

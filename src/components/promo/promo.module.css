@@ -10,7 +10,8 @@
 	width: 100%;
   background: url('./assets/_88188-215.jpg') no-repeat;
   background-size: cover;
-  background-attachment: fixed;
+	background-attachment: fixed;
+	box-sizing: border-box;
 }
 
 .promo {
@@ -153,12 +154,37 @@
 	max-width: 400px;
 }
 
+.intervalMethodDescription {
+	margin: 0 10px 20px;
+	padding: 20px;
+	background: #fff8dc;
+	border-radius: 5px;
+	box-shadow: 0 0 5px #ffb427;
+}
+
 .promoVideo {
   margin-bottom: 20px;
-  padding: 20px;
+  padding: 90px;
   border-radius: 10px;
   background-color: #fffdf4;
   box-shadow: 0 0 5px #f5deb3;
+}
+
+.video {
+	margin-bottom: 20px;
+}
+
+.linkRepoTitle {
+	font-weight: 700;
+}
+
+.linkRepo {
+	color: #474747;
+	text-decoration: none;
+}
+
+.linkRepo:hover {
+	color: #1f62bb;
 }
 
 .games {
@@ -365,156 +391,156 @@
 .slide {  
   list-style: none;
   border: 1px solid #fff;
-  transition: background-image 0.5s cubic-bezier(0, 0, 0.83, 1.17);
+	transition: background-image 0.5s cubic-bezier(0, 0, 0.83, 1.17);
 }
 
-.audiochallenge1 {
-  background-image: url('./assets/audiochallenge/audio-start-page.png');
+.audiocall1 {
+  background-image: url('./assets/audiocall/audio-start-page.png');
   background-size: cover;
 }
 
-.audiochallenge2 {
-  background-image: url('./assets/audiochallenge/audio-game-page.png');
+.audiocall2 {
+  background-image: url('./assets/audiocall/audio-game-page.png');
   background-size: cover;
 }
 
-.audiochallenge3 {
-  background-image: url('./assets/audiochallenge/audio-correct.png');
+.audiocall3 {
+  background-image: url('./assets/audiocall/audio-correct.png');
   background-size: cover;
 }
 
-.audiochallenge4 {
-  background-image: url('./assets/audiochallenge/audio-incorrect.png');
+.audiocall4 {
+  background-image: url('./assets/audiocall/audio-incorrect.png');
   background-size: cover;
 }
 
-.audiochallenge5 {
-  background-image: url('./assets/audiochallenge/audio-results.png');
+.audiocall5 {
+  background-image: url('./assets/audiocall/audio-results.png');
   background-size: cover;
 }
 
 .speakit1 {
-  background-image: url('./assets/audiochallenge/audio-start-page.png');
+  background-image: url('./assets/audiocall/audio-start-page.png');
   background-size: cover;
 }
 
 .speakit2 {
-  background-image: url('./assets/audiochallenge/audio-game-page.png');
+  background-image: url('./assets/audiocall/audio-game-page.png');
   background-size: cover;
 }
 
 .speakit3 {
-  background-image: url('./assets/audiochallenge/audio-correct.png');
+  background-image: url('./assets/audiocall/audio-correct.png');
   background-size: cover;
 }
 
 .speakit4 {
-  background-image: url('./assets/audiochallenge/audio-incorrect.png');
+  background-image: url('./assets/audiocall/audio-incorrect.png');
   background-size: cover;
 }
 
 .speakit5 {
-  background-image: url('./assets/audiochallenge/audio-results.png');
+  background-image: url('./assets/audiocall/audio-results.png');
   background-size: cover;
 }
 
 .savannah1 {
-  background-image: url('./assets/audiochallenge/audio-start-page.png');
+  background-image: url('./assets/audiocall/audio-start-page.png');
   background-size: cover;
 }
 
 .savannah2 {
-  background-image: url('./assets/audiochallenge/audio-game-page.png');
+  background-image: url('./assets/audiocall/audio-game-page.png');
   background-size: cover;
 }
 
 .savannah3 {
-  background-image: url('./assets/audiochallenge/audio-correct.png');
+  background-image: url('./assets/audiocall/audio-correct.png');
   background-size: cover;
 }
 
 .savannah4 {
-  background-image: url('./assets/audiochallenge/audio-incorrect.png');
+  background-image: url('./assets/audiocall/audio-incorrect.png');
   background-size: cover;
 }
 
 .savannah5 {
-  background-image: url('./assets/audiochallenge/audio-results.png');
+  background-image: url('./assets/audiocall/audio-results.png');
   background-size: cover;
 }
 
 .sprint1 {
-  background-image: url('./assets/audiochallenge/audio-start-page.png');
+  background-image: url('./assets/audiocall/audio-start-page.png');
   background-size: cover;
 }
 
 .sprint2 {
-  background-image: url('./assets/audiochallenge/audio-game-page.png');
+  background-image: url('./assets/audiocall/audio-game-page.png');
   background-size: cover;
 }
 
 .sprint3 {
-  background-image: url('./assets/audiochallenge/audio-correct.png');
+  background-image: url('./assets/audiocall/audio-correct.png');
   background-size: cover;
 }
 
 .sprint4 {
-  background-image: url('./assets/audiochallenge/audio-incorrect.png');
+  background-image: url('./assets/audiocall/audio-incorrect.png');
   background-size: cover;
 }
 
 .sprint5 {
-  background-image: url('./assets/audiochallenge/audio-results.png');
+  background-image: url('./assets/audiocall/audio-results.png');
   background-size: cover;
 }
 
 .englishPuzzle1 {
-  background-image: url('./assets/audiochallenge/audio-start-page.png');
+  background-image: url('./assets/audiocall/audio-start-page.png');
   background-size: cover;
 }
 
 .englishPuzzle2 {
-  background-image: url('./assets/audiochallenge/audio-game-page.png');
+  background-image: url('./assets/audiocall/audio-game-page.png');
   background-size: cover;
 }
 
 .englishPuzzle3 {
-  background-image: url('./assets/audiochallenge/audio-correct.png');
+  background-image: url('./assets/audiocall/audio-correct.png');
   background-size: cover;
 }
 
 .englishPuzzle4 {
-  background-image: url('./assets/audiochallenge/audio-incorrect.png');
+  background-image: url('./assets/audiocall/audio-incorrect.png');
   background-size: cover;
 }
 
 .englishPuzzle5 {
-  background-image: url('./assets/audiochallenge/audio-results.png');
+  background-image: url('./assets/audiocall/audio-results.png');
   background-size: cover;
 }
 
 .wordConstructor1 {
-  background-image: url('./assets/audiochallenge/audio-start-page.png');
+  background-image: url('./assets/audiocall/audio-start-page.png');
   background-size: cover;
 }
 
 .wordConstructor2 {
-  background-image: url('./assets/audiochallenge/audio-game-page.png');
+  background-image: url('./assets/audiocall/audio-game-page.png');
   background-size: cover;
 }
 
 .wordConstructor3 {
-  background-image: url('./assets/audiochallenge/audio-correct.png');
+  background-image: url('./assets/audiocall/audio-correct.png');
   background-size: cover;
 }
 
 .wordConstructor4 {
-  background-image: url('./assets/audiochallenge/audio-incorrect.png');
+  background-image: url('./assets/audiocall/audio-incorrect.png');
   background-size: cover;
 }
 
 .wordConstructor5 {
-  background-image: url('./assets/audiochallenge/audio-results.png');
+  background-image: url('./assets/audiocall/audio-results.png');
   background-size: cover;
 }
 
@@ -551,6 +577,7 @@
   height: 40px;
   background-size: cover;
 	border: 1px solid #fff;
+	cursor: pointer;
 }
 
 .thumbnails {

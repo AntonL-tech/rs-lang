@@ -15,11 +15,11 @@ const cards = [
     },
     {
         name: 'Yulia Reutovich',
-        job: 'Audiochallenge, promo page',
+        job: 'Audiocall, promo page, styles',
         image: require('./Assets/yulia.jpg'),
     },
     {
-        name: 'Maxim Mirashnichenka',
+        name: 'Maksim Mirashnichenka',
         job: 'Sprint, word-constructor, test',
         image: require('./Assets/maxmir.jpg'),
     },
@@ -40,7 +40,7 @@ class Team extends React.Component {
 
     render() {
         const ourTeamBlocks = cards.map((elem, i, array) => (
-            <div className={s.teamBlocks}>
+            <div className={s.teamBlocks} key={`${elem}${i}`}>
                 <div className={s.imgBlock}>
                     <img className={s.image} src={elem.image} alt='' />
                 </div>
@@ -53,7 +53,7 @@ class Team extends React.Component {
         return (
 
             <Page openedPage='team'>
-                <div className={'flex'}>
+                <div className={s.flex}>
                     <div className={s.wrap}>
                         <div className={s.contentContainer}>
                             <div className={s.mainContainer}>{ourTeamBlocks}</div>

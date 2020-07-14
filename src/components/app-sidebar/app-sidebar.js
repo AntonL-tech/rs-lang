@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 function Sidebar({isOpen, openedPage}) {
   
-  console.log(openedPage)
   const sidebarLink = isOpen ? a.sidebar_link : a.hideLinkDescription;
   const sidebarList = isOpen ? a.sidebar_list_open : a.sidebar_list_close;
 

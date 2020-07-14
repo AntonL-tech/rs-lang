@@ -161,13 +161,13 @@ li:hover i, li:hover span {
     }
 
     .sidebar_list_open {
+        width: 260px;
         overflow: hidden;
     }
 
     .sidebar_list_open li {
         animation: showMenuTags 0.5s linear;
     }  
-
         
     @keyframes openMenu {
         0% {
