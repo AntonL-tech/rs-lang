@@ -9,7 +9,7 @@ import success from '../Assets/sounds/correct.mp3';
 import start from '../Assets/sounds/start.mp3';
 import star from '../Assets/icons/star-win.svg';
 import starError from '../Assets/icons/star.svg';
-import updateWord from '../../sprint-game/logic/updateWord'
+// import updateWord from '../../sprint-game/logic/updateWord'
 
 
 class GamePage extends React.Component {
@@ -154,10 +154,10 @@ class GamePage extends React.Component {
                 }
                 return {...el, class: elementlClass};
             });
-            if (this.state.userLevel) {
-
-                updateWord(this.state.questionWordObj.id)
-            }
+            // if (this.state.userLevel) {
+            //
+            //     updateWord(this.state.questionWordObj.id)
+            // }
 
             this.setState({questionArray: newQuestionArray});
             setTimeout(() => this.changeCountCard(), 500);
@@ -194,10 +194,10 @@ class GamePage extends React.Component {
                 let elementlClass = el.class;
                 if (el.id === field.id) {
                     elementlClass = 'WrongAnswer';
-                    if (this.state.userLevel) {
-                        console.log(obj.word)
-                        updateWord(obj.id)
-                    }
+                    // if (this.state.userLevel) {
+                    //     console.log(obj.word)
+                    //     updateWord(obj.id)
+                    // }
 
                 }
                 if (el.id === obj.id) {
