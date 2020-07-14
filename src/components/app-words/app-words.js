@@ -108,7 +108,7 @@ export default class Words extends React.Component {
     render() {
         const {arrayOfDeletedWords, arrayOfHardWords, show, arrayOfLearnedWords} = this.state;
         return (
-            <Page>
+            <Page openedPage='vocabluary'>
                 <div className={'flex'}>
                     <div className={s.words_inner}>
                         <div className={s.words_item}>

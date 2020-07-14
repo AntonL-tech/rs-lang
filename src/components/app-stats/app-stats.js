@@ -7,10 +7,8 @@ import Page from '../app-page-structure/app-page-structure';
 
 function Stats() {
     return (
-        <Page>
-            {/* <Header/> */}
+        <Page openedPage='stats'>
             <div className={'flex'}>
-                    {/* <Sidebar/> */}
                     <p>Statistic</p>
             </div>
         </Page>

@@ -9,25 +9,30 @@
 }
 
 .game_card {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     margin-right: 25px;
     padding: 20px;
     max-width: 300px;
-    /* width: 350px; */
-    /* height: 380px; */
     box-shadow: 0 0 15px #22a2b2;
     border-radius: 8px;
-    box-sizing: border-box;
+    box-sizing: border-box;    
+    transition: all 0.2s linear;
+}
+
+.game_card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 10px #00b1ff;
 }
 
 
 .card_img {
     width: 100%;
+    border: 0.5px solid #bfe7f9;
 }
 
 .game_page {
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     display: flex;
 }
 
@@ -35,7 +40,7 @@
     margin-left: 10vh;    
     margin-top: 75px; 
     width: 100%;
-
+    display: flex;
 }
 
 .cards_container {  
@@ -43,7 +48,6 @@
     padding: 15px 15px 0;   
     max-width: 1280px;   
     width: 100%;  
-    height: 100%;  
     display: flex;
     flex-wrap: wrap; 
     justify-content: space-around;  
@@ -58,7 +62,7 @@
 
 .card_description {
     margin-bottom: 10px;
-    height: 45px;
+    min-height: 45px;
     font-size: 15px;
 }
 
@@ -83,7 +87,3 @@
     color: #1b599dd9;
 } 
 
-.flex{
-    display: flex;
-    flex-wrap: wrap;
-}

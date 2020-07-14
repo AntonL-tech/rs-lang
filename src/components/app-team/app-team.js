@@ -52,7 +52,7 @@ class Team extends React.Component {
 
         return (
 
-            <Page>
+            <Page openedPage='team'>
                 <div className={'flex'}>
                     <div className={s.wrap}>
                         <div className={s.contentContainer}>

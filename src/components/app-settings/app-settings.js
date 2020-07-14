@@ -844,11 +844,8 @@ export default class Settings extends React.Component {
         </div>);
 
         return (
-            <Page>
-                {/* <Header/> */}
+            <Page openedPage='mainApp'>
                 <div className={s.container}>
-                    {/* <Sidebar/> */}
-
                     <div className={s.form_inner}>
                         {page}
                     </div>

@@ -22,12 +22,11 @@
     font-size: 40px;
 }
 
-.header_button {
-    font-size: 18px;
+.header_button {    
+    padding: 0;
+    font-size: 40px;
     cursor: pointer;
-    color: #d4b083;
-    border: solid 1px #a18960;
-    background-color: #6e84ab63;
+    color: #a9e7ff;
     padding: 5px 15px;
     border-radius: 10px;
     outline: none;
@@ -37,8 +36,7 @@
 }
 
 .header_button:hover { 
-    color: #ffd0d0;
-    background-color: #bb3737;
+    color: #e37878;
 }
 
 .header_content {
@@ -62,8 +60,7 @@
 
     .header_button {
         margin-left: 10px;
-        padding: 5px 10px;
-        font-size: 12px;
+        font-size: 26px;
     }
 }
 
@@ -78,8 +75,7 @@
     
     .header_button {
         margin-left: 10px;
-        padding: 3px 7px;
-        font-size: 10px;
+        font-size: 20px;
     }
 
     .header_logo {

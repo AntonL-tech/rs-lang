@@ -1,6 +1,5 @@
 .sidebar_inner {    
     height: 100%;   
-    border-right: solid 2px #09d3ac;    
     position: fixed;
     left: 0;
     z-index: 2;
@@ -124,5 +123,89 @@
 
     100% {
         width: 6vh;
+    }
+}
+
+.home li:nth-child(1) i, .home li:nth-child(1) span {
+    color: #e8ff96;
+}
+
+.mainApp li:nth-child(2) i, .mainApp li:nth-child(2) span {
+    color: #e8ff96;
+}
+
+.games li:nth-child(3) i, .games li:nth-child(3) span {
+    color: #e8ff96;
+}
+
+.vocabluary li:nth-child(4) i, .vocabluary li:nth-child(4) span {
+    color: #e8ff96;
+}
+
+.stats li:nth-child(5) i, .stats li:nth-child(5) span {
+    color: #e8ff96;
+}
+
+.team li:nth-child(6) i, .team li:nth-child(6) span {
+    color: #e8ff96;
+}
+
+li:hover i, li:hover span {
+    color: #e8ff96;
+}
+
+@media (max-width: 765px) {
+    .sidebar_list {
+        width: 0;
+        overflow: hidden;
+    }
+
+    .sidebar_list_open {
+        overflow: hidden;
+    }
+
+    .sidebar_list_open li {
+        animation: showMenuTags 0.5s linear;
+    }  
+
+        
+    @keyframes openMenu {
+        0% {
+            width: 0;
+        }
+
+        100% {
+            width: 260px;
+        }
+    }
+
+    @keyframes closeMenu {
+        0% {
+            width: 260px;
+        }
+
+        100% {
+            width: 0;
+        }
+    }
+
+    @keyframes showMenuTags {
+        0% {
+            width: 0;
+        }
+
+        100% {
+            width: 200px;
+        }
+    }
+
+    @keyframes hideMenuTags {
+        0% {
+            width: 200px;
+        }
+
+        100% {
+            width: 0;
+        }
     }
 }

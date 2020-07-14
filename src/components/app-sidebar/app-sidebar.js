@@ -2,12 +2,15 @@ import React from 'react';
 import a from './app-sidebar.module.css';
 import { Link } from 'react-router-dom';
 
-function Sidebar({isOpen}) {
+function Sidebar({isOpen, openedPage}) {
+  
+  console.log(openedPage)
   const sidebarLink = isOpen ? a.sidebar_link : a.hideLinkDescription;
   const sidebarList = isOpen ? a.sidebar_list_open : a.sidebar_list;
+
   return (
     <div className={a.sidebar_inner}>
-      <ul className={sidebarList}>
+      <ul className={`${sidebarList} ${a[openedPage]}`}>
         <li className={a.sidebar_item}>
           <Link to="/">
             <i className="fas fa-home" />

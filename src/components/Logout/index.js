@@ -27,7 +27,7 @@ class Logout extends Component {
       <>
         {this.renderRedirect()}
         <button onClick={this.setRedirect} className={this.props.className}>
-          {this.props.text}
+          <i className="fas fa-sign-in-alt" />
         </button>
       </>
     );
