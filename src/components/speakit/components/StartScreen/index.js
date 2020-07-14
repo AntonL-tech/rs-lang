@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import s from './StartScreen.module.css';
+import sUI from '../../ui-speakit.module.css';
 
 class StartScreen extends Component {
   constructor(props) {
@@ -30,7 +31,9 @@ class StartScreen extends Component {
           <option value={5}>Level 5</option>
           <option value={6}>Level 6</option>
         </select>
-        <button onClick={this.props.clickHandler}>Start Game</button>
+        <button className={sUI.button} onClick={this.props.clickHandler}>
+          Start Game
+        </button>
       </div>
     );
   }

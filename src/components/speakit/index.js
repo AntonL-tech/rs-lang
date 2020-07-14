@@ -130,7 +130,7 @@ class SpeakIt extends Component {
     return !this.state.uploaded ? (
       <Spinner />
     ) : (
-      <>
+      <div className={sUI.global}>
         {this.state.isStart ? (
           <StartScreen
             hasUserWords={this.state.hasUserWords}
@@ -152,15 +152,17 @@ class SpeakIt extends Component {
           selectId={this.state.isGame ? null : this.state.selectedWord.id}
           onSelect={this.selectWord}
         />
-        <button className={sUI.button} onClick={this.restart}>
-          Restart
-        </button>
-        <button className={sUI.button} onClick={this.startGame}>
-          Start Game!
-        </button>
-        <button className={sUI.button} onClick={this.showResults}>
-          Results
-        </button>
+        <div className={sUI.btnContainer}>
+          <button className={sUI.button} onClick={this.restart}>
+            Restart
+          </button>
+          <button className={sUI.button} onClick={this.startGame}>
+            Start Game!
+          </button>
+          <button className={sUI.button} onClick={this.showResults}>
+            Results
+          </button>
+        </div>
         {this.state.showResults ? (
           <Results
             errorsWords={errorsWordsArr}
@@ -169,7 +171,7 @@ class SpeakIt extends Component {
             onNewGame={this.restart}
           />
         ) : null}
-      </>
+      </div>
     );
   }
 }
