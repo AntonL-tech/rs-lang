@@ -9,7 +9,7 @@
     margin: 0;
     padding: 80px 0 20px;
     background-color: #44597e;
-    width: 10vh;   
+    width: 260px;   
     height: 100%;
     list-style: none;
     display: flex;
@@ -19,7 +19,6 @@
     box-sizing: border-box;
     opacity: 0.5;
     transition: all 0.5s linear;   
-    animation: closeMenu 0.5s linear;
 }
 
 .sidebar_list:hover {
@@ -61,8 +60,10 @@
     align-items: flex-start;
     justify-content: space-around;
     box-sizing: border-box;
+    opacity: 1;
+    overflow: hidden;
     transition: all 0.5s linear;
-    animation: openMenu 0.5s linear;
+    animation: openMenu 0.5s linear;    
 }
 
 .sidebar_list_open li {
@@ -70,10 +71,6 @@
     cursor: pointer;
     width: 200px;    
     animation: showMenuTags 0.5s linear;
-}
-
-.sidebar_list li {
-    animation: hideMenuTags 0.5s linear;
 }
 
 .sidebar_list_open  i {  
@@ -84,6 +81,18 @@
     padding: 0 5px;
     overflow: hidden;
     white-space: nowrap;
+}
+
+.sidebar_list_close {
+    width: 10vh;
+}
+
+.sidebar_list_close li {
+    width: initial;
+}
+
+.sidebar_item {
+    overflow: hidden;
 }
 
 @keyframes openMenu {
@@ -122,7 +131,7 @@
     }
 
     100% {
-        width: 6vh;
+        width: 0;
     }
 }
 

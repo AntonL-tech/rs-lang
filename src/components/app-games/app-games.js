@@ -13,7 +13,7 @@ function Games() {
         {image: speakItImg, title: 'SpeakIt', text: 'Play this mini-game and check your pronunciation.', path: '/speakit'},
         {image: SprintImg, title: 'Sprint', text: 'Learn how to quickly translate from English into your native language.', path: '/sprint'},
         {image: savannahImg, title: 'Savannah', text: 'It helps you build your vocabulary. Guess more words to get the best result.', path: '/savanna'},        
-        {image: 'https://avatarko.ru/img/kartinka/33/multfilm_lyagushka_32117.jpg', title: 'Audiocall', text: 'Improves your listening skills in English.', path: '/audiocall'},
+        {image: 'https://avatarko.ru/img/kartinka/33/multfilm_lyagushka_32117.jpg', title: 'Audiochallenge', text: 'Improves your listening skills in English.', path: '/audiocall'},
         {image: wConstrImg, title: 'Word Constructor', text: 'Let\'s find out if you can correctly assemble a word from letters.', path: '/constructor'},
         {image: puzzleImg, title: 'English-puzzle', text: 'Collect sentences from words as if they were puzzles.', path: '/english-puzzle/start'},
     ]

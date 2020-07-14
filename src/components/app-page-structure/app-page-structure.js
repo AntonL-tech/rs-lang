@@ -18,7 +18,8 @@ class Page extends Component {
 
   render() {
     const { isSidebarOpen } = this.state;
-    const { openedPage, children } = this.props;
+    const { openedPage, children} = this.props;
+    
 
     return (
         <div>

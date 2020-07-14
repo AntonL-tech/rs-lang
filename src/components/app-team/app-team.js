@@ -15,7 +15,7 @@ const cards = [
     },
     {
         name: 'Yulia Reutovich',
-        job: 'Audiocall, promo page',
+        job: 'Audiochallenge, promo page',
         image: require('./Assets/yulia.jpg'),
     },
     {

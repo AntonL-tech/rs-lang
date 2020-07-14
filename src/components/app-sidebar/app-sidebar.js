@@ -6,11 +6,11 @@ function Sidebar({isOpen, openedPage}) {
   
   console.log(openedPage)
   const sidebarLink = isOpen ? a.sidebar_link : a.hideLinkDescription;
-  const sidebarList = isOpen ? a.sidebar_list_open : a.sidebar_list;
+  const sidebarList = isOpen ? a.sidebar_list_open : a.sidebar_list_close;
 
   return (
     <div className={a.sidebar_inner}>
-      <ul className={`${sidebarList} ${a[openedPage]}`}>
+      <ul className={`${a.sidebar_list} ${sidebarList} ${a[openedPage]}`}>
         <li className={a.sidebar_item}>
           <Link to="/">
             <i className="fas fa-home" />
