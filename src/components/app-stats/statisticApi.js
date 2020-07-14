@@ -56,3 +56,13 @@ export async function getUserStatistic(userId, token) {
   );
   return await rawResponse.json();
 }
+
+export async function updateUserMiniStatistic(name, correct, series) {
+  let stat = { name, correct, series };
+  console.log(stat);
+}
+
+export async function updateRSLangStatistic(learnedWordsCount) {
+  let stat = { learnedWordsCount };
+  console.log(stat);
+}
