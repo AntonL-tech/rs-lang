@@ -1,7 +1,7 @@
 import shuffle from './shuffle';
 import getWords from '../api/getWords';
 import getUserAllWord from '../api/getUserAllWord';
-import getUserWord from '../api/getUserWord';
+import getWord from '../api/getWord';
 
 const user = 'user';
 
@@ -27,7 +27,7 @@ const createArrayWords = (level = 1, list = []) => {
 
         if(level === user){
             wordList = shuffle(list).slice(0, 80)
-            let requests = wordList.map((el, i) => getUserWord(id, token, el.wordId).then((vl) => {
+            let requests = wordList.map((el, i) => getWord(id, token, el.wordId).then((vl) => {
                 return vl
             }))
             return Promise.all(requests).then(responses => createGameArr(responses))
