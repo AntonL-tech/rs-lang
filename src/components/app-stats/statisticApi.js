@@ -1,4 +1,7 @@
-export async function updateUserStatistic(userId, token, name, stat) {
+export async function updateUserStatistic(name, stat) {
+  const userId = localStorage.getItem('userId');
+  const token = localStorage.getItem('token');
+
   let statistic = await getUserStatistic(userId, token);
 
   console.log('get statistic', statistic);
@@ -19,10 +22,9 @@ export async function updateUserStatistic(userId, token, name, stat) {
     statistic.optional[name].stats.push(stat);
   }
 
-  delete statistic.id;
+  // delete statistic.id;
 
-  const body = JSON.stringify(statistic);
-  console.log('body', body);
+  console.log(statistic);
 
   const rawResponse = await fetch(
     `https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`,
@@ -33,11 +35,15 @@ export async function updateUserStatistic(userId, token, name, stat) {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
       },
-      body: body,
+      body: JSON.stringify(statistic),
     }
   );
 
-  return await rawResponse.json();
+  let result = await rawResponse.json();
+
+  console.log('result', result);
+
+  return result;
 }
 
 export async function getUserStatistic(userId, token) {
@@ -58,23 +64,15 @@ export async function getUserStatistic(userId, token) {
 export async function updateUserMiniStatistic(name, correct, series) {
   const date = new Date();
   let stat = { date, correct, series };
-  console.log(stat);
 
-  const userId = localStorage.getItem('userId');
-  const token = localStorage.getItem('token');
-
-  updateUserStatistic(userId, token, name, stat);
+  updateUserStatistic(name, stat);
 }
 
 export async function updateRSLangStatistic(learnedWordsCount) {
   const date = new Date();
   let stat = { date, learnedWordsCount };
-  console.log(stat);
 
-  const userId = localStorage.getItem('userId');
-  const token = localStorage.getItem('token');
-
-  updateUserStatistic(userId, token, 'main', stat);
+  updateUserStatistic('main', stat);
 }
 
 export async function setZeroUserStatistics(userId, token) {

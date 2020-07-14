@@ -5,21 +5,13 @@ import s from './app-stats.module.css';
 import Page from '../app-page-structure/app-page-structure';
 import BarChart from './BarChart';
 import LineChart from './LineChart';
-import { getUserStatistic, updateUserStatistic } from './statisticApi';
+import { getUserStatistic } from './statisticApi';
 
 function Stats() {
-  // const userId = localStorage.getItem('userId');
-  // const token = localStorage.getItem('token');
+  const userId = localStorage.getItem('userId');
+  const token = localStorage.getItem('token');
 
-  // const stats = {
-  //   gameName: 'game name',
-  //   correct: 10,
-  //   series: 2,
-  // };
-
-  // updateUserStatistic(userId, token, stats).then(() => {
-  //   getUserStatistic(userId, token).then((res) => console.log(res));
-  // });
+  getUserStatistic(userId, token).then((res) => console.log(res));
 
   function getRandomDateArray(numItems) {
     // Create random array of objects (with date)
