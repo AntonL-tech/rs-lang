@@ -4,6 +4,7 @@ import SignUpForm from './SignUpForm';
 import { createUser, loginUser } from './clientApi';
 import { Redirect } from 'react-router-dom';
 import s from './auth.module.css';
+import { setZeroUserStatistics } from '../app-stats/statisticApi';
 
 class Auth extends Component {
   constructor(props) {
@@ -38,70 +39,19 @@ class Auth extends Component {
     } else {
       this.setState({ failureText: result.data });
     }
+    return result;
   }
 
   async onSignUp(userData) {
     let result = await createUser(userData);
     if (result.status === 'success') {
-      this.onSignIn(userData);
+      this.onSignIn(userData).then((result) => {
+        setZeroUserStatistics(result.data.userId, result.data.token);
+      });
     } else {
       this.setState({ failureText: result.data });
     }
   }
-
-  // async setStats() {
-  //   const rawResponse = await fetch(
-  //     `https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`,
-  //     {
-  //       method: 'PUT',
-  //       withCredentials: true,
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //         Accept: 'application/json',
-  // //       },
-  //       body: JSON.stringify({
-  //         learnedWords: 0,
-  //         optional: {
-  //           main: {
-  //             name: "RSLang",
-  //             stats: [{ date: '10-10-2010', learned: 10 },
-  //             { date: '10-11-2010', learned: 20 },]
-  //         },
-  //           speakit: {
-  //             name: "Speak It",
-  //             stats: [{ date: '10-10-2010', series: 3, correct:5  },
-  //             { date: '10-11-2010',  series: 4, correct:5},]
-  //           },
-  //           sprint: {
-  //             name: "Sprint",
-  //             stats: [{ date: '10-10-2010',  series: 3, correct:5},
-  //             { date: '10-11-2010',  series: 3, correct:5},]
-  //           },
-  //           savannah: {
-  //             name: "Savannah",
-  //             stats: [{ date: '10-10-2010',  series: 3, correct:5},
-  //             { date: '10-11-2010',  series: 3, correct:5},]
-  //           },
-  //           audiocall: {
-  //             name: "Audiocall",
-  //             stats: [{ date: '10-10-2010',  series: 3, correct:5},
-  //             { date: '10-11-2010',  series: 3, correct:5},]
-  //           },
-  //           wordConstructor: {
-  //             name: "wordConstructor",
-  //             stats: [{ date: '10-10-2010',  series: 3, correct:5},
-  //             { date: '10-11-2010',  series: 3, correct:5},]
-  //           },
-  //           englishPuzzle: {
-  //             name: "English Puzzle",
-  //             stats: [{ date: '10-10-2010',  series: 3, correct:5},
-  //             { date: '10-11-2010',  series: 3, correct:5},]
-  //           },
-  //         },
-  //       }),
-  // //     }
-  // //   );
-  // // }
 
   render() {
     let activeClass = `${s.linksItem} ${s.linksItemActive}`;

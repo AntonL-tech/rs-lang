@@ -66,3 +66,53 @@ export async function updateRSLangStatistic(learnedWordsCount) {
   let stat = { learnedWordsCount };
   console.log(stat);
 }
+
+export async function setZeroUserStatistics(userId, token) {
+  const zeroStatistics = {
+    learnedWords: 0,
+    optional: {
+      main: {
+        name: 'RSLang',
+        stats: [],
+      },
+      speakit: {
+        name: 'Speak It',
+        stats: [],
+      },
+      sprint: {
+        name: 'Sprint',
+        stats: [],
+      },
+      savannah: {
+        name: 'Savannah',
+        stats: [],
+      },
+      audiocall: {
+        name: 'Audiocall',
+        stats: [],
+      },
+      wordConstructor: {
+        name: 'wordConstructor',
+        stats: [],
+      },
+      englishPuzzle: {
+        name: 'English Puzzle',
+        stats: [],
+      },
+    },
+  };
+
+  const rawResponse = await fetch(
+    `https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`,
+    {
+      method: 'PUT',
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(zeroStatistics),
+    }
+  );
+  return await rawResponse.json();
+}
