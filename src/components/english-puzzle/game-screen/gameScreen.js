@@ -574,7 +574,7 @@ export default class GameScreen extends Component {
                         </div>
                     </div>
 
-                    <p className={s.info_screen}>Sorry, the game is not supported at this resolution, you can always play other mini-games :)</p>
+                   
 
                     <div className={s.game_wrapper}>
                         <div className={s.game_group}>
@@ -622,7 +622,7 @@ export default class GameScreen extends Component {
                                     key={i.toString() + 'd1'}
                                     onClick={()=>this.onSwapWordsForPuzzles(i,currentSentencesArray)}
                                 >
-                                    {word}
+                                   <span>{word}</span>
                                 </div>
                             ))}
                         </div>

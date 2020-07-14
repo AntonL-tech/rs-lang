@@ -70,7 +70,6 @@
     width: 25px;
     cursor: pointer;
     border-radius: 10px;
-    margin-left: 10px;
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url(../assets/speaker.svg);
@@ -96,4 +95,12 @@
     height: 80px;
     border-radius: 10px;
     object-fit: contain;
+}
+
+@media screen and (max-width: 565px) {
+    .speaker_btn {
+        height: 18px;
+        width: 31px;
+        background-color: transparent;
+    }
 }
