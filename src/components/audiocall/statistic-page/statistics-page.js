@@ -31,7 +31,6 @@ export default class StatisticsPage extends Component {
 
   componentDidMount () {
     const { correctAnswers, longestSeries } = this.props;
-    const { userId, token } = localStorage;
     updateUserMiniStatistic('audiocall', correctAnswers.length, longestSeries);
   }
 

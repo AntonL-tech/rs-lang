@@ -204,6 +204,7 @@ export default class GamePage extends Component {
 
       return (
         <div className = {s.page} style={{backgroundColor:`hsl(${step1}, ${step2}%, ${step3}%)`}}>
+          <button className={s.cancel}/>
           <button className={soundOn ? s.sound : `${s.sound} ${s.soundOff}`} onClick={this.switchSound} />
           <div className={s.gameWrapper}> 
             <div className={s.questionBoard}>

@@ -69,8 +69,7 @@ export default class Audiocall extends Component {
     console.log(level);
 
       return (
-      <>
-        <button className={s.cancel}/>
+      <>        
         {page}
       </>
       )      
