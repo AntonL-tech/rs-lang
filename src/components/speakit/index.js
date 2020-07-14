@@ -7,6 +7,7 @@ import Results from './components/Results';
 import StartScreen from './components/StartScreen';
 import DifficultSelector from './components/DifficultSelector';
 import WordService from './wordsService';
+import Spinner from './components/Spinner';
 class SpeakIt extends Component {
   constructor(props) {
     super(props);
@@ -19,20 +20,25 @@ class SpeakIt extends Component {
       isStart: true,
       difficult: '',
       hasUserWords: false,
+      uploaded: false,
     };
 
     this.wordService = new WordService();
   }
 
   componentDidMount() {
+    this.checkUserWords();
+  }
+
+  checkUserWords() {
     this.wordService.getUserWordsCount().then((userWordsCount) => {
       console.log('user words count ', userWordsCount);
 
       if (userWordsCount < 10) {
-        this.setState({ hasUserWords: false });
+        this.setState({ uploaded: true, hasUserWords: false });
         this.selectDifficult('0');
       } else {
-        this.setState({ hasUserWords: true });
+        this.setState({ uploaded: true, hasUserWords: true });
         this.selectDifficult('-1');
       }
     });
@@ -87,6 +93,9 @@ class SpeakIt extends Component {
   };
 
   restart = () => {
+    this.setState({
+      isStart: true,
+    });
     let lvl = this.state.difficult;
 
     this.wordService.getRndWordsFromGroup(lvl).then((data) =>
@@ -129,16 +138,17 @@ class SpeakIt extends Component {
     const guessedWordsArr = this.state.data.filter((elem) => elem.guessed);
     const guessedCount = guessedWordsArr.length;
 
-    return (
+    return !this.state.uploaded ? (
+      <Spinner />
+    ) : (
       <>
         {this.state.isStart ? (
-          <StartScreen onClick={this.hideStartScreen} />
+          <StartScreen
+            hasUserWords={this.state.hasUserWords}
+            clickHandler={this.hideStartScreen}
+            changeHandler={this.selectDifficult}
+          />
         ) : null}
-        <DifficultSelector
-          onChange={this.selectDifficult}
-          hasUserWords={this.state.hasUserWords}
-          selectedOption={this.state.difficult}
-        />
         <Stars n={guessedCount}></Stars>
         {this.state.isGame ? (
           <Recognition onRecognition={this.checkWord} />
