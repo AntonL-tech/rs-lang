@@ -54,6 +54,7 @@ export default class Settings extends React.Component {
            customLevelWords: [],
            customLine: 0,
            repeat: true,
+           onlyNewWords: false,
            usedWord: true, 
            match: 0,
            mistake: 0,
@@ -124,6 +125,7 @@ export default class Settings extends React.Component {
         this.setState({miss: 0})
         this.setState({complexity: false})
         this.setState({isRightAnswer: false})
+        this.setState({onlyNewWords: false})
         this.getUserWord(this.state.userId)
     }
 
@@ -219,6 +221,7 @@ export default class Settings extends React.Component {
     handleCheck = (event) => {
         this.setState({[event.target.id]: event.target.checked})
         localStorage.setItem(`${event.target.id}`, `${event.target.checked}`)
+        console.log(this.state)
     };
 
     handleSelect = (event) => {
@@ -226,6 +229,10 @@ export default class Settings extends React.Component {
     };
 
     getResults() {
+        if (this.state.onlyNewWords) {
+            this.setState({customLevelWords: []});
+            this.setState({repeat: false})
+        }
         const group = !this.state.level ? 0 : this.state.level - 1;
         fetch(`https://afternoon-falls-25894.herokuapp.com/words?page=${this.state.page}&group=${group}`)
             .then(data => {
@@ -234,7 +241,8 @@ export default class Settings extends React.Component {
             .then(this.setResults)
             .catch(err => {
                 console.log(err)
-            })
+        })
+        console.log(this.state)
     };
 
     async setResults(data) {
@@ -332,6 +340,9 @@ export default class Settings extends React.Component {
                     <input className={s.game_checkbox} id='voiceAllow' type="checkbox" checked={this.state.voiceAllow} onChange = {this.handleCheck}/>
                     <label htmlFor='voiceAllow' className={s.game_checkbox_label}>Кнопка звука</label>
 
+                    <input className={s.game_checkbox} id='onlyNewWords' type="checkbox" checked={this.state.onlyNewWords} onChange = {this.handleCheck}/>
+                    <label htmlFor='onlyNewWords' className={s.game_checkbox_label}>Учить только новые слова</label>
+
                     <input className={s.game_checkbox} id='complexity' type="checkbox" checked={this.state.complexity} onChange = {this.handleCheck}/>
                     <label htmlFor='complexity' className={s.game_checkbox_label}>Индивидуальная сложность изучаемого слова</label>
                 </form>
@@ -412,7 +423,7 @@ export default class Settings extends React.Component {
     };
 
     async increment(data, line) {
-        const {answer, stopAudio, meaningAudio, audioExample, answerButton, countOfCards, percentage, count, repeat, endGame, customLevelWords, usedWord, match, mistake, isRightAnswer, complexity} = this.state;
+        const {answer, stopAudio, meaningAudio, audioExample, answerButton, countOfCards, percentage, count, repeat, endGame, customLevelWords, usedWord, match, mistake, isRightAnswer, complexity, onlyNewWords} = this.state;
         this.setState({isActiveAgainBtn: false})
         this.setState({isActiveBadBtn: false})
         this.setState({isActiveGoodBtn: false})
@@ -1021,6 +1032,7 @@ export default class Settings extends React.Component {
 
     componentDidMount() {
         this.getUserWord(this.state.userId);
+        console.log(this.state)
     }
 
     getUserWord (userId) {
@@ -1077,7 +1089,7 @@ export default class Settings extends React.Component {
     
 
     render() {
-        const { settingPage, data, customLevelWords, repeat, line, customLine} = this.state;
+        const { settingPage, data, customLevelWords, repeat, line, customLine, onlyNewWords} = this.state;
         const page = settingPage ? (<div className={s.settings_inner}>
              {this.displaySettings()}
         </div>) :
