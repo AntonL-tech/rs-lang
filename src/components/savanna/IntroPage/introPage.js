@@ -3,30 +3,32 @@ import s from './introPage.module.css';
 import GamePauseModal from '../GamePauseModal/gamePauseModal';
 import EnglishLevelTest from '../../english-level-test/EnglishLevelTest';
 
+
+
 class IntroPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { isOpen: false };
+        this.state = {isOpen: false};
     }
 
     stopGame = () => {
-        this.setState({ isOpen: true });
+        this.setState({isOpen: true});
     };
 
     clickToMainMenuReturn = () => {
-        this.setState({ isOpen: false });
+        this.setState({isOpen: false});
         window.location.assign('/');
     };
 
     clickToGameReturn = () => {
-        this.setState({ isOpen: false });
+        this.setState({isOpen: false});
         window.location.assign('/savanna');
     };
 
     render() {
-        const { isOpen } = this.state;
-        const { handleStartGame, handleChange, errorMsg, errorMsgWordLength } = this.props;
-        const { levelValue } = this.props;
+        const {isOpen} = this.state;
+        const {handleStartGame, handleChange, errorMsg, errorMsgWordLength} = this.props;
+        const {levelValue} = this.props;
         const errorMessage = errorMsg ? (
             <p>Please login once more or choose another level</p>
         ) : errorMsgWordLength ? (
@@ -39,9 +41,10 @@ class IntroPage extends React.Component {
             <>
 
                 <div className={s.introPage}>
-  <EnglishLevelTest />
+                    <EnglishLevelTest/>
                     <h1 className={s.introTitle}>SAVANNAH</h1>
-                    <h3 className={s.introSubTitle}>The Savannah training helps you build your vocabulary. The more words you know, the more experience points you'll get.</h3>
+                    <h3 className={s.introSubTitle}>The Savannah training helps you build your vocabulary. The more
+                        words you know, the more experience points you'll get.</h3>
                     <p className={s.introLevelText}>Choose your difficulty level and start the game</p>
                     <div className={s.introSelectWrap}>
                         <select className={s.introSelectMenu} value={levelValue} onChange={handleChange}>
