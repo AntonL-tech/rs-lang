@@ -2,10 +2,6 @@ import { getWords, getUserWordsList, getWordById } from './clientApi';
 
 const MAX_PAGE = 29;
 const MIN_PAGE = 0;
-const MAX_GROUP = 5;
-const MIN_GROUP = 0;
-const MAX_WORD_INDEX = 19;
-const MIN_WORD_INDEX = 0;
 
 export default class WordsService {
   constructor() {
