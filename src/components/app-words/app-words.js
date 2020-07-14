@@ -73,6 +73,7 @@ export default class Words extends React.Component {
     }
 
     showWords (array, textOfButton) {
+        console.log(this.state)
         if (array === this.state.arrayOfDeletedWords) {
             textOfButton = 'RESTORE'
         } else if (array === this.state.arrayOfHardWords) {
@@ -80,9 +81,11 @@ export default class Words extends React.Component {
         } else if (array === this.state.arrayOfLearnedWords) {
             textOfButton = 'DELETE'
         }
-        return (array.map(element => (<div className={s.word}><span> {element.optional.word.word}{this.showRepeatStars(element.optional.repeat)}</span> 
-            {this.state.transcription === 'true' ? <span>{element.optional.word.transcription}</span> : null}    
-            {this.state.translation === 'true' ? <span>{element.optional.word.wordTranslate}</span> : null}
+        return (array.map(element => (<div className={s.word}>
+            {localStorage.image === 'true' ? <span> <img className={s.word_image} src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${element.optional.word.image}`} alt='meaning' /></span>: null}
+            <span> {element.optional.word.word}{this.showRepeatStars(element.optional.repeat)}</span> 
+            {localStorage.transcription === 'true' ? <span>{element.optional.word.transcription}</span> : null}    
+            {localStorage.translation === 'true' ? <span>{element.optional.word.wordTranslate}</span> : null}
             <span>Repeated / Studied: {element.optional.currentDate}</span>
             <span>Next repeat: {element.optional.repeatDate}</span>
             <span>Total reps: {element.optional.repeat}</span>
@@ -122,7 +125,6 @@ export default class Words extends React.Component {
         if (event.target.textContent === 'Learned words') {
             this.setState({learnedWords: true})
         }
-        
     }
 
     render() {

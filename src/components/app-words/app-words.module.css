@@ -97,9 +97,49 @@
     text-transform: uppercase;
 }
 
+.word_image {
+    width: 350px;
+    height: 250px;
+}
+
 
 @media (max-width:790px) {
     .words_content {
         justify-content: center;
+    }
+}
+
+@media (max-width:340px) {
+    .words_nav {
+        flex-direction: column;
+        justify-content: end;
+    }
+    .nav_btn {
+        font-size: 15px;
+        margin: 0 -40px 5px 0;
+    }
+
+    .nav_btn_active {
+        font-size: 15px;
+        margin: 0 -40px 5px 0;
+    }
+
+    .words_item {
+        font-size: 15px;
+        margin: 0 -40px 0 0;
+    }
+
+    .word_image {
+        width: 175px;
+        height: 125px;
+    }
+
+    .word {
+        margin-top: 15px; 
+        padding: 20px 10px;
+    }
+
+    .star i {
+        margin-left: 3px;
     }
 }

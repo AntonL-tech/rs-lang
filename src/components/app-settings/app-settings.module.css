@@ -482,7 +482,7 @@ input[type='number'] {
     }
 }
 
-@media (max-width:790px) {
+@media (max-width:340px) {
     label.game_checkbox_label {
         text-align: center;
     }
