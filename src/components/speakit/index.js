@@ -7,6 +7,7 @@ import Results from './components/Results';
 import StartScreen from './components/StartScreen';
 import DifficultSelector from './components/DifficultSelector';
 import WordService from './wordsService';
+import { updateUserMiniStatistic } from '../app-stats/statisticApi';
 class SpeakIt extends Component {
   constructor(props) {
     super(props);
@@ -56,6 +57,10 @@ class SpeakIt extends Component {
           return [...before, guessedWord, ...after];
         });
         this.selectWord(id);
+
+        const guessedWordsArr = this.state.data.filter((elem) => elem.guessed);
+        const guessedCount = guessedWordsArr.length;
+        this.updateStatistics(guessedCount);
       }
     });
     if (words.length === words.filter((word) => word.guessed).length) {
@@ -64,6 +69,10 @@ class SpeakIt extends Component {
       });
     }
   };
+
+  updateStatistics(guessedCount) {
+    updateUserMiniStatistic('speakit', guessedCount, 0);
+  }
 
   startGame = () => {
     this.setState({ isGame: true });

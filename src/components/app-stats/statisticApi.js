@@ -1,28 +1,26 @@
-export async function updateUserStatistic(
-  userId,
-  token,
-  { gameName, correct, series }
-) {
+export async function updateUserStatistic(userId, token, name, stat) {
   let statistic = await getUserStatistic(userId, token);
 
-  let gameStatistics = statistic.optional ? statistic.optional[gameName] : [];
+  console.log('get statistic', statistic);
 
-  gameStatistics = gameStatistics || [];
+  if (statistic.optional[name].stats.length > 0) {
+    let lastStat =
+      statistic.optional[name].stats[statistic.optional[name].stats.length - 1];
 
-  gameStatistics = gameStatistics.slice(-10);
+    if (lastStat.date.toLocaleDateString() === stat.date.toLocaleDateString()) {
+      lastStat.correct =
+        lastStat.correct > stat.correct ? lastStat.correct : stat.correct;
+      lastStat.series =
+        lastStat.series > stat.series ? lastStat.series : stat.series;
+    } else {
+      statistic.optional[name].stats.push(stat);
+    }
+  } else {
+    statistic.optional[name].stats.push(stat);
+  }
 
-  gameStatistics.push({
-    correct,
-    series,
-  });
+  delete statistic.id;
 
-  statistic = {
-    optional: {
-      [gameName]: gameStatistics,
-    },
-  };
-
-  console.log('statistic', statistic);
   const body = JSON.stringify(statistic);
   console.log('body', body);
 
@@ -58,13 +56,25 @@ export async function getUserStatistic(userId, token) {
 }
 
 export async function updateUserMiniStatistic(name, correct, series) {
-  let stat = { name, correct, series };
+  const date = new Date();
+  let stat = { date, correct, series };
   console.log(stat);
+
+  const userId = localStorage.getItem('userId');
+  const token = localStorage.getItem('token');
+
+  updateUserStatistic(userId, token, name, stat);
 }
 
 export async function updateRSLangStatistic(learnedWordsCount) {
-  let stat = { learnedWordsCount };
+  const date = new Date();
+  let stat = { date, learnedWordsCount };
   console.log(stat);
+
+  const userId = localStorage.getItem('userId');
+  const token = localStorage.getItem('token');
+
+  updateUserStatistic(userId, token, 'main', stat);
 }
 
 export async function setZeroUserStatistics(userId, token) {
