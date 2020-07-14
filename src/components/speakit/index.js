@@ -5,9 +5,9 @@ import Recognition from './components/Recognition';
 import Stars from './components/Stars';
 import Results from './components/Results';
 import StartScreen from './components/StartScreen';
-import DifficultSelector from './components/DifficultSelector';
 import WordService from './wordsService';
 import Spinner from './components/Spinner';
+import sUI from './ui-speakit.module.css';
 class SpeakIt extends Component {
   constructor(props) {
     super(props);
@@ -95,19 +95,8 @@ class SpeakIt extends Component {
   restart = () => {
     this.setState({
       isStart: true,
+      showResults: false,
     });
-    let lvl = this.state.difficult;
-
-    this.wordService.getRndWordsFromGroup(lvl).then((data) =>
-      this.setState({
-        data: data,
-        difficult: lvl,
-        selectedWord: {},
-        isGame: false,
-        recognizedWord: '',
-        showResults: false,
-      })
-    );
   };
 
   hideStartScreen = () => {
@@ -163,9 +152,15 @@ class SpeakIt extends Component {
           selectId={this.state.isGame ? null : this.state.selectedWord.id}
           onSelect={this.selectWord}
         />
-        <button onClick={this.restart}>Restart</button>
-        <button onClick={this.startGame}>Start Game!</button>
-        <button onClick={this.showResults}>Results</button>
+        <button className={sUI.button} onClick={this.restart}>
+          Restart
+        </button>
+        <button className={sUI.button} onClick={this.startGame}>
+          Start Game!
+        </button>
+        <button className={sUI.button} onClick={this.showResults}>
+          Results
+        </button>
         {this.state.showResults ? (
           <Results
             errorsWords={errorsWordsArr}
