@@ -73,7 +73,7 @@ button:active, button:focus,
     border: 2px solid #ffffff;
     border-radius: 5px;
     background-color: #ffffff;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .bad,

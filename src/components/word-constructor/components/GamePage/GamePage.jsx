@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import createArrayWords from '../../logic/createArrayWords';
+import updateWord from '../../../sprint-game/logic/updateWord';
 import shuffle from '../../logic/shuffle';
 import Preloader from '../Preloader/Preloader';
 import GamePlay from './GamePlay/GamePlay';
@@ -16,6 +17,7 @@ const intervals = [];
 const block = 'block';
 const bad = 'bad';
 const good = 'good';
+const user = 'user';
 class GamePage extends Component {
     constructor(props) {
         super(props);
@@ -164,6 +166,11 @@ class GamePage extends Component {
             if(copyWord.join('') === this.state.wordList[id].word){
                 if (this.state.wordError > 0 ) {
                     this.setState({badWord: this.state.badWord.concat(this.state.wordList[id])}) 
+
+                    if (this.props.location.aboutProps.level === user){
+                        updateWord(this.state.wordList[this.state.wordId].id)
+                    }
+
                 } else {
                     this.setState({goodWord: this.state.goodWord.concat(this.state.wordList[id])});
                 }

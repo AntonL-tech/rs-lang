@@ -4,6 +4,8 @@ import s from './app-settings.module.css'
 import ProgressBar from './progress-bar/index'
 import { Link } from 'react-router-dom';
 import Page from '../app-page-structure/app-page-structure';
+import {updateRSLangStatistic} from '../app-stats/statisticApi';
+
 
 const ProggresBarContainer = styled.div`
     width: 100%;
@@ -176,6 +178,7 @@ export default class Settings extends React.Component {
                 this.setState({repeat: false})
             }
             if (count === countOfCards - 1) {
+                updateRSLangStatistic(this.state.match)
                 this.setState({endGame: false})
             }
 
@@ -221,7 +224,6 @@ export default class Settings extends React.Component {
     handleCheck = (event) => {
         this.setState({[event.target.id]: event.target.checked})
         localStorage.setItem(`${event.target.id}`, `${event.target.checked}`)
-        console.log(this.state)
     };
 
     handleSelect = (event) => {
@@ -242,7 +244,6 @@ export default class Settings extends React.Component {
             .catch(err => {
                 console.log(err)
         })
-        console.log(this.state)
     };
 
     async setResults(data) {
@@ -505,6 +506,7 @@ export default class Settings extends React.Component {
                         this.setState({usedWord: false})
                     }  
                     if (count === countOfCards - 1) {
+                        updateRSLangStatistic(this.state.match)
                         this.setState({endGame: false})
                     } 
 
@@ -563,7 +565,7 @@ export default class Settings extends React.Component {
     };
 
     setComplexityOfWord(event, data, line) {
-        const {customLevelWords, usedWord, count, countOfCards, repeat} = this.state;
+        const {usedWord, count, countOfCards, repeat} = this.state;
         if (!this.state.currentWord.optional || !usedWord) {
             if (event.target.textContent === 'Снова') {
                 this.setState({isActiveAgainBtn: true})
@@ -580,6 +582,7 @@ export default class Settings extends React.Component {
                         this.setState({usedWord: false})
                     } 
                     if (count === countOfCards) {
+                        updateRSLangStatistic(this.state.match)
                         this.setState({endGame: false})
                     } 
    
@@ -623,6 +626,7 @@ export default class Settings extends React.Component {
                         this.setState({usedWord: false})
                     } 
                     if (count === countOfCards) {
+                        updateRSLangStatistic(this.state.match)
                         this.setState({endGame: false})
                     } 
    
@@ -663,6 +667,7 @@ export default class Settings extends React.Component {
                         this.setState({usedWord: false})
                     } 
                     if (count === countOfCards) {
+                        updateRSLangStatistic(this.state.match)
                         this.setState({endGame: false})
                     } 
    
@@ -702,6 +707,7 @@ export default class Settings extends React.Component {
                         this.setState({usedWord: false})
                     } 
                     if (count === countOfCards) {
+                        updateRSLangStatistic(this.state.match)
                         this.setState({endGame: false})
                     } 
    
@@ -742,6 +748,7 @@ export default class Settings extends React.Component {
                         this.setState({usedWord: false})
                     } 
                     if (count === countOfCards ) {
+                        updateRSLangStatistic(this.state.match)
                         this.setState({endGame: false})
                     } 
    
@@ -784,6 +791,7 @@ export default class Settings extends React.Component {
                         this.setState({usedWord: false})
                     } 
                     if (count === countOfCards) {
+                        updateRSLangStatistic(this.state.match)
                         this.setState({endGame: false})
                     } 
    
@@ -824,6 +832,7 @@ export default class Settings extends React.Component {
                         this.setState({usedWord: false})
                     } 
                     if (count === countOfCards) {
+                        updateRSLangStatistic(this.state.match)
                         this.setState({endGame: false})
                     } 
    
@@ -863,6 +872,7 @@ export default class Settings extends React.Component {
                         this.setState({usedWord: false})
                     } 
                     if (count === countOfCards) {
+                        updateRSLangStatistic(this.state.match)
                         this.setState({endGame: false})
                     } 
    
@@ -956,7 +966,7 @@ export default class Settings extends React.Component {
             }
             result.push(arrayOfWordLetters[i]);
         }
-        return <div className={s.card_answer} contentEditable={true}>{result.map(element => (element))}</div>
+        return <div className={s.card_answer} contentEditable={false}>{result.map(element => (element))}</div>
     };
 
     createUserWord = async ({ userId, wordId, word }) => {
@@ -1032,7 +1042,6 @@ export default class Settings extends React.Component {
 
     componentDidMount() {
         this.getUserWord(this.state.userId);
-        console.log(this.state)
     }
 
     getUserWord (userId) {
