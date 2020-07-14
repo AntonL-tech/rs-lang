@@ -1,4 +1,5 @@
 import React from 'react';
+import s from './WordList.module.css';
 
 const WordList = (props) => {
   const onClick = props.onClick;
@@ -11,14 +12,13 @@ const WordList = (props) => {
             onClick(audio);
           }}
         >
-          <span>{word}</span>
-          <span>{transcription}</span>
+          <span>{word}</span> - <span>{transcription}</span> -{' '}
           <span>{translate}</span>
         </li>
       );
     }
   );
-  return <ul>{elements}</ul>;
+  return <ul className={s.list}>{elements}</ul>;
 };
 
 export default WordList;
