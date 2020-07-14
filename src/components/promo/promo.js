@@ -15,9 +15,8 @@ class GallerySlider extends Component {
   }
 
   changeImage = (event) => {
-    console.log(event.target)
     const id = event.target.dataset.id;
-    this.setState({currentGallerySlide: id});
+    this.setState({ currentGallerySlide: id });
   }
 
   render() {
@@ -39,7 +38,6 @@ class GallerySlider extends Component {
             <li className={`${s[`${slide}4`]} ${s.thumbnail}`} onClick={this.changeImage} data-id={`${slide}4`}></li>
             <li className={`${s[`${slide}5`]} ${s.thumbnail}`} onClick={this.changeImage} data-id={`${slide}5`}></li>
           </ul>
-
         </div>
       </div>
     )
@@ -61,8 +59,6 @@ const GameCard = ({ slidesData, currentGamesSlide, previouseGamesSlide, directio
     }
 
 
-    console.log(animation, key,  currentGamesSlide,  'clNAme')
-
     return (
       <div className={`${s.gameCardWrapper} ${animation}`} key={key}>
         <div className={`${s.gameCard} `}>
@@ -80,9 +76,7 @@ const GameCard = ({ slidesData, currentGamesSlide, previouseGamesSlide, directio
     <>
       {slides }
     </>
-
   );
-
 }
 
 
