@@ -27,13 +27,13 @@ class Results extends Component {
         <div className={s.resultsContainer}>
           <section>
             <div>
-              Ошибок<span>{errorsWords.length}</span>
+              Errors<span className={s.errors}>{errorsWords.length}</span>
             </div>
             <WordList list={errorsWords} onClick={this.playSound} />
           </section>
           <section>
             <div>
-              Знаю<span>{knownWords.length}</span>
+              Known<span className={s.known}>{knownWords.length}</span>
             </div>
             <WordList list={knownWords} onClick={this.playSound} />
           </section>
