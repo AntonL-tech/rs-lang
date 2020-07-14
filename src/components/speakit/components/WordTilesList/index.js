@@ -21,7 +21,7 @@ const WordTilesList = ({ tiles, onSelect, selectId }) => {
 
   return (
     <section className="word-tiles">
-      {elements.length ? elements : <Spinner></Spinner>}
+      {elements.length ? elements : <Spinner />}
     </section>
   );
 };

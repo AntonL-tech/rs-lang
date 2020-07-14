@@ -473,17 +473,34 @@ export default class GameScreen extends Component {
             sentencesArrayBoard,
             offerTranslation,
             isResultButton,
-            audioArray
+            audioArray,
+            pronounceAfterSuccessful,
+            promptAlwaysPronunciation
         } = this.state;
 
         const settingButton = s.setting_button;  
 
 
-        const megafon = settingButton + ' ' + s.megafon_btn;
+        let megafon = settingButton + ' ' + s.megafon_btn;
+
+        if (!pronounceAfterSuccessful) {
+            megafon = settingButton + ' ' + s.megafon_btn + ' ' + s.non_active_btn;
+        }
 
         let translate = settingButton + ' ' + s.translate_btn;
-        const song = settingButton + ' ' + s.song_btn;
-        const image = settingButton + ' ' + s.image_btn;
+
+        if (!offerTranslation) {
+            translate = settingButton + ' ' + s.translate_btn + ' ' + s.non_active_btn;
+        }
+
+        let song = settingButton + ' ' + s.song_btn;
+
+        let speaker_btn = s.game_speaker;
+
+        if (!promptAlwaysPronunciation) {
+            song = settingButton + ' ' + s.song_btn + ' ' + s.non_active_btn;
+            speaker_btn = s.game_speaker + ' ' + s.vis_hidden;
+        }
 
         const chooseButton = settingButton+ ' ' + s.chose_btn;
         const takePuzzles = s.take_puzzles + ' ' + s.game_words;
@@ -496,27 +513,27 @@ export default class GameScreen extends Component {
         
         const onSwapWordsForBoard = this.onSwapWordsForBoard;
 
-        let collectButton = settingButton; 
+        let collectButton = s.game_button; 
         let checkButton = s.drag_word +' '+s.display_none; 
         let continueButton = s.drag_word +' '+s.display_none;
 
         if (!isIgnoranceButton) {
-            collectButton = settingButton +' '+ s.display_none;
+            collectButton = s.game_button +' '+ s.display_none;
         }
 
         if (isCheckButton){
-            checkButton = settingButton;
+            checkButton = s.game_button;
         }
 
         if (isContinueButton){
             checkButton = s.display_none;
             collectButton = s.display_none;
-            continueButton = settingButton;
+            continueButton = s.game_button;
         }
 
-        let resultButton = settingButton
+        let resultButton = s.game_button
         if (!isResultButton){
-            resultButton = settingButton +' '+ s.display_none;
+            resultButton = s.game_button +' '+ s.display_none;
         }
 
         return (
@@ -550,21 +567,20 @@ export default class GameScreen extends Component {
                             </select>
                             <ButtonSettings label = {'GO'} classNameBtn={chooseButton} clickBtn={this.changeGameParam}/>
                         </div>
-                        <div>
-                            <span></span>
-                        </div>
                         <div className={s.menu_settings}>
-                            <ButtonSettings classNameBtn={megafon} clickBtn={this.pronounceAfter}/>
-                            <ButtonSettings classNameBtn={translate} clickBtn={this.disableTranslation}/>
-                            <ButtonSettings classNameBtn={song} clickBtn={this.switchPromptAlwaysPronunciation}/>
+                            <ButtonSettings classNameBtn={megafon} clickBtn={this.pronounceAfter} help={'pronounce the sentence after assembly'}/>
+                            <ButtonSettings classNameBtn={translate} clickBtn={this.disableTranslation} help={'show offer translation'}/>
+                            <ButtonSettings classNameBtn={song} clickBtn={this.switchPromptAlwaysPronunciation} help={'display pronunciation button'}/>
                         </div>
                     </div>
-    
+
+                    <p className={s.info_screen}>Sorry, the game is not supported at this resolution, you can always play other mini-games :)</p>
+
                     <div className={s.game_wrapper}>
                         <div className={s.game_group}>
                             <div className={s.game_settings}>
                                 <h3 className={translateSentence}>{sentencesTranslateArray[currentSentencesIndex]}</h3>
-                                <ButtonSettings classNameBtn={s.game_speaker} clickBtn={()=>this.promptPronunciation(audioArray[currentSentencesIndex])}/>
+                                <ButtonSettings classNameBtn={speaker_btn} clickBtn={()=>this.promptPronunciation(audioArray[currentSentencesIndex])} help={'pronunciation button'}/>
                             </div>
                         </div>
 

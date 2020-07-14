@@ -1,4 +1,5 @@
 .stars {
+  height: 60px;
   display: flex;
   justify-content: flex-end;
 }
