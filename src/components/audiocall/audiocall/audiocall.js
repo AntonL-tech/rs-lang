@@ -3,20 +3,32 @@ import StartPage from '../start-page/start-page';
 import GamePage from '../game-page/game-page';
 import s from './audiocall.module.css';
 import StatisticsPage from '../statistic-page/statistics-page';
+import GameModel from '../game-model/game-model'; 
 
 export default class Audiocall extends Component {
     constructor(props) {
       super(props);
+      this.gameModel = new GameModel();
       this.state = {
         isStartPage: true,
         isStatisticsPage: false,
-        level: 0,
+        level: '6',
       }
     }
 
-    startGame = () => {     
-      if (!this.state.isStartPage) return;
-      this.setState({ isStartPage: false })
+    startGame = () => {            
+      if (!this.state.isStartPage) return;  
+      console.log('here') 
+      if (!this.state.level === 6) {
+        this.gameModel.getUserWords()
+          .then((res) => {
+            console.log('here2')
+            if (res.length < 5) return;
+            this.setState({ isStartPage: false })
+          })
+      } else {
+        this.setState({ isStartPage: false })
+      }
     } 
     
     showStatistics = (correctAnswers, incorrectAnswers) => {
@@ -27,10 +39,18 @@ export default class Audiocall extends Component {
       })
     }
   
+    showStartPage = () => {
+      this.setState({
+        isStatisticsPage: false, 
+        isStartPage: true,
+      })
+    }
+
     changeLevel = (event) => {
       this.setState({ level: event.target.value });  
     }
-    
+   
+
     render() {
       const { isStartPage, isStatisticsPage, correctAnswers, incorrectAnswers, level } = this.state;
 
@@ -41,8 +61,11 @@ export default class Audiocall extends Component {
       } 
 
       if (isStatisticsPage) {
-        page = <StatisticsPage correctAnswers={correctAnswers} incorrectAnswers={incorrectAnswers} level= {level}/>
+        page = <StatisticsPage correctAnswers={correctAnswers} incorrectAnswers={incorrectAnswers} showStartPage={this.showStartPage} level= {level}/>
       }
+
+       
+    console.log(level);
 
       return (
       <>

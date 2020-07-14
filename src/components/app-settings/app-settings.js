@@ -6,6 +6,7 @@ import Sidebar from '../app-sidebar/app-sidebar'
 import ProgressBar from './progress-bar/index'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom';
+import Page from '../app-page-structure/app-page-structure';
 
 const ProggresBarContainer = styled.div`
     width: 100%;
@@ -59,11 +60,17 @@ export default class Settings extends React.Component {
            usedWord: true, 
            match: 0,
            mistake: 0,
-           miss: 0
+           miss: 0,
+           complexity: false, 
+           isRightAnswer: false,
+           response: [],
+           currentWord: {},
+           allCustomWords: []
         };
         this.setResults = this.setResults.bind(this)
         this.myRef = React.createRef();
         this.setUserWord = this.setUserWord.bind(this)
+        this.setWord = this.setWord.bind(this)
     }
 
     continueGame() {
@@ -110,6 +117,8 @@ export default class Settings extends React.Component {
         this.setState({match: 0})
         this.setState({mistake: 0})
         this.setState({miss: 0})
+        this.setState({complexity: false})
+        this.setState({isRightAnswer: false})
         this.getUserWord(userId)
         console.log(this.state)
     }
@@ -221,8 +230,10 @@ export default class Settings extends React.Component {
     };
 
     async setResults(data) {
-        data = await this.filterArray(this.state.customLevelWords, data)
-        data = await this.filterArray(this.state.arrayOfDeletedWords, data)
+        data = await this.filterArray(this.state.allCustomWords, data)
+        if (!this.state.customLevelWords.length) {
+            this.setState({usedWord: false})
+        }
         if (!data.length) {
             this.setState({ page: this.state.page + 1 });
             this.getResults();
@@ -310,6 +321,9 @@ export default class Settings extends React.Component {
 
                     <input className={s.game_checkbox} id='voiceAllow' type="checkbox" checked={this.state.voiceAllow} onChange = {this.handleCheck}/>
                     <label htmlFor='voiceAllow' className={s.game_checkbox_label}>Кнопка звука</label>
+
+                    <input className={s.game_checkbox} id='complexity' type="checkbox" checked={this.state.complexity} onChange = {this.handleCheck}/>
+                    <label htmlFor='complexity' className={s.game_checkbox_label}>Индивидуальная сложность изучаемого слова</label>
                 </form>
                 </div>
                 <button className={s.game_btn} type="button" onClick={() => this.getResults()}>Начать</button>
@@ -321,7 +335,7 @@ export default class Settings extends React.Component {
     displayCards(data, line = 0) {
         const {translation, transcription,answerButton, audio, image, meaning, meaningRu, textExample, meaningAudio, 
             textExampleTranslate, audioExample, deleteButton, showWordButton, voiceAllow, hardButton, translationButton, 
-            isAnswerWrong, sound, showTranslation, usedWord, match, mistake, miss} = this.state;
+            isAnswerWrong, sound, showTranslation, usedWord, match, mistake, miss, isRightAnswer} = this.state;
 
         let hideTextMeaning = !answerButton ? this.hideWord(data[line].textMeaning, data[line].word) : this.showWords(data[line].textMeaning, data[line].word);
         let hideTextExample = !answerButton ? this.hideWord(data[line].textExample, data[line].word) : this.showWords(data[line].textExample, data[line].word);
@@ -349,14 +363,20 @@ export default class Settings extends React.Component {
                     <button className={!showTranslation ? s.game_btn_translaition : s.game_btn_translaition_active} onClick={() => this.toggletranslationButton()}>Показывать перевод</button>
                     {voiceAllow ? <button className={!sound ? s.game_btn_audio : s.game_btn_audio_active} onClick={(event) => this.toggleSpeaking(event)}><i className="fas fa-volume-up"/></button> : null}
                 </div>
+                <div className={s.complexity_btns}>
+                    {isRightAnswer ? <button  className={s.game_btn} onClick={(event) => this.setComplexityOfWord(event, data, line)}>Снова</button> : null}
+                    {isRightAnswer ? <button  className={s.game_btn} onClick={(event) => this.setComplexityOfWord(event, data, line)}>Трудно</button> : null}
+                    {isRightAnswer ? <button  className={s.game_btn} onClick={(event) => this.setComplexityOfWord(event, data, line)}>Хорошо</button> : null}
+                    {isRightAnswer ? <button  className={s.game_btn} onClick={(event) => this.setComplexityOfWord(event, data, line)}>Легко</button> : null}
+                </div>
                 <div className={s.result_btns}>
                     {showWordButton ? <button className={s.game_btn} onClick={() => this.toggleAnswer(data,line)}>Показать ответ</button> : null}
-                    <button className={s.game_btn} type="button" onClick={() => this.increment(data,line)}>Ответить</button>
+                    {!isRightAnswer ? <button className={s.game_btn} type="button" onClick={() => this.increment(data,line)}>Ответить</button> : null}
                 </div>
                 <ProggresBarContainer className={s.progress_bar}>
-                    {this.state.percentage.toFixed()}%
+                    {this.state.match}
                     <ProgressBar percentage={this.state.percentage}/>
-                    100%
+                    {this.state.countOfCards}
                 </ProggresBarContainer>
             </div>
         </div>) : (<div className={s.card}>
@@ -381,38 +401,56 @@ export default class Settings extends React.Component {
     };
 
     async increment(data, line) {
-        const {answer, stopAudio, meaningAudio, audioExample, answerButton, countOfCards, percentage, count, repeat, endGame, customLevelWords, usedWord, match, mistake} = this.state;
+        const {answer, stopAudio, meaningAudio, audioExample, answerButton, countOfCards, percentage, count, repeat, endGame, customLevelWords, usedWord, match, mistake, isRightAnswer, complexity} = this.state;
+
         // Чекаем есть ли слова для повторения
         if (!customLevelWords.length && line === 0) {
-            this.setState({repeat: false});
+            
+            this.getWord(userId, data[line].id);
             // Добавляем слова в изученые
             this.createUserWord({
                 userId: userId,
                 wordId: data[line].id,
-                word: { "difficulty": "weak", "optional": {'word': data[line], 'ok': true, 'string': 'string', 'feel' : false}},
+                word: { "difficulty": "weak", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 5).toISOString().split('T')[0], 'repeat' : 0}},
                 });
-            this.setState({line: line + 1})
+            setTimeout(() => {
+                if (answer.toLowerCase() === data[line].word.toLowerCase()) {
+                    this.setState({line: line + 1})
+                    this.setState({usedWord: false})
+                    this.setState({repeat: false}); 
+                }
+            }, 1000)
         };
         // Если слово отгадано
         if (answer.toLowerCase() === data[line].word.toLowerCase()) {
             console.log('ответ правильный')
-            this.setState({match: match + 1})
+
+            this.setState({match: match + 1});
 
             // Добавляем слова в изученые
             if (!usedWord) {
                 this.createUserWord({
                     userId: userId,
                     wordId: data[line].id,
-                    word: { "difficulty": "weak", "optional": {'word': data[line], 'ok': true, 'string': 'string', 'feel' : false}},
+                    word: { "difficulty": "weak", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 5).toISOString().split('T')[0], 'repeat' : 0}},
                 });
+            } else if (customLevelWords.length){
+                console.log('слово повторено', new Date())
+                console.log(this.state);
+                this.getWord(userId, data[line].id);
+                setTimeout(() => {
+                    this.updateUserWord({
+                        userId: userId,
+                        wordId: data[line].id,
+                        word: { "difficulty": "weak", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 5).toISOString().split('T')[0], 'repeat' : this.state.currentWord.optional.repeat + 1}},
+                    });
+                }, 1000)
             }
             
-
             // Увеличен счёт карточек
             this.setState({ count: count + 1 });
 
-            // Фокус в поле ввода
-            this.myRef.current.focus();
+           
 
             // Показывает слово 
             this.setState({answerButton: true});
@@ -432,36 +470,76 @@ export default class Settings extends React.Component {
                 }
             }
 
-            // Скрывает слово 
-            this.setState({answerButton: false});
-            // Очищает поле ввода
-            this.myRef.current.textContent = '';
+             // Фокус в поле ввода
+             this.myRef.current.focus();
 
-            //  Когда кончаются слова для повторения подкидывает новые
-            if (repeat && count === data.length - 1) {
-                this.setState({repeat: false})
-                this.setState({usedWord: false})
-            } else if (count === countOfCards - 1) {
-                this.setState({endGame: false})
-            } 
+            this.setState({isRightAnswer: true});
 
+            if (!complexity) {
+                // Скрывает слово 
+                this.setState({answerButton: false});
+                // Очищает поле ввода
+                this.myRef.current.textContent = '';
 
-            // Переход к следующему слову
-            if (repeat) {
-                this.setState({customLine: line + 1})
-            } else {
-                if (line === data.length - 1) {
-                    this.setState({ line: 0 });
-                    this.setState({ page: this.state.page + 1 });
-                    this.getResults();
+                //  Когда кончаются слова для повторения подкидывает новые
+                if (repeat && count === data.length - 1) {
+                    this.setState({repeat: false})
+                    this.setState({usedWord: false})
+                }  
+                if (count === countOfCards - 1) {
+                    this.setState({endGame: false})
+                } 
+
+                // Переход к следующему слову
+                if (repeat) {
+                    this.setState({customLine: line + 1})
                 } else {
-                    this.setState({line: line + 1})
+                    if (line === data.length - 1) {
+                        this.setState({ line: 0 });
+                        this.setState({ page: this.state.page + 1 });
+                        this.getResults();
+                    } else {
+                        this.setState({line: line + 1})
+                    }
                 }
-            }
 
+                this.setState({isRightAnswer: false});
+            } else {
+                setTimeout(() => {
+                     // Скрывает слово 
+                    this.setState({answerButton: false});
+                    // Очищает поле ввода
+                    this.myRef.current.textContent = '';
+
+                    //  Когда кончаются слова для повторения подкидывает новые
+                    if (repeat && count === data.length - 1) {
+                        this.setState({repeat: false})
+                        this.setState({usedWord: false})
+                    } 
+                    if (count === countOfCards - 1) {
+                        this.setState({endGame: false})
+                    } 
+
+                    // Переход к следующему слову
+                    if (repeat) {
+                        this.setState({customLine: line + 1})
+                    } else {
+                        if (line === data.length - 1) {
+                            this.setState({ line: 0 });
+                            this.setState({ page: this.state.page + 1 });
+                            this.getResults();
+                        } else {
+                            this.setState({line: line + 1})
+                        }
+                    }
+
+                    this.setState({isRightAnswer: false});
+                }, 3000)
+            }
 
             console.log(this.state)
         } else {
+            data.push(data[line]);
             // Счетчик ошибок
             this.setState({mistake: mistake + 1})
 
@@ -489,29 +567,76 @@ export default class Settings extends React.Component {
         }
     };
 
-    gameProcess(data, line) {
-        // const {answer,answerButton, percentage, countOfCards, stopAudio, meaningAudio, audioExample, count, repeat} = this.state;
-        // this.setState({ count: count + 1 });
+    setComplexityOfWord(event, data, line) {
+        const {customLevelWords} = this.state;
+        if (!this.state.currentWord.optional) {
+            if (event.target.textContent === 'Снова') {
+                data.push(data[line]);
+                this.updateUserWord({
+                    userId: userId,
+                    wordId: data[line].id,
+                    word: { "difficulty": "hard", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': new Date().toISOString().split('T')[0], 'repeat' : 0}},
+                });
+            } 
 
-        // if(!repeat && line === 19) {
-        //     this.setState({ line: 0 });
-        //     this.setState({ page: this.state.page + 1 });
-        //     this.getResults();
-        // };
+            if (event.target.textContent === 'Трудно') {
+                this.updateUserWord({
+                    userId: userId,
+                    wordId: data[line].id,
+                    word: { "difficulty": "hard", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 1).toISOString().split('T')[0], 'repeat' : 0}},
+                });
+            } 
+    
+            if (event.target.textContent === 'Хорошо') {
+                this.updateUserWord({
+                    userId: userId,
+                    wordId: data[line].id,
+                    word: { "difficulty": "weak", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 7).toISOString().split('T')[0], 'repeat' : 0}},
+                });
+            }
+    
+            if (event.target.textContent === 'Легко') {
+                this.updateUserWord({
+                    userId: userId,
+                    wordId: data[line].id,
+                    word: { "difficulty": "weak", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 21).toISOString().split('T')[0], 'repeat' : 0}},
+                });
+            }
+        } else {
+            if (event.target.textContent === 'Снова') {
+                data.push(data[line]);
+                this.updateUserWord({
+                    userId: userId,
+                    wordId: data[line].id,
+                    word: { "difficulty": "hard", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': new Date().toISOString().split('T')[0], 'repeat' : this.state.currentWord.optional.repeat + 1}},
+                });
+            } 
 
-        // if (repeat && count === this.state.customLevelWords.length - 1) {
-        //     this.setState({repeat: false})
-        // } else if (count === countOfCards - 1) {
-        //     this.setState({endGame: false})
-        // }
-
-        // this.setState({ answer: '' });
-        // this.setState({answerButton: false})
-        // this.setState({line: line + 1})
-        // this.myRef.current.focus();
-        // this.myRef.current.textContent = '';
-        // console.log(this.state)
-        console.log('Game process')
+            if (event.target.textContent === 'Трудно') {
+                this.updateUserWord({
+                    userId: userId,
+                    wordId: data[line].id,
+                    word: { "difficulty": "hard", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 1).toISOString().split('T')[0], 'repeat' : this.state.currentWord.optional.repeat + 1}},
+                });
+            } 
+    
+            if (event.target.textContent === 'Хорошо') {
+                this.updateUserWord({
+                    userId: userId,
+                    wordId: data[line].id,
+                    word: { "difficulty": "weak", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 7).toISOString().split('T')[0], 'repeat' : this.state.currentWord.optional.repeat + 1}},
+                });
+            }
+    
+            if (event.target.textContent === 'Легко') {
+                this.updateUserWord({
+                    userId: userId,
+                    wordId: data[line].id,
+                    word: { "difficulty": "weak", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 21).toISOString().split('T')[0], 'repeat' : this.state.currentWord.optional.repeat + 1}},
+                });
+            }
+        }
+        
     }
 
     handleKeyPress(event,data,line) {
@@ -565,9 +690,15 @@ export default class Settings extends React.Component {
         let arrayOfWordLetters = word.split('');
         let arrayOfAnswerLetters = answer.split('');
         let result=[];
+        let count = 0
         for (let i = 0; i < arrayOfWordLetters.length; i++) {
             if (arrayOfWordLetters[i] !== arrayOfAnswerLetters[i]) {
-                arrayOfWordLetters[i] = (<span className={s.red}>{arrayOfWordLetters[i]}</span>)
+                count = count + 1;
+            }
+        }
+        for (let i = 0; i < arrayOfWordLetters.length; i++) {
+            if (arrayOfWordLetters[i] !== arrayOfAnswerLetters[i]) {
+                arrayOfWordLetters[i] = (<span className={count > 2 ? s.red : s.orange}>{arrayOfWordLetters[i]}</span>)
             } else {
                 arrayOfWordLetters[i] = (<span className={s.green}>{arrayOfWordLetters[i]}</span>)
             }
@@ -592,14 +723,30 @@ export default class Settings extends React.Component {
         console.log(content);
     };
 
+    updateUserWord = async ({ userId, wordId, word }) => {
+        const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`, {
+            method: 'PUT',
+            withCredentials: true,
+            headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(word)
+        });
+        const content = await rawResponse.json();
+        
+        console.log(content);
+    };
+    
+
     deleteUserWord (data,line) {
         this.createUserWord({
             userId: userId,
             wordId: data[line].id,
-            word: { "difficulty": "weak", "optional": {'word': data[line], 'deleted': true}},
+            word: { "difficulty": "weak", "optional": {'word': data[line], 'deleted': true, 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': 'Deleted', 'repeat' : 0}},
         });
         console.log(data[line].word, 'удалено');
-
         this.toggleAnswer(data, line)
     }
 
@@ -607,11 +754,30 @@ export default class Settings extends React.Component {
         this.createUserWord({
             userId: userId,
             wordId: data[line].id,
-            word: { "difficulty": "hard", "optional": {'word': data[line]}}
+            word: { "difficulty": "hard", "optional": {'word': data[line], 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': this.addDays(new Date(), 1).toISOString().split('T')[0], 'repeat' : 0}}
         });
         console.log(data[line].word, 'добавлено в сложные');
         this.toggleAnswer(data, line)
     }
+
+    getWord (userId, wordId) {
+        fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`, {
+          method: 'GET',
+          withCredentials: true,
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/json',
+          }
+        }).then(data => {
+            return data.json();
+        }).then(this.setWord)
+        .catch(err => console.log(err))
+    };
+
+    setWord(data) {
+        this.setState({currentWord: data})
+    }
+
 
     componentDidMount() {
         this.getUserWord(userId);
@@ -632,6 +798,11 @@ export default class Settings extends React.Component {
     };
 
     setUserWord(data) {
+        this.setState({response: data})
+        for (let i = 0; i < data.length; i++) {
+            this.state.allCustomWords.push(data[i].optional.word)
+        }
+        data = data.filter(element => element.optional.repeatDate === new Date().toISOString().split('T')[0])
         for (let i = 0; i < data.length; i++) {
             if (data[i].optional.deleted) {
                 this.state.arrayOfDeletedWords.push(data[i].optional.word)
@@ -657,6 +828,12 @@ export default class Settings extends React.Component {
         return arr2;
     }
 
+    addDays(theDate, days) {
+        return new Date(theDate.getTime() + days*24*60*60*1000);
+    }
+
+    
+
     render() {
         const { settingPage, data, customLevelWords, repeat, line, customLine} = this.state;
         const page = settingPage ? (<div className={s.settings_inner}>
@@ -667,15 +844,16 @@ export default class Settings extends React.Component {
         </div>);
 
         return (
-            <div>
-                <Header/>
-                <div className={'flex'}>
-                    <Sidebar/>
+            <Page>
+                {/* <Header/> */}
+                <div className={s.container}>
+                    {/* <Sidebar/> */}
+
                     <div className={s.form_inner}>
                         {page}
                     </div>
                 </div>
-            </div>
+            </Page>
 
         );
     }
