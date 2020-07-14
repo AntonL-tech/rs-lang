@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import EpHeader from "../ep-header/epHeader";
 import ButtonSettings from './buttonSettings/buttonSettings'
 import RowSentences from './rowSentences/rowSentences'
+import { updateUserMiniStatistic } from '../../app-stats/statisticApi';
 export default class GameScreen extends Component {
     state = {
         level: +localStorage.getItem('level') || 0,
@@ -147,6 +148,7 @@ export default class GameScreen extends Component {
                 localStorage.setItem('page', +page+1);
             }
         }
+        updateUserMiniStatistic('englishPuzzle',this.state.statistic.trueSentences.length,0)
     }
 
     onContinue = async () => {
