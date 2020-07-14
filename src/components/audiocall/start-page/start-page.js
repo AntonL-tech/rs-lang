@@ -8,7 +8,7 @@ export default class StartPage extends Component {
    
     return <div className={s.page} >
       <div className={s.about}>        
-        <h1 className={s.header}>Audiochallenge</h1>
+        <h1 className={s.header}>Audiocall</h1>
         <p className={s.description}>          
           Improves your listening skills in English.
         </p>

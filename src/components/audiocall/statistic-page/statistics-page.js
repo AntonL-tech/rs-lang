@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { updateUserMiniStatistic } from '../../app-stats/statisticApi';
 import s from './statistics-page.module.css';
 
 const List = ({ words, playAudio }) => {  
@@ -28,6 +29,12 @@ export default class StatisticsPage extends Component {
     }
   }
 
+  componentDidMount () {
+    const { correctAnswers, longestSeries } = this.props;
+    const { userId, token } = localStorage;
+    updateUserMiniStatistic('audiocall', correctAnswers.length, longestSeries);
+  }
+
   playAudio = (event) => {
     const audioPath = event.target.dataset.audio;
     const audio = new Audio(`https://raw.githubusercontent.com/yrevtovich/rslang-data/master/${audioPath}`);
@@ -35,13 +42,13 @@ export default class StatisticsPage extends Component {
   }
 
   render() {
-    const { correctAnswers, incorrectAnswers, level,  showStartPage } = this.props;
+    const { correctAnswers, incorrectAnswers, level,  showStartPage, longestSeries } = this.props;
 
     return (
       <div className={s.page}>
         <div className={s.results}>
-          <p className={s.header}>Statistics</p>
-          <p className={s.info}>Level: {level}, Amount of words: {correctAnswers.length + incorrectAnswers.length}</p>
+          <p className={s.header}>Results</p>
+          <p className={s.info}>Level: {level}, Amount of words: {correctAnswers.length + incorrectAnswers.length}, Longest series: {longestSeries}</p>
         
           <div className={s.answers}>          
             <div className={s.answersBlock}>

@@ -31,11 +31,12 @@ export default class Audiocall extends Component {
       }
     } 
     
-    showStatistics = (correctAnswers, incorrectAnswers) => {
+    showStatistics = (correctAnswers, incorrectAnswers, longestSeries) => {
       this.setState({
         isStatisticsPage: true, 
         correctAnswers,
         incorrectAnswers,
+        longestSeries,
       })
     }
   
@@ -52,7 +53,7 @@ export default class Audiocall extends Component {
    
 
     render() {
-      const { isStartPage, isStatisticsPage, correctAnswers, incorrectAnswers, level } = this.state;
+      const { isStartPage, isStatisticsPage, correctAnswers, incorrectAnswers, level, longestSeries } = this.state;
 
       let page = <StartPage startGame={this.startGame} changeLevel={this.changeLevel} />
 
@@ -61,7 +62,7 @@ export default class Audiocall extends Component {
       } 
 
       if (isStatisticsPage) {
-        page = <StatisticsPage correctAnswers={correctAnswers} incorrectAnswers={incorrectAnswers} showStartPage={this.showStartPage} level= {level}/>
+        page = <StatisticsPage correctAnswers={correctAnswers} incorrectAnswers={incorrectAnswers} showStartPage={this.showStartPage} longestSeries={longestSeries} level={level}/>
       }
 
        

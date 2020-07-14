@@ -60,7 +60,6 @@
 
 .answersList {
   padding: 0 20px;
-  width: 100%;
 }
 
 .answersBlock {
@@ -68,12 +67,6 @@
   display: flex;
   flex-direction: column;
 }
-
-/* .answersIncorrect {
-  border-radius: 5px;
-  display: flex;  
-  flex-direction: column;
-} */
 
 .wordBlock {
   padding: 5px;

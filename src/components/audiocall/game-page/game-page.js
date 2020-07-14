@@ -12,6 +12,8 @@ export default class GamePage extends Component {
     this.level = this.props.level;
     this.correctAnswers = [];
     this.incorrectAnswers = [];
+    this.currentSeries = 0;
+    this.longestSeries = 0;
     this.state = {
       isQuestion: true,
       isCorrectAnswer: true,
@@ -39,18 +41,27 @@ export default class GamePage extends Component {
     })
 
     document.addEventListener("keydown", this.keyboardEvents);
-    console.log('add')
+    // console.log('add')
   }
 
   componentWillUnmount() {
     document.removeEventListener("keydown", this.keyboardEvents);
-    console.log('remove')
+    // console.log('remove')
   }
 
   pass = () => {
     this.incorrectAnswers.push(this.state.currentWord);    
+    this.currentSeries = 0;
     this.playSound(error);
     this.setState({ isQuestion: false, isCorrectAnswer: false, answerId: undefined });
+  }
+  
+  getAnswersSeries = () => {
+    this.currentSeries += 1;
+    
+    if (this.currentSeries > this.longestSeries) {
+      this.longestSeries = this.currentSeries;
+    }
   }
 
   getAnswer = (event) => {    
@@ -61,9 +72,11 @@ export default class GamePage extends Component {
     const answer = event.target.dataset.correct;
     if (answer === 'true') {
       this.correctAnswers.push(currentWord);   
+      this.getAnswersSeries();
       this.playSound(correct);  
     } else {
       this.incorrectAnswers.push(currentWord);  
+      this.currentSeries = 0;
       this.playSound(error);  
     }
 
@@ -79,20 +92,22 @@ export default class GamePage extends Component {
 
     const answer = this.state.answers[+event.key - 1].correct.toString();
     
-    console.log(event, this.state.answers[+event.key - 1], answer ,'1cons')
+    // console.log(event, this.state.answers[+event.key - 1], answer ,'1cons')
 
 
     if (answer === 'true') {
       this.correctAnswers.push(currentWord);   
+      this.getAnswersSeries();
       this.playSound(correct);  
     } else {
       this.incorrectAnswers.push(currentWord);  
+      this.currentSeries = 0;
       this.playSound(error);  
     }
 
     const id = answers[+event.key - 1].id;
 
-    console.log(answer, id)
+    // console.log(answer, id)
 
     this.setState({ isQuestion: false, isCorrectAnswer: answer, answerId: id });
   }
@@ -101,13 +116,13 @@ export default class GamePage extends Component {
     this.setState({preloader: true})
     const newPageData = this.gameModel.nextTurn();
     if(!newPageData) {
-      this.props.showStatistics(this.correctAnswers, this.incorrectAnswers);
+      this.props.showStatistics(this.correctAnswers, this.incorrectAnswers, this.longestSeries);
       return;
     }
 
     newPageData.then(([currentWord, answers]) => {
       const { bgColors: { r, g, b }, bgPercent, degree, step1, step2, step3 } = this.state;
-      console.log(typeof bgPercent, bgPercent, bgPercent + 3)
+      // console.log(typeof bgPercent, bgPercent, bgPercent + 3)
       this.setState({ isQuestion: true, currentWord, answers, preloader:false,
         // bgColors: { r: r - 2, g: g + 1, b: b - 3}
         // bgPercent: (bgPercent + 3) 
@@ -147,7 +162,7 @@ export default class GamePage extends Component {
   keyboardEvents = (event) => {
     console.log('here')
     const key = event.key;
-    console.log(event, key)
+    // console.log(event, key)
     
 
     switch (key) {
@@ -180,10 +195,12 @@ export default class GamePage extends Component {
 
   render() {
     const { preloader, bgColors, bgPercent, degree, step1, step2, step3 } = this.state;
+
+    console.log(this.currentSeries, this.longestSeries);
     
     if (!preloader) {
       const { isQuestion, answers, answerId, isCorrectAnswer, currentWord : { image, wordTranslate }, soundOn , bgColors, bgPercent} = this.state;
-      console.log( bgPercent)
+      // console.log( bgPercent)
 
       return (
         <div className = {s.page} style={{backgroundColor:`hsl(${step1}, ${step2}%, ${step3}%)`}}>
