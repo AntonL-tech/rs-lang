@@ -9,8 +9,10 @@ import success from '../Assets/sounds/correct.mp3';
 import start from '../Assets/sounds/start.mp3';
 import star from '../Assets/icons/star-win.svg';
 import starError from '../Assets/icons/star.svg';
-// import updateWord from '../../sprint-game/logic/updateWord'
+import updateWord from '../../sprint-game/logic/updateWord';
+import { updateUserMiniStatistic } from '../../app-stats/statisticApi';
 
+const savannah = 'savannah';
 
 class GamePage extends React.Component {
     constructor(props) {
@@ -38,9 +40,12 @@ class GamePage extends React.Component {
             isStartFallingWord: false,
             clickedModalWord: {},
             isOpenWordModal: false,
-            userLevel: false
+            userLevel: false,
+            bestGoodWordsScore: 0,
+            currentGoodWordsScore: 0,
         };
     }
+
 
     componentDidMount() {
         if (this.state.levelValue === 7) {
@@ -154,15 +159,21 @@ class GamePage extends React.Component {
                 }
                 return {...el, class: elementlClass};
             });
-            // if (this.state.userLevel) {
-            //
-            //     updateWord(this.state.questionWordObj.id)
-            // }
+            if (this.state.userLevel) {
+                updateWord(this.state.questionWordObj.id)
+            }
 
-            this.setState({questionArray: newQuestionArray});
+            this.setState({questionArray: newQuestionArray})
+            this.isHighScoreCurrentWord()
             setTimeout(() => this.changeCountCard(), 500);
         }
     };
+
+    isHighScoreCurrentWord = () => {
+        if (this.state.bestGoodWordsScore<this.state.currentGoodWordsScore) {
+            this.setState({bestGoodWordsScore: this.state.currentGoodWordsScore, currentGoodWordsScore: 0})
+        };
+    }
 
     answearWord = (field, obj) => {
         this.setState({slideDone: false, isShowBlock: false});
@@ -185,7 +196,9 @@ class GamePage extends React.Component {
             this.setState({
                 wrightWords: [...this.state.wrightWords, this.state.questionWordObj],
             });
-            this.setState({questionArray: newQuestionArray});
+
+            this.setState({questionArray: newQuestionArray, currentGoodWordsScore: this.state.currentGoodWordsScore+1});
+            // console.log(this.state.currentGoodWordsScore, 'hello')
         } else {
             this.playSound(error);
             this.setState({countStarError: this.state.countStarError + 1, countStar: this.state.countStar - 1});
@@ -194,10 +207,9 @@ class GamePage extends React.Component {
                 let elementlClass = el.class;
                 if (el.id === field.id) {
                     elementlClass = 'WrongAnswer';
-                    // if (this.state.userLevel) {
-                    //     console.log(obj.word)
-                    //     updateWord(obj.id)
-                    // }
+                    if (this.state.userLevel) {
+                        updateWord(obj.id)
+                    }
 
                 }
                 if (el.id === obj.id) {
@@ -210,6 +222,7 @@ class GamePage extends React.Component {
             });
 
             this.setState({questionArray: newQuestionArray});
+            this.isHighScoreCurrentWord()
         }
 
         setTimeout(() => this.changeCountCard(), 500);
@@ -242,6 +255,7 @@ class GamePage extends React.Component {
         if (this.state.countStarError >= 5 || countCard === 600 || countCard + 4 > data.length) {
             this.showGameOverModal();
             this.setState({isShowBlock: false});
+            updateUserMiniStatistic(savannah, this.state.wrightWords.length, this.state.bestGoodWordsScore);
         } else {
             this.createQuestionAnswearWords(someWord);
             setTimeout(() => this.checkWordFinish(this.state.slideDone), 5000);
