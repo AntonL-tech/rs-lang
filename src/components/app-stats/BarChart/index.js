@@ -4,14 +4,41 @@ import Chart from 'chart.js';
 class BarChart extends React.Component {
   constructor(props) {
     super(props);
-    this.chartRef = React.createRef();
+    this.canvasRef = React.createRef();
+  }
+
+  componentDidUpdate() {
+    this.myChart.data.labels = this.props.data.map((d) => d.label);
+    this.myChart.data.datasets[0].data = this.props.data.map((d) => d.value);
+    this.myChart.update();
   }
 
   componentDidMount() {
-    this.myChart = new Chart(this.chartRef.current, {
+    this.myChart = new Chart(this.canvasRef.current, {
       type: 'bar',
+      options: {
+        maintainAspectRatio: false,
+        scales: {
+          xAxes: [
+            {
+              type: 'time',
+              time: {
+                unit: 'week',
+              },
+            },
+          ],
+          yAxes: [
+            {
+              ticks: {
+                min: 0,
+                max: 100,
+              },
+            },
+          ],
+        },
+      },
       data: {
-        labels: this.props.data.map((d) => d.name),
+        labels: this.props.data.map((d) => d.time),
         datasets: [
           {
             label: this.props.title,
@@ -24,7 +51,7 @@ class BarChart extends React.Component {
   }
 
   render() {
-    return <canvas ref={this.chartRef} />;
+    return <canvas ref={this.canvasRef} />;
   }
 }
 
