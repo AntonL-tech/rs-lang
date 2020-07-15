@@ -6,21 +6,8 @@ import LineChart from './LineChart';
 import { getUserStatistic, updateUserStatistic } from './statisticApi';
 
 function Stats() {
-  // const userId = localStorage.getItem('userId');
-  // const token = localStorage.getItem('token');
-
-  // const stats = {
-  //   gameName: 'game name',
-  //   correct: 10,
-  //   series: 2,
-  // };
-
-  // updateUserStatistic(userId, token, stats).then(() => {
-  //   getUserStatistic(userId, token).then((res) => console.log(res));
-  // });
 
   function getRandomDateArray(numItems) {
-    // Create random array of objects (with date)
     let data = [];
     let baseTime = new Date('2018-05-01T00:00:00').getTime();
     let dayMs = 24 * 60 * 60 * 1000;
@@ -43,22 +30,12 @@ function Stats() {
 
   return (
     <Page>
-      <div className={'flex'}>
+      <div className={s.bg}>
         <p>Statistic</p>
         <div className={s.chartsWrapper}>
           <div className={`${s.main} ${s.chartWrapper}`}>
-            <LineChart
-              data={data[0].data}
-              title={data[0].title}
-              color={data[0].color}
-            />
           </div>
-          <div className={`${s.sub} ${s.chartWrapper}`}>
-            <BarChart
-              data={data[0].data}
-              title={data[0].title}
-              color={data[0].color}
-            />
+          <div className={`${s.sub} ${s.chartWrapper}`}>            
           </div>
         </div>
       </div>
