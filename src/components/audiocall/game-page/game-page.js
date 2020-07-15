@@ -10,8 +10,11 @@ export default class GamePage extends Component {
   constructor(props) {
     super(props);
     this.level = this.props.level;
+    this.userWords = null;
     this.correctAnswers = [];
     this.incorrectAnswers = [];
+    this.currentSeries = 0;
+    this.longestSeries = 0;
     this.state = {
       isQuestion: true,
       isCorrectAnswer: true,
@@ -20,15 +23,11 @@ export default class GamePage extends Component {
       bgColors: {r: 179, g: 213, b: 216},
       bgPercent: 40,
       degree: 0,
-      step1: 213,
-      step2: 100,
-      step3: 71,
+      colorH: 213,
+      colorS: 100,
+      colorL: 71,
     }
   }
-
-  // changeBackgroundColor = () => {
-    
-  // } 
 
   componentDidMount() {
     this.gameModel = new GameModel(this.level);
@@ -36,21 +35,60 @@ export default class GamePage extends Component {
       let [currentWord, answers] = res;
       this.setState({ currentWord, answers, preloader: false });
       this.playWord();
+      this.userWords = this.gameModel.userWords;
     })
 
     document.addEventListener("keydown", this.keyboardEvents);
-    console.log('add')
   }
 
   componentWillUnmount() {
     document.removeEventListener("keydown", this.keyboardEvents);
-    console.log('remove')
   }
 
   pass = () => {
-    this.incorrectAnswers.push(this.state.currentWord);    
+    const { currentWord } = this.state;
+    this.incorrectAnswers.push(currentWord);    
+    this.currentSeries = 0;
+    this.updateUserWordDifficulty(currentWord);
     this.playSound(error);
     this.setState({ isQuestion: false, isCorrectAnswer: false, answerId: undefined });
+  }
+  
+  getAnswersSeries = () => {
+    this.currentSeries += 1;
+    
+    if (this.currentSeries > this.longestSeries) {
+      this.longestSeries = this.currentSeries;
+    }
+  }
+
+  updateUserWord = async ({ wordId, word }) => {
+    const {userId, token} = localStorage;
+
+    const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`, {
+        method: 'PUT',
+        withCredentials: true,
+        headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(word)
+
+    });
+    const content = await rawResponse.json();    
+  };
+
+  updateUserWordDifficulty = (currentWord) => {
+    if (this.level !== '6') return;
+
+    const difficultWord = this.userWords.find((item) => item.wordId === currentWord.id);
+    const { wordId, optional: { word , repeat } } = difficultWord;
+
+    this.updateUserWord({
+      wordId,
+      word: { "difficulty": "hard", "optional": {'word': word, 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': new Date().toISOString().split('T')[0], 'repeat' : repeat + 1}},
+    });    
   }
 
   getAnswer = (event) => {    
@@ -61,10 +99,13 @@ export default class GamePage extends Component {
     const answer = event.target.dataset.correct;
     if (answer === 'true') {
       this.correctAnswers.push(currentWord);   
+      this.getAnswersSeries();
       this.playSound(correct);  
     } else {
       this.incorrectAnswers.push(currentWord);  
+      this.currentSeries = 0;
       this.playSound(error);  
+      this.updateUserWordDifficulty(currentWord);
     }
 
     const id = event.target.id;
@@ -78,21 +119,19 @@ export default class GamePage extends Component {
     if (!isQuestion) return;
 
     const answer = this.state.answers[+event.key - 1].correct.toString();
-    
-    console.log(event, this.state.answers[+event.key - 1], answer ,'1cons')
-
 
     if (answer === 'true') {
       this.correctAnswers.push(currentWord);   
+      this.getAnswersSeries();
       this.playSound(correct);  
     } else {
       this.incorrectAnswers.push(currentWord);  
+      this.currentSeries = 0;
+      this.updateUserWordDifficulty(currentWord);
       this.playSound(error);  
     }
 
     const id = answers[+event.key - 1].id;
-
-    console.log(answer, id)
 
     this.setState({ isQuestion: false, isCorrectAnswer: answer, answerId: id });
   }
@@ -101,27 +140,27 @@ export default class GamePage extends Component {
     this.setState({preloader: true})
     const newPageData = this.gameModel.nextTurn();
     if(!newPageData) {
-      this.props.showStatistics(this.correctAnswers, this.incorrectAnswers);
+      this.props.showStatistics(this.correctAnswers, this.incorrectAnswers, this.longestSeries);
       return;
     }
 
     newPageData.then(([currentWord, answers]) => {
-      const { bgColors: { r, g, b }, bgPercent, degree, step1, step2, step3 } = this.state;
-      console.log(typeof bgPercent, bgPercent, bgPercent + 3)
-      this.setState({ isQuestion: true, currentWord, answers, preloader:false,
-        // bgColors: { r: r - 2, g: g + 1, b: b - 3}
-        // bgPercent: (bgPercent + 3) 
-        step1: step1 + 2,
-        step2: step2 - 3,
-        step3: step3 - 1,
-        // degree: degree + 5
+      const {colorH, colorS, colorL } = this.state;
+      this.setState({ 
+        isQuestion: true, 
+        currentWord, 
+        answers, 
+        preloader:false,
+        colorH: colorH + 2,
+        colorS: colorS - 3,
+        colorL: colorL - 1,
+        closeModal: false,
       });          
       this.playWord();  
     }); 
   }
 
   nextWordByKeyboard = (event) => {
-    console.log('here')
     if (event.key === 'Enter') {
       this.nextWord();
     }
@@ -145,10 +184,7 @@ export default class GamePage extends Component {
   } 
 
   keyboardEvents = (event) => {
-    console.log('here')
     const key = event.key;
-    console.log(event, key)
-    
 
     switch (key) {
       case 'Enter':
@@ -179,14 +215,16 @@ export default class GamePage extends Component {
   }
 
   render() {
-    const { preloader, bgColors, bgPercent, degree, step1, step2, step3 } = this.state;
+    const { preloader, colorH, colorS, colorL, closeModal } = this.state;
+
+    const { closeGame } = this.props;
     
     if (!preloader) {
-      const { isQuestion, answers, answerId, isCorrectAnswer, currentWord : { image, wordTranslate }, soundOn , bgColors, bgPercent} = this.state;
-      console.log( bgPercent)
+      const { isQuestion, answers, answerId, isCorrectAnswer, currentWord : { image, wordTranslate }, soundOn } = this.state;
 
       return (
-        <div className = {s.page} style={{backgroundColor:`hsl(${step1}, ${step2}%, ${step3}%)`}}>
+        <div className = {s.page} style={{backgroundColor:`hsl(${colorH}, ${colorS}%, ${colorL}%)`}} >
+          <button className={s.cancel} onClick={closeGame}/>
           <button className={soundOn ? s.sound : `${s.sound} ${s.soundOff}`} onClick={this.switchSound} />
           <div className={s.gameWrapper}> 
             <div className={s.questionBoard}>
@@ -201,14 +239,16 @@ export default class GamePage extends Component {
             <WordList words={answers} callback={this.getAnswer} isQuestion={isQuestion} answer={isCorrectAnswer} answerId={answerId} /> 
             
             <button className={isQuestion ? s.pass : s.hidden} onClick={this.pass}>Pass</button>
-            <button className={isQuestion ? s.hidden : s.next} type='button' onClick={this.nextWord} /*onKeyDown={this.nextWordByKeyboard}*/>Next word</button>
+            <button className={isQuestion ? s.hidden : s.next} type='button' onClick={this.nextWord} >
+              Next word
+            </button>
           </div>        
         </div>
       )
     }
 
     return (
-      <div className = {s.page} style={{backgroundColor:`hsl(${step1}, 100%, 71%)`}}>
+      <div className = {s.page} style={{backgroundColor:`hsl(${colorH}, 100%, 71%)`}}>
         <Preloader />
       </div>
     )
