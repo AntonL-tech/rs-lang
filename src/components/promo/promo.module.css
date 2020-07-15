@@ -420,127 +420,127 @@
 }
 
 .speakit1 {
-  background-image: url('./assets/audiocall/audio-start-page.png');
+  background-image: url('./assets/speakIt/start.png');
   background-size: cover;
 }
 
 .speakit2 {
-  background-image: url('./assets/audiocall/audio-game-page.png');
+  background-image: url('./assets/speakIt/question.png');
   background-size: cover;
 }
 
 .speakit3 {
-  background-image: url('./assets/audiocall/audio-correct.png');
+  background-image: url('./assets/speakIt/correct.png');
   background-size: cover;
 }
 
 .speakit4 {
-  background-image: url('./assets/audiocall/audio-incorrect.png');
+  background-image: url('./assets/speakIt/train.png');
   background-size: cover;
 }
 
 .speakit5 {
-  background-image: url('./assets/audiocall/audio-results.png');
+  background-image: url('./assets/speakIt/result.png');
   background-size: cover;
 }
 
 .savannah1 {
-  background-image: url('./assets/audiocall/audio-start-page.png');
+  background-image: url('./assets/savannah/start.png');
   background-size: cover;
 }
 
 .savannah2 {
-  background-image: url('./assets/audiocall/audio-game-page.png');
+  background-image: url('./assets/savannah/question.png');
   background-size: cover;
 }
 
 .savannah3 {
-  background-image: url('./assets/audiocall/audio-correct.png');
+  background-image: url('./assets/savannah/correct.png');
   background-size: cover;
 }
 
 .savannah4 {
-  background-image: url('./assets/audiocall/audio-incorrect.png');
+  background-image: url('./assets/savannah/incorrect.png');
   background-size: cover;
 }
 
 .savannah5 {
-  background-image: url('./assets/audiocall/audio-results.png');
+  background-image: url('./assets/savannah/result.png');
   background-size: cover;
 }
 
 .sprint1 {
-  background-image: url('./assets/audiocall/audio-start-page.png');
+  background-image: url('./assets/sprint/start.png');
   background-size: cover;
 }
 
 .sprint2 {
-  background-image: url('./assets/audiocall/audio-game-page.png');
+  background-image: url('./assets/sprint/loader.png');
   background-size: cover;
 }
 
 .sprint3 {
-  background-image: url('./assets/audiocall/audio-correct.png');
+  background-image: url('./assets/sprint/question.png');
   background-size: cover;
 }
 
 .sprint4 {
-  background-image: url('./assets/audiocall/audio-incorrect.png');
+  background-image: url('./assets/sprint/progress.png');
   background-size: cover;
 }
 
 .sprint5 {
-  background-image: url('./assets/audiocall/audio-results.png');
+  background-image: url('./assets/sprint/result.png');
   background-size: cover;
 }
 
 .englishPuzzle1 {
-  background-image: url('./assets/audiocall/audio-start-page.png');
+  background-image: url('./assets/puzzle/start.png');
   background-size: cover;
 }
 
 .englishPuzzle2 {
-  background-image: url('./assets/audiocall/audio-game-page.png');
+  background-image: url('./assets/puzzle/question.png');
   background-size: cover;
 }
 
 .englishPuzzle3 {
-  background-image: url('./assets/audiocall/audio-correct.png');
+  background-image: url('./assets/puzzle/progress.png');
   background-size: cover;
 }
 
 .englishPuzzle4 {
-  background-image: url('./assets/audiocall/audio-incorrect.png');
+  background-image: url('./assets/puzzle/incorrect.png');
   background-size: cover;
 }
 
 .englishPuzzle5 {
-  background-image: url('./assets/audiocall/audio-results.png');
+  background-image: url('./assets/puzzle/result.png');
   background-size: cover;
 }
 
 .wordConstructor1 {
-  background-image: url('./assets/audiocall/audio-start-page.png');
+  background-image: url('./assets/word_constructor/start.png');
   background-size: cover;
 }
 
 .wordConstructor2 {
-  background-image: url('./assets/audiocall/audio-game-page.png');
+  background-image: url('./assets/word_constructor/loader.png');
   background-size: cover;
 }
 
 .wordConstructor3 {
-  background-image: url('./assets/audiocall/audio-correct.png');
+  background-image: url('./assets/word_constructor/question.png');
   background-size: cover;
 }
 
 .wordConstructor4 {
-  background-image: url('./assets/audiocall/audio-incorrect.png');
+  background-image: url('./assets/word_constructor/question_progress.png');
   background-size: cover;
 }
 
 .wordConstructor5 {
-  background-image: url('./assets/audiocall/audio-results.png');
+  background-image: url('./assets/word_constructor/result.png');
   background-size: cover;
 }
 
@@ -576,7 +576,7 @@
   width: 200px;
   height: 40px;
   background-size: cover;
-	border: 1px solid #fff;
+	border: 1px solid #2582e757;
 	cursor: pointer;
 }
 
@@ -587,6 +587,10 @@
 	margin: 0;
 	list-style: none;
 	display: flex;
+}
+
+.choosen {
+	border-color: crimson;
 }
 
 .thumbnails > li {

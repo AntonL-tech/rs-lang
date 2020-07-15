@@ -32,7 +32,7 @@ class GallerySlider extends Component {
           </ul>
 
           <ul className={s.thumbnails}>
-            <li className={`${s[`${slide}1`]} ${s.thumbnail}`} onClick={this.changeImage} data-id={`${slide}1`} />
+            <li className={`${s[`${slide}1`]} ${s.thumbnail}`} />
             <li className={`${s[`${slide}2`]} ${s.thumbnail}`} onClick={this.changeImage} data-id={`${slide}2`}></li>
             <li className={`${s[`${slide}3`]} ${s.thumbnail}`} onClick={this.changeImage} data-id={`${slide}3`}></li>
             <li className={`${s[`${slide}4`]} ${s.thumbnail}`} onClick={this.changeImage} data-id={`${slide}4`}></li>
@@ -87,7 +87,7 @@ export default class Promo extends Component {
       { 
         key: 'audiocall', 
         name: 'audiocall', 
-        description: 'Improves listening skills'
+        description: 'During the game you\'ll mproves your listening skills'
       }, 
       { 
         key: 'sprint',
