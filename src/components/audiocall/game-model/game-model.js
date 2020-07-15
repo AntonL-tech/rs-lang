@@ -7,6 +7,7 @@ export default class GameModel {
     this.level = level;
     this.round = round;
     this.currentWord = null;
+    this.userWords = null;
     this.questionWords = [];
     this.answerWords = [];
     this.usedPages = [];
@@ -49,7 +50,10 @@ export default class GameModel {
       }
     })
       .then((response) => response.json())
-      .then((words) => words.map((word) => word.optional.word));
+      .then((words) => {
+        this.userWords = words;
+        return words.map((word) => word.optional.word)
+      });
   }
 
   getCollectionWords = (level, page) => {

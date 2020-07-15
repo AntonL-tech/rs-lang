@@ -10,6 +10,7 @@ export default class GamePage extends Component {
   constructor(props) {
     super(props);
     this.level = this.props.level;
+    this.userWords = null;
     this.correctAnswers = [];
     this.incorrectAnswers = [];
     this.currentSeries = 0;
@@ -38,6 +39,7 @@ export default class GamePage extends Component {
       let [currentWord, answers] = res;
       this.setState({ currentWord, answers, preloader: false });
       this.playWord();
+      this.userWords = this.gameModel.userWords;
     })
 
     document.addEventListener("keydown", this.keyboardEvents);
@@ -50,8 +52,11 @@ export default class GamePage extends Component {
   }
 
   pass = () => {
-    this.incorrectAnswers.push(this.state.currentWord);    
+    const { currentWord } = this.state;
+    this.incorrectAnswers.push(currentWord);    
     this.currentSeries = 0;
+    console.log('here -up')
+    this.updateUserWordDifficulty(currentWord);
     this.playSound(error);
     this.setState({ isQuestion: false, isCorrectAnswer: false, answerId: undefined });
   }
@@ -62,6 +67,35 @@ export default class GamePage extends Component {
     if (this.currentSeries > this.longestSeries) {
       this.longestSeries = this.currentSeries;
     }
+  }
+
+  updateUserWord = async ({ wordId, word }) => {
+    const {userId, token} = localStorage;
+
+    const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`, {
+        method: 'PUT',
+        withCredentials: true,
+        headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(word)
+
+    });
+    const content = await rawResponse.json();    
+  };
+
+  updateUserWordDifficulty = (currentWord) => {
+    if (this.level !== '6') return;
+
+    const difficultWord = this.userWords.find((item) => item.wordId === currentWord.id);
+    const { wordId, optional: { word , repeat } } = difficultWord;
+
+    this.updateUserWord({
+      wordId,
+      word: { "difficulty": "hard", "optional": {'word': word, 'currentDate': new Date().toISOString().split('T')[0], 'repeatDate': new Date().toISOString().split('T')[0], 'repeat' : repeat + 1}},
+    });    
   }
 
   getAnswer = (event) => {    
@@ -78,6 +112,7 @@ export default class GamePage extends Component {
       this.incorrectAnswers.push(currentWord);  
       this.currentSeries = 0;
       this.playSound(error);  
+      this.updateUserWordDifficulty(currentWord);
     }
 
     const id = event.target.id;
@@ -102,6 +137,7 @@ export default class GamePage extends Component {
     } else {
       this.incorrectAnswers.push(currentWord);  
       this.currentSeries = 0;
+      this.updateUserWordDifficulty(currentWord);
       this.playSound(error);  
     }
 
@@ -162,8 +198,7 @@ export default class GamePage extends Component {
   keyboardEvents = (event) => {
     console.log('here')
     const key = event.key;
-    // console.log(event, key)
-    
+    // console.log(event, key)  
 
     switch (key) {
       case 'Enter':
