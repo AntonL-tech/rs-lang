@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React  from 'react';
 import styled from 'styled-components'
 import s from './app-settings.module.css'
 import ProgressBar from './progress-bar/index'
@@ -74,6 +74,7 @@ export default class Settings extends React.Component {
            isActiveGoodBtn: false,
            isActiveEasyBtn: false,
            isCompl: false,
+           edit: true
         };
         this.setResults = this.setResults.bind(this)
         this.myRef = React.createRef();
@@ -138,6 +139,7 @@ export default class Settings extends React.Component {
 
     async toggleAnswer(data,line) {
         const {stopAudio, meaningAudio, audioExample, answerButton, countOfCards, percentage, count, repeat, endGame, customLevelWords, miss, match} = this.state;
+        this.setState({edit: false})
         this.setState({isAllow: false});
         this.setState({miss: miss + 1})
         this.setState({match: match + 1})
@@ -146,8 +148,6 @@ export default class Settings extends React.Component {
 
         // Увеличен счёт карточек
         this.setState({ count: count + 1 });
-
-        
 
         // Показывает слово 
         this.setState({answerButton: true});
@@ -165,6 +165,7 @@ export default class Settings extends React.Component {
 
         if(this.myRef.current) {
             // Фокус в поле ввода
+            this.setState({edit: true})
             this.myRef.current.focus();
 
             // Скрывает слово 
@@ -275,7 +276,7 @@ export default class Settings extends React.Component {
                 <div>
                 <form className={s.settings_form}>
                     <label>
-                        Уровень сложности:
+                         Level of difficulty:
                         <div className={s.select}>
                             <select value={this.state.level} onChange={this.handleSelect}>
                                 <option>1</option>
@@ -289,67 +290,67 @@ export default class Settings extends React.Component {
                     </label>
 
                     <label>
-                        Новых слов в день:
+                        New words a day:
                         <input id='countOfWords' type="number" onChange = {this.handleChange} min="1" max="50" required autoComplete='false'/>
                     </label>
 
                     <label>
-                        Максимальное количество карточек в день:
+                        Maximum number of cards per day:
                         <input id='countOfCards' type="number" onChange = {this.handleChange} min="1" max="50" required autoComplete='false'/>
                     </label>
 
 
                     <input className={s.game_checkbox} id='translation' type="checkbox" checked={this.state.translation} onChange = {this.handleCheck}/>
-                    <label htmlFor='translation' className={s.game_checkbox_label}>Перевод слова</label>
+                    <label htmlFor='translation' className={s.game_checkbox_label}>A translation of a word</label>
 
                     <input className={s.game_checkbox} id='audio' type="checkbox" checked={this.state.audio} onChange = {this.handleCheck}/>
-                    <label htmlFor='audio' className={s.game_checkbox_label}>Аудио</label>
+                    <label htmlFor='audio' className={s.game_checkbox_label}>Audio</label>
 
                     <input className={s.game_checkbox} id='meaning' type="checkbox" checked={this.state.meaning} onChange = {this.handleCheck}/>
-                    <label htmlFor='meaning' className={s.game_checkbox_label}>Предложение с объяснением значения слова</label>
+                    <label htmlFor='meaning' className={s.game_checkbox_label}>A sentence explaining the meaning of the word</label>
 
                     <input className={s.game_checkbox} id='meaningRu' type="checkbox" checked={this.state.meaningRu} onChange = {this.handleCheck}/>
-                    <label htmlFor='meaningRu' className={s.game_checkbox_label}>Предложение с объяснением значения слова на русском</label>
+                    <label htmlFor='meaningRu' className={s.game_checkbox_label}>A sentence explaining the meaning of the word in Russian</label>
 
                     <input className={s.game_checkbox} id='meaningAudio' type="checkbox" checked={this.state.meaningAudio} onChange = {this.handleCheck}/>
-                    <label htmlFor='meaningAudio' className={s.game_checkbox_label}>Аудио с объяснением значения слова</label>
+                    <label htmlFor='meaningAudio' className={s.game_checkbox_label}>Word Explanation Audio</label>
 
                     <input className={s.game_checkbox} id='textExample' type="checkbox" checked={this.state.textExample} onChange = {this.handleCheck}/>
-                    <label htmlFor='textExample' className={s.game_checkbox_label}>Предложение с примером использования изучаемого слова</label>
+                    <label htmlFor='textExample' className={s.game_checkbox_label}>Sentence with an example of using the studied word</label>
 
                     <input className={s.game_checkbox} id='textExampleTranslate' type="checkbox" checked={this.state.textExampleTranslate} onChange = {this.handleCheck}/>
-                    <label htmlFor='textExampleTranslate' className={s.game_checkbox_label}>Предложение с примером использования изучаемого слова на русском</label>
+                    <label htmlFor='textExampleTranslate' className={s.game_checkbox_label}>Sentence with an example of using the studied word in Russian</label>
 
                     <input className={s.game_checkbox} id='audioExample' type="checkbox" checked={this.state.audioExample} onChange = {this.handleCheck}/>
-                    <label htmlFor='audioExample' className={s.game_checkbox_label}>Аудио с примером использования изучаемого слова</label>
+                    <label htmlFor='audioExample' className={s.game_checkbox_label}>Audio with an example of using the studied word</label>
 
                     <input className={s.game_checkbox} id='transcription' type="checkbox" checked={this.state.transcription} onChange = {this.handleCheck}/>
-                    <label htmlFor='transcription' className={s.game_checkbox_label}>Транскрипция</label>
+                    <label htmlFor='transcription' className={s.game_checkbox_label}>Transcription</label>
 
                     <input className={s.game_checkbox} id='image' type="checkbox" checked={this.state.image} onChange = {this.handleCheck}/>
-                    <label htmlFor='image' className={s.game_checkbox_label}>Картинка</label>
+                    <label htmlFor='image' className={s.game_checkbox_label}>Picture</label>
 
                     <input className={s.game_checkbox} id='deleteButton' type="checkbox" checked={this.state.deleteButton} onChange = {this.handleCheck}/>
-                    <label htmlFor='deleteButton' className={s.game_checkbox_label}>Кнопка удалить</label>
+                    <label htmlFor='deleteButton' className={s.game_checkbox_label}>Add Delete button</label>
 
                     <input className={s.game_checkbox} id='hardButton' type="checkbox" checked={this.state.hardButton} onChange = {this.handleCheck}/>
-                    <label htmlFor='hardButton' className={s.game_checkbox_label}>Кнопка cложные слова</label>
+                    <label htmlFor='hardButton' className={s.game_checkbox_label}>Add Сomplex button</label>
 
                     <input className={s.game_checkbox} id='showWordButton' type="checkbox" checked={this.state.showWordButton} onChange = {this.handleCheck}/>
-                    <label htmlFor='showWordButton' className={s.game_checkbox_label}>Кнопка показать ответ</label>
+                    <label htmlFor='showWordButton' className={s.game_checkbox_label}>add Show answer button</label>
 
                     <input className={s.game_checkbox} id='voiceAllow' type="checkbox" checked={this.state.voiceAllow} onChange = {this.handleCheck}/>
-                    <label htmlFor='voiceAllow' className={s.game_checkbox_label}>Кнопка звука</label>
+                    <label htmlFor='voiceAllow' className={s.game_checkbox_label}>add Sound button</label>
 
                     <input className={s.game_checkbox} id='onlyNewWords' type="checkbox" checked={this.state.onlyNewWords} onChange = {this.handleCheck}/>
-                    <label htmlFor='onlyNewWords' className={s.game_checkbox_label}>Учить только новые слова</label>
+                    <label htmlFor='onlyNewWords' className={s.game_checkbox_label}>Learn only new words</label>
 
                     <input className={s.game_checkbox} id='complexity' type="checkbox" checked={this.state.complexity} onChange = {this.handleCheck}/>
-                    <label htmlFor='complexity' className={s.game_checkbox_label}>Индивидуальная сложность изучаемого слова</label>
+                    <label htmlFor='complexity' className={s.game_checkbox_label}>Interval Repetition Technique</label>
                 </form>
                 </div>
-                <button className={s.game_btn} type="button" onClick={() => this.getResults()}>Начать</button>
-                {this.state.isCheck ? <div className={s.error_settings}>Необходимо указать количество новых слов, которые планируете выучить за день, а также максимальное количество карточек со словами на день.<p>Хотя бы один пункт из нижеперечисленных должен быть отмечен:<br/>перевод слова<br/>предложение с объяснением значения слова<br/> предложение с примером использования изучаемого слова </p></div> : null}
+                <button className={s.game_btn} type="button" onClick={() => this.getResults()}>Start</button>
+                {this.state.isCheck ? <div className={s.error_settings}>You must specify the number of new words that you plan to learn per day, as well as the maximum number of cards with words per day.<p>At least one of the following should be marked:<br/>A translation of a word<br/>A sentence explaining the meaning of the word<br/> Sentence with an example of using the studied word </p></div> : null}
             </>
         )
     };
@@ -357,43 +358,43 @@ export default class Settings extends React.Component {
     displayCards(data, line = 0) {
         const {translation, transcription,answerButton, audio, image, meaning, meaningRu, textExample, meaningAudio, 
             textExampleTranslate, audioExample, deleteButton, showWordButton, voiceAllow, hardButton, translationButton, 
-            isAnswerWrong, sound, showTranslation, usedWord, match, mistake, miss, isRightAnswer, isAllow, isActiveDeleteBtn, isActiveHardBtn, isActiveAgainBtn, isActiveBadBtn, isActiveGoodBtn, isActiveEasyBtn, isCompl} = this.state;
+            isAnswerWrong, sound, showTranslation, usedWord, match, mistake, miss, isRightAnswer, isAllow, isActiveDeleteBtn, isActiveHardBtn, isActiveAgainBtn, isActiveBadBtn, isActiveGoodBtn, isActiveEasyBtn, isCompl, edit} = this.state;
 
         let hideTextMeaning = !answerButton ? this.hideWord(data[line].textMeaning, data[line].word) : this.showWords(data[line].textMeaning, data[line].word);
         let hideTextExample = !answerButton ? this.hideWord(data[line].textExample, data[line].word) : this.showWords(data[line].textExample, data[line].word);
         
         const inputWidth = data[line].word.length * 18;
         const {endGame} = this.state;
-        let answerBox = (<div style={{width: inputWidth + 'px'}} className={s.card_answer} contentEditable={true} onBlur = {this.handleChangeDiv} id="answer" onKeyPress={(event) => this.handleKeyPress(event, data, line)} ref={this.myRef}></div>);
+        let answerBox = (<div style={{width: inputWidth + 'px'}} className={s.card_answer} contentEditable={edit ? true : false} onBlur = {this.handleChangeDiv} id="answer" onKeyPress={(event) => this.handleKeyPress(event, data, line)} ref={this.myRef}></div>);
         let errorBox =  this.compareWords(data[line].word, this.state.answer);
         const page = endGame ? (<div>
             <div className={s.card}>
-                <div className={s.answer}>Слово: {!isAnswerWrong ? answerBox : errorBox}</div>
-                {translation && translationButton ? <div className={s.card_word}>Перевод: {data[line].wordTranslate}</div> : null}
-                {transcription ? <div className={s.card_word}>Транскрипция: {data[line].transcription}</div> : null}
-                {audio ? <div className={s.card_word}>Аудио: <audio controls src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].audio}`}></audio></div> : null}
-                {image ? <div className={s.card_word}>Картинка:  <img src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].image}`} alt='meaning' /></div> : null}
-                {meaning ? <div className={s.card_word}>Предложение на англе: {hideTextMeaning} </div> : null}
-                {meaningRu && translationButton ? <div className={s.card_word}>Предложение на русском: {data[line].textMeaningTranslate}</div> : null}
-                {meaningAudio ? <div className={s.card_word}>Аудио значение на англе: <audio controls src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].audioMeaning}`}></audio></div> : null}
-                {textExample ? <div className={s.card_word}>Предложение с примером использования изучаемого слова: {hideTextExample}</div> : null}
-                {textExampleTranslate && translationButton ? <div className={s.card_word}>Предложение с примером использования изучаемого слова на русском: {data[line].textExampleTranslate}</div> : null}
-                {audioExample ? <div className={s.card_word}>Аудио предложение на англе: <audio controls src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].audioExample}`}></audio></div> : null}
+                <div className={s.answer}>Word: {!isAnswerWrong ? answerBox : errorBox}</div>
+                {translation && translationButton ? <div className={s.card_word}>Translation: {data[line].wordTranslate}</div> : null}
+                {transcription ? <div className={s.card_word}>Transcription: {data[line].transcription}</div> : null}
+                {audio ? <div className={s.card_word}>Audio: <audio controls src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].audio}`}></audio></div> : null}
+                {image ? <div className={s.card_word}>Picture:  <img src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].image}`} alt='meaning' /></div> : null}
+                {meaning ? <div className={s.card_word}>A sentence explaining the meaning of the word: {hideTextMeaning} </div> : null}
+                {meaningRu && translationButton ? <div className={s.card_word}>A sentence explaining the meaning of the word in Russian: {data[line].textMeaningTranslate}</div> : null}
+                {meaningAudio ? <div className={s.card_word}>Word Explanation Audio: <audio controls src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].audioMeaning}`}></audio></div> : null}
+                {textExample ? <div className={s.card_word}>Sentence with an example of using the studied word: {hideTextExample}</div> : null}
+                {textExampleTranslate && translationButton ? <div className={s.card_word}>Sentence with an example of using the studied word in Russian: {data[line].textExampleTranslate}</div> : null}
+                {audioExample ? <div className={s.card_word}>Audio with an example of using the studied word: <audio controls src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${data[line].audioExample}`}></audio></div> : null}
                 <div className={s.btn_inner}>
-                    {deleteButton && !usedWord && isAllow && !isRightAnswer ? <button  className={isActiveDeleteBtn ? s.game_btn_active : s.game_btn} onClick={() => this.deleteUserWord(data, line)}>Удалить</button> : null}
-                    {hardButton && !usedWord && isAllow && !isRightAnswer ? <button className={isActiveHardBtn ? s.game_btn_active : s.game_btn} onClick={() => this.hardUserWord(data, line)}>Сложные</button> : null }
-                    <button className={!showTranslation ? s.game_btn_translaition : s.game_btn_translaition_active} onClick={() => this.toggletranslationButton()}>Показывать перевод</button>
+                    {deleteButton && !usedWord && isAllow && !isRightAnswer ? <button  className={isActiveDeleteBtn ? s.game_btn_active : s.game_btn} onClick={() => this.deleteUserWord(data, line)}>Delete</button> : null}
+                    {hardButton && !usedWord && isAllow && !isRightAnswer ? <button className={isActiveHardBtn ? s.game_btn_active : s.game_btn} onClick={() => this.hardUserWord(data, line)}>Complex</button> : null }
+                    <button className={!showTranslation ? s.game_btn_translaition : s.game_btn_translaition_active} onClick={() => this.toggletranslationButton()}>Show translation</button>
                     {voiceAllow ? <button className={!sound ? s.game_btn_audio : s.game_btn_audio_active} onClick={(event) => this.toggleSpeaking(event)}><i className="fas fa-volume-up"/></button> : null}
                 </div>
                 <div className={s.complexity_btns}>
-                    {isRightAnswer && isCompl ? <button  className={isActiveAgainBtn ? s.game_btn_active : s.game_btn} onClick={(event) => this.setComplexityOfWord(event, data, line)}>Снова</button> : null}
-                    {isRightAnswer && isCompl ? <button  className={isActiveBadBtn ? s.game_btn_active : s.game_btn} onClick={(event) => this.setComplexityOfWord(event, data, line)}>Трудно</button> : null}
-                    {isRightAnswer && isCompl ? <button  className={isActiveGoodBtn ? s.game_btn_active : s.game_btn} onClick={(event) => this.setComplexityOfWord(event, data, line)}>Хорошо</button> : null}
-                    {isRightAnswer && isCompl ? <button  className={isActiveEasyBtn ? s.game_btn_active : s.game_btn} onClick={(event) => this.setComplexityOfWord(event, data, line)}>Легко</button> : null}
+                    {isRightAnswer && isCompl ? <button  className={isActiveAgainBtn ? s.game_btn_active : s.game_btn} onClick={(event) => this.setComplexityOfWord(event, data, line)}>Again</button> : null}
+                    {isRightAnswer && isCompl ? <button  className={isActiveBadBtn ? s.game_btn_active : s.game_btn} onClick={(event) => this.setComplexityOfWord(event, data, line)}>Hard</button> : null}
+                    {isRightAnswer && isCompl ? <button  className={isActiveGoodBtn ? s.game_btn_active : s.game_btn} onClick={(event) => this.setComplexityOfWord(event, data, line)}>Good</button> : null}
+                    {isRightAnswer && isCompl ? <button  className={isActiveEasyBtn ? s.game_btn_active : s.game_btn} onClick={(event) => this.setComplexityOfWord(event, data, line)}>Easy</button> : null}
                 </div>
                 <div className={s.result_btns}>
-                    {showWordButton && !isRightAnswer && isAllow ? <button className={s.game_btn} onClick={() => this.toggleAnswer(data,line)}>Показать ответ</button> : null}
-                    {!isRightAnswer && isAllow ? <button className={s.game_btn} type="button" onClick={() => this.increment(data,line)}>Ответить</button> : null}
+                    {showWordButton && !isRightAnswer && isAllow ? <button className={s.game_btn} onClick={() => this.toggleAnswer(data,line)}>Show answer</button> : null}
+                    {!isRightAnswer && isAllow ? <button className={s.game_btn} type="button" onClick={() => this.increment(data,line)}>Answer</button> : null}
                 </div>
                 <ProggresBarContainer className={s.progress_bar}>
                     {this.state.match}
@@ -402,17 +403,17 @@ export default class Settings extends React.Component {
                 </ProggresBarContainer>
             </div>
         </div>) : (<div className={s.card}>
-                <h2 className={s.card_word}>Ура! На сегодня всё.</h2>
-                <p className={s.card_word}>Карточек завершено - {match}</p>
-                <p className={s.card_word_error}>Сделано ошибок - {mistake}</p>
-                <p className={s.card_word_miss}>Карточек пропущено - {miss}</p>
-                <p className={s.card_word}>Процент правильных ответов - {match > 0 ? ((match - mistake - miss)/match * 100).toFixed() : 0}%</p>
-                <p className={s.card_word}>Есть ещё новые карточки, но дневной лимит исчерпан. Вы можете увеличить лимит в настройках, но, пожалуйста, имейте в виду, что чем больше новых карточек вы просмотрите, тем больше вам надо будет повтороять в ближайшее время.</p>
-                <p className={s.card_word}>Для обучения сверх обычного расписания, нажмите кнопку 'Учить ещё' ниже</p>
+                <h2 className={s.card_word}>Hooray! That's all for today.</h2>
+                <p className={s.card_word}>Cards Completed - {match}</p>
+                <p className={s.card_word_error}>Made mistakes - {mistake}</p>
+                <p className={s.card_word_miss}>Cards Missed - {miss}</p>
+                <p className={s.card_word}>Percentage of correct answers - {match > 0 ? ((match - mistake - miss)/match * 100).toFixed() : 0}%</p>
+                <p className={s.card_word}>There are still new cards, but the daily limit has been reached. You can increase the limit in the settings, but please keep in mind that the more new cards you look at, the more you will need to repeat in the near future.</p>
+                <p className={s.card_word}>To study beyond the usual timetable, click on the 'Learn More' button below.</p>
                 <div className={s.game_btn_inner}> 
-                    <button className={s.game_btn} onClick={() => this.continueGame()}>Учить ещё</button>
-                    <button className={s.game_btn}><Link to="/app-words">Словарь</Link></button>
-                    <button className={s.game_btn}><Link to="/">На главную</Link></button>
+                    <button className={s.game_btn} onClick={() => this.continueGame()}>Learn More</button>
+                    <button className={s.game_btn}><Link to="/app-words">Vocabulary</Link></button>
+                    <button className={s.game_btn}><Link to="/">Promo page</Link></button>
                 </div>
         </div>)
 
@@ -424,7 +425,7 @@ export default class Settings extends React.Component {
     };
 
     async increment(data, line) {
-        const {answer, stopAudio, meaningAudio, audioExample, answerButton, countOfCards, percentage, count, repeat, endGame, customLevelWords, usedWord, match, mistake, isRightAnswer, complexity, onlyNewWords} = this.state;
+        const {answer, stopAudio, meaningAudio, audioExample, countOfCards, percentage, count, repeat, customLevelWords, usedWord, match, mistake, complexity} = this.state;
         this.setState({isActiveAgainBtn: false})
         this.setState({isActiveBadBtn: false})
         this.setState({isActiveGoodBtn: false})
@@ -480,6 +481,7 @@ export default class Settings extends React.Component {
 
             // Произносит слово и предложения
             if(stopAudio) {
+                this.setState({edit: false})
                 await this.sayWord(data[line].word)
                 if (meaningAudio && this.myRef.current) {
                 await this.sayWord(data[line].textMeaning)
@@ -523,6 +525,10 @@ export default class Settings extends React.Component {
                         }
                     }
                     this.setState({isRightAnswer: false});
+                    this.setState({edit: true})
+                    if (this.myRef.current) {
+                        this.myRef.current.focus();
+                    }
                 }
             } else {
                 speechSynthesis.cancel()
@@ -567,7 +573,7 @@ export default class Settings extends React.Component {
     setComplexityOfWord(event, data, line) {
         const {usedWord, count, countOfCards, repeat} = this.state;
         if (!this.state.currentWord.optional || !usedWord) {
-            if (event.target.textContent === 'Снова') {
+            if (event.target.textContent === 'Again') {
                 this.setState({isActiveAgainBtn: true})
 
                 setTimeout(() => {
@@ -599,7 +605,10 @@ export default class Settings extends React.Component {
                         }
                     }
                     this.setState({isRightAnswer: false});
-
+                    this.setState({edit: true})
+                    if (this.myRef.current) {
+                        this.myRef.current.focus();
+                    }
                 }, 1000)
                 
 
@@ -611,7 +620,7 @@ export default class Settings extends React.Component {
                 });
             } 
 
-            if (event.target.textContent === 'Трудно') {
+            if (event.target.textContent === 'Hard') {
                 this.setState({isActiveBadBtn: true})
                  
                 setTimeout(() => {
@@ -643,7 +652,10 @@ export default class Settings extends React.Component {
                         }
                     }
                     this.setState({isRightAnswer: false});
-
+                    this.setState({edit: true})
+                    if (this.myRef.current) {
+                        this.myRef.current.focus();
+                    }
                 }, 1000)
                 
                 this.updateUserWord({
@@ -653,7 +665,7 @@ export default class Settings extends React.Component {
                 });
             } 
     
-            if (event.target.textContent === 'Хорошо') {
+            if (event.target.textContent === 'Good') {
                 this.setState({isActiveGoodBtn: true})
                 setTimeout(() => {
                     // Скрывает слово 
@@ -684,7 +696,10 @@ export default class Settings extends React.Component {
                         }
                     }
                     this.setState({isRightAnswer: false});
-
+                    this.setState({edit: true})
+                    if (this.myRef.current) {
+                        this.myRef.current.focus();
+                    }
                 }, 1000)
                 this.updateUserWord({
                     userId: this.state.userId,
@@ -693,7 +708,7 @@ export default class Settings extends React.Component {
                 });
             }
     
-            if (event.target.textContent === 'Легко') {
+            if (event.target.textContent === 'Easy') {
                 this.setState({isActiveEasyBtn: true})
                 setTimeout(() => {
                     // Скрывает слово 
@@ -724,7 +739,10 @@ export default class Settings extends React.Component {
                         }
                     }
                     this.setState({isRightAnswer: false});
-
+                    this.setState({edit: true})
+                    if (this.myRef.current) {
+                        this.myRef.current.focus();
+                    }
                 }, 1000)
                 this.updateUserWord({
                     userId: this.state.userId,
@@ -733,7 +751,7 @@ export default class Settings extends React.Component {
                 });
             }
         } else {
-            if (event.target.textContent === 'Снова') {
+            if (event.target.textContent === 'Again') {
                 this.setState({isActiveAgainBtn: true})
                 
                 setTimeout(() => {
@@ -765,7 +783,10 @@ export default class Settings extends React.Component {
                         }
                     }
                     this.setState({isRightAnswer: false});
-
+                    this.setState({edit: true})
+                    if (this.myRef.current) {
+                        this.myRef.current.focus();
+                    }
                 }, 1000)
                 
                 data.push(data[line]);
@@ -776,7 +797,7 @@ export default class Settings extends React.Component {
                 });
             } 
 
-            if (event.target.textContent === 'Трудно') {
+            if (event.target.textContent === 'Hard') {
                 this.setState({isActiveBadBtn: true})
                  
                 setTimeout(() => {
@@ -808,7 +829,10 @@ export default class Settings extends React.Component {
                         }
                     }
                     this.setState({isRightAnswer: false});
-
+                    this.setState({edit: true})
+                    if (this.myRef.current) {
+                        this.myRef.current.focus();
+                    }
                 }, 1000)
                 
                 this.updateUserWord({
@@ -818,7 +842,7 @@ export default class Settings extends React.Component {
                 });
             } 
     
-            if (event.target.textContent === 'Хорошо') {
+            if (event.target.textContent === 'Good') {
                 this.setState({isActiveGoodBtn: true})
                 setTimeout(() => {
                     // Скрывает слово 
@@ -849,7 +873,10 @@ export default class Settings extends React.Component {
                         }
                     }
                     this.setState({isRightAnswer: false});
-
+                    this.setState({edit: true})
+                    if (this.myRef.current) {
+                        this.myRef.current.focus();
+                    }
                 }, 1000)
                 this.updateUserWord({
                     userId: this.state.userId,
@@ -858,7 +885,7 @@ export default class Settings extends React.Component {
                 });
             }
     
-            if (event.target.textContent === 'Легко') {
+            if (event.target.textContent === 'Easy') {
                 this.setState({isActiveEasyBtn: true})
                 setTimeout(() => {
                     // Скрывает слово 
@@ -889,7 +916,10 @@ export default class Settings extends React.Component {
                         }
                     }
                     this.setState({isRightAnswer: false});
-
+                    this.setState({edit: true})
+                    if (this.myRef.current) {
+                        this.myRef.current.focus();
+                    }
                 }, 1000)
                 this.updateUserWord({
                     userId: this.state.userId,

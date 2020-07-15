@@ -7,6 +7,7 @@ export default class GameModel {
     this.level = level;
     this.round = round;
     this.currentWord = null;
+    this.userWords = null;
     this.questionWords = [];
     this.answerWords = [];
     this.usedPages = [];
@@ -49,7 +50,10 @@ export default class GameModel {
       }
     })
       .then((response) => response.json())
-      .then((words) => words.map((word) => word.optional.word));
+      .then((words) => {
+        this.userWords = words;
+        return words.map((word) => word.optional.word)
+      });
   }
 
   getCollectionWords = (level, page) => {
@@ -121,7 +125,7 @@ export default class GameModel {
       }
 
       const { wordTranslate, id } =  this.currentWord;
-      answers.push({ wordTranslate, id, correct: true });      
+      answers.push({ ...this.currentWord , correct: true });      
       this.shuffle(answers);
       
       return new Promise((resolve) => resolve([this.currentWord, answers]));

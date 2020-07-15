@@ -67,7 +67,7 @@ export default class Words extends React.Component {
         for (let i=0 ; i < count; i++) {
             array.push(star)
         }
-        return (array.map(element => (<span className={s.star}>{element} </span>)))
+        return (array.map((element, index) => (<span key={index} className={s.star}>{element} </span>)))
     }
 
     showWords (array, textOfButton) {
@@ -78,7 +78,7 @@ export default class Words extends React.Component {
         } else if (array === this.state.arrayOfLearnedWords) {
             textOfButton = 'DELETE'
         }
-        return (array.map(element => (<div className={s.word}>
+        return (array.map((element, index) => (<div key={index} className={s.word}>
             {localStorage.image === 'true' ? <span> <img className={s.word_image} src={`https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${element.optional.word.image}`} alt='meaning' /></span>: null}
             <span className={s.word_wraper}> {element.optional.word.word}<i onClick={() => this.playSound(element.optional.word.audio)} className="fas fa-volume-up sound"></i></span> 
             {localStorage.transcription === 'true' ? <span>{element.optional.word.transcription}</span> : null}    
