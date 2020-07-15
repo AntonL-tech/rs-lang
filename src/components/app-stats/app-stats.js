@@ -1,7 +1,5 @@
 import React from 'react';
 import s from './app-stats.module.css';
-// import Header from '../app-header/app-header'
-// import Sidebar from '../app-sidebar/app-sidebar'
 import Page from '../app-page-structure/app-page-structure';
 import BarChart from './BarChart';
 import LineChart from './LineChart';
@@ -45,9 +43,7 @@ function Stats() {
 
   return (
     <Page>
-      {/* <Header/> */}
       <div className={'flex'}>
-        {/* <Sidebar/> */}
         <p>Statistic</p>
         <div className={s.chartsWrapper}>
           <div className={`${s.main} ${s.chartWrapper}`}>

@@ -30,20 +30,22 @@ class SignInForm extends Component {
   render() {
     return (
       <form onSubmit={this.onSubmit} className={s.auth_form}>
-        <label>Login: </label>
-        <input
-          type="text"
-          name="username"
-          placeholder="Login"
-          onChange={this.onChangeValue}
-        />
-        <label>Password: </label>
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={this.onChangeValue}
-        />
+        <div className={s.user_data_wrapper}>
+          <label>Login: </label>
+          <input
+            type="text"
+            name="username"
+            placeholder="Login"
+            onChange={this.onChangeValue}
+          />
+          <label>Password: </label>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={this.onChangeValue}
+          />
+        </div>
         <button type="submit" className={s.button}>
           SignIn
         </button>

@@ -13,6 +13,7 @@ class Auth extends Component {
       token: '',
       redirect: null,
       failureText: '',
+      failureMessage: false,
     };
 
     this.onSignIn = this.onSignIn.bind(this);
@@ -36,7 +37,10 @@ class Auth extends Component {
 
       this.setState({ redirect: '/' });
     } else {
-      this.setState({ failureText: result.data });
+      this.setState({ 
+        failureText: result.data, 
+        failureMessage: true,
+      });
     }
   }
 
@@ -45,7 +49,10 @@ class Auth extends Component {
     if (result.status === 'success') {
       this.onSignIn(userData);
     } else {
-      this.setState({ failureText: result.data });
+      this.setState({ 
+        failureText: result.data,
+        failureMessage: true,
+      });
     }
   }
 
@@ -106,32 +113,51 @@ class Auth extends Component {
   render() {
     let activeClass = `${s.linksItem} ${s.linksItemActive}`;
     return (
-      <div className={s.auth}>
-        {this.state.redirect ? <Redirect to={this.state.redirect} /> : null}
-        <div className={s.links}>
-          <button
-            className={this.state.signin ? activeClass : s.linksItem}
-            onClick={() => {
-              this.setState({ signin: true });
-            }}
-          >
-            Sign In
-          </button>
-          <button
-            className={this.state.signin ? s.linksItem : activeClass}
-            onClick={() => {
-              this.setState({ signin: false });
-            }}
-          >
-            Sign Up
-          </button>
+      <div className={s.container}>
+        <div className={s.content_wrapper}>
+          <div className={s.about_app}>
+            <h1  className={s.header}>RSLang App</h1>
+            <p className={s.description}>
+              The application for learning English words with interval repetition techniques, tracking individual progress and mini-games.            
+            </p>
+          </div>
+          <div className={s.auth}>
+            {this.state.redirect ? <Redirect to={this.state.redirect} /> : null}
+            <div className={s.links}>
+              <button
+                className={this.state.signin ? activeClass : s.linksItem}
+                onClick={() => {
+                  this.setState({ 
+                    signin: true,
+                    failureMessage: false, 
+                  });
+                }}
+              >
+                Sign In
+              </button>
+              <button
+                className={this.state.signin ? s.linksItem : activeClass}
+                onClick={() => {
+                  this.setState({ 
+                    signin: false,
+                    failureMessage: false,
+                  });
+                }}
+              >
+                Sign Up
+              </button>
+            </div>
+            {this.state.signin ? (
+              <SignInForm onSubmit={this.onSignIn} />
+            ) : (
+              <SignUpForm onSubmit={this.onSignUp} />
+            )}
+            {this.state.failureMessage ? (
+              <div className={s.failure}>{this.state.failureText}</div>
+            ) : null}
+            
+          </div>
         </div>
-        {this.state.signin ? (
-          <SignInForm onSubmit={this.onSignIn} />
-        ) : (
-          <SignUpForm onSubmit={this.onSignUp} />
-        )}
-        <div className={s.failure}>{this.state.failureText}</div>
       </div>
     );
   }

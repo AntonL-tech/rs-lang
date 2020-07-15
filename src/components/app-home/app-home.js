@@ -5,7 +5,7 @@ import Page from '../app-page-structure/app-page-structure';
 const Home = () => {
     return (
         <div>
-            <Page>
+            <Page openedPage='home'>
                 <Promo />
             </Page>
         </div>

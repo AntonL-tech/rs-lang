@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import Header from '../app-header/app-header'
-import Sidebar from '../app-sidebar/app-sidebar'
-import Burger from '../app-header/header-burger/header-burger'
+import Header from '../app-header/app-header';
+import Sidebar from '../app-sidebar/app-sidebar';
+import Burger from '../app-header/header-burger/header-burger';
+import s from './app-page-structure.module.css';
 
 class Page extends Component {
   constructor(props) {
@@ -16,13 +17,17 @@ class Page extends Component {
   }
 
   render() {
+    const { isSidebarOpen } = this.state;
+    const { openedPage, children} = this.props;
+    
+
     return (
         <div>
-            <Burger  showMenu={this.toggleMenu} isSidebarOpen={this.state.isSidebarOpen} />
+            <Burger  showMenu={this.toggleMenu} isSidebarOpen={isSidebarOpen} />
             <Header/>
-            <div  className={'flex'}>
-                <Sidebar isOpen={this.state.isSidebarOpen} />
-                {this.props.children}
+            <div  className={s.flex}>
+                <Sidebar isOpen={isSidebarOpen} openedPage={openedPage}/>
+                {children}
             </div>
         </div>
     )

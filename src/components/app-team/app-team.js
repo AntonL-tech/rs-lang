@@ -40,7 +40,7 @@ class Team extends React.Component {
 
     render() {
         const ourTeamBlocks = cards.map((elem, i, array) => (
-            <div className={s.teamBlocks}>
+            <div className={s.teamBlocks} key={`${elem}${i}`}>
                 <div className={s.imgBlock}>
                     <img className={s.image} src={elem.image} alt='' />
                 </div>
@@ -52,8 +52,8 @@ class Team extends React.Component {
 
         return (
 
-            <Page>
-                <div className={'flex'}>
+            <Page openedPage='team'>
+                <div className={s.flex}>
                     <div className={s.wrap}>
                         <div className={s.contentContainer}>
                             <div className={s.mainContainer}>{ourTeamBlocks}</div>

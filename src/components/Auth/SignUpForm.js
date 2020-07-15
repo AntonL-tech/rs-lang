@@ -63,7 +63,7 @@ class SignUpForm extends Component {
           onChange={this.onChangeValue}
         />
         <span>{this.state.errorText}</span>
-        <p>
+        <p className={s.passwordInfo}>
           The password must contain at least 8 characters, at least one
           uppercase letter, one uppercase letter, one number and one special
           character from + -_ @ $!% *? & #.,;: [] {}

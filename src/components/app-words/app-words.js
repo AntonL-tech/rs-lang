@@ -139,8 +139,8 @@ export default class Words extends React.Component {
     render() {
         const {arrayOfDeletedWords, arrayOfHardWords, show, arrayOfLearnedWords, deletedWords, hardWords, learnedWords} = this.state;
         return (
-            <Page>
-                <div className={'flex'}>
+            <Page openedPage='vocabluary'>
+                <div className={s.flex}>
                     <div className={s.words_inner}>
                         <div className={s.words_nav}>
                             <button className={deletedWords ? s.nav_btn_active : s.nav_btn} onClick={(event) => this.showContent(event)}>Deleted words</button>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const StyledBurger = styled.div`
@@ -10,7 +10,7 @@ const StyledBurger = styled.div`
   justify-content: space-around;
   flex-flow: column nowrap;
   position: fixed;
-  top: 20px;
+  top: 15px;
   left: 15px;
   div {
     width: 2rem;

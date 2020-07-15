@@ -1,6 +1,5 @@
 .wrap {
     width: 100%;
-    min-height: 100vh;
     background-image: url('./Assets/tttt.jpg');
     background-size: cover;   
     display: flex;
@@ -56,4 +55,20 @@
 
 .contentContainer {
     margin: 75px 10vh 0;
+    display: flex;
+}
+
+.flex {
+    width: 100%;
+    display: flex;
+}
+
+@media (max-width: 375px) {
+    .contentContainer {
+        margin-top: 45px;
+    }
+
+    .teamBlocks {
+        margin: 20px 0;
+    }
 }

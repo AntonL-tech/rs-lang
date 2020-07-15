@@ -1,5 +1,5 @@
 .words_inner {   
-    padding: 80px;
+    padding: 80px 0 0 10vh;
     width: 100%;
     min-height: 100vh;
     background: #ffffff;
@@ -17,14 +17,14 @@
     border-radius: 10px;
     font-family: 'Pangolin', cursive;
     font-size: 25px;
-    padding: 25px 25px;
+    padding: 25px 0;
     flex-wrap: wrap;
 }
 
 .words_content {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .word_button {
@@ -109,6 +109,12 @@ i {
     height: 250px;
 }
 
+.flex {    
+  width: 100%;
+  display: flex;
+  box-sizing: border-box;
+}
+
 
 @media (max-width:790px) {
     .words_content {
@@ -118,26 +124,34 @@ i {
     .word {
         width: 390px;
     }
+
+    .nav_btn, .nav_btn_active {
+        margin: 0 5px;
+    }
 }
 
-@media (max-width:340px) {
+@media (max-width: 375px) {
+    .words_inner {   
+        padding-top: 65px;
+    }
+
     .words_nav {
         flex-direction: column;
         justify-content: end;
     }
     .nav_btn {
         font-size: 15px;
-        margin: 0 -40px 5px 0;
+        margin-bottom: 5px;
     }
 
     .nav_btn_active {
-        font-size: 15px;
-        margin: 0 -40px 5px 0;
+        font-size: 15px;        
+        margin-bottom: 5px;
     }
 
     .words_item {
         font-size: 15px;
-        margin: 0 -40px 0 0;
+        margin: 0;
     }
 
     .word_image {
@@ -148,10 +162,16 @@ i {
     .word {
         margin-top: 15px; 
         padding: 20px 10px;
-        width: 195px;
+        width: 280px;
     }
 
     .star i {
         margin-left: 3px;
+    }
+}
+
+@media (max-width: 765px) {
+    .words_inner {   
+        padding-left: 0;
     }
 }

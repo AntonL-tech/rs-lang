@@ -1107,7 +1107,7 @@ export default class Settings extends React.Component {
         </div>);
 
         return (
-            <Page>
+            <Page openedPage='mainApp'>
                 <div className={s.container}>
                     <div className={s.form_inner}>
                         {page}
