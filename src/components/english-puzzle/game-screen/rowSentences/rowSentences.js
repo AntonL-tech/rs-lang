@@ -47,7 +47,7 @@ export default class RowSentences extends Component {
                             }
                         }}
                     >
-                        {word}
+                        <span>{word}</span>
                     </div>
 
                 ))}

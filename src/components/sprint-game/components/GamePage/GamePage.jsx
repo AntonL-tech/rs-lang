@@ -11,9 +11,12 @@ import audioFinish from '../../files/audio/finish.mp3';
 import audioNewLevel from '../../files/audio/newLevel.mp3';
 import audioTikTak from '../../files/audio/tikTak.mp3';
 import { BrowserRouter as Router, Redirect } from 'react-router-dom';
+import { updateUserMiniStatistic } from '../../../app-stats/statisticApi';
+
 
 const intervals = [];
 const user = 'user';
+const sprint = 'sprint';
 
 class GamePage extends Component {
     constructor(props) {
@@ -64,6 +67,7 @@ class GamePage extends Component {
                     badWord: [],
                     score: 0,
                     goodWordsScore: 0,
+                    bestGoodWordsScore: 0,
                     classMark: false,
                     audio: this.props.location.aboutProps.audioStatus,
                     id: localStorage.userId,
@@ -102,10 +106,11 @@ class GamePage extends Component {
                 this.playAudio(audioTikTak);
             }
         }
-        if (this.state.time === 0 || this.state.goodWordsScore === 80) {
+        if (this.state.time === 0 || this.state.step === 80) {
             if (this.state.audio) {
                 this.playAudio(audioFinish);
             }
+            updateUserMiniStatistic(sprint, this.state.goodWord.length, this.state.bestGoodWordsScore);
             intervals.forEach(clearInterval);
         }
 
@@ -160,9 +165,11 @@ class GamePage extends Component {
             this.playAudio(audioGot);
         }
         const wordList = [...this.state.goodWord];
+        const newGodWordScore = this.state.goodWordsScore + 1;
         this.setState({
             goodWord: wordList.concat([this.state.wordList[this.state.wordId]]),
             goodWordsScore: this.state.goodWordsScore + 1,
+            bestGoodWordsScore: newGodWordScore > this.state.bestGoodWordsScore ? newGodWordScore : this.state.bestGoodWordsScore,
             score: this.state.score + this.calcNum(),
         });
         if (this.state.goodWordsScore === 3 || this.state.goodWordsScore === 7 || this.state.goodWordsScore === 11) {
