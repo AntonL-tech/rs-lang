@@ -11,7 +11,7 @@
     align-items: center;
     justify-content: center;
     user-select: none;
-    border: solid 1px #37393d;
+    outline: solid 1px #37393d;
 }
 
 .success_color {
@@ -26,7 +26,7 @@
     align-items: center;
     justify-content: center;
     user-select: none;
-    border: solid 1px #37393d;
+    outline: solid 1px #37393d;
 }
 
 .drag_word {
@@ -98,4 +98,45 @@
 
 .error_color+.success_color {
     margin-left: 6px;
+}
+
+@media screen and (max-width: 940px) {
+    .error_color,
+    .success_color,
+    .drag_word  {
+        font-size: 12px;
+    }
+    .error_color>span,
+    .success_color>span,
+    .drag_word>span  {
+        z-index: 10;
+        margin-left: 10px;
+    }
+}
+
+@media screen and (max-width: 565px) {
+    .error_color,
+    .success_color,
+    .drag_word  {
+        font-size: 8px;
+    }
+    .error_color>span,
+    .success_color>span,
+    .drag_word>span  {
+        margin-left: 8px;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .error_color,
+    .success_color,
+    .drag_word  {
+        font-size: 7px;
+    }
+    .error_color>span,
+    .success_color>span,
+    .drag_word>span  {
+        margin-left: 5px;
+    }
+
 }
