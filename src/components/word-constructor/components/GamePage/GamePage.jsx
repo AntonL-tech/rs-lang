@@ -12,12 +12,15 @@ import audioFinish from '../../files/audio/finish.mp3';
 import audioNewLevel from '../../files/audio/newLevel.mp3';
 import audioTikTak from '../../files/audio/tikTak.mp3';
 import {BrowserRouter as Router, Redirect} from 'react-router-dom';
+import {updateUserMiniStatistic} from '../../../app-stats/statisticApi';
 
 const intervals = [];
 const block = 'block';
 const bad = 'bad';
 const good = 'good';
 const user = 'user';
+const wordConstructor = 'wordConstructor';
+
 class GamePage extends Component {
     constructor(props) {
         super(props);
@@ -75,6 +78,7 @@ class GamePage extends Component {
                 badWord: [],
                 score: 0,
                 goodWordsScore: 0,
+                bestGoodWordsScore: 0,
                 classMark: block,
                 audio: this.props.location.aboutProps.audioStatus,
                 word: elSort[0].word.split('').map((el) => ''),
@@ -118,6 +122,7 @@ class GamePage extends Component {
                 this.playAudio(audioFinish);
             }
             intervals.forEach(clearInterval);
+            updateUserMiniStatistic(wordConstructor, this.state.goodWord.length, this.state.bestGoodWordsScore)
         }
 
         this.setState({
@@ -164,15 +169,21 @@ class GamePage extends Component {
                 score: this.state.score + 1
             });
             if(copyWord.join('') === this.state.wordList[id].word){
+                console.log(this.state.bestGoodWordsScore)
                 if (this.state.wordError > 0 ) {
-                    this.setState({badWord: this.state.badWord.concat(this.state.wordList[id])}) 
+                    this.setState({badWord: this.state.badWord.concat(this.state.wordList[id]),
+                        goodWordsScore: 0}) 
 
                     if (this.props.location.aboutProps.level === user){
                         updateWord(this.state.wordList[this.state.wordId].id)
                     }
 
                 } else {
-                    this.setState({goodWord: this.state.goodWord.concat(this.state.wordList[id])});
+                    const newGoodWordsScore = this.state.goodWordsScore+1;
+                    
+                    this.setState({goodWord: this.state.goodWord.concat(this.state.wordList[id]),
+                        goodWordsScore: newGoodWordsScore,
+                        bestGoodWordsScore: newGoodWordsScore > this.state.bestGoodWordsScore ? newGoodWordsScore : this.state.bestGoodWordsScore});
                 }
                 const newId = this.state.level === 0 ? id + 1 : (this.state.success + (this.state.level * 10) + 1)
                 const newLevel = (this.state.success + 1 ) % 6 === 0 && this.state.level < 4 ? this.state.level + 1 :  this.state.level;
