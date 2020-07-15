@@ -47,6 +47,7 @@
   padding: 0 22px;
   width: 80%;
   overflow-y: scroll;
+  box-sizing: border-box;
 }
 
 .answersTitle {
@@ -151,7 +152,15 @@
   }
 
   .answers {
-    padding: 0 10px;
+    padding: 0 15px;
     width: 95%;
+  }
+
+  .results {
+    padding: 15px 0 30px;
+  }
+
+  .statistics-page_answers__2_mU8 {
+    width: 100%;
   }
 }

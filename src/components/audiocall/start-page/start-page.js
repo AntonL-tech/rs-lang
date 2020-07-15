@@ -31,6 +31,6 @@ export default class StartPage extends Component {
           </div>
         </div>
       </>
-    )
+    ) 
   }
 }

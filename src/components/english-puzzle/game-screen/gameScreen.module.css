@@ -125,7 +125,7 @@
 }
 
 .game_sentence {
-    min-height: 25px;
+    min-height: 50px;
     margin-bottom: 5px;
 }
 
@@ -149,9 +149,9 @@
 
 .game_container {
     display: flex;
-    height: 400px;
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    height: 410px;
 }
 
 .game_board {
@@ -166,7 +166,8 @@
     align-items: center;
     justify-content: space-between;
     height: 40px;
-    width: 100%
+    width: 100%;
+    margin-bottom: 1px;
 }
 
 .take_puzzles {
@@ -195,6 +196,7 @@
     justify-content: center;
     align-items: center;
     color: #09d3ac;
+    margin-bottom: 1px;
 }
 
 .drag_word {
@@ -264,16 +266,41 @@
 }
 
 @media screen and (max-width: 940px) {
-    .game_wrapper {
-        visibility: hidden;
+    .drag_word {
+        font-size: 12px;
+    }
+    .drag_word>span  {
+        z-index: 10;
+        margin-left: 10px;
+    }
+    
+}
+
+@media screen and (max-width: 565px) {
+    .drag_word  {
+        font-size: 8px;
+    }
+    .drag_word>span  {
+        margin-left: 8px;
+    }
+    .game_numbering {
+        display: none;
+    }
+    .take_puzzles {
+        margin-left: 0px;
+        width: 100%;
     }
 }
 
-@media screen and (min-width: 940px) {
-    .info_screen {
-        visibility: hidden;
+@media screen and (max-width: 380px) {
+    .drag_word  {
+        font-size: 7px;
+    }
+    .drag_word>span  {
+        margin-left: 5px;
     }
 }
+
 
 .info_screen {
     position: absolute;

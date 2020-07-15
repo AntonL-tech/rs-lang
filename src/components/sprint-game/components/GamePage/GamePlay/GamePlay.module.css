@@ -222,7 +222,7 @@ button:active, button:focus,
 .linkEl:nth-child(2){
     transform: rotate(-45deg);
     top: -18px;
-    left: 5px;
+    left: 10px;
 }
 
 .link:hover .linkEl{
