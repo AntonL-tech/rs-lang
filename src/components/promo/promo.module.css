@@ -168,10 +168,17 @@
   border-radius: 10px;
   background-color: #fffdf4;
   box-shadow: 0 0 5px #f5deb3;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .video {
+	outline: none;
 	margin-bottom: 20px;
+	width: 750px;
+	height: 500px;
 }
 
 .linkRepoTitle {
@@ -813,9 +820,22 @@
 	.cssSlider .slides {
     height: 170px;
 	}
+
+	.video {
+		width: 550px;
+		height: 300px;
+	}
 }
 
 @media (max-width: 765px) {
+	.promoVideo{
+		padding: 20px;
+	}
+	.video {
+		width: 100%;
+		height: auto;
+	}
+	
 	.promoWrapper {
 		margin: 60px 5px 10px;
 	}
