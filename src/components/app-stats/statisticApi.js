@@ -22,8 +22,6 @@ export async function updateUserStatistic(name, stat) {
     statistic.optional[name].stats.push(stat);
   }
 
-  // delete statistic.id;
-
   console.log(statistic);
 
   const rawResponse = await fetch(
