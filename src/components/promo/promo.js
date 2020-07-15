@@ -93,12 +93,12 @@ export default class Promo extends Component {
       { 
         key: 'audiocall', 
         name: 'audiocall', 
-        description: 'During the game you\'ll mproves your listening skills'
+        description: 'During the game you\'ll mprove your listening skills. '
       }, 
       { 
         key: 'sprint',
         name: 'sprint',
-        description: 'In 60 seconds you need to specify as many correct translation options as possible. Then larger the series of correct answers, then more points are given for each answer.' 
+        description: 'You have 60 seconds to specify as many correct translation options as possible. The larger series of correct answers, the more points are given for each answer.' 
       }, 
       { 
         key: 'speakit',
@@ -174,14 +174,14 @@ export default class Promo extends Component {
               <div className={s.promoHeader}>
                 <h2 className={s.promoHeaderTitle}>Welcome to RSLang</h2>
                 <p className={s.mainDescription}>
-                  This is an application for learning English words with interval repetition techniques, tracking individual progress and mini-games.
+                  It is an application for learning English words with interval repetition techniques, mini-games and with functionality for tracking individual progress.
                 </p>
               </div>        
               <div className={s.promoOpportunities}>
                 <div className={s.promoAboutWrapper}>                        
                   <h2 className={s.aboutHeader}>About application</h2>
                   <p className={s.aboutDescription}>
-                    This application contains training for learning 3600 commonly used English words, and is based on the collection of "4000 essential english words". The first 400 most frequently used words were not included in the collection, because it is believed that this is the basic stock of an adult left over from a school / university or previous attempts to learn a language.
+                    The application contains trainings for learning 3600 commonly used English words and is based on the collection of "4000 essential english words". The first 400 most frequently used words are not included in the collection. It is believed that they represent basic vocabulary, that is left after previous attempts to learn language in school/ university or others.
                   </p>
                 </div>        
                 <div>
@@ -189,7 +189,7 @@ export default class Promo extends Component {
                     <h3 className={s.mainApplicationHeader}>Main application</h3>
                     <div className={s.mainAppDescriptionBlock}>
                       <p className={s.mainApplicationDescription}>
-                        The main functionality of the application is to learn and repeat words. It is presented in the form of cards with words to be guessed. Word cards contain both new words and words that need to be repeated. During the game, both knowledge of English words and their spelling is checked.  
+                        The main functionality of the application is to learn and repeat words. It is presented in the form of cards with words to be guessed. Word cards contain both new words and words that need to be repeated. During the game, both knowledge of English words and their spelling are checked.
                       </p>
                       <div className={s.mainAppImgBlock}>
                         <img className={s.mainAppImg} src={owl} alt='Illustration - owl' />
@@ -197,7 +197,7 @@ export default class Promo extends Component {
                     </div>
                     <div className={s.mainAppDescriptionBlock}>
                       <p className={s.mainApplicationDescription}>
-                        In the application settings, you can specify the number of new words that you plan to learn per day, and the maximum number of cards with words per day. You can also indicate what information is displayed on cards with words: translation of a word, sentence with an explanation of the meaning of the word, sentence with an example of the use of the word being studied.
+                        You can specify the number of new words that you plan to learn per day and the maximum number of cards with words per day in the application settings. You can also indicate what information has to be displayed on cards with words: translation of the word, sentence with an explanation of the word meaning, sentence with an example of the word use case.
                       </p>
                       <div className={s.mainAppImgBlock}>
                         <img className={s.mainAppImg} src={settingsImg} alt='Illustration - settings' />
@@ -205,7 +205,7 @@ export default class Promo extends Component {
                     </div>
                     <div className={s.mainAppDescriptionBlock}>
                       <p className={s.mainApplicationDescription}>
-                        The application has a dictionary that contains information on which words were learned, which were removed from the study, and which were marked as difficult words. The user can manage the words in his dictionary: delete from the study, return difficult words to the general list of words to be studied.
+                        The application has a dictionary that contains information on what words were learned, what were removed from the study and what were marked as difficult words. The user can manage the words in his dictionary: delete from the study, return difficult words to the general list of words to be studied.
                       </p>
                       <div className={s.mainAppImgBlock}>
                           <img className={s.mainAppImg} src={books} alt='Illustration - books' />
@@ -213,7 +213,7 @@ export default class Promo extends Component {
                     </div>
                     <div className={s.intervalMethodDescription}>   
                       <p className={s.intervalMethod}>
-                        The application implements a technique of interval repetition for better memorization of words. In the process of learning words, the user has the opportunity to mark the word as difficult, medium-difficult, easy, or repeat it again. If the user marks the word as easy, it will appear in the study after 21 days. If the user marks the word as medium-heavy, it will appear in the study after 7 days. If the word is marked out as heavy, it will appear in the study the next day. If the user chooses to repeat the word again, it will appear in the current workout.
+                        The application implements a technique of interval repetition for better memorization of words. In the process of learning words, the user has the opportunity to mark the word as difficult, medium difficulty, easy or repeat it again. If the user marks the word as easy, it will appear in the study after 21 days. If the user marks the word as medium-heavy, it will appear in the study after 7 days. If the word is marked out as heavy, it will appear in the study the next day. If the user chooses to repeat the word again, it will appear in the current workout.
                       </p>
                     </div>  
                   </div>                   
@@ -221,7 +221,7 @@ export default class Promo extends Component {
                 <div className={s.games}>
                   <h3 className={s.gamesHeader}>Games</h3>
                   <p className={s.gamesDescription}>
-                    There are 6 mini games in the priory that will help you consolidate the previously acquired knowledge. You can play mini-games with previously learned words or by choosing one of six presented difficulty levels.
+                    There are 6 mini games in the application that help you to consolidate the previously acquired knowledge. You can play mini-games with previously learned words or by choosing one of the six presented difficulty levels.
                   </p>        
                   <div className={s.gameSlider}>
                     <div className={s.gameSlides}>        
@@ -240,7 +240,7 @@ export default class Promo extends Component {
                   <h3 className={s.statisticsHeader}>Statistics</h3>                          
                   <div className={s.statisticsDescriptionBlock}>
                     <p className={s.statisticsDescription}>
-                      In the application there is a statistics page where, in the form of a graph, information on the learning outcomes for each day is presented. Also, the statistics page provides long-term statistics of mini-games, you can see when and how many times they played a mini-game and with what result.
+                      There is a statistics page in the application, where you can find information on the learning outcomes for every day in the form of a graph. Moreover this page provides long-term statistics on mini-games, you can see when and how many times you played a mini-game and the results.
                     </p>
                     <div className={s.statsImgBlock}>
                       <img className={s.statisticsImg} src={graph} />
