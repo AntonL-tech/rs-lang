@@ -4,8 +4,7 @@ import graph from './assets/stat2.png';
 import owl from './assets/learn/owl3.png';
 import settingsImg from './assets/learn/settings.png';
 import books from './assets/books/book.png';
-import videoImg from './assets/vid.jpg';
-
+import video from './assets/rs-lang.mp4'
 class GallerySlider extends Component {
   constructor(props) {
     super(props)
@@ -251,7 +250,9 @@ export default class Promo extends Component {
               </div>
               <div>                           
                 <div className={s.promoVideo}>
-                  <img className={s.video} src={videoImg} />
+                <video className={s.video} controls >
+                  <source src={video} type="video/mp4"/>
+                </video>
                   <div>
                     <span className={s.linkRepoTitle}>Repository link: </span>
                     <a className={s.linkRepo} href='https://github.com/AntonL-tech/rs-lang' target='_blank'>https://github.com/AntonL-tech/rs-lang</a>
