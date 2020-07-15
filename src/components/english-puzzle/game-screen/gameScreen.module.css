@@ -18,6 +18,7 @@
     height: 100%;
     max-width: 1440px;
     margin: 0 auto;
+
 }
 
 .menu_wrapper {
@@ -42,8 +43,8 @@
     color: #09d3ac;
     width: 70px;
     background-color:  #37393d;
+    transition: 0.3s;
 }
-
 
 .choose_level {
     width: 55px;
@@ -59,6 +60,15 @@
     line-height: 17px;
     padding-left: 5px;
     margin-right: 10px;
+    transition: 0.3s;
+}
+
+.choose_level:hover,
+.chose_btn:hover,
+.setting_button:hover,
+.game_speaker:hover,
+.game_button:hover {
+    transform: scale(1.2);
 }
 
 .setting_button {
@@ -68,6 +78,17 @@
     margin-left: 10px;
     background-size: contain;
     background-repeat: no-repeat;
+    transition: 0.3s;
+}
+
+.game_button {
+    height: 40px;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-left: 10px;
+    transition: 0.3s;
+    background-color: #fff;
+    padding: 0 5px;
 }
 
 .megafon_btn {
@@ -75,13 +96,13 @@
     background-image: url(../assets/megaphone.svg);
 }
 
-.active_btn {
-    background-color: #09d3ac;
+.non_active_btn {
+    background-color: red;
 }
 
 .translate_btn {
     width: 50px;
-    background-image: url(../assets/translate.svg);
+    background-image: url(../assets/text.svg);
 }
 
 .song_btn {
@@ -93,7 +114,6 @@
     width: 50px;
     background-image: url(../assets/photo.svg);
 }
-
 
 .game_wrapper {
     display: flex;
@@ -124,6 +144,7 @@
     background-repeat: no-repeat;
     width: 50px;
     background-image: url(../assets/speaker.svg);
+    transition: 0.3s;
 }
 
 .game_container {
@@ -228,4 +249,35 @@
 
 .vis_hidden {
     visibility: hidden;
+}
+
+@media screen and (max-width: 509px) {
+    .menu_wrapper {
+        flex-direction: column;
+    }
+    .menu_wrapper>div {
+        margin-bottom: 10px;
+    }
+    .info_screen {
+        margin-top: 20px;
+    }
+}
+
+@media screen and (max-width: 940px) {
+    .game_wrapper {
+        visibility: hidden;
+    }
+}
+
+@media screen and (min-width: 940px) {
+    .info_screen {
+        visibility: hidden;
+    }
+}
+
+.info_screen {
+    position: absolute;
+    top: 40%;
+    left: 10vw;
+    right: 10vw;
 }

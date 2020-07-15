@@ -2,9 +2,10 @@ import React from 'react';
 import Logout from '../Logout';
 import s from './app-header.module.css'
 
-const user = window.localStorage.getItem('email');
 
-function Header() {
+function Header() { 
+  const user = window.localStorage.getItem('email');
+
   return (
     <div className={s.header_inner}>
       <div className={s.header_logo}>RSLang</div>

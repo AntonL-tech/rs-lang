@@ -37,7 +37,7 @@ input:focus {
 
 .title> h1 {
     user-select: none;
-    font-size: 80px;
+    font-size: 8vw;
     color: blue;
 }
 
@@ -66,6 +66,7 @@ input:focus {
   .start_btn:hover {
     scale: 1.2;
   }
+
   .start_btn:after {
     padding: 0;
     content: '';
@@ -77,6 +78,7 @@ input:focus {
     top: 0;
     left: 0;
   }
+
   .start_btn:before {
     -webkit-transition: all 0s ease-in-out;
     -moz-transition: all 0s ease-in-out;
@@ -100,6 +102,7 @@ input:focus {
     -o-transform: translate(0, 0);
     transform: translate(0, 0);
   }
+  
   .start_btn:hover:before, .start_btn:active:before,.start_btn:focus:before {
     -webkit-transition: all 0.4s ease-in-out;
     -moz-transition: all 0.4s ease-in-out;

@@ -5,9 +5,11 @@ import Recognition from './components/Recognition';
 import Stars from './components/Stars';
 import Results from './components/Results';
 import StartScreen from './components/StartScreen';
-import DifficultSelector from './components/DifficultSelector';
 import WordService from './wordsService';
 import { updateUserMiniStatistic } from '../app-stats/statisticApi';
+import Spinner from './components/Spinner';
+import sUI from './ui-speakit.module.css';
+
 class SpeakIt extends Component {
   constructor(props) {
     super(props);
@@ -18,20 +20,27 @@ class SpeakIt extends Component {
       recognizedWord: '',
       showResults: false,
       isStart: true,
-      difficult: '-1',
+      difficult: '',
       hasUserWords: false,
+      uploaded: false,
     };
 
     this.wordService = new WordService();
   }
 
   componentDidMount() {
+    this.checkUserWords();
+  }
+
+  checkUserWords() {
     this.wordService.getUserWordsCount().then((userWordsCount) => {
+      console.log('user words count ', userWordsCount);
+
       if (userWordsCount < 10) {
-        this.setState({ hasUserWords: false });
+        this.setState({ uploaded: true, hasUserWords: false });
         this.selectDifficult('0');
       } else {
-        this.setState({ hasUserWords: true });
+        this.setState({ uploaded: true, hasUserWords: true });
         this.selectDifficult('-1');
       }
     });
@@ -94,18 +103,10 @@ class SpeakIt extends Component {
   };
 
   restart = () => {
-    let lvl = this.state.difficult;
-
-    this.wordService.getRndWordsFromGroup(lvl).then((data) =>
-      this.setState({
-        data: data,
-        difficult: lvl,
-        selectedWord: {},
-        isGame: false,
-        recognizedWord: '',
-        showResults: false,
-      })
-    );
+    this.setState({
+      isStart: true,
+      showResults: false,
+    });
   };
 
   hideStartScreen = () => {
@@ -136,16 +137,17 @@ class SpeakIt extends Component {
     const guessedWordsArr = this.state.data.filter((elem) => elem.guessed);
     const guessedCount = guessedWordsArr.length;
 
-    return (
-      <>
+    return !this.state.uploaded ? (
+      <Spinner />
+    ) : (
+      <div className={sUI.global}>
         {this.state.isStart ? (
-          <StartScreen onClick={this.hideStartScreen} />
+          <StartScreen
+            hasUserWords={this.state.hasUserWords}
+            clickHandler={this.hideStartScreen}
+            changeHandler={this.selectDifficult}
+          />
         ) : null}
-        <DifficultSelector
-          onChange={this.selectDifficult}
-          hasUserWords={this.state.hasUserWords}
-          selectedOption={this.state.difficult}
-        />
         <Stars n={guessedCount}></Stars>
         {this.state.isGame ? (
           <Recognition onRecognition={this.checkWord} />
@@ -160,9 +162,17 @@ class SpeakIt extends Component {
           selectId={this.state.isGame ? null : this.state.selectedWord.id}
           onSelect={this.selectWord}
         />
-        <button onClick={this.restart}>Restart</button>
-        <button onClick={this.startGame}>Start Game!</button>
-        <button onClick={this.showResults}>Results</button>
+        <div className={sUI.btnContainer}>
+          <button className={sUI.button} onClick={this.restart}>
+            Restart
+          </button>
+          <button className={sUI.button} onClick={this.startGame}>
+            Start Game!
+          </button>
+          <button className={sUI.button} onClick={this.showResults}>
+            Results
+          </button>
+        </div>
         {this.state.showResults ? (
           <Results
             errorsWords={errorsWordsArr}
@@ -171,7 +181,7 @@ class SpeakIt extends Component {
             onNewGame={this.restart}
           />
         ) : null}
-      </>
+      </div>
     );
   }
 }
