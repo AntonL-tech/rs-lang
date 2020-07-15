@@ -590,7 +590,7 @@
 }
 
 .choosen {
-	border-color: crimson;
+	border: 2px solid #ed7314;
 }
 
 .thumbnails > li {

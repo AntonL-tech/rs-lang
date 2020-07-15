@@ -22,6 +22,16 @@ class GallerySlider extends Component {
   render() {
     const { slide } = this.props;
     const { currentGallerySlide } = this.state;
+    const slides = [];
+    
+    for (let i = 0; i < 5; i++) {
+      let slideClassNames = `${s[`${slide}${i + 1}`]} ${s.thumbnail}`;
+      if (currentGallerySlide === `${slide}${i + 1}`) {
+        slideClassNames += ` ${s.choosen}`;
+      }
+
+      slides.push(<li className={slideClassNames} onClick={this.changeImage} data-id={`${slide}${i + 1}`} />);
+    }
 
     return (
       <div className={s.gameGallery}>
@@ -32,11 +42,7 @@ class GallerySlider extends Component {
           </ul>
 
           <ul className={s.thumbnails}>
-            <li className={`${s[`${slide}1`]} ${s.thumbnail}`} />
-            <li className={`${s[`${slide}2`]} ${s.thumbnail}`} onClick={this.changeImage} data-id={`${slide}2`}></li>
-            <li className={`${s[`${slide}3`]} ${s.thumbnail}`} onClick={this.changeImage} data-id={`${slide}3`}></li>
-            <li className={`${s[`${slide}4`]} ${s.thumbnail}`} onClick={this.changeImage} data-id={`${slide}4`}></li>
-            <li className={`${s[`${slide}5`]} ${s.thumbnail}`} onClick={this.changeImage} data-id={`${slide}5`}></li>
+            {slides}
           </ul>
         </div>
       </div>
