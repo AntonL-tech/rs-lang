@@ -24,7 +24,9 @@ export default class GameScreen extends Component {
         isResultButton: false,
         sentencesArrayBoard:[], 
         statistic: {falseSentences: [] ,trueSentences: []},
-        audioArray: []
+        audioArray: [],
+        seriesVictoriesSentencesArray: [],
+        seriesVictoryCountArray: []
     }
 
     getRequest =  async (level,page) => {
@@ -148,7 +150,7 @@ export default class GameScreen extends Component {
                 localStorage.setItem('page', +page+1);
             }
         }
-        updateUserMiniStatistic('englishPuzzle',this.state.statistic.trueSentences.length,0)
+        updateUserMiniStatistic('englishPuzzle',this.state.statistic.trueSentences.length,Math.max(...this.state.seriesVictoryCountArray))
     }
 
     onContinue = async () => {
@@ -239,6 +241,16 @@ export default class GameScreen extends Component {
         this.setState({sentencesArrayBoard: board})
 
         if (!colorArray.includes('error')){
+            
+            if (!this.isSeriesVictories(this.state.currentSentences)){
+                
+                let seriesVictoriesSentencesArray = this.state.seriesVictoriesSentencesArray;
+
+                seriesVictoriesSentencesArray.push(this.state.currentSentences);
+                this.setState({seriesVictoriesSentencesArray: seriesVictoriesSentencesArray})
+               
+            }
+
             this.setState({isContinueButton: true})
             if (this.state.currentSentencesIndex === 9){
                 this.setState({isResultButton: true})
@@ -260,6 +272,17 @@ export default class GameScreen extends Component {
         else {
             this.setState({isIgnoranceButton: true})
         }
+    }
+
+    isSeriesVictories = (sentences) => {
+        let isCollected = false;
+        let seriesVictories = this.state.seriesVictoriesSentencesArray;
+        seriesVictories.forEach((item)=>{
+            if (sentences === item){
+             isCollected = true;
+            }
+        })
+        return isCollected;
     }
 
 
@@ -358,6 +381,10 @@ export default class GameScreen extends Component {
 
         this.setState({isContinueButton: true}) 
 
+        let countArray = this.state.seriesVictoryCountArray;
+        countArray.push(this.state.seriesVictoriesSentencesArray.length)
+        this.setState({seriesVictoriesSentencesArray: []})
+        
         const statistic = {...this.state.statistic};
 
         if (!this.isCollectedSentences(this.state.currentSentences)){
@@ -376,7 +403,7 @@ export default class GameScreen extends Component {
         }
     }
 
-    swapBoxes = (fromArray,toArray) => {
+    swapPuzzles = (fromArray,toArray) => {
 
         const board  = [...this.state.sentencesArrayBoard]
         const currentIndex = this.state.currentSentencesIndex; 
@@ -443,7 +470,7 @@ export default class GameScreen extends Component {
             arr: arr,
             index: index
         }
-        this.swapBoxes(fromArray, toArray);
+        this.swapPuzzles(fromArray, toArray);
         return false;
     };
 
