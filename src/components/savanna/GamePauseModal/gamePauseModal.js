@@ -9,10 +9,12 @@ const Modal = ({ title, isOpen, onGameReturn, toMainMenu, subTitle, gamePause, g
 
     return (
         <div>
-            <div class={s.muteIcon} onClick={gameSound}>
+            <div className={s.muteIcon} onClick={gameSound}>
                 {wordBlock}
             </div>
+
             <div className={s.exitGameIcon} onClick={gamePause}></div>
+
             {isOpen && (
                 <div className={s.modalOverlay}>
                     <div className={s.modalWindow}>
