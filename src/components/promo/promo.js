@@ -30,7 +30,7 @@ class GallerySlider extends Component {
         slideClassNames += ` ${s.choosen}`;
       }
 
-      slides.push(<li className={slideClassNames} onClick={this.changeImage} data-id={`${slide}${i + 1}`} />);
+      slides.push(<li className={slideClassNames} onClick={this.changeImage} data-id={`${slide}${i + 1}`} key={`${slide}${i + 1}`}/>);
     }
 
     return (
@@ -213,7 +213,7 @@ export default class Promo extends Component {
                     </div>
                     <div className={s.intervalMethodDescription}>   
                       <p className={s.intervalMethod}>
-                        The application implements a technique of interval repetition for better memorization of words. In the process of learning words, the user has the opportunity to mark the word as difficult, medium difficulty, easy or repeat it again. If the user marks the word as easy, it will appear in the study after 21 days. If the user marks the word as medium-heavy, it will appear in the study after 7 days. If the word is marked out as heavy, it will appear in the study the next day. If the user chooses to repeat the word again, it will appear in the current workout.
+                        The application implements a technique of interval repetition for better memorization of words. In the process of learning words, the user has the opportunity to mark the word as difficult, medium difficulty, easy or repeat it again. There are four buttons in the  game card: "Again", "Hard", "Good", "Easy". If the user marks the word as easy by pressing the "Easy" button, it will appear in the study after 21 days. If the user marks the word as medium-heavy (should be pressed "Good"), it will appear in the study after 7 days. If the word is marked out as heavy (button "Heavy"), it will appear in the study the next day. If the user press "Again", it will appear in the current workout.
                       </p>
                     </div>  
                   </div>                   

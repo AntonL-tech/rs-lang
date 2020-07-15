@@ -16,10 +16,6 @@ const List = ({ words, playAudio }) => {
   return <ul className={s.answersList}>{wordList}</ul>
 }
 
-// const WordBlock = (answers) => {
-
-// }
-
 export default class StatisticsPage extends Component {
   constructor(props) {
     super(props);
