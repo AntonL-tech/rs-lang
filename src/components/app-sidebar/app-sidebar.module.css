@@ -1,0 +1,211 @@
+.sidebar_inner {    
+    height: 100%;   
+    position: fixed;
+    left: 0;
+    z-index: 2;
+}
+
+.sidebar_list {
+    margin: 0;
+    padding: 80px 0 20px;
+    background-color: #44597e;
+    width: 260px;   
+    height: 100%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    box-sizing: border-box;
+    opacity: 0.5;
+    transition: all 0.5s linear;   
+}
+
+.sidebar_list:hover {
+    opacity: 1;
+}
+
+.sidebar_item {
+    margin: auto ;
+    cursor: pointer;
+    width: 200px;
+    transition: all 0.5s linear;  
+}
+
+.sidebar_item  i {  
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    font-size: 6vh;
+    color: #09d3ca;
+}
+
+.sidebar_item a {    
+    height: 100%;
+    font-family: 'Carter One', cursive;
+    color: #09d3ca;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+}
+
+.hideLinkDescription {
+    display: none;
+}
+
+.sidebar_list_open {
+    margin: 0;
+    padding: 80px 0 20px;
+    background-color: #44597e;
+    height: 100%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    box-sizing: border-box;
+    opacity: 1;
+    overflow: hidden;
+    transition: all 0.5s linear;
+    animation: openMenu 0.5s linear;    
+}
+
+.sidebar_list_open li {
+    margin: 0 30px;
+    cursor: pointer;
+    width: 200px;    
+    animation: showMenuTags 0.5s linear;
+}
+
+.sidebar_list_open  i {  
+    margin-right: 10px; 
+}
+
+.sidebar_list_open  span {
+    padding: 0 5px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.sidebar_list_close {
+    width: 10vh;
+}
+
+.sidebar_list_close li {
+    width: 10vh;
+}
+
+.sidebar_list_close a {
+    width: 10vh;
+    text-align: center;
+    display: inline-block;
+}
+
+.sidebar_item {
+    overflow: hidden;
+}
+
+@keyframes openMenu {
+    0% {
+        width: 10vh;
+    }
+
+    100% {
+        width: 260px;
+    }
+}
+
+@keyframes showMenuTags {
+    0% {
+        width: 10vh;
+    }
+
+    100% {
+        width: 200px;
+    }
+}
+
+.home li:nth-child(1) i, .home li:nth-child(1) span {
+    color: #e8ff96;
+}
+
+.mainApp li:nth-child(2) i, .mainApp li:nth-child(2) span {
+    color: #e8ff96;
+}
+
+.games li:nth-child(3) i, .games li:nth-child(3) span {
+    color: #e8ff96;
+}
+
+.vocabluary li:nth-child(4) i, .vocabluary li:nth-child(4) span {
+    color: #e8ff96;
+}
+
+.stats li:nth-child(5) i, .stats li:nth-child(5) span {
+    color: #e8ff96;
+}
+
+.team li:nth-child(6) i, .team li:nth-child(6) span {
+    color: #e8ff96;
+}
+
+li:hover i, li:hover span {
+    color: #e8ff96;
+}
+
+@media (max-width: 765px) {
+    .sidebar_list {
+        width: 0;
+        overflow: hidden;
+    }
+
+    .sidebar_list_open {
+        width: 260px;
+        overflow: hidden;
+    }
+
+    .sidebar_list_open li {
+        animation: showMenuTags 0.5s linear;
+    }  
+        
+    @keyframes openMenu {
+        0% {
+            width: 0;
+        }
+
+        100% {
+            width: 260px;
+        }
+    }
+
+    @keyframes closeMenu {
+        0% {
+            width: 260px;
+        }
+
+        100% {
+            width: 0;
+        }
+    }
+
+    @keyframes showMenuTags {
+        0% {
+            width: 0;
+        }
+
+        100% {
+            width: 200px;
+        }
+    }
+
+    @keyframes hideMenuTags {
+        0% {
+            width: 200px;
+        }
+
+        100% {
+            width: 0;
+        }
+    }
+}

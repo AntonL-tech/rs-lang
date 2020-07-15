@@ -1,0 +1,96 @@
+.game_inner {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 30px 300px;
+}
+
+.game_card {
+    margin-bottom: 40px;
+    margin-right: 25px;
+    padding: 20px;
+    max-width: 300px;
+    box-shadow: 0 0 15px #22a2b2;
+    border-radius: 8px;
+    box-sizing: border-box;    
+    transition: all 0.2s linear;
+}
+
+.game_card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 10px #00b1ff;
+}
+
+.card_img {
+    width: 100%;
+    border: 0.5px solid #bfe7f9;
+}
+
+.game_page {
+    width: 100%;
+    display: flex;
+}
+
+.main_content_wrapper {
+    margin-left: 10vh;    
+    margin-top: 75px; 
+    width: 100%;
+    display: flex;
+}
+
+.cards_container {  
+    margin: auto; 
+    padding: 15px 15px 0;   
+    max-width: 1280px;   
+    width: 100%;  
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-around;  
+    align-items: center;
+}
+
+.card_title {
+    margin-bottom: 7px;
+    font-family: 'Carter One', cursive;
+    font-size: 20px;
+}
+
+.card_description {
+    margin-bottom: 10px;
+    min-height: 45px;
+    font-size: 15px;
+}
+
+.card_button {
+    padding: 5px 10px;
+    border: 1px solid #6c9ed5;
+    border-radius: 5px;
+    background-color: #6c9ed5;
+    color: #fff;
+}
+
+.card_button a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.card_button:hover {
+    background-color: #e3f3fc;
+} 
+
+.card_button:hover a {
+    color: #1b599dd9;
+} 
+
+@media (max-width: 765px) {
+    .main_content_wrapper {
+        margin-left: 0;
+    }
+
+    .game_card {
+        margin-right: 0;
+    }
+}

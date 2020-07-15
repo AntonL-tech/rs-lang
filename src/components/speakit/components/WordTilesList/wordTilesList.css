@@ -1,0 +1,13 @@
+.word-tiles {
+  position: relative;
+  width: 70%;
+  min-height: 120px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.word-tiles__item {
+  margin: 1rem;
+}
