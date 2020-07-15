@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React  from 'react';
 import styled from 'styled-components'
 import s from './app-settings.module.css'
 import ProgressBar from './progress-bar/index'
@@ -74,6 +74,7 @@ export default class Settings extends React.Component {
            isActiveGoodBtn: false,
            isActiveEasyBtn: false,
            isCompl: false,
+           edit: true
         };
         this.setResults = this.setResults.bind(this)
         this.myRef = React.createRef();
@@ -138,6 +139,7 @@ export default class Settings extends React.Component {
 
     async toggleAnswer(data,line) {
         const {stopAudio, meaningAudio, audioExample, answerButton, countOfCards, percentage, count, repeat, endGame, customLevelWords, miss, match} = this.state;
+        this.setState({edit: false})
         this.setState({isAllow: false});
         this.setState({miss: miss + 1})
         this.setState({match: match + 1})
@@ -146,8 +148,6 @@ export default class Settings extends React.Component {
 
         // Увеличен счёт карточек
         this.setState({ count: count + 1 });
-
-        
 
         // Показывает слово 
         this.setState({answerButton: true});
@@ -165,6 +165,7 @@ export default class Settings extends React.Component {
 
         if(this.myRef.current) {
             // Фокус в поле ввода
+            this.setState({edit: true})
             this.myRef.current.focus();
 
             // Скрывает слово 
@@ -357,14 +358,14 @@ export default class Settings extends React.Component {
     displayCards(data, line = 0) {
         const {translation, transcription,answerButton, audio, image, meaning, meaningRu, textExample, meaningAudio, 
             textExampleTranslate, audioExample, deleteButton, showWordButton, voiceAllow, hardButton, translationButton, 
-            isAnswerWrong, sound, showTranslation, usedWord, match, mistake, miss, isRightAnswer, isAllow, isActiveDeleteBtn, isActiveHardBtn, isActiveAgainBtn, isActiveBadBtn, isActiveGoodBtn, isActiveEasyBtn, isCompl} = this.state;
+            isAnswerWrong, sound, showTranslation, usedWord, match, mistake, miss, isRightAnswer, isAllow, isActiveDeleteBtn, isActiveHardBtn, isActiveAgainBtn, isActiveBadBtn, isActiveGoodBtn, isActiveEasyBtn, isCompl, edit} = this.state;
 
         let hideTextMeaning = !answerButton ? this.hideWord(data[line].textMeaning, data[line].word) : this.showWords(data[line].textMeaning, data[line].word);
         let hideTextExample = !answerButton ? this.hideWord(data[line].textExample, data[line].word) : this.showWords(data[line].textExample, data[line].word);
         
         const inputWidth = data[line].word.length * 18;
         const {endGame} = this.state;
-        let answerBox = (<div style={{width: inputWidth + 'px'}} className={s.card_answer} contentEditable={true} onBlur = {this.handleChangeDiv} id="answer" onKeyPress={(event) => this.handleKeyPress(event, data, line)} ref={this.myRef}></div>);
+        let answerBox = (<div style={{width: inputWidth + 'px'}} className={s.card_answer} contentEditable={edit ? true : false} onBlur = {this.handleChangeDiv} id="answer" onKeyPress={(event) => this.handleKeyPress(event, data, line)} ref={this.myRef}></div>);
         let errorBox =  this.compareWords(data[line].word, this.state.answer);
         const page = endGame ? (<div>
             <div className={s.card}>
@@ -424,7 +425,7 @@ export default class Settings extends React.Component {
     };
 
     async increment(data, line) {
-        const {answer, stopAudio, meaningAudio, audioExample, answerButton, countOfCards, percentage, count, repeat, endGame, customLevelWords, usedWord, match, mistake, isRightAnswer, complexity, onlyNewWords} = this.state;
+        const {answer, stopAudio, meaningAudio, audioExample, countOfCards, percentage, count, repeat, customLevelWords, usedWord, match, mistake, complexity} = this.state;
         this.setState({isActiveAgainBtn: false})
         this.setState({isActiveBadBtn: false})
         this.setState({isActiveGoodBtn: false})
@@ -480,6 +481,7 @@ export default class Settings extends React.Component {
 
             // Произносит слово и предложения
             if(stopAudio) {
+                this.setState({edit: false})
                 await this.sayWord(data[line].word)
                 if (meaningAudio && this.myRef.current) {
                 await this.sayWord(data[line].textMeaning)
@@ -523,6 +525,10 @@ export default class Settings extends React.Component {
                         }
                     }
                     this.setState({isRightAnswer: false});
+                    this.setState({edit: true})
+                    if (this.myRef.current) {
+                        this.myRef.current.focus();
+                    }
                 }
             } else {
                 speechSynthesis.cancel()
@@ -599,7 +605,10 @@ export default class Settings extends React.Component {
                         }
                     }
                     this.setState({isRightAnswer: false});
-
+                    this.setState({edit: true})
+                    if (this.myRef.current) {
+                        this.myRef.current.focus();
+                    }
                 }, 1000)
                 
 
@@ -643,7 +652,10 @@ export default class Settings extends React.Component {
                         }
                     }
                     this.setState({isRightAnswer: false});
-
+                    this.setState({edit: true})
+                    if (this.myRef.current) {
+                        this.myRef.current.focus();
+                    }
                 }, 1000)
                 
                 this.updateUserWord({
@@ -684,7 +696,10 @@ export default class Settings extends React.Component {
                         }
                     }
                     this.setState({isRightAnswer: false});
-
+                    this.setState({edit: true})
+                    if (this.myRef.current) {
+                        this.myRef.current.focus();
+                    }
                 }, 1000)
                 this.updateUserWord({
                     userId: this.state.userId,
@@ -724,7 +739,10 @@ export default class Settings extends React.Component {
                         }
                     }
                     this.setState({isRightAnswer: false});
-
+                    this.setState({edit: true})
+                    if (this.myRef.current) {
+                        this.myRef.current.focus();
+                    }
                 }, 1000)
                 this.updateUserWord({
                     userId: this.state.userId,
@@ -765,7 +783,10 @@ export default class Settings extends React.Component {
                         }
                     }
                     this.setState({isRightAnswer: false});
-
+                    this.setState({edit: true})
+                    if (this.myRef.current) {
+                        this.myRef.current.focus();
+                    }
                 }, 1000)
                 
                 data.push(data[line]);
@@ -808,7 +829,10 @@ export default class Settings extends React.Component {
                         }
                     }
                     this.setState({isRightAnswer: false});
-
+                    this.setState({edit: true})
+                    if (this.myRef.current) {
+                        this.myRef.current.focus();
+                    }
                 }, 1000)
                 
                 this.updateUserWord({
@@ -849,7 +873,10 @@ export default class Settings extends React.Component {
                         }
                     }
                     this.setState({isRightAnswer: false});
-
+                    this.setState({edit: true})
+                    if (this.myRef.current) {
+                        this.myRef.current.focus();
+                    }
                 }, 1000)
                 this.updateUserWord({
                     userId: this.state.userId,
@@ -889,7 +916,10 @@ export default class Settings extends React.Component {
                         }
                     }
                     this.setState({isRightAnswer: false});
-
+                    this.setState({edit: true})
+                    if (this.myRef.current) {
+                        this.myRef.current.focus();
+                    }
                 }, 1000)
                 this.updateUserWord({
                     userId: this.state.userId,
