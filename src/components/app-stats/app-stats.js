@@ -45,9 +45,7 @@ function Stats() {
 
   return (
     <Page>
-      {/* <Header/> */}
       <div className={'flex'}>
-        {/* <Sidebar/> */}
         <p>Statistic</p>
         <div className={s.chartsWrapper}>
           <div className={`${s.main} ${s.chartWrapper}`}>
