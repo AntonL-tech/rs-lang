@@ -10,7 +10,7 @@ import start from '../Assets/sounds/start.mp3';
 import star from '../Assets/icons/star-win.svg';
 import starError from '../Assets/icons/star.svg';
 import updateWord from '../../sprint-game/logic/updateWord';
-import { updateUserMiniStatistic } from '../../app-stats/statisticApi';
+
 
 const savannah = 'savannah';
 
@@ -41,8 +41,6 @@ class GamePage extends React.Component {
             clickedModalWord: {},
             isOpenWordModal: false,
             userLevel: false,
-            bestGoodWordsScore: 0,
-            currentGoodWordsScore: 0,
         };
     }
 
@@ -56,7 +54,6 @@ class GamePage extends React.Component {
             this.ourInterval();
             this.setState({userLevel: true})
         } else {
-
             this.getWords();
         }
         document.addEventListener('keydown', this.onKeyPressed);
@@ -164,16 +161,9 @@ class GamePage extends React.Component {
             }
 
             this.setState({questionArray: newQuestionArray})
-            this.isHighScoreCurrentWord()
             setTimeout(() => this.changeCountCard(), 500);
         }
     };
-
-    isHighScoreCurrentWord = () => {
-        if (this.state.bestGoodWordsScore<this.state.currentGoodWordsScore) {
-            this.setState({bestGoodWordsScore: this.state.currentGoodWordsScore, currentGoodWordsScore: 0})
-        };
-    }
 
     answearWord = (field, obj) => {
         this.setState({slideDone: false, isShowBlock: false});
@@ -197,8 +187,7 @@ class GamePage extends React.Component {
                 wrightWords: [...this.state.wrightWords, this.state.questionWordObj],
             });
 
-            this.setState({questionArray: newQuestionArray, currentGoodWordsScore: this.state.currentGoodWordsScore+1});
-            // console.log(this.state.currentGoodWordsScore, 'hello')
+            this.setState({questionArray: newQuestionArray});
         } else {
             this.playSound(error);
             this.setState({countStarError: this.state.countStarError + 1, countStar: this.state.countStar - 1});
@@ -222,7 +211,6 @@ class GamePage extends React.Component {
             });
 
             this.setState({questionArray: newQuestionArray});
-            this.isHighScoreCurrentWord()
         }
 
         setTimeout(() => this.changeCountCard(), 500);
@@ -255,7 +243,6 @@ class GamePage extends React.Component {
         if (this.state.countStarError >= 5 || countCard === 600 || countCard + 4 > data.length) {
             this.showGameOverModal();
             this.setState({isShowBlock: false});
-            updateUserMiniStatistic(savannah, this.state.wrightWords.length, this.state.bestGoodWordsScore);
         } else {
             this.createQuestionAnswearWords(someWord);
             setTimeout(() => this.checkWordFinish(this.state.slideDone), 5000);
