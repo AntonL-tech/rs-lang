@@ -29,6 +29,16 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+}
+
+.warningMessage {
+  padding: 5px 20px;
+  color: #b30000c4;
+}
+
+.warningMessageHidden {
+  visibility: hidden;
 }
 
 .select {

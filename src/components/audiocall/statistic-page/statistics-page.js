@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { updateUserMiniStatistic } from '../../app-stats/statisticApi';
 import s from './statistics-page.module.css';
+import { Link } from 'react-router-dom';
 
 const List = ({ words, playAudio }) => {  
   const wordList = words.map((item) => {
 
     return (
-      <li className={s.wordBlock} key={item.id} id={item.id}>
+      <li className={s.wordBlock} key={item.id} id={item.id} >
         <p className={s.wordBlockItem}>{item.word}</p>
         <p className={s.wordBlockItem}>{item.wordTranslate}</p>
         <button className={s.soundBtn} data-audio={item.audio} onClick={playAudio} />
@@ -17,13 +18,10 @@ const List = ({ words, playAudio }) => {
   return <ul className={s.answersList}>{wordList}</ul>
 }
 
-// const WordBlock = (answers) => {
-
-// }
-
 export default class StatisticsPage extends Component {
   constructor(props) {
     super(props);
+    this.words = null;
     this.state = {
       answer: true,
     }
@@ -41,7 +39,7 @@ export default class StatisticsPage extends Component {
   }
 
   render() {
-    const { correctAnswers, incorrectAnswers, level,  showStartPage, longestSeries } = this.props;
+    const { correctAnswers, incorrectAnswers, level,  showStartPage, longestSeries, modal, objectword } = this.props;
 
     return (
       <div className={s.page}>
@@ -52,18 +50,20 @@ export default class StatisticsPage extends Component {
           <div className={s.answers}>          
             <div className={s.answersBlock}>
               <p className={s.answersTitle}>Correct: {correctAnswers.length}</p>
-              <List words={correctAnswers} playAudio={this.playAudio} />
+              <List words={correctAnswers} playAudio={this.playAudio} showModal={this.showModal} />
             </div>
         
             <div className={s.answersBlock}>
               <p className={s.answersTitle}>Incorrect: {incorrectAnswers.length}</p>
-              <List words={incorrectAnswers}  playAudio={this.playAudio} />
+              <List words={incorrectAnswers}  playAudio={this.playAudio} showModal={this.showModal} />
             </div>
           </div>
 
           <div className={s.buttons}>
             <button className={s.btn} onClick={showStartPage}>Play again</button>
-            <button className={s.btn}>Return</button>
+            <Link to="/">
+              <button className={s.btn} >Return</button>
+            </Link>
           </div>
         </div>
         

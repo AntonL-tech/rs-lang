@@ -125,7 +125,7 @@ export default class GameModel {
       }
 
       const { wordTranslate, id } =  this.currentWord;
-      answers.push({ wordTranslate, id, correct: true });      
+      answers.push({ ...this.currentWord , correct: true });      
       this.shuffle(answers);
       
       return new Promise((resolve) => resolve([this.currentWord, answers]));

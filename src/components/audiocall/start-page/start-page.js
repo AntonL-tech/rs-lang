@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import s from './start-page.module.css';
 import EnglishLevelTest from '../../english-level-test/EnglishLevelTest';
-import Select from '../select/select'
 
 export default class StartPage extends Component {
   render() {
-    const { startGame, changeLevel } = this.props;
+    const { startGame, changeLevel, message, amountOfWords } = this.props;
    
     return (
       <>
-        <EnglishLevelTest />
+        <EnglishLevelTest />        
         <div className={s.page} >
           <div className={s.about}>        
             <h1 className={s.header}>Audiocall</h1>
@@ -25,7 +24,10 @@ export default class StartPage extends Component {
               <option value="4">Level 5</option>
               <option value="5">Level 6</option>        
             </select>       
-            <button className={s.start} onClick={startGame}>Start</button>        
+            <button className={s.start} onClick={startGame}>Start</button>  
+            <p className={message ? s.warningMessage : s.warningMessageHidden}>
+              {`Sorry, you've learned only ${amountOfWords} words. User mode will become available when you learn at least 20 words`}
+            </p>     
           </div>
         </div>
       </>
