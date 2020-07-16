@@ -1,0 +1,13 @@
+.page {
+  width: 100vw;
+  height: 100vh;  
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preloader {
+  width: 200px;
+  height: 200px;
+}

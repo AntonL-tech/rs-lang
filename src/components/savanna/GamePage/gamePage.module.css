@@ -1,0 +1,233 @@
+.questionWordBlock {
+    min-height: 400px;
+    position: relative;
+    width: 60%;
+    margin: 0 auto;
+    min-width: 300px;
+    overflow: hidden;
+    left: 0;
+    top: 0;
+    font-size: 48px;
+    line-height: 1;
+    font-weight: 300;
+    white-space: nowrap;
+    letter-spacing: 1px;
+}
+
+.questionWord {
+    display: inline-block;
+    position: absolute;
+    color: transparent;
+    top: 0;
+    transform: translate(-50%);
+    left: 50%;
+    height: 2.75rem;
+    width: 15rem;
+    animation: move 5s linear;
+    animation-direction: normal;
+    animation: move-highlight 5s linear;
+    animation-fill-mode: forwards;
+    text-shadow: rgb(255, 255, 255) 0 0 0;
+}
+
+@keyframes move-highlight {
+    0% {
+        top: 0;
+        text-shadow: rgb(255, 255, 255) 0 0 0;
+        letter-spacing: 0;
+    }
+
+    94% {
+        text-shadow: rgb(255, 255, 255) 0 0 0;
+        letter-spacing: 0;
+    }
+
+    100% {
+        text-shadow: rgb(255, 255, 255) 0 0 19px;
+        top: 7.3em;
+        letter-spacing: 2rem;
+    }
+}
+
+.starsBlock {
+    margin: 20px 10px;
+    width: 30px;
+    height: 30px;
+}
+
+.answearBlock {
+    position: relative;
+    display: flex;
+    bottom: 100px;
+    justify-content: center;
+    z-index: 3;
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 300;
+    color: #fff;
+}
+
+.answearWord {
+    padding: 15px;
+    cursor: pointer;
+    margin: 0 20px;
+}
+
+.RightAnswer {
+    padding: 15px;
+    margin: 0 20px;
+    background: rgba(164, 252, 139, 0.218);
+}
+
+.WrongAnswer {
+    padding: 15px;
+    margin: 0 20px;
+    background: #f79d9da2;
+}
+
+.exitGamePage {
+    width: 30px;
+    height: 30px;
+    background-size: 100%;
+    position: absolute;
+    top: 30px;
+    right: 45px;
+    cursor: pointer;
+}
+
+.statLines {
+    display: flex;
+}
+
+.lineWord {
+    color: blue;
+    cursor: pointer;
+}
+
+.soundBtn {
+    background-image: url('../Assets/icons/song.svg');
+    background-size: 18px 18px;
+    background-position: 49%;
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    margin-top: -6px;
+}
+
+.timer {
+    height: 20vmin;
+    line-height: 20vmin;
+    left: calc(50% - 10vmin);
+    position: fixed;
+    top: calc(50% - 10vmin);
+    width: 20vmin;
+    z-index: 1;
+    font-size: 2em;
+    background-image: url('../Assets/icons/timeAnimationRed.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.msg {
+    max-width: 565px;
+    padding: 30px;
+    margin: 0 auto 15px;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 300;
+    color: #fff;
+}
+
+.none {
+    display: none;
+}
+
+.loader {
+    animation: spin 1s infinite linear;
+    border: solid 2vmin transparent;
+    border-radius: 50%;
+    border-right-color: rgb(234, 0, 255);
+    border-top-color: rgb(234, 0, 255);
+    box-sizing: border-box;
+    height: 20vmin;
+    left: calc(50% - 10vmin);
+    position: fixed;
+    top: calc(50% - 10vmin);
+    width: 20vmin;
+    z-index: 2;
+}
+
+.loader:before {
+    animation: spin 2s infinite linear;
+    border: solid 2vmin transparent;
+    border-radius: 50%;
+    border-right-color: rgb(218, 97, 255);
+    border-top-color: rgb(218, 97, 255);
+    box-sizing: border-box;
+    content: '';
+    height: 16vmin;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 16vmin;
+}
+
+.loader::after {
+    animation: spin 3s infinite linear;
+    border: solid 2vmin transparent;
+    border-radius: 50%;
+    border-right-color: rgba(255, 102, 247, 0.616);
+    border-top-color: rgba(255, 102, 247, 0.616);
+    box-sizing: border-box;
+    content: '';
+    height: 12vmin;
+    left: 2vmin;
+    position: absolute;
+    top: 2vmin;
+    width: 12vmin;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media (min-width: 300px) and (max-width: 550px) {
+    .starsBlock {
+        margin: 10px;
+        width: 20px;
+        height: 20px;
+    }
+
+    .exitGameIcon {
+        width: 15px;
+        height: 15px;
+        background-size: 100%;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+
+    .questionWordBlock {
+        min-height: 300px;
+    }
+
+    .answearBlock {
+        flex-direction: column;
+        margin-top: 80px;
+    }
+
+    @keyframes move-highlight {
+        0% {
+            top: 0;
+        }
+
+        100% {
+            top: 6.2em;
+        }
+    }
+}
